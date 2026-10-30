@@ -1,18 +1,26 @@
-# Ask NINJA — low-cost question-box preview
+# NINJA MOONS — Ask NINJA question box with restored transcription
 
-Live preview: https://ninja-moons-ask-ninja-lab.vercel.app/
+Live adult-only test: https://ninja-moons-ask-ninja-lab.vercel.app/
 
 - Reader: https://ninja-moons-ask-ninja-lab.vercel.app/student.html
 - Teacher: https://ninja-moons-ask-ninja-lab.vercel.app/teacher.html
+- AI endpoint readiness status: https://ninja-moons-ask-ninja-lab.vercel.app/api/ask
 
-The **Ask NINJA** question field accepts typed text, with sample question chips and clearly labeled **built-in sample answers**. **This is not an AI service:** no OpenAI connection, no real AI inference, and no API cost.
+## What works today
+- Teacher can connect to and hear the selected reader through the WebRTC PeerJS audio test.
+- Student and teacher have blue live browser-transcription panels, using SpeechRecognition where supported. A transcript is sent over the PeerJS data channel.
+- Word hover definitions, click-to-speak narration, and sample reading sentences.
+- An Ask NINJA typed-question form. Built-in sample answers continue to work without AI.
+- A production-deployed Vercel function at `api/ask.mjs` handles short, text-only AI questions using AI Gateway, when explicitly activated.
 
-**Restored:** Live browser-based SpeechRecognition converts the reader's spoken words to visible text in a blue transcript panel. Transcript and status are sent over the existing PeerJS connection to the teacher dashboard and update as speech is recognized, regardless of which reader is currently selected for audible monitoring. There is **no paid AI transcription API and no automated reading analysis**. The question box also works independently without enabling a microphone. Availability and reliability depend on the browser; some browsers may send speech to their provider for processing.
+## Activation (NOT DONE: remain billable-call disabled)
+The Vercel server function checks all three:
+1. `NINJA_AI_ENABLED=true` set in **this test project's** production environment.
+2. `NINJA_TEST_ACCESS_CODE` set to a long, unpredictable value in the Vercel project environment. Only an adult with this access code should test the API.
+3. Valid Vercel OIDC credentials injected by Vercel or `AI_GATEWAY_API_KEY` stored securely in this project's environment.
 
-The teacher can test existing PeerJS live audio monitoring (one selected reader at a time). This is a **public shared unauthenticated adult-only technical test**; do not use with students, do not enter confidential data, and do not assume school deployment readiness.
+**Before enabling any paid call**, the owner should configure a small Vercel AI Gateway **project spending limit** and confirm account billing/credits, then review authentication and data-handling requirements. The function has a per-IP best-effort, in-memory request counter, but **this is not a distributed rate limiter or hard spending cap**. No full public classroom launch should happen without real authenticated sessions, global rate limits, consent and privacy handling. This prototype is strictly adult-only and unauthenticated for listening.
 
-No typed Ask NINJA questions are stored or sent by the page. The app itself does not save transcripts or record audio, but the browser speech-recognition vendor may process microphone audio remotely. Transcript text travels over third-party PeerJS data signaling to the teacher in the unauthenticated test room. Live monitoring streams the selected reader's microphone to the teacher via WebRTC; this setup is not production-secure.
+The function sends only the typed question plus current sample story sentence to `openai/gpt-5-nano` through Vercel AI Gateway, not microphone audio, a transcript, or recording. There is no automatic AI reading analysis. The browser itself may send audio to its browser speech-recognition vendor; that is separate and has device/browser-specific availability and terms.
 
-Before actual AI responses are enabled, add a private server-side model connection, authentication, classroom identity and access controls, rate limiting, per-class billing cap, data retention safeguards, appropriate child privacy/consent policies, and student-safety checks. Keep API credentials server-side and never in the public GitHub repository or client HTML.
-
-This is an isolated Vercel project and GitHub experiment branch. The main NINJA MOONS site, Secret Garden, original working one-tap test, multireader lab, and old NINJA Reading Advice prototype are untouched.
+**Do not put any API keys, access codes, student audio, or student data into this public GitHub experiment or inline client HTML.** No code changes to the original NINJA MOONS website, Secret Garden, the single-reader prototype, or the earlier multireader test have been made.
