@@ -1,0 +1,44 @@
+
+:root{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#eef7ff;background:#081629;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 65% -25%,#214a77 0,transparent 58%),#081629}
+button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:not-allowed}
+a{color:#9bdffd;text-decoration:none}a:hover{text-decoration:underline}
+.wrap{width:min(1050px,100%);margin:auto;padding:23px 20px 60px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:29px}
+.logo{font-weight:850;letter-spacing:.11em;font-size:14px;display:flex;align-items:center;gap:9px}.logo span{font-size:25px}
+.pill{font-size:11px;color:#b5dfff;border:1px solid #3f769d;border-radius:999px;background:#1e4463;padding:7px 11px;white-space:nowrap}
+h1{font-size:clamp(32px,5vw,48px);line-height:1.1;letter-spacing:-.04em;margin:0 0 10px}h2{font-size:21px;letter-spacing:-.02em;margin:0 0 12px}
+.subtitle{font-size:16px;color:#bdd0e4;line-height:1.55;margin:0 0 25px}
+.layout{display:grid;grid-template-columns:1.45fr 1fr;gap:19px;align-items:start}
+.panel{background:#101f35;border:1px solid #314761;border-radius:19px;padding:20px;box-shadow:0 14px 35px #0002}
+.panel+.panel{margin-top:18px}.panelTitle{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:16px}
+small,.subtext{color:#aec1d5}.subtext{font-size:13px;line-height:1.65}
+.btn{border:0;border-radius:13px;padding:16px 20px;min-height:54px;font-weight:850;font-size:16px;background:#52d2fa;color:#062035;width:100%;box-shadow:0 8px 18px #1c8ebf30}
+.btn.secondary{background:#253852;border:1px solid #5b7391;color:#f5f9ff;box-shadow:none}.btn.mint{background:#c1ef82;color:#1c3506}
+.btn.small{font-size:14px;min-height:40px;padding:9px 13px;width:auto}
+.btn.danger{background:#503444;color:#ffeaf0;border:1px solid #a35e78;box-shadow:none}
+.controls{display:flex;gap:10px;flex-wrap:wrap}.controls>*{flex:1}
+.status{display:flex;gap:12px;align-items:start;margin-top:15px}
+.light{width:12px;height:12px;flex:none;border-radius:50%;background:#8da0b8;box-shadow:0 0 0 5px #aec2dc18;margin-top:5px}
+.light.wait{background:#eecf86}.light.live{background:#69dca2}.light.error{background:#fe8b9f}
+.statusStrong{font-size:16px;font-weight:800}.statusText{font-size:13px;color:#afc3d8;line-height:1.5;margin-top:3px}
+.readerList{display:grid;gap:10px;max-height:550px;overflow-y:auto}
+.readerCard{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid #34536f;background:#162942;border-radius:14px}
+.readerCard.selected{background:#1d4055;border-color:#66c2e9}
+.avatar{border-radius:11px;background:#27435d;width:40px;height:40px;display:grid;place-items:center;flex:none;font-size:20px}
+.readerInfo{flex:1;min-width:0}.readerInfo strong{display:block;font-size:15px}.readerInfo p{font-size:12px;margin:4px 0 0;line-height:1.35;color:#b5c7dc;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.readerCard button{border:0;border-radius:10px;background:#68dbac;color:#073020;font-weight:850;padding:11px 13px;flex:none;min-width:83px}
+.readerCard.selected button{background:#ffcf8a;color:#4e2400}
+.empty{padding:24px 12px;text-align:center;background:#15253d;border:1px dashed #43607e;border-radius:13px;color:#b6c9dd;font-size:14px;line-height:1.55}
+.note{font-size:12px;line-height:1.65;color:#acc1d8;border-top:1px solid #30475f;margin-top:20px;padding-top:18px}
+.details{font-size:14px;color:#c6daf0;line-height:1.7}.sentence{font-size:20px;font-weight:650;line-height:1.5;margin:12px 0;color:white}
+.label{font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#a7c2dd}
+.mini{font-size:13px;color:#afc6da}.hidden{display:none!important}
+h3{font-size:15px;margin:0 0 8px}
+.secondaryBox{border:1px solid #45627e;border-radius:13px;background:#182a43;padding:15px}
+.readerLayout{max-width:570px}.readerLayout .panel{margin:18px 0}
+.numbers{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:15px}
+.number{border:1px solid #6a829c;border-radius:10px;padding:10px 13px;font-size:14px;color:#e0effe;background:#213952}
+.number.active{background:#4ecff3;border-color:#4ecff3;color:#08253b;font-weight:850}
+a.back{font-size:13px;display:inline-block;margin-bottom:15px}
+@media(max-width:730px){.layout{grid-template-columns:1fr}.wrap{padding:18px 16px 45px}.panel{padding:17px}.readerList{max-height:none}.controls{flex-direction:column}}
