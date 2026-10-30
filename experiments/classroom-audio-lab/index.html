@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#081629"><title>NINJA MOONS · Classroom Listening Lab</title>
+<link rel="stylesheet" href="/styles.css"><script defer src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js"></script><script defer src="/app.js"></script></head>
+<body><div class="wrap"><header><div class="logo"><span>🥷🌙</span>NINJA MOONS</div><span class="pill">ADULT TEST · CLASSROOM LAB</span></header>
+<section id="home" class="hidden readerLayout"><h1>Listen to every reader.<br>One voice at a time.</h1><p class="subtitle">A separate multi-reader audio test. No pairing codes, no text messages. Pick your role.</p>
+<a href="/teacher.html" class="btn" style="display:flex;justify-content:center;align-items:center;text-decoration:none;margin-bottom:14px">🎧 Teacher Dashboard</a>
+<a href="/student.html" class="btn mint" style="display:flex;justify-content:center;align-items:center;text-decoration:none">🎤 Reader Microphone</a>
+<div class="panel"><h2>Simple two-step connection</h2><p>Teacher taps <b>Start Monitoring</b>. Each adult reader taps <b>Start Microphone</b>. Readers appear automatically. Tap <b>Listen</b> next to any one reader to hear them.</p></div>
+<div class="note"><strong>Not for students yet.</strong> This experimental shared room has no classroom login or access controls. Test only with consenting adults. Your main NINJA MOONS site is unchanged.</div></section>
+<section id="teacher" class="hidden"><a class="back" href="/">‹ Back to test home</a><h1>Classroom Listening</h1><p class="subtitle">See connected readers and tap Listen to switch voices. Only the selected reader streams audio.</p>
+<div class="layout"><div><div class="panel"><div class="panelTitle"><h2>Teacher Controls</h2><span class="pill">UP TO 30 READERS</span></div>
+<button id="startTeacher" class="btn" type="button">🎧 Start Monitoring</button>
+<button id="stopTeacher" class="btn danger hidden" type="button">■ Stop Monitoring</button>
+<div class="status"><div id="teacherLight" class="light"></div><div><div id="teacherStatus" class="statusStrong">Monitor is off</div><div id="teacherDescription" class="statusText">Start on this device, then other adults can start their microphones.</div></div></div>
+</div>
+<div id="readerPanel" class="panel hidden"><div class="panelTitle"><h2>Connected Readers</h2><span class="pill"><span id="count">0</span> ONLINE</span></div>
+<div id="readerList" class="readerList"><div class="empty">No readers online yet.</div></div></div>
+</div>
+<div><div id="selectedPanel" class="panel hidden"><div class="panelTitle"><h2>Now Listening</h2><span class="pill">LIVE AUDIO</span></div>
+<div id="listeningTo" style="font-size:23px;font-weight:850;margin:18px 0">Nobody selected</div>
+<div class="secondaryBox"><div class="label">Selected reader's practice sentence</div><p id="selectedSentence" class="sentence">Tap Listen beside any reader.</p></div>
+<button id="muteBtn" class="btn secondary hidden" type="button" style="margin-top:14px">🔇 Mute Audio</button>
+<button id="resumeSound" class="btn secondary hidden" type="button" style="margin-top:12px">🔊 Enable Sound</button>
+<p class="subtext">Connect Bluetooth earbuds before listening. Your microphone is never used.</p></div>
+<div class="panel"><div class="panelTitle"><h2>AI Reading Coach</h2><span class="pill">PLANNED · NOT ACTIVE</span></div>
+<p class="subtext">A future opt-in assistant could listen to the selected reader, identify words that need practice, and offer encouraging feedback. It is not connected in this test. We will first add teacher authentication, student access controls, consent, and privacy safeguards.</p>
+</div></div></div>
+<div class="note"><b>Adult-only prototype.</b> This is a single shared test room without login or verified identities. Do not test with students. Voice is streamed via WebRTC; the app does not record or save the audio. School networks may need additional TURN infrastructure.</div></section>
+<section id="reader" class="hidden readerLayout"><a class="back" href="/">‹ Back to test home</a><h1>Ready to read?</h1><p class="subtitle">Tap one button and allow your microphone. Your reader slot appears automatically on the teacher dashboard.</p>
+<div class="panel"><div class="panelTitle"><h2>Reader Microphone</h2><span class="pill" id="readerLabel">Not assigned</span></div>
+<button id="startReader" class="btn mint" type="button">🎤 Start Microphone</button>
+<button id="stopReader" class="btn danger hidden" type="button">■ Stop Microphone</button>
+<div class="status"><div id="readerLight" class="light"></div><div><div id="readerStatus" class="statusStrong">Microphone is off</div><div id="readerDescription" class="statusText">Start and the teacher will see you automatically.</div></div></div></div>
+<div class="panel"><div class="label">Practice sentence</div><p id="readerSentence" class="sentence">The spaceship traveled among the stars.</p><button type="button" id="nextSentence" class="btn secondary">Next Sentence →</button></div>
+<div class="note"><b>Adult-only prototype.</b> The microphone is enabled after your button press, but your audio is only transmitted when the teacher selects your reader slot. Tap Stop Microphone anytime. Audio is not saved by the app. Do not use with students until classroom authorization is implemented.</div></section>
+</div></body></html>
