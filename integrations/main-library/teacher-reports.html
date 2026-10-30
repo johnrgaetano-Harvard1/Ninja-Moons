@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><title>NINJA MOONS — Teacher Dashboard</title>
+<style>
+:root{--night:#071932;--navy:#0e315c;--blue:#185d9b;--glow:#4bd6ff;--ink:#17324e;--light:#eef5fb;--border:#cee0ee}
+*{box-sizing:border-box}body{margin:0;background:var(--light);color:var(--ink);font:16px/1.5 'Segoe UI',Arial,sans-serif}
+header{background:linear-gradient(110deg,#05152b,#0c376b);border-bottom:3px solid #47c5ee;color:#fff;padding:21px max(24px,calc((100vw - 1200px)/2))}
+header h1{font-size:clamp(23px,3vw,34px);margin:0;letter-spacing:.3px}header small{color:#a2dbf1;letter-spacing:2px;font-weight:800;font-size:12px}
+header a{color:#bdeeff;text-decoration:none;font-size:14px}.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+main{max-width:1200px;margin:25px auto;padding:0 20px 50px}
+.card{background:#fff;border:1px solid var(--border);border-radius:13px;box-shadow:0 4px 18px #1840640d;padding:24px}
+#login-panel{max-width:510px;margin:55px auto}h2{margin:0 0 10px;color:#154b85;font-size:26px}p{margin:0 0 14px}
+label{display:block;font-weight:750;color:#1f456a;margin:15px 0 6px}input[type=password],input[type=search]{width:100%;border:1.5px solid #8baeca;padding:12px 14px;border-radius:8px;background:#fff;color:#163756;font-size:17px}
+input:focus{outline:2px solid #45b9ef;outline-offset:2px}
+button{border:0;border-radius:8px;padding:11px 18px;background:linear-gradient(105deg,#075bb2,#0c8bd0);color:white;font:750 15px 'Segoe UI',Arial,sans-serif;cursor:pointer}button:hover{filter:brightness(1.08)}button:disabled{opacity:.6;cursor:wait}.subtle{color:#667d90;font-size:13px}.error{color:#a9252d;font-weight:700}
+#dashboard[hidden],#login-panel[hidden]{display:none}#dashboard .toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:18px 0}.toolbar input{max-width:450px;flex:1;min-width:200px}.toolbar .secondary{background:#fff;border:1px solid #9fb9cd;color:#164b7d}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.stat{padding:17px;background:#fff;border-radius:10px;border:1px solid var(--border)}.stat strong{display:block;color:#144c8b;font-size:clamp(24px,3vw,36px)}.stat span{color:#536a7c;font-size:14px}
+#responses{display:grid;gap:12px}.response{border:1px solid #c8dce8;border-radius:10px;background:#fff;overflow:hidden}.response summary{cursor:pointer;padding:14px 18px;display:flex;gap:12px;justify-content:space-between;align-items:center}.response summary:hover{background:#eef7ff}.student{font-weight:850;color:#104b82}.timestamp{font-size:12px;color:#607d8f}.details{border-top:1px solid #d9e7ef;padding:17px 18px}.details h3{font-size:14px;color:#256397;margin:9px 0 5px}.details p{white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 12px}.details button{background:#fff;border:1px solid #c76b76;color:#973d4c;font-size:12px;padding:7px 12px}
+#activity{margin:10px 0;min-height:20px}.empty{padding:30px;text-align:center;color:#56758c;background:#fff;border:1px dashed #aac6d9;border-radius:10px}
+@media(max-width:700px){main{padding:0 10px;margin-top:14px}header{padding:17px 13px}.card{padding:17px}.stats{gap:7px}.stat{padding:10px}.stat span{font-size:12px}.response summary{padding:11px 13px}.top{align-items:flex-start}header h1{font-size:22px}}
+
+/* Dashboard matches the NINJA MOONS navy/laser-blue theme */
+:root{--night:#07162c;--navy:#071a34;--blue:#13539e;--glow:#4bd6ff;--ink:#17283f;--light:#edf2f8;--border:#b2d4eb}
+body{background:#edf2f8;color:#17283f}
+header{background:#07162c;border-bottom:3px solid #2cbeec}
+header h1{color:#e6f9ff;letter-spacing:1px}
+button{cursor:pointer}
+.ninja-score-summary{padding:14px 16px;margin:8px 0 20px;background:#071a34;color:#d8f6ff;border-left:5px solid #4bd6ff;border-radius:9px;font-size:14px}
+.nm-score-chip{display:inline-block;border:1px solid #41b5e3;background:#e3f7ff;color:#114f86;border-radius:6px;padding:2px 8px;margin-left:10px;font-size:12px;font-weight:800}
+.response{border:1px solid #b8d8ea;border-left:4px solid #1685ca}
+.response h3{color:#12548e}
+
+/* Classroom reading and vocabulary insights */
+.nm-insights{margin:22px 0;background:#fff;border:1px solid #bad9eb;border-radius:13px;padding:21px;box-shadow:0 4px 18px #1840640d}
+.nm-insights h2{font-size:23px;margin:0 0 6px}.nm-insights h3{font-size:16px;color:#13548b;margin:0 0 11px}
+.nm-analytics-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+.nm-analytics-metrics .nm-metric{background:#f3f9fe;padding:12px;border-radius:9px;border:1px solid #cbe2f2}
+.nm-analytics-metrics strong{display:block;font-size:26px;color:#0b5b9a}
+.nm-analytics-metrics span{font-size:12px;color:#4b657c}
+.nm-analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.nm-insights-panel{border:1px solid #d4e6f2;background:#fbfdff;border-radius:10px;padding:15px;min-width:0}
+.nm-analytics-bars{display:grid;gap:9px}.nm-analytics-line{display:grid;grid-template-columns:minmax(80px,1.2fr) minmax(70px,3fr) minmax(55px,1fr);align-items:center;gap:9px;font-size:12px}
+.nm-analytics-name{overflow-wrap:anywhere;font-weight:650}.nm-analytics-track{height:10px;border-radius:9px;background:#dfedf8;overflow:hidden}
+.nm-analytics-fill{display:block;height:100%;background:linear-gradient(90deg,#1169bb,#35c6ee);border-radius:9px}
+.nm-analytics-figure{text-align:right;color:#315b79;font-size:11px;font-variant-numeric:tabular-nums}
+.nm-student-choice{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:9px 0 18px}
+.nm-student-choice label{margin:0;font-size:14px}.nm-student-choice select{max-width:320px;min-width:170px;border:1.5px solid #96b8cf;border-radius:8px;padding:9px;background:white;color:#133b60;font-size:14px}
+.nm-student-cards{display:grid;gap:10px;margin-top:11px}.nm-student-card{border:1px solid #cbe0ed;border-radius:9px;padding:13px;background:#fbfdff}
+.nm-student-card summary{cursor:pointer;font-weight:800;color:#11538b}.nm-student-card p{font-size:13px;margin:8px 0}
+.nm-student-card .nm-timeline{display:flex;gap:4px;align-items:end;margin:9px 0 0;flex-wrap:wrap;min-height:35px}
+.nm-mini-mark{width:14px;height:27px;background:#1a95c9;border-radius:3px;position:relative}.nm-mini-mark.incorrect{height:12px;background:#cb6972}
+.nm-mini-mark:focus{outline:2px solid #105ea0;outline-offset:2px}
+.nm-vocab-delete{font-size:12px;background:#fff;color:#9d3344;border:1px solid #b96876;padding:7px 10px;margin-top:7px}
+.nm-small-note{font-size:12px;color:#617a8c;margin:8px 0}.nm-activity-bar{display:flex;align-items:end;gap:5px;height:75px;padding:7px 0}
+.nm-activity-day{display:flex;flex:1;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0;gap:4px}
+.nm-activity-day .column{width:100%;max-width:26px;background:linear-gradient(#37c6e9,#1666a6);border-radius:4px 4px 0 0;min-height:2px}
+.nm-activity-day small{font-size:9px;color:#45627a}
+@media(max-width:750px){.nm-analytics-grid{grid-template-columns:1fr}.nm-analytics-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.nm-insights{padding:13px}.nm-analytics-line{grid-template-columns:minmax(55px,1.1fr) minmax(55px,3fr) minmax(48px,1fr);gap:5px}}
+#nm-site-nav{position:relative;z-index:20;background:#07182cf5;border-bottom:1px solid #2c4560;color:#e9f6ff;font:700 13px/1.3 system-ui;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px max(20px,calc((100vw - 1200px)/2));flex-wrap:wrap}#nm-site-nav a{color:inherit;text-decoration:none}#nm-site-nav .nm-mark{font-size:18px;font-weight:950;letter-spacing:.04em;white-space:nowrap}#nm-site-nav nav{display:flex;gap:5px;align-items:center;flex-wrap:wrap}#nm-site-nav nav a{padding:10px 12px;border-radius:8px}#nm-site-nav nav a:hover,#nm-site-nav nav a:focus-visible,#nm-site-nav a[aria-current=page]{background:#183750;outline-color:#6ee5ff}#nm-site-nav .nm-home{color:#b9cddd}@media(max-width:600px){#nm-site-nav{padding:13px 16px;gap:9px}#nm-site-nav nav{width:100%;justify-content:space-between}#nm-site-nav nav a{padding:9px 7px;font-size:12px}}</style></head><body><div id="nm-site-nav"><a class="nm-mark" href="/dashboard">🥷 NINJA MOONS <span style="color:#ffda7b">◔</span></a><nav aria-label="NINJA MOONS main navigation"><a href="/dashboard">My dashboard</a><a href="/reader?level=All">Library</a><a href="/teacher-dashboard">Teachers</a><a href="/about.html">About</a><a class="nm-home" href="/">Login</a></nav></div>
+<header><div class="top"><div><small>NINJA MOONS · PRIVATE TEACHER AREA</small><h1>Student Answers</h1></div><nav aria-label="Teacher links" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><a id="nm-race-teacher-link" href="https://ninja-reading-race.vercel.app/" style="border:1px solid #70dfff;border-radius:9px;padding:10px 13px;background:#135082;color:#fff;font-weight:800;text-decoration:none">🚀 Launch Reading Race</a><a id="nm-reader-recovery-link" href="/reader-recovery.html" style="border:1px solid #74c69b;border-radius:9px;padding:10px 13px;background:#144e62;color:#fff;font-weight:800;text-decoration:none">📚 Reader PIN Recovery</a><a href="/teacher-dashboard">Teacher home</a></nav></div></header>
+<main>
+<section class="card" id="login-panel"><h2>Teacher sign-in</h2><p>View all submitted answers in one place. Only the teacher password unlocks the records.</p>
+<form id="login"><label for="teacher-password">Teacher password</label><input id="teacher-password" type="password" autocomplete="current-password" required minlength="12">
+<p class="subtle">Your password stays in this tab. Close this page or sign out when finished.</p><button id="login-button" type="submit">Open dashboard</button>
+<p id="login-error" class="error" role="alert"></p></form></section>
+<section id="dashboard" hidden>
+<div class="stats" aria-label="Submission summary"><div class="stat"><strong id="total-count">0</strong><span>Answers received</span></div><div class="stat"><strong id="today-count">0</strong><span>Submitted today</span></div><div class="stat"><strong id="matching-count">0</strong><span>Showing now</span></div></div>
+
+<section id="nm-insights" class="nm-insights" aria-label="Teacher learning insights">
+<h2>Reading and vocabulary insights</h2>
+<p class="nm-small-note">These reports reflect recorded quiz answers and word-help use, not a standardized reading level. Repeated word lookups suggest extra support was used, not that a word was failed. Written answers need teacher review.</p>
+<div class="nm-student-choice"><label for="nm-student-filter">Show student</label><select id="nm-student-filter"><option value="">All students</option></select></div>
+<div id="nm-analytics-content" aria-live="polite"></div>
+</section>
+<div class="toolbar"><input type="search" id="search" placeholder="Search first names or answers" aria-label="Search answers"><button id="refresh" class="secondary" type="button">Refresh</button><button id="csv" class="secondary" type="button">Download CSV</button><button id="progress-csv" class="secondary" type="button">Export learning report</button><button id="logout" class="secondary" type="button">Sign out</button></div>
+<p id="activity" class="subtle" role="status" aria-live="polite"></p>
+<div id="responses" aria-live="polite"></div>
+<p class="subtle" style="margin-top:20px">Answers are stored privately. This page shows submissions received since the dashboard was activated; older emailed responses are not automatically imported. No student email addresses are collected.</p>
+</section>
+</main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+let password='',all=[],visible=[];
+const form=$('login'),button=$('login-button'),err=$('login-error'),login=$('login-panel'),dash=$('dashboard'),responses=$('responses');
+const formatDate=date=>new Date(date).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});
+async function callAPI(payload){const r=await fetch('/api/teacher-responses',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({password,...payload})});const result=await r.json().catch(()=>({error:'Could not read server response'}));if(!r.ok)throw Error(result.error||'Request failed');return result;}
+function text(tag,content,cls){const el=document.createElement(tag);el.textContent=content;if(cls)el.className=cls;return el;}
+
+
+const isVocab=x=>x.kind==='vocabulary';
+const isQuiz=x=>x.kind==='paragraph_quiz';
+const normalName=x=>String(x||'').trim().replace(/\s+/g,' ').toLocaleLowerCase();
+const at=rec=>Date.parse(rec.submitted_at)||0;
+let selectedStudent='';
+const h=(tag,cls,content)=>{
+ const node=document.createElement(tag);if(cls)node.className=cls;if(content!==undefined)node.textContent=String(content);return node;
+};
+function metric(label,value){
+ const card=h('div','nm-metric');card.append(h('strong','',value),h('span','',label));return card;
+}
+function bars(records,container,maxRows=12){
+ container.replaceChildren();
+ if(!records.length){container.append(h('p','nm-small-note','No observations have been recorded yet.'));return;}
+ const maximum=Math.max(...records.map(r=>r.value),1);
+ for(const record of records.slice(0,maxRows)){
+  const line=h('div','nm-analytics-line'),name=h('span','nm-analytics-name',record.label);
+  const track=h('div','nm-analytics-track'),fill=h('span','nm-analytics-fill');
+  fill.style.width=(100*record.value/maximum).toFixed(1)+'%';
+  track.append(fill);line.append(name,track,h('span','nm-analytics-figure',record.detail||String(record.value)));container.append(line);
+ }
+}
+function recordsFor(student){return all.filter(x=>!student||normalName(x.first_name)===student);}
+function analyticsRender(){
+ const picker=$('nm-student-filter'),out=$('nm-analytics-content');if(!picker||!out)return;
+ const allNames=[...new Set(all.map(x=>String(x.first_name||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+ const selected=selectedStudent;
+ picker.replaceChildren(new Option('All students',''));
+ allNames.forEach(n=>picker.add(new Option(n,normalName(n))));
+ if(!allNames.some(n=>normalName(n)===selected))selectedStudent='';
+ picker.value=selectedStudent;
+ const data=recordsFor(selectedStudent),attempts=data.filter(isQuiz),mc=attempts.filter(x=>x.question_type==='mc'&&typeof x.score==='number'),written=attempts.filter(x=>x.question_type==='written');
+ const words=data.filter(isVocab),finals=data.filter(x=>!isQuiz(x)&&!isVocab(x));
+ const count=words.reduce((n,x)=>n+(Array.isArray(x.words)?x.words.reduce((s,w)=>s+Number(w.count||0),0):0),0);
+ const accuracy=mc.length?Math.round(mc.reduce((n,x)=>n+Number(x.score||0),0)/mc.length):null;
+ out.replaceChildren();
+ const metrics=h('div','nm-analytics-metrics');
+ metrics.append(metric('Students with recorded activity',new Set(data.map(x=>normalName(x.first_name)).filter(Boolean)).size),
+  metric('Multiple-choice accuracy',accuracy===null?'—':accuracy+'%'),
+  metric('Written answers to review',written.length),
+  metric('Word-help lookups',count));
+ out.append(metrics);
+ const grid=h('div','nm-analytics-grid');
+ const questionPanel=h('section','nm-insights-panel');questionPanel.append(h('h3','','Multiple-choice comprehension by question'));
+ const questionBars=h('div','nm-analytics-bars');questionPanel.append(questionBars);
+ const questions=[1,3,5,7,9].map(id=>{
+  const rows=mc.filter(x=>Number(x.question_id)===id);
+  const rate=rows.length?Math.round(100*rows.filter(x=>x.score>=100).length/rows.length):0;
+  return {label:'Question '+id,value:rate,detail:rows.length?rate+'% · '+rows.length+' tries':'No answers',answered:rows.length};
+ });
+ bars(questions.filter(x=>x.answered),questionBars);
+ const vocabPanel=h('section','nm-insights-panel');vocabPanel.append(h('h3','','Most frequently looked-up English words'));
+ const vocabBars=h('div','nm-analytics-bars');vocabPanel.append(vocabBars);
+ const tally=new Map();
+ for(const r of words){for(const w of Array.isArray(r.words)?r.words:[]){
+  const key=String(w.word||'').toLocaleLowerCase();
+  if(!key)continue;
+  tally.set(key,(tally.get(key)||0)+Number(w.count||0));
+ }}
+ const ranking=[...tally.entries()].sort((a,b)=>b[1]-a[1]).map(([label,value])=>({label,value,detail:value+' lookups'}));
+ bars(ranking,vocabBars);
+ vocabPanel.append(h('p','nm-small-note','Counts combine all six definition languages. A lookup is help-seeking, not a wrong answer.'));
+ grid.append(questionPanel,vocabPanel);
+ const activity=h('section','nm-insights-panel');
+ activity.append(h('h3','','Recorded answers · Last 14 days'));
+ const days=[],today=new Date();today.setHours(0,0,0,0);
+ for(let i=13;i>=0;i--){
+  const dt=new Date(today);dt.setDate(today.getDate()-i);
+  const next=new Date(dt);next.setDate(next.getDate()+1);
+  const value=data.filter(x=>!isVocab(x)&&at(x)>=dt.getTime()&&at(x)<next.getTime()).length;
+  days.push({day:dt,value});
+ }
+ const max=Math.max(1,...days.map(d=>d.value)),chart=h('div','nm-activity-bar');
+ for(const d of days){
+  const day=h('div','nm-activity-day'),bar=h('div','column');
+  bar.style.height=(d.value?Math.max(8,Math.round(50*d.value/max)):2)+'px';
+  day.title=d.day.toLocaleDateString()+' · '+d.value+' answers';day.append(bar,h('small','',String(d.day.getDate())));chart.append(day);
+ }
+ activity.append(chart,h('p','nm-small-note','Counts are answer submissions, not minutes spent reading.'));
+ const responsePanel=h('section','nm-insights-panel');responsePanel.append(h('h3','','Student progress'));
+ const cards=h('div','nm-student-cards');responsePanel.append(cards);
+ const displayNames=selectedStudent?allNames.filter(n=>normalName(n)===selectedStudent):allNames;
+ if(!displayNames.length)cards.append(h('p','nm-small-note','Student progress will appear after names and responses are recorded.'));
+ for(const n of displayNames.slice(0,45)){
+  const key=normalName(n),items=all.filter(x=>normalName(x.first_name)===key);
+  const q=items.filter(isQuiz),graded=q.filter(x=>x.question_type==='mc'&&typeof x.score==='number'),compositions=q.filter(x=>x.question_type==='written');
+  const vocab=items.filter(isVocab),totalLookups=vocab.reduce((a,r)=>a+(Array.isArray(r.words)?r.words.reduce((b,w)=>b+Number(w.count||0),0):0),0);
+  const last=items.reduce((a,x)=>Math.max(a,at(x)),0);
+  const ratings=items.filter(x=>x.story_rating!=null&&Number.isFinite(Number(x.story_rating))).sort((a,b)=>at(b)-at(a));
+  const score=graded.length?Math.round(graded.reduce((a,x)=>a+Number(x.score),0)/graded.length)+'%':'—';
+  const card=h('details','nm-student-card'),summary=h('summary','',n+' · MC '+score+' · '+totalLookups+' word lookups');
+  card.append(summary);
+  card.append(h('p','','MC attempts: '+graded.length+' · Written answers for review: '+compositions.length+' · Latest rating: '+(ratings.length?ratings[0].story_rating+'/10':'—')+' · Last activity: '+(last?formatDate(last):'—')));
+  const sorted=graded.slice().sort((a,b)=>at(a)-at(b));
+  if(sorted.length){
+   card.append(h('p','nm-small-note','Multiple-choice result history (correct = tall bar; incorrect = short bar)'));
+   const timeline=h('div','nm-timeline');
+   for(const row of sorted.slice(-25)){
+    const mark=h('span','nm-mini-mark'+(row.score<100?' incorrect':''));
+    mark.title='Question '+row.question_id+' · '+row.score+'/100 · '+formatDate(row.submitted_at);
+    mark.tabIndex=0;mark.setAttribute('aria-label',mark.title);
+    timeline.append(mark);
+   }
+   card.append(timeline);
+  }
+  if(vocab.length){
+   const erase=h('button','nm-vocab-delete','Delete this student’s word-lookup history');
+   erase.type='button';
+   erase.addEventListener('click',async()=>{
+    if(!confirm('Delete '+vocab.length+' saved word-lookup records for '+n+'? This cannot be undone.'))return;
+    erase.disabled=true;
+    try{
+     for(const rec of vocab)await callAPI({action:'delete',id:rec.id});
+     const remove=new Set(vocab.map(x=>x.id));all=all.filter(x=>!remove.has(x.id));render();
+     $('activity').textContent='Vocabulary activity deleted for '+n+'.';
+    }catch(e){alert(e.message);erase.disabled=false;}
+   });
+   card.append(erase);
+  }
+  cards.append(card);
+ }
+ if(displayNames.length>45)cards.append(h('p','nm-small-note','Showing the first 45 students. Use the student selector to view anyone else.'));
+ const bottom=h('div','nm-analytics-grid');bottom.append(activity,responsePanel);
+ out.append(grid,bottom);
+}
+
+function render(){
+ const q=$('search').value.trim().toLocaleLowerCase();
+ visible=all.filter(x=>!isVocab(x)&&[x.first_name,x.answer,x.summary,x.question,x.feedback].some(v=>String(v||'').toLocaleLowerCase().includes(q)));
+ $('total-count').textContent=all.filter(x=>!isVocab(x)).length;$('matching-count').textContent=visible.length;
+ const today=new Date().toDateString();
+ $('today-count').textContent=all.filter(x=>!isVocab(x)&&new Date(x.submitted_at).toDateString()===today).length;
+ analyticsRender();
+ responses.replaceChildren();
+ const ratings=visible.filter(x=>Number.isInteger(Number(x.story_rating))&&Number(x.story_rating)>=1&&Number(x.story_rating)<=10&&x.story_rating!=null);
+ if(ratings.length){const average=ratings.reduce((a,x)=>a+Number(x.story_rating),0)/ratings.length;const score=text('div','Story ratings: '+ratings.length+' · Average '+average.toFixed(1)+'/10','ninja-score-summary');responses.append(score);}
+ const graded=visible.filter(x=>x.kind==='paragraph_quiz'&&x.question_type==='mc'&&typeof x.score==='number'&&Number.isFinite(x.score));
+ const writtenCount=visible.filter(x=>x.kind==='paragraph_quiz'&&x.question_type==='written').length;
+ if(graded.length||writtenCount){
+  let sum=graded.reduce((a,x)=>a+Number(x.score),0);
+  const note=document.createElement('div');note.className='ninja-score-summary';
+  note.textContent='Multiple-choice submissions: '+graded.length+' · Multiple-choice average: '+(graded.length?Math.round(sum/graded.length)+'%':'—')+' · Written responses: '+writtenCount+' (feedback provided; not automatically graded).';
+  responses.append(note);
+ }
+ if(!visible.length){responses.append(text('div',all.length?'No answers match your search.':'No student answers yet. They will appear here after a student presses Send.','empty'));return;}
+ for(const item of visible){
+  const card=document.createElement('details');card.className='response';
+  const summary=document.createElement('summary');
+  const name=text('span',item.first_name||'Student','student');
+  const date=text('span',formatDate(item.submitted_at),'timestamp');
+  summary.append(name,date);
+  if(item.kind==='paragraph_quiz'){
+   const status=item.question_type==='written'?(item.score==null?'Written · Not graded':'Written · '+item.score+'/100 (earlier estimate)'):'Multiple choice · '+item.score+'/100';
+   const caption=text('span','Question '+item.question_id+' · '+status,'nm-score-chip');
+   summary.append(caption);
+  }
+  const div=document.createElement('div');div.className='details';
+  if(item.kind==='paragraph_quiz'){
+   div.append(text('h3','Comprehension question '+item.question_id),text('p',item.question||item.summary||''),
+              text('h3','Student answer'),text('p',item.answer||''),
+              text('h3',item.question_type==='written'?'Written response':'Practice score'),text('p',item.question_type==='written'?(item.score==null?'Recorded — not automatically graded':item.score+'/100 (earlier provisional estimate)'):String(item.score)+'/100'),
+              text('h3',item.question_type==='written'?(item.coaching_source==='ai'?'Master Ren · AI coaching':(item.coaching_source==='practice'?'Master Ren · Practice prompt':'Feedback')):'Feedback'),text('p',item.feedback||''));
+   if(item.correct_answer)div.append(text('h3','Reference answer'),text('p',item.correct_answer));
+  }else{
+   div.append(text('h3','Mystery answer'),text('p',item.answer||''),text('h3','One-sentence summary'),text('p',item.summary||''));
+   if(item.story_rating!=null)div.append(text('h3','Story rating'),text('p',String(item.story_rating)+'/10'));
+  }
+  const del=document.createElement('button');del.type='button';del.textContent='Delete this submission';
+  del.addEventListener('click',async()=>{
+   if(!confirm('Permanently delete this answer from the dashboard?'))return;
+   del.disabled=true;
+   try{await callAPI({action:'delete',id:item.id});all=all.filter(x=>x.id!==item.id);render();$('activity').textContent='Answer deleted.';}
+   catch(e){alert(e.message);del.disabled=false;}
+  });
+  div.append(del);card.append(summary,div);responses.append(card);
+ }
+}
+async function load(){const refresh=$('refresh');refresh.disabled=true;$('activity').textContent='Loading student answers…';const allItems=[];let cursor=null,rounds=0;try{do{const page=await callAPI({action:'list',cursor});allItems.push(...(page.records||[]));cursor=page.nextCursor||null;rounds++;$('activity').textContent='Loaded '+allItems.length+' answers…';}while(cursor&&rounds<100);all=allItems.sort((a,b)=>Date.parse(b.submitted_at)-Date.parse(a.submitted_at));render();$('activity').textContent=cursor?'Some older answers may remain. Refresh to try again.':'Last refreshed at '+new Date().toLocaleTimeString();}catch(e){$('activity').textContent='Could not load answers: '+e.message;throw e;}finally{refresh.disabled=false;}}
+form.addEventListener('submit',async e=>{e.preventDefault();password=$('teacher-password').value;button.disabled=true;err.textContent='';try{const result=await callAPI({action:'list'});if(!Array.isArray(result.records))throw Error('Could not load responses');login.hidden=true;dash.hidden=false;await load();$('teacher-password').value='';}catch(e){login.hidden=false;dash.hidden=true;err.textContent=e.message;password='';}finally{button.disabled=false;}});
+$('refresh').addEventListener('click',()=>load().catch(()=>{}));
+$('nm-student-filter').addEventListener('change',e=>{selectedStudent=e.target.value;render();});$('search').addEventListener('input',render);
+$('logout').addEventListener('click',()=>{password='';all=[];visible=[];selectedStudent='';dash.hidden=true;login.hidden=false;form.reset();responses.replaceChildren();err.textContent='';});
+
+$('progress-csv').addEventListener('click',()=>{
+ const names=[...new Set(all.map(x=>String(x.first_name||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+ const rows=[['Student (first name + last initial)','MC attempts','MC accuracy %','Written responses to review','Total vocabulary lookups','Distinct words looked up','Latest story rating /10','Most recent activity']];
+ for(const student of names){
+  const items=all.filter(x=>normalName(x.first_name)===normalName(student));
+  const mc=items.filter(x=>isQuiz(x)&&x.question_type==='mc'&&typeof x.score==='number');
+  const written=items.filter(x=>isQuiz(x)&&x.question_type==='written');
+  const help=items.filter(isVocab),wordCounts=new Set();
+  let count=0;
+  for(const r of help){for(const w of Array.isArray(r.words)?r.words:[]){
+   wordCounts.add(String(w.word||'').toLowerCase());
+   count+=Number(w.count||0);
+  }}
+  const ratings=items.filter(x=>x.story_rating!=null).sort((a,b)=>at(b)-at(a));
+  const accuracy=mc.length?Math.round(mc.reduce((sum,x)=>sum+Number(x.score),0)/mc.length):'';
+  rows.push([student,mc.length,accuracy,written.length,count,wordCounts.size,ratings.length?ratings[0].story_rating:'',items.length?new Date(Math.max(...items.map(at))).toISOString():'']);
+ }
+ const escaped=s=>'"'+String(s??'').replaceAll('"','""')+'"';
+ const output='\ufeff'+rows.map(row=>row.map(escaped).join(',')).join('\r\n');
+ const url=URL.createObjectURL(new Blob([output],{type:'text/csv;charset=utf-8'}));
+ const link=document.createElement('a');link.href=url;link.download='ninja-moons-learning-report-'+new Date().toISOString().slice(0,10)+'.csv';link.click();
+ setTimeout(()=>URL.revokeObjectURL(url),2000);
+});
+
+$('csv').addEventListener('click',()=>{const rows=[['First name','Submitted at','Type','Question #','Question','Student answer','Practice score','Feedback','Provisional','Story rating (1–10)'],...visible.map(x=>[x.first_name,x.submitted_at,x.kind||'final challenge',x.question_id||'',x.question||'',x.answer,x.score??'',x.feedback||'',x.provisional?'Yes':'No',x.story_rating??''])];const escape=x=>'"'+String(x??'').replaceAll('"','""')+'"';const csv='\ufeff'+rows.map(row=>row.map(escape).join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='ninja-moons-answers-'+new Date().toISOString().slice(0,10)+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);});
+})();
+</script></body></html>

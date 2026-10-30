@@ -12,3 +12,16 @@ The main project's /published/(.*) rewrite points to https://ninja-moons-publish
 5. Verify https://ninjamoons.vercel.app/reader?level=<grade>, /published/stories/<slug>/ and /reading-helper?story=<slug>. No per-story library edits or routing changes are needed.
 
 This publishes prepared content; it does not generate or approve story text or illustrations. The 180-title, 13-level curriculum remains future content work.
+
+## Assembled site navigation
+
+- `/` serves `welcome.html`: original entrance artwork and login request; successful login goes to `/dashboard`.
+- `/dashboard`, `/teacher-dashboard`, `/admin-dashboard` serve `hub.html`. The route selects a student dashboard, teacher tools hub, or owner management links. These pages contain no private records and do not grant permissions.
+- `/teacher.html` serves `teacher-reports.html`, preserving the original password-protected reports/API and adding shared navigation.
+- `/journey` serves `journey.html`, the existing local-progress prototype, clearly labeled. Its 13 original illustrated worlds are referenced in `assets.json` and deployed as `worlds/*.webp`; the source assets remain in the original Reading Journey project.
+- `/about.html` serves the original long scrolling About page with the shared navigation added.
+- Keep the existing APIs, PIN recovery, story rewrites, and `/published/(.*)` route intact.
+- Live audio, Ask NINJA, Spanish practice, and Reading Race retain their existing environments. Experimental tools remain labeled and their access controls unchanged.
+- Dashboard resume uses this tab's sessionStorage, not a shared student account. No invented progress, roster, or account management is shown.
+
+Deploy `index.html` also as `grades.html`, plus the HTML files and cached asset references in `assets.json`. Preview aliases `dashboard/index.html`, `teacher-dashboard/index.html`, and `admin-dashboard/index.html` can all use `hub.html`. The static library is deployed separately from the publisher; changing its integration sources alone does not deploy the library.

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>NINJA MOONS — Enter the Adventure</title>
+<meta name="description" content="Enter the NINJA MOONS reading adventure.">
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;background:#061831;color:#e6f7ff;font-family:Arial,Helvetica,sans-serif}
+body{display:flex;align-items:center;justify-content:center;min-height:100svh;overflow-x:hidden}
+.poster{position:relative;display:block;width:min(100vw,calc(100svh * 1700 / 2200));aspect-ratio:1700/2200;background:#061831;box-shadow:0 12px 60px #0009;container-type:inline-size}
+.poster img{display:block;width:100%;height:auto;object-fit:contain}
+#entrance{position:absolute;inset:0;margin:0}
+#student-password{position:absolute;left:28.5%;top:30.05%;width:29.3%;height:3.42%;margin:0;padding:0 .7%;border:0;outline:0;border-radius:3px;background:#08264f;color:#fff;font-size:clamp(13px,1.9cqw,24px);font-family:Arial,Helvetica,sans-serif;line-height:1;letter-spacing:.02em;min-width:0}
+#student-password::placeholder{color:#a9c4e3;opacity:1}
+#student-password:focus-visible{outline:3px solid #8df7ff;outline-offset:2px}
+#student-login{position:absolute;left:59.3%;top:29.90%;width:15.7%;height:3.78%;border:0;padding:0;margin:0;background:transparent;color:transparent;border-radius:9px;cursor:pointer}
+#student-login:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#student-login:hover{box-shadow:0 0 18px #65e3ff99}
+#student-login:disabled{cursor:progress;opacity:.6}
+#login-message{position:absolute;left:23%;width:54%;top:35.8%;margin:0;padding:5px 8px;color:#fff;background:#772c46e8;font-weight:700;font-size:clamp(12px,1.55cqw,18px);text-align:center;border-radius:7px;box-shadow:0 5px 15px #05172b77}
+#login-message[hidden]{display:none}
+@media(max-width:620px){#student-password{font-size:clamp(12px,2.65cqw,16px);border-radius:2px}#student-login{border-radius:5px}#login-message{font-size:12px;padding:3px 4px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+
+/* NINJA MOONS reusable classroom race — separate from student story sign-in */
+#nm-race-entry{position:fixed;z-index:20;right:clamp(12px,3vw,26px);bottom:max(16px,env(safe-area-inset-bottom));display:flex;align-items:center;gap:9px;background:#073a68ee;border:2px solid #76dfff;color:#fff;text-decoration:none;font:800 clamp(13px,1.7vw,17px)/1.2 Arial,sans-serif;padding:13px 17px;border-radius:999px;box-shadow:0 4px 18px #001329cc}
+#nm-race-entry:hover,#nm-race-entry:focus-visible{background:#125a94;outline:3px solid #a6f7ff;outline-offset:2px}
+@media(max-width:440px){#nm-race-entry{left:12px;right:12px;justify-content:center;padding:12px 10px}}
+
+#nm-visitor-links{position:absolute;left:23%;top:34.5%;width:54%;display:flex;gap:8px;justify-content:center;z-index:4;flex-wrap:wrap}
+#nm-visitor-links a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:#092b50ed;color:#e8faff;border:1px solid #8deaff9c;border-radius:999px;padding:7px 12px;font-size:clamp(10px,1.6cqw,17px);font-weight:700;box-shadow:0 3px 15px #00152e88;min-height:28px}
+#nm-visitor-links a:last-child{color:#ffe59c;border-color:#ffe59caa}#nm-visitor-links a:hover,#nm-visitor-links a:focus-visible{background:#16588c;outline:2px solid #a5f7ff;outline-offset:3px}
+#login-message{top:42%}
+@media(max-width:620px){#nm-visitor-links{left:13%;width:74%;top:34.3%;gap:5px}#nm-visitor-links a{padding:6px 9px;font-size:clamp(10px,2.2cqw,13px)}}
+#nm-site-nav{position:relative;z-index:20;background:#07182cf5;border-bottom:1px solid #2c4560;color:#e9f6ff;font:700 13px/1.3 system-ui;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px max(20px,calc((100vw - 1200px)/2));flex-wrap:wrap}#nm-site-nav a{color:inherit;text-decoration:none}#nm-site-nav .nm-mark{font-size:18px;font-weight:950;letter-spacing:.04em;white-space:nowrap}#nm-site-nav nav{display:flex;gap:5px;align-items:center;flex-wrap:wrap}#nm-site-nav nav a{padding:10px 12px;border-radius:8px}#nm-site-nav nav a:hover,#nm-site-nav nav a:focus-visible,#nm-site-nav a[aria-current=page]{background:#183750;outline-color:#6ee5ff}#nm-site-nav .nm-home{color:#b9cddd}@media(max-width:600px){#nm-site-nav{padding:13px 16px;gap:9px}#nm-site-nav nav{width:100%;justify-content:space-between}#nm-site-nav nav a{padding:9px 7px;font-size:12px}}body{display:block}.poster{margin:0 auto 90px}</style></head>
+<body><div id="nm-site-nav"><a class="nm-mark" href="/dashboard">🥷 NINJA MOONS <span style="color:#ffda7b">◔</span></a><nav aria-label="NINJA MOONS main navigation"><a href="/dashboard">My dashboard</a><a href="/reader?level=All">Library</a><a href="/teacher-dashboard">Teachers</a><a href="/about.html">About</a><a class="nm-home" href="/">Login</a></nav></div>
+<main class="poster" aria-label="NINJA MOONS: The Seven-Second Journey">
+<img src="/assets/login.avif" width="1700" height="2200" alt="NINJA MOONS entrance: Kai, Mira, Pip and Master Ren race across the bridges of a brilliant futuristic moon city, with a blue password panel.">
+<form id="entrance" action="/api/login" method="post">
+<label for="student-password" style="position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden">Story password</label>
+<input id="student-password" type="password" name="password" placeholder="Enter password" autocomplete="current-password" required maxlength="72" spellcheck="false">
+<button id="student-login" type="submit" aria-label="Login and begin the NINJA MOONS story">Login</button>
+<p id="login-message" role="alert" aria-live="polite" hidden></p>
+</form><nav id="nm-visitor-links" aria-label="New visitors"><a href="/about.html">About NINJA MOONS</a><a href="/about.html#join">New here? Start here →</a></nav>
+</main>
+<a id="nm-race-entry" href="https://ninja-reading-race.vercel.app/" aria-label="Open the NINJA MOONS reading race for teachers and students">🚀 Reading Race · Join or Host</a>
+<script>
+(function(){
+'use strict';
+var form=document.getElementById('entrance'),button=document.getElementById('student-login'),input=document.getElementById('student-password'),msg=document.getElementById('login-message');
+form.addEventListener('submit',async function(event){
+event.preventDefault();
+if(!input.value)return;
+button.disabled=true;msg.hidden=true;
+try{
+ var response=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({password:input.value})});
+ var result=await response.json().catch(function(){return {};});
+ if(!response.ok||result.success!==true)throw new Error(result.error||'Incorrect password. Try again.');
+ window.location.assign('/dashboard');
+}catch(err){msg.textContent=err.message||'Could not sign in. Please try again.';msg.hidden=false;input.focus();input.select();}
+finally{button.disabled=false;input.value='';}
+});
+})();
+</script></body></html>
