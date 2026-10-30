@@ -5,7 +5,7 @@ This is a standalone **adult-only prototype** with a separate Vercel project, no
 - Teacher: https://ninja-moons-audio-classroom-lab.vercel.app/teacher.html
 - Reader: https://ninja-moons-audio-classroom-lab.vercel.app/student.html
 - One button for the teacher and each reader. No codes or messages.
-- Teacher shows an automatically populated roster of connected readers (up to 12 in this adult-only test) and can switch listening by tapping a card.
+- Teacher shows an automatically populated roster of connected readers (up to 30 in this adult-only test; simultaneous capacity is unverified until load tested with multiple physical devices) and can switch listening by tapping a card.
 - The *selected* reader transmits live microphone audio; unselected readers are connected to signaling but not transmitting their microphone to the teacher.
 - Reader name is optional; without one the teacher assigns Reader 01, Reader 02, etc.
 - The practice text and current sentence update across the signaling data channel.
