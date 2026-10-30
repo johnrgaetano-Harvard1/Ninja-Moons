@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#071627"><meta name="robots" content="noindex,nofollow">
+<title>NINJA MOONS • Ask NINJA Preview</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#071526;color:#eef9ff;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top right,#183960 0,transparent 65%),#071526;min-height:100vh}
+main{max-width:800px;margin:auto;padding:24px 18px 70px}
+a{color:#9bdcff;text-decoration:none}.brand{display:flex;gap:11px;align-items:center;font-size:17px;font-weight:900;letter-spacing:.09em}.brand span{font-size:30px}
+.tag{display:inline-block;font-size:11px;letter-spacing:.12em;border-radius:100px;font-weight:850;padding:8px 13px;color:#a9e7ff;border:1px solid #2d5b7f;background:#103751;margin-top:24px}
+h1{font-size:clamp(29px,7vw,43px);letter-spacing:-.045em;line-height:1.06;margin:17px 0 12px}h2{font-size:21px;margin:0 0 10px}p{font-size:15px;line-height:1.55;color:#bdcddd}.lead{font-size:16px;max-width:600px}
+.panel{border:1px solid #2c4c66;border-radius:20px;background:#10243a;padding:20px;margin:20px 0}
+button,.entry{width:100%;border:0;border-radius:15px;padding:17px 18px;min-height:58px;display:flex;align-items:center;justify-content:center;gap:8px;font:800 18px system-ui;cursor:pointer;color:#062337;background:#51d3ff;box-shadow:0 7px 18px #45bbe633}
+button:disabled{opacity:.6;cursor:default}.entry{margin:14px 0}.entry.reader{background:#c6ec84;color:#1b3209}.secondary{background:#243b54;border:1px solid #4b718c;color:#e8f5ff;box-shadow:none;font-size:15px;min-height:50px}
+.btnrow{display:flex;gap:10px}.btnrow button{width:50%}
+.hidden{display:none!important}.status{display:flex;gap:12px;align-items:flex-start}.dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:6px;background:#a1afbe;box-shadow:0 0 0 5px #b6c6d610}.dot.wait{background:#ffd16f;box-shadow:0 0 0 5px #ffd16f22}.dot.ok{background:#66e9b0;box-shadow:0 0 0 5px #66e9b025}.dot.err{background:#ff7e93;box-shadow:0 0 0 5px #ff7e9325}
+.status strong{display:block;font-size:17px}.status small{display:block;font-size:13px;color:#b5c7d9;margin-top:4px;line-height:1.5}
+.back{display:block;margin:20px 0 0}.eyebrow{font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#93c2da;margin-bottom:11px}
+.roster{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:13px}
+.reader-card{display:flex;text-align:left;flex-direction:column;align-items:stretch;gap:7px;min-height:98px;background:#182e47;border:1px solid #415c76;color:#eafbff;border-radius:16px;padding:13px 15px;box-shadow:none;font-size:15px}
+.reader-card.active{background:#15465a;border-color:#6cdfff;box-shadow:inset 0 0 0 1px #6cdfff}.reader-card b{font-size:16px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;display:block}.reader-card small{font-weight:500;color:#bed4e4;font-size:12px}
+.sentence{font-size:22px;line-height:1.45;font-weight:700;color:white;margin:8px 0 15px}
+.sentence.small{font-size:19px}.num{display:grid;place-items:center;border:1px solid #4c7290;border-radius:11px;width:31px;height:31px;flex-shrink:0}
+.step{display:flex;gap:13px;align-items:flex-start;margin-top:16px}.step b{display:block}.step small{color:#b6c8d9;font-size:13px;line-height:1.5}
+.placeholder{font-size:13px;color:#9bb3c8;line-height:1.5}
+.muted-panel{opacity:.8;border-style:dashed}.privacy{background:#271e24;border:1px solid #805a50;border-radius:15px;color:#ffdcc7;padding:13px 15px;font-size:12px;line-height:1.55;margin-top:24px}
+input{width:100%;background:#071a2c;color:white;border:1px solid #59718b;border-radius:13px;min-height:50px;padding:12px 14px;font-size:16px;margin:4px 0 12px}
+label{font-size:13px;color:#d4e3ef}.help{color:#a1bfd3;font-size:13px;margin-top:13px}
+.pill{display:inline-flex;border-radius:100px;background:#103947;border:1px solid #2e7a7c;color:#b4f5eb;padding:6px 10px;font-size:12px;font-weight:800}
+footer{margin-top:30px;color:#829eb5;font-size:12px;line-height:1.7}
+@media(max-width:480px){.panel{padding:16px}.roster{grid-template-columns:1fr 1fr}.reader-card{padding:12px 9px;min-height:92px}.reader-card b{font-size:14px}.reader-card small{font-size:11px}}
+
+/* Ask NINJA accessible question interface */
+.ask-panel{border-color:#3b9f9b;background:linear-gradient(150deg,#112c42,#0b292c);box-shadow:0 10px 40px #0003}
+.ask-heading{display:flex;gap:13px;align-items:center;margin-bottom:20px}
+.ask-emoji{font-size:34px;display:grid;place-items:center;width:56px;height:56px;flex-shrink:0;border-radius:16px;background:#123b47;border:1px solid #3b9f9b}
+.ask-heading h2{margin:0;line-height:1.2;font-size:20px}.ask-heading .eyebrow{color:#7ef3ce}
+.ask-form{display:flex;gap:9px;align-items:start}.ask-form input{flex:1;min-width:0;margin:5px 0 0}.ask-form button{width:auto;min-width:145px;min-height:51px;margin-top:5px;padding:12px 15px;white-space:nowrap}
+.suggest-title{color:#bcd9df;font-size:12px;font-weight:750;margin:14px 0 9px}
+.suggestions{display:flex;flex-wrap:wrap;gap:8px}.suggestion{width:auto;min-height:39px;padding:8px 12px;font-size:12px;font-weight:650;color:#e1ffff;border:1px solid #3a7c84;border-radius:99px;background:#164353;box-shadow:none}
+.ninja-answer{margin-top:20px;background:#102e32;border:1px solid #3a8783;border-radius:15px;padding:17px;animation:appear .2s ease}
+.ninja-answer .eyebrow{color:#70ddbb}.ninja-answer .asked{font-size:14px;font-weight:750;color:#e8faff}.ninja-answer p{color:#effff7;font-size:16px;margin-bottom:0;line-height:1.6}
+.ai-status{margin-top:17px;font-size:12px;line-height:1.55;color:#aacbd0}
+.word-tip{color:#aef3d1;background:#0c302c;border:1px solid #286e66;border-radius:12px;font-size:13px;padding:12px;margin:12px 0 16px;min-height:56px}
+.story-word{display:inline-block;padding:0 2px;border-radius:6px;border-bottom:1px dotted #4eaa9c;cursor:pointer}
+.story-word:hover,.story-word:focus{background:#23695f;color:white;outline:1px solid #6cd4af}
+@keyframes appear{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:550px){.ask-form{flex-direction:column}.ask-form input,.ask-form button{width:100%;margin-top:3px}.ask-heading h2{font-size:18px}}
+
+/* Blue transcript, separate from green-toned Ask NINJA */
+.transcript-panel{background:linear-gradient(135deg,#0d284b 0%,#153763 100%);border:1px solid #457bc1;box-shadow:inset 0 1px 0 #5b91d122}
+.transcript-heading{display:flex;align-items:start;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.transcript-heading h2{font-size:19px;margin-bottom:10px;color:#eef6ff}
+.transcript-panel .eyebrow{color:#8cbdff}
+.transcript-pill{color:#e5f1ff;font-size:11px;font-weight:750;border:1px solid #619de4;background:#1d4983;padding:7px 10px;border-radius:24px}
+.transcript-output{border:1px solid #4d83c8;background:#0a1e3a;color:#e9f5ff;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:14px;padding:16px;min-height:105px;line-height:1.65;font-size:17px;margin-top:10px}
+.transcript-note{font-size:12px;margin:12px 0 0;color:#aacaf1}
+.transcript-tools{display:flex;justify-content:flex-end;margin-top:10px}.transcript-tools button{width:auto;min-height:38px;font-size:12px;padding:8px 13px}
+@media(max-width:450px){.transcript-heading h2{font-size:17px}.transcript-output{font-size:16px;padding:13px}}
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js"></script>
+</head><body><div id="nm-site-nav"><a class="nm-mark" href="https://ninjamoons.vercel.app/">🥷 NINJA MOONS <span aria-hidden="true" style="color:#ffda7b">◔</span></a><nav aria-label="NINJA MOONS main navigation"><a href="https://ninjamoons.vercel.app/">Home</a><a href="https://ninjamoons.vercel.app/dashboard">My dashboard</a><a href="https://ninjamoons.vercel.app/reader?level=All">Library</a><a href="https://ninjamoons.vercel.app/teacher-dashboard">Teachers</a><a href="https://ninjamoons.vercel.app/about.html">About</a></nav></div><style>
+#nm-site-nav{position:sticky;top:0;z-index:10000;isolation:isolate;box-sizing:border-box;flex:0 0 auto;width:100%;margin:0;background:#07182cf7;border-bottom:1px solid #36546b;color:#e9f6ff;font:700 13px/1.3 system-ui;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px max(16px,calc((100vw - 1200px)/2));text-align:left;backdrop-filter:blur(12px)}#nm-site-nav *{box-sizing:border-box}#nm-site-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;color:#e9f6ff;text-decoration:none;border:0;box-shadow:none;margin:0;white-space:nowrap}#nm-site-nav .nm-mark{font-size:17px;font-weight:950;letter-spacing:.035em;gap:5px;flex-shrink:0}#nm-site-nav nav{position:static;display:flex;gap:3px;align-items:center;flex-wrap:wrap;margin:0;padding:0;width:auto;background:none;border:0}#nm-site-nav nav a{padding:10px 11px;border-radius:8px;font-size:13px;font-style:normal;text-transform:none;letter-spacing:0}#nm-site-nav nav a:hover,#nm-site-nav nav a:focus-visible{background:#183750;outline:2px solid #6ee5ff;outline-offset:1px}@media(max-width:700px){#nm-site-nav{padding:8px 12px;gap:3px;flex-wrap:wrap}#nm-site-nav .nm-mark{min-height:33px;font-size:16px}#nm-site-nav nav{width:100%;justify-content:space-between;gap:0}#nm-site-nav nav a{padding:8px 7px;font-size:12px;min-height:40px}}@media print{#nm-site-nav{display:none!important}}
+</style>
+<main>
+<div class="brand"><span>🥷🌙</span> NINJA MOONS</div>
+<div id="home">
+<div class="tag">ASK NINJA • QUESTION BOX PREVIEW</div>
+<h1>Read. Wonder.<br>Ask NINJA.</h1>
+<p class="lead">A simple Ask NINJA question box, the original live transcription on both screens, and teacher listening. No AI reading analysis and no installations.</p>
+<a href="/teacher.html" class="entry">🎧 Teacher Dashboard</a>
+<a href="/student.html" class="entry reader">🥷 Reader + Ask NINJA</a>
+<div class="panel">
+<div class="eyebrow">One website • Simple setup</div>
+<div class="step"><div class="num">1</div><div><b>Teacher opens their dashboard</b><small>On an iPhone or computer. Tap Start Listening to monitor a reader.</small></div></div>
+<div class="step"><div class="num">2</div><div><b>Readers open the story</b><small>They can tap Start Microphone if the teacher wants to listen, but asking a question needs no microphone.</small></div></div>
+<div class="step"><div class="num">3</div><div><b>Transcription and Ask NINJA</b><small>Words appear on the reader and teacher screens when the browser supports recognition; students can also type questions.</small></div></div>
+</div>
+</div>
+<div id="teacher" class="hidden">
+<a href="/" class="back">‹ Live reading setup</a><div class="tag">TEACHER • ASK NINJA PREVIEW</div>
+<h1>Your Teacher Dashboard.</h1>
+<p class="lead">Listen to readers and see their spoken words appear below. Students also have the Ask NINJA question box. There is no automatic reading analysis.</p>
+<div class="panel">
+<div class="btnrow"><button id="teacherStart">🎧 Start Listening</button><button id="teacherStop" class="secondary hidden">■ Stop</button><button id="mute" class="secondary hidden">🔇 Mute</button></div>
+<div class="status" style="margin-top:18px"><span class="dot" id="teacherDot"></span><div><strong id="teacherStatus">Ready</strong><small id="teacherInfo">Tap Start Listening. Then open the reader page on another device.</small></div></div>
+</div>
+<div class="panel">
+<div class="eyebrow">Connected readers • <span id="readerCount">0</span></div>
+<div id="empty" class="placeholder">No one is connected yet. The reader just needs to tap Start Microphone.</div>
+<div id="roster" class="roster"></div>
+</div>
+<div class="panel">
+<div class="eyebrow">Now listening</div>
+<div id="selectedName" class="pill">No reader selected</div>
+<div id="selectedSentence" class="sentence">Select a reader to see their current sentence.</div>
+<div class="help" id="selectedHelp">Only the selected reader can transmit audio to your device.</div>
+</div>
+<div class="panel transcript-panel" id="teacherTranscriptPanel">
+<div class="transcript-heading"><div><div class="eyebrow">🎙️ LIVE TRANSCRIPTION</div><h2>What your reader is saying</h2></div><div class="transcript-pill" id="teacherTranscriptionState">Waiting for reader</div></div>
+<div class="transcript-output" id="teacherTranscript" role="log" aria-live="polite">Select a connected reader to see their words appear here.</div>
+<p class="transcript-note">The words appear as the reader's browser recognizes them. You can keep listening separately.</p>
+</div>
+<div class="panel">
+<div class="eyebrow">🥷 ASK NINJA • SIMPLE QUESTION BOX</div>
+<h2>Students can type questions as they read.</h2>
+<p>The protected Ask NINJA text service is enabled for adult testing with a $4 monthly AI Gateway project budget. Real answers are accessed from the Reader page using the adult test code. Transcription remains separate and free of paid AI analysis.</p>
+<div class="pill">Text AI enabled • protected adult test</div>
+</div>
+</div>
+<div id="reader" class="hidden">
+<a href="/" class="back">‹ Live reading setup</a><div class="tag">READER • ASK NINJA</div>
+<h1>Your story and Ask NINJA.</h1>
+<p class="lead">Read your story, hover over a word to learn its meaning, or tap it to hear the sentence from there. Have a question? Type it below and tap Ask NINJA.</p>
+<div class="panel">
+<label for="readerName">Reader name (optional — you can skip this)</label>
+<input id="readerName" maxlength="28" autocomplete="off" placeholder="Leave blank for Reader 01">
+<button id="readerStart">🎤 Start Microphone</button>
+<button id="readerStop" class="secondary hidden" style="margin-top:10px">■ Stop Microphone</button>
+<div class="status" style="margin-top:18px"><span id="readerDot" class="dot"></span><div><strong id="readerStatus">Microphone off</strong><small id="readerInfo">Tap Start Microphone. Your microphone will ask for permission if needed.</small></div></div>
+</div>
+<div class="panel">
+<div class="eyebrow">YOUR STORY • SAMPLE SENTENCES</div>
+<div id="practice" class="sentence small">The spaceship traveled among the stars.</div>
+<div id="wordTip" class="word-tip" aria-live="polite">Hover over a word for its meaning, or tap a word to hear narration from there.</div>
+<div class="btnrow"><button id="hearSentence" type="button" class="secondary">🔊 Hear sentence</button><button id="nextSentence" type="button" class="secondary">Next →</button></div>
+</div>
+<div class="panel transcript-panel" id="readerTranscriptPanel">
+<div class="transcript-heading"><div><div class="eyebrow">🎙️ LIVE TRANSCRIPTION</div><h2>Your spoken words</h2></div><div class="transcript-pill" id="readerTranscriptionState">Mic off</div></div>
+<div class="transcript-output" id="readerTranscript" role="log" aria-live="polite">Tap Start Microphone and read your sentence aloud. Your words will show here.</div>
+<div class="transcript-tools"><button class="secondary" type="button" id="clearTranscript">Clear words</button></div>
+<p class="transcript-note">This uses the browser's speech recognition where supported. Some browsers send speech to their provider. No AI reading analysis is running.</p>
+</div>
+<div class="panel ask-panel" id="askNinja">
+<div class="ask-heading"><div class="ask-emoji" aria-hidden="true">🥷</div><div><div class="eyebrow">🥷 ASK NINJA</div><h2>Ask NINJA anything about the story.</h2></div></div>
+<form id="ninjaForm">
+<label for="ninjaQuestion">What would you like to know?</label>
+<div class="ask-form"><input id="ninjaQuestion" name="question" type="text" maxlength="400" autocomplete="off" placeholder="Type your question here…" aria-describedby="aiStatus" required><button id="ninjaSend" type="submit">Ask NINJA</button></div>
+</form>
+<div class="suggest-title">Try a sample question</div>
+<div class="suggestions"><button type="button" class="suggestion" data-example="What is a spaceship?">What is a spaceship?</button><button type="button" class="suggestion" data-example="What does among mean?">What does among mean?</button><button type="button" class="suggestion" data-example="How can plants grow in space?">How can plants grow in space?</button></div>
+<div id="ninjaAnswerPanel" class="ninja-answer hidden" role="status" aria-live="polite"><div class="eyebrow" id="answerLabel">SAMPLE ANSWER</div><div id="ninjaAsked" class="asked"></div><p id="ninjaAnswer"></p></div>
+<div id="aiStatus" class="ai-status">Checking the Ask NINJA text-answer connection. The free sample questions will remain available.</div>
+</div>
+<div class="help" id="readerLabel"></div>
+</div>
+<div class="privacy"><b>Adult-only test, not for students yet.</b> The room is shared and unauthenticated, using third-party signaling. Do not use it with children or confidential information. Browser speech recognition may send microphone audio to the browser provider; transcript text is sent live to the teacher over the test connection. The page doesn't save it. If text AI is enabled, only typed Ask NINJA questions and the current example story sentence are sent to the AI provider for an answer; no microphone audio or transcript is sent by Ask NINJA. Live audio goes to the selected teacher. Classroom use needs proper authentication, private rooms, permission, privacy review, and a spending budget.</div>
+<footer>Separate Ask NINJA test with restored live browser transcription, teacher listening, story narration, hover definitions, and typed questions. Text-only AI endpoint is installed but requires activation and an adult-only access code; the page continues to offer example answers without charge. Original NINJA MOONS and earlier experiments remain untouched.</footer>
+</main>
+<script>
+(()=>{
+"use strict";
+const role=/\/teacher(?:\.html)?\/?$/.test(location.pathname)?"teacher":/\/(?:student|reader)(?:\.html)?\/?$/.test(location.pathname)?"reader":"home";
+document.getElementById(role).classList.remove("hidden");
+if(role==="home")return;
+const TEACHER_ID="ninjamoons-ask-ninja-adult-lab-v1-f4a28b71";
+const options={host:"0.peerjs.com",port:443,path:"/",secure:true,config:{iceServers:[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"}]}};
+const $=id=>document.getElementById(id);
+const say=(type,main,info,color="")=>{$(type+"Status").textContent=main;$(type+"Info").textContent=info;$(type+"Dot").className="dot "+color};
+const clean=v=>String(v||"").replace(/[<>&\u0000-\u001F]/g,"").trim().slice(0,28);
+const sentences=["The spaceship traveled among the stars.","The explorers saw a beautiful new moon.","A small garden grew inside the space station.","Everyone was excited to learn something new.","The ninja explorers discovered a brilliant new idea."];
+let peer=null,active=false,epoch=0,selectedId=null,muted=false,audioCtx=null,audioSrc=null,readerNum=0;
+const readers=new Map(); // only the browser's in-memory connection state; never persisted
+let connection=null,stream=null,mediaCall=null,activeForTeacher=false,connected=false,interval=null,attemptTimeout=null,connecting=false,sentenceIndex=0;
+const safeSend=(conn,data)=>{try{if(conn?.open)conn.send(data)}catch(e){}};
+const destroy=(p)=>{try{p?.destroy()}catch(e){}};
+const stopMic=()=>{if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}};
+const closeCall=()=>{if(mediaCall){let c=mediaCall;mediaCall=null;try{c.close()}catch(e){}}};
+function disconnectAudio(){if(audioSrc){try{audioSrc.disconnect()}catch(e){}audioSrc=null}}
+function showTeacherTranscript(){
+ const s=selectedId?readers.get(selectedId):null;
+ $("teacherTranscriptionState").textContent=s?s.transcriptState:"Waiting for reader";
+ $("teacherTranscript").textContent=s?(s.transcript||"No words recognized yet."):"Select a connected reader to see their words appear here.";
+}
+function teacherShow(){
+ $("readerCount").textContent=String(readers.size);
+ $("empty").classList.toggle("hidden",readers.size>0);
+ const root=$("roster");root.replaceChildren();
+ for(const [id,s] of readers){
+  const btn=document.createElement("button");btn.type="button";
+  btn.className="reader-card"+(id===selectedId?" active":"");
+  const heading=document.createElement("b");heading.textContent=(id===selectedId?"🎧 ":"🎤 ")+s.label;
+  const detail=document.createElement("small");detail.textContent=id===selectedId?(s.live?"● Live audio":"Selected • connecting"):"Tap to listen";
+  btn.append(heading,detail);btn.addEventListener("click",()=>teacherSelect(id));
+  root.append(btn);
+ }
+ let s=selectedId?readers.get(selectedId):null;
+ $("selectedName").textContent=s?s.label:"No reader selected";
+ $("selectedSentence").textContent=s?.sentence||"Select a reader to see their current sentence.";
+ $("selectedHelp").textContent=s?(s.live?"You are hearing only this reader. Tap another name to switch.":"Connecting this reader's microphone…"):"Only the selected reader can transmit audio to your device.";
+ showTeacherTranscript();
+}
+function teacherSelect(id){
+ if(!active||!readers.has(id))return;
+ if(selectedId===id){if(audioCtx?.state==="suspended")audioCtx.resume().catch(()=>{});if(!readers.get(id)?.live)safeSend(readers.get(id)?.conn,{type:"startAudio"});return;}
+ let old=selectedId?readers.get(selectedId):null;
+ if(old){
+  safeSend(old.conn,{type:"stopAudio"});
+  if(old.call){try{old.call.close()}catch(e){}old.call=null;}
+  old.live=false;
+ }
+ disconnectAudio();
+ selectedId=id;
+ const s=readers.get(id);s.live=false;
+ safeSend(s.conn,{type:"startAudio"});
+ say("teacher","Connecting "+s.label+"…","Only the selected reader's voice will play.","wait");
+ teacherShow();
+}
+function removeReader(id){
+ const s=readers.get(id);if(!s)return;
+ if(s.call){try{s.call.close()}catch(e){}}
+ readers.delete(id);
+ if(selectedId===id){
+  selectedId=null;disconnectAudio();
+  const next=readers.keys().next().value;
+  if(next)teacherSelect(next);
+  else if(active)say("teacher","Listening is on","Waiting for someone to tap Start Microphone.","wait");
+ }
+ teacherShow();
+}
+async function startTeacher(){
+ if(active)return;active=true;const now=++epoch;selectedId=null;muted=false;readerNum=0;
+ $("teacherStart").classList.add("hidden");$("teacherStop").classList.remove("hidden");$("mute").classList.remove("hidden");$("mute").textContent="🔇 Mute";
+ say("teacher","Starting…","Preparing browser audio connection.","wait");
+ try{
+  if(!window.Peer)throw new Error("Audio connection library did not load. Check internet.");
+  audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  await audioCtx.resume();
+  if(!active||epoch!==now)return;
+  peer=new Peer(TEACHER_ID,options);
+  peer.on("open",()=>{
+   if(!active||epoch!==now)return;
+   say("teacher","Listening is on","Waiting for readers. Open Reader on other devices.","wait");
+  });
+  peer.on("connection",conn=>{
+   if(!active){conn.close();return;}
+   let id=conn.peer;
+   conn.on("open",()=>{
+    if(!active)return;
+    if(readers.size>=30){safeSend(conn,{type:"error",message:"Test room full (30 readers)."});conn.close();return;}
+    if(readers.has(id))removeReader(id);
+    readerNum++;
+    const s={conn,label:"Reader "+String(readerNum).padStart(2,"0"),sentence:sentences[0],call:null,live:false,transcript:"",transcriptState:"Waiting for microphone"};
+    readers.set(id,s);
+    safeSend(conn,{type:"welcome",label:s.label});
+    teacherShow();
+    // Wait for the reader hello event so their data channel is ready.
+   });
+   conn.on("data",msg=>{
+    let s=readers.get(id);if(!s||!msg||typeof msg!=="object")return;
+    if(msg.type==="hello"){
+      const name=clean(msg.name);if(name)s.label=name;
+      safeSend(conn,{type:"welcome",label:s.label});
+      if(!selectedId)teacherSelect(id);
+      else if(selectedId===id&&!s.call)safeSend(conn,{type:"startAudio"});
+    }
+    if(msg.type==="sentence"&&typeof msg.text==="string")s.sentence=msg.text.slice(0,240);
+    if(msg.type==="transcript"&&typeof msg.text==="string"){
+      s.transcript=msg.text.slice(-5000);
+      if(typeof msg.state==="string")s.transcriptState=msg.state.slice(0,100);
+      if(selectedId===id)showTeacherTranscript();
+      return;
+    }
+    teacherShow();
+   });
+   conn.on("close",()=>removeReader(id));
+   conn.on("error",()=>removeReader(id));
+  });
+  peer.on("call",incoming=>{
+   const id=incoming.peer;const s=readers.get(id);
+   if(!active||!s||selectedId!==id){incoming.close();return;}
+   if(s.call){try{s.call.close()}catch(e){}}
+   s.call=incoming;
+   incoming.on("stream",async remote=>{
+    if(!active||selectedId!==id||s.call!==incoming)return;
+    disconnectAudio();
+    try{
+      audioSrc=audioCtx.createMediaStreamSource(remote);
+      if(!muted)audioSrc.connect(audioCtx.destination);
+      await audioCtx.resume();
+      if(active&&selectedId===id){
+       s.live=true;
+       say("teacher","Hearing "+s.label,"Audio is live. Tap another reader to switch.","ok");
+       safeSend(s.conn,{type:"audioLive"});
+       teacherShow();
+      }
+    }catch(e){say("teacher","Audio connected","Tap Start Listening again if you cannot hear sound.","wait")}
+   });
+   incoming.on("close",()=>{
+    if(s.call!==incoming)return;
+    s.call=null;s.live=false;
+    if(selectedId===id){
+     disconnectAudio();teacherShow();
+     if(active)say("teacher","Reader audio stopped","The microphone may have disconnected. Try selecting this reader again.","wait");
+    }
+   });
+   incoming.on("error",()=>{if(s.call===incoming){s.live=false;teacherShow()}});
+   incoming.answer();
+  });
+  peer.on("error",err=>{
+   if(!active)return;
+   say("teacher","Connection error",err?.type==="unavailable-id"?"Another teacher dashboard is already listening in this test room. Close it first.":String(err?.message||"Check the network and try again."),"err");
+  });
+  peer.on("disconnected",()=>{if(active)say("teacher","Reconnecting…","The signaling connection was interrupted.","wait")});
+ }catch(e){stopTeacher();say("teacher","Unable to start",String(e.message||e),"err")}
+}
+function stopTeacher(){
+ active=false;epoch++;for(const [id,s] of readers){safeSend(s.conn,{type:"stopAudio"});try{s.call?.close()}catch(e){}try{s.conn.close()}catch(e){}}
+ readers.clear();disconnectAudio();selectedId=null;
+ destroy(peer);peer=null;
+ if(audioCtx){try{audioCtx.close()}catch(e){}audioCtx=null}
+ $("teacherStart").classList.remove("hidden");$("teacherStop").classList.add("hidden");$("mute").classList.add("hidden");
+ teacherShow();say("teacher","Listening stopped","Tap Start Listening whenever you're ready.");
+}
+$("teacherStart")?.addEventListener("click",startTeacher);
+$("teacherStop")?.addEventListener("click",stopTeacher);
+$("mute")?.addEventListener("click",()=>{
+ muted=!muted;
+ if(audioSrc){
+  try{audioSrc.disconnect()}catch(e){}
+  if(!muted){try{audioSrc.connect(audioCtx.destination);audioCtx.resume().catch(()=>{})}catch(e){}}
+ }
+ $("mute").textContent=muted?"🔊 Unmute":"🔇 Mute";
+});
+
+const glossary={
+ spaceship:"A vehicle that travels through space.",traveled:"Went from one place to another.",among:"In the middle of several things.",
+ stars:"Very large, bright balls of hot gas far away in space.",explorers:"People who travel to discover or learn about new places.",
+ saw:"Noticed with the eyes.",beautiful:"Nice or lovely to look at.",moon:"A natural object that travels around a planet.",
+ garden:"A place where plants grow.",grew:"Got larger or developed.",inside:"Within something.",station:"A place where people live or work.",
+ excited:"Very happy and eager to do something.",discover:"To find out something new.",discovered:"Found out something new.",
+ brilliant:"Very bright or very clever.",ninja:"A curious explorer on the NINJA MOONS team.",idea:"A thought or plan."
+};
+const canned=[
+ {test:q=>/spaceship|space ship|rocket/i.test(q),text:"A spaceship is a vehicle built to travel beyond Earth. In this story, our explorers use a spaceship to learn about the stars."},
+ {test:q=>/\bamong\b/i.test(q),text:"Among means in the middle of several things. If a spaceship is among the stars, stars are all around it."},
+ {test:q=>/plant|garden|grow|zero.gravity|weightless/i.test(q),text:"In space, plants can grow with light, water, nutrients, and carefully controlled air. Their roots don't always need soil; they can grow in water-based systems. Scientists are still improving ways to grow food in space."},
+ {test:q=>/star/i.test(q),text:"A star is an enormous, hot ball of gas that shines in space. Our Sun is a star."},
+ {test:q=>/\bmoon\b/i.test(q),text:"A moon is a natural object that travels around a planet. Earth's Moon is one example."},
+ {test:q=>/explor/i.test(q),text:"An explorer is someone who visits a new place to learn and make discoveries. In NINJA MOONS, exploring is about curiosity."}
+];
+function renderWords(){
+ if(role!=="reader")return;
+ const root=$("practice");root.replaceChildren();
+ readerSentence().split(/\s+/).forEach((w,index)=>{
+  const span=document.createElement("span");span.className="story-word";
+  span.textContent=w+" ";span.tabIndex=0;span.role="button";
+  span.setAttribute("aria-label",w+" — meaning and listen from here");
+  const define=()=>{
+   const key=w.toLowerCase().replace(/[^a-z']/g,"");
+   $("wordTip").textContent=w.replace(/[,.!?]/g,"")+" — "+(glossary[key]||"Tap to hear this word in its sentence.");
+  };
+  span.addEventListener("mouseenter",define);
+  span.addEventListener("focus",define);
+  span.addEventListener("click",()=>{define();hearFrom(index)});
+  span.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();define();hearFrom(index)}});
+  root.appendChild(span);
+ });
+}
+function hearFrom(index=0){
+ if(!window.speechSynthesis){$("wordTip").textContent="Narration isn't available in this browser.";return}
+ const message=readerSentence().split(/\s+/).slice(index).join(" ");
+ try{
+  window.speechSynthesis.cancel();
+  const speech=new SpeechSynthesisUtterance(message);speech.lang="en-US";speech.rate=.85;
+  window.speechSynthesis.speak(speech);
+ }catch(e){$("wordTip").textContent="This device couldn't play narration.";}
+}
+
+let ninjaEnabled=false,ninjaBusy=false,labAccess="";
+const updateAIStatus=(message)=>{if(role==="reader")$("aiStatus").textContent=message;};
+async function readNinjaConnection(){
+ if(role!=="reader")return;
+ try{
+  const response=await fetch("/api/ask",{method:"GET",cache:"no-store"});
+  const data=await response.json();
+  ninjaEnabled=response.ok&&data.enabled===true;
+  updateAIStatus(ninjaEnabled?
+   "Real AI answering is available for this adult-only test. Text questions (not microphone audio or transcripts) go securely to the AI provider. A private test access code is needed.":
+   "Ask NINJA connection is installed, but real AI responses are not activated. The free sample-answer questions still work. No paid questions will be sent.");
+ }catch(e){ninjaEnabled=false;updateAIStatus("Sample-answer mode. The AI service is not available.");}
+}
+function showSampleNinja(question,reason=""){
+ const matched=canned.find(item=>item.test(question));
+ $("answerLabel").textContent=matched?"BUILT-IN SAMPLE ANSWER • NOT AI":"AI NOT ACTIVE YET";
+ $("ninjaAnswer").textContent=matched?matched.text:
+ "The question box is working. Actual AI answers will appear when the teacher activates the secure, low-cost text service.";
+ if(reason&&!matched)$("ninjaAnswer").textContent+=" "+reason;
+}
+async function submitNinjaQuestion(q){
+ const question=String(q||"").trim().slice(0,400);
+ if(!question||ninjaBusy)return;
+ $("ninjaAsked").textContent=question;
+ $("ninjaAnswerPanel").classList.remove("hidden");
+ if(!ninjaEnabled){showSampleNinja(question);return;}
+ if(!labAccess){
+  const entered=window.prompt("Adult-only AI test access code (provided through the teacher's Vercel settings):");
+  if(!entered){showSampleNinja(question,"Test access was not provided.");return}
+  labAccess=entered.trim().slice(0,100);
+ }
+ ninjaBusy=true;
+ $("ninjaSend").disabled=true;
+ $("answerLabel").textContent="🥷 NINJA IS THINKING";
+ $("ninjaAnswer").textContent="Finding a clear answer…";
+ try{
+  const result=await fetch("/api/ask",{
+   method:"POST",headers:{"Content-Type":"application/json","X-Ninja-Test-Access":labAccess},
+   body:JSON.stringify({question,story:readerSentence()})
+  });
+  const data=await result.json();
+  if(!result.ok){
+   if(result.status===401)labAccess="";
+   if(result.status===503){ninjaEnabled=false;showSampleNinja(question,data.message||"");}
+   else{$("answerLabel").textContent="NINJA CONNECTION NOTICE";$("ninjaAnswer").textContent=data.message||"Please try that question again.";}
+   return;
+  }
+  $("answerLabel").textContent="🥷 NINJA ANSWER • REAL AI";
+  $("ninjaAnswer").textContent=String(data.answer||"No answer received.").slice(0,1600);
+ }catch(e){$("answerLabel").textContent="CONNECTION NOT AVAILABLE";$("ninjaAnswer").textContent="The AI answer service could not be reached. You can still use story reading and the teacher listener.";}
+ finally{ninjaBusy=false;$("ninjaSend").disabled=false;}
+}
+$("ninjaForm")?.addEventListener("submit",e=>{e.preventDefault();submitNinjaQuestion($("ninjaQuestion").value)});
+for(const button of document.querySelectorAll("[data-example]")){
+ button.addEventListener("click",()=>{const q=button.getAttribute("data-example");$("ninjaQuestion").value=q;submitNinjaQuestion(q);});
+}
+if(role==="reader")readNinjaConnection();
+$("hearSentence")?.addEventListener("click",()=>hearFrom(0));
+
+
+/* Local-browser SpeechRecognition: no AI model or paid cloud transcription from this site. */
+const SpeechRecognizer=window.SpeechRecognition||window.webkitSpeechRecognition;
+let recognizer=null,recognitionDesired=false,recognitionFailures=0,retryRecognitionTimer=null;
+let finalizedWords="",interimWords="",transcriptionState="Mic off",lastTranscriptSentAt=0,pendingTranscriptTimer=null;
+function publishTranscript(force=false){
+ if(role!=="reader")return;
+ const recognized=(finalizedWords+(interimWords?" "+interimWords:"")).trim().slice(-5000);
+ $("readerTranscriptionState").textContent=transcriptionState;
+ $("readerTranscript").textContent=recognized||"No words recognized yet. Read your sentence aloud.";
+ function send(){
+  clearTimeout(pendingTranscriptTimer);pendingTranscriptTimer=null;
+  lastTranscriptSentAt=Date.now();
+  safeSend(connection,{type:"transcript",text:recognized,state:transcriptionState});
+ }
+ if(force||Date.now()-lastTranscriptSentAt>250)send();
+ else if(!pendingTranscriptTimer)pendingTranscriptTimer=setTimeout(send,250);
+}
+function stopTranscription(){
+ recognitionDesired=false;
+ clearTimeout(retryRecognitionTimer);retryRecognitionTimer=null;
+ clearTimeout(pendingTranscriptTimer);pendingTranscriptTimer=null;
+ if(recognizer){try{recognizer.onend=null;recognizer.abort()}catch(e){}recognizer=null;}
+ interimWords="";
+ transcriptionState="Microphone off";
+ if(role==="reader")publishTranscript(true);
+}
+function beginTranscription(){
+ if(role!=="reader")return;
+ finalizedWords="";interimWords="";recognitionFailures=0;
+ recognitionDesired=true;
+ if(!SpeechRecognizer){
+  recognitionDesired=false;transcriptionState="Browser speech recognition unavailable";
+  publishTranscript(true);return;
+ }
+ recognizer=new SpeechRecognizer();
+ recognizer.lang="en-US";recognizer.continuous=true;recognizer.interimResults=true;
+ recognizer.maxAlternatives=1;
+ recognizer.onstart=()=>{recognitionFailures=0;transcriptionState="Listening • transcribing";publishTranscript(true);};
+ recognizer.onresult=event=>{
+  let nextInterim="";
+  let newFinal="";
+  for(let i=event.resultIndex;i<event.results.length;i++){
+    const t=event.results[i][0]?.transcript||"";
+    if(event.results[i].isFinal)newFinal+=" "+t;else nextInterim+=" "+t;
+  }
+  if(newFinal.trim())finalizedWords=(finalizedWords+" "+newFinal.trim()).trim().slice(-5000);
+  interimWords=nextInterim.trim();
+  transcriptionState="Listening • transcribing";
+  publishTranscript(Boolean(newFinal.trim()));
+ };
+ recognizer.onerror=event=>{
+  if(!recognitionDesired)return;
+  if(event.error==="no-speech"){transcriptionState="Listening for your words…";publishTranscript(true);return;}
+  if(event.error==="not-allowed"||event.error==="service-not-allowed"){
+   recognitionDesired=false;transcriptionState="Speech transcription permission denied";
+  }else if(event.error==="network"){
+   transcriptionState="Speech recognition service unavailable";
+   recognitionDesired=false;
+  }else if(event.error==="audio-capture"){
+   recognitionDesired=false;transcriptionState="Speech input unavailable";
+  }else{
+   transcriptionState="Speech recognition interrupted";
+  }
+  publishTranscript(true);
+ };
+ recognizer.onend=()=>{
+  if(!recognitionDesired||!active)return;
+  clearTimeout(retryRecognitionTimer);
+  retryRecognitionTimer=setTimeout(()=>{
+   if(!recognitionDesired||!active)return;
+   try{recognizer.start()}catch(e){
+    recognitionFailures++;
+    if(recognitionFailures>=3){
+     recognitionDesired=false;transcriptionState="Unable to restart transcription";
+     publishTranscript(true);
+    }else{retryRecognitionTimer=setTimeout(()=>{if(recognitionDesired&&active){try{recognizer.start()}catch(e){}}},1000);}
+   }
+  },400);
+ };
+ try{recognizer.start();transcriptionState="Starting transcription…";publishTranscript(true);}
+ catch(e){recognitionDesired=false;transcriptionState="Could not start browser transcription";publishTranscript(true);}
+}
+$("clearTranscript")?.addEventListener("click",()=>{
+ finalizedWords="";interimWords="";transcriptionState=recognitionDesired?"Listening • transcribing":transcriptionState;
+ publishTranscript(true);
+});
+function readerSentence(){return sentences[sentenceIndex]}
+function sendSentence(){safeSend(connection,{type:"sentence",text:readerSentence()})}
+function beginAudio(){
+ if(!active||!connected||!stream||!peer?.open)return;
+ if(activeForTeacher&&mediaCall)return;
+ if(mediaCall){try{mediaCall.close()}catch(e){}mediaCall=null}
+ activeForTeacher=true;
+ say("reader","Teacher selected you","Connecting your microphone to the teacher.","wait");
+ try{
+  const c=peer.call(TEACHER_ID,stream);
+  if(!c)throw Error("Call could not start");
+  mediaCall=c;
+  c.on("close",()=>{if(mediaCall!==c)return;mediaCall=null;if(active){activeForTeacher=false;say("reader","Ready • waiting","Microphone is on. The teacher can choose your name.","wait")}});
+  c.on("error",()=>{if(mediaCall===c){mediaCall=null;activeForTeacher=false;say("reader","Connection interrupted","Waiting for teacher to choose you again.","wait")}});
+ }catch(e){say("reader","Could not start sound","Stop and retry both devices.","err");activeForTeacher=false}
+}
+function haltAudio(){
+ activeForTeacher=false;closeCall();
+ if(active)say("reader","Microphone on • waiting","Your voice is not currently being sent. The teacher can tap your name.","wait");
+}
+function connectReader(){
+ if(!active||!peer?.open||connecting||connected)return;
+ connecting=true;
+ const c=peer.connect(TEACHER_ID,{reliable:true});
+ connection=c;
+ attemptTimeout=setTimeout(()=>{if(!connected&&connection===c){try{c.close()}catch(e){}connecting=false}},4000);
+ c.on("open",()=>{
+  if(!active){c.close();return}
+  clearTimeout(attemptTimeout);connecting=false;connected=true;
+  const name=clean($("readerName").value);
+  safeSend(c,{type:"hello",name});
+  sendSentence();
+  publishTranscript(true);
+  say("reader","Connected • microphone on","Waiting for the teacher to select you.","wait");
+ });
+ c.on("data",msg=>{
+  if(!active||!msg)return;
+  if(msg.type==="welcome"){$("readerLabel").textContent="Connected as "+clean(msg.label);return;}
+  if(msg.type==="startAudio"){beginAudio();return;}
+  if(msg.type==="stopAudio"){haltAudio();return;}
+  if(msg.type==="audioLive"){if(activeForTeacher)say("reader","Teacher is listening now","Your voice is being transmitted live. Tap Stop Microphone to end.","ok");return;}
+  if(msg.type==="error"){say("reader","Room full",String(msg.message||"Try again later."),"err")}
+ });
+ c.on("close",()=>{
+  if(connection!==c)return;
+  connection=null;connected=false;connecting=false;clearTimeout(attemptTimeout);
+  haltAudio();
+  if(active)say("reader","Waiting for teacher","Microphone is on. Reconnecting automatically.","wait");
+ });
+ c.on("error",()=>{if(connection===c){connected=false;connecting=false}});
+}
+async function startReader(){
+ if(active)return;active=true;const now=++epoch;
+ $("readerStart").classList.add("hidden");$("readerStop").classList.remove("hidden");$("readerName").disabled=true;
+ say("reader","Requesting microphone…","Allow microphone access if your browser asks.","wait");
+ try{
+  if(!window.Peer)throw Error("Connection library not loaded. Check internet.");
+  if(!navigator.mediaDevices?.getUserMedia)throw Error("Microphone unsupported in this browser. Use Chrome or Safari via HTTPS.");
+  stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
+  if(!active||epoch!==now){stopMic();return;}
+  say("reader","Microphone on • waiting","Looking for the teacher dashboard.","wait");
+  beginTranscription();
+  peer=new Peer(undefined,options);
+  peer.on("open",()=>{if(active){connectReader();interval=setInterval(connectReader,2600)}});
+  peer.on("error",err=>{
+   if(active&&err?.type!=="peer-unavailable")say("reader","Connection problem",String(err?.message||"Trying again."),"err");
+  });
+  peer.on("disconnected",()=>{if(active)say("reader","Connection interrupted","Trying again.","wait")});
+  stream.getAudioTracks()[0]?.addEventListener("ended",()=>{if(active)stopReader()});
+ }catch(e){stopReader();say("reader","Could not use microphone",String(e.message||e),"err")}
+}
+function stopReader(){
+ active=false;epoch++;stopTranscription();clearInterval(interval);clearTimeout(attemptTimeout);interval=null;
+ haltAudio();
+ try{connection?.close()}catch(e){}connection=null;connected=false;connecting=false;
+ destroy(peer);peer=null;stopMic();activeForTeacher=false;
+ $("readerStart").classList.remove("hidden");$("readerStop").classList.add("hidden");$("readerName").disabled=false;
+ $("readerLabel").textContent="";
+ say("reader","Microphone off","Tap Start Microphone when ready.");
+}
+$("readerStart")?.addEventListener("click",startReader);
+$("readerStop")?.addEventListener("click",stopReader);
+$("nextSentence")?.addEventListener("click",()=>{
+ sentenceIndex=(sentenceIndex+1)%sentences.length;
+ renderWords();sendSentence();
+});
+if(role==="reader"){renderWords();publishTranscript(true);}
+window.addEventListener("pagehide",()=>{if(active){if(role==="teacher")stopTeacher();else stopReader()}});
+})();
+</script></body></html>

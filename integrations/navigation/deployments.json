@@ -1,0 +1,110 @@
+[
+  {
+    "key": "trainer",
+    "domain": "ninja-reading-coach-ui.vercel.app",
+    "project": "prj_loosCCAGHVNiOZOib5rDCNN2CJgh",
+    "previousDeployment": "dpl_C1K5p4iTpm8kfMUqp2MdCBd3JB1G",
+    "files": [
+      {
+        "file": "index.html",
+        "sha": "2653254939f7ad0fe9cf420ec93199070bf80d6b"
+      }
+    ]
+  },
+  {
+    "key": "race",
+    "domain": "ninja-reading-race.vercel.app",
+    "project": "prj_rNiI7fKNExv967R0PKMO8IDG6T2E",
+    "previousDeployment": "dpl_3eprC76nM57UKU8NKpntYQkH154K",
+    "files": [
+      {
+        "file": "api/race.js",
+        "sha": "afe1f8fb0e7cb4d9fbc2d91cd13f9cbdad593bc8"
+      },
+      {
+        "file": "index.html",
+        "sha": "160f43d219bd91cf32e6246dbe19c48ab23d41c2"
+      },
+      {
+        "file": "package.json",
+        "sha": "c155ef2c84f9b4b293155acbe67df7e39e63deda"
+      }
+    ]
+  },
+  {
+    "key": "spanish",
+    "domain": "ninja-reader-spanish-lab.vercel.app",
+    "project": "prj_7l4yttpYUW8vT8ISM3Ly1rVGgfpz",
+    "previousDeployment": "dpl_6uw8Uu9cmoug479H23jJAiDqvQGd",
+    "files": [
+      {
+        "file": "app.js",
+        "sha": "c9bac09a732cbecbb07bf357e0c0c1f9a002664a"
+      },
+      {
+        "file": "index.html",
+        "sha": "94ed74937e67efa3b18ad12d8bb64ad4f20a2f1c"
+      },
+      {
+        "file": "lexicon.json",
+        "sha": "3960f3c1bb2dbd6700da14f82f09bc4ac4dff390"
+      },
+      {
+        "file": "story.json",
+        "sha": "6752c8a684fe05a39403b5aaaa9eb94e3b6f4b22"
+      }
+    ]
+  },
+  {
+    "key": "live",
+    "domain": "ninja-moons-audio-classroom-lab.vercel.app",
+    "project": "prj_9Zyi7AxEWFcYz6JHM8dWtHMF8zFe",
+    "previousDeployment": "dpl_7cNw5T4BN83b3p677PURymD8Pi73",
+    "files": [
+      {
+        "file": "index.html",
+        "sha": "57f888be033e073d64f04246149f9b40b833385a"
+      },
+      {
+        "file": "vercel.json",
+        "sha": "208fc3faaec9c9c420522edc7aaca02f81a360bd"
+      }
+    ]
+  },
+  {
+    "key": "ask",
+    "domain": "ninja-moons-ask-ninja-lab.vercel.app",
+    "project": "prj_zHRJivyjaSEvLDBTepTXCoyN73z8",
+    "previousDeployment": "dpl_8MeWd3Qo32Gm31p9PXu7NFjFScrT",
+    "files": [
+      {
+        "file": "api/ask.mjs",
+        "sha": "1e517e5ee2b125999307505305e5973f05e8ba80"
+      },
+      {
+        "file": "index.html",
+        "sha": "13d9457d1aa53bd8ff43d123898f71a7322b5e9f"
+      },
+      {
+        "file": "vercel.json",
+        "sha": "208fc3faaec9c9c420522edc7aaca02f81a360bd"
+      }
+    ]
+  },
+  {
+    "key": "story-one",
+    "domain": "ninja-story-touch-speech.vercel.app",
+    "project": "prj_WWbD6AGNBdal1nMQKHDOAGz7bUQw",
+    "previousDeployment": "dpl_5UKJZESCqQHC1Vha5wqvAjPxCjRD",
+    "files": [
+      {
+        "file": "index.html",
+        "sha": "3391c8370cbe6edb93d261a32645ff13b2ad31c0"
+      },
+      {
+        "file": "story.html",
+        "sha": "3391c8370cbe6edb93d261a32645ff13b2ad31c0"
+      }
+    ]
+  }
+]

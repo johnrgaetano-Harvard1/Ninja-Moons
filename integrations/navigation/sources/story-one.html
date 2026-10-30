@@ -1,0 +1,136 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NINJA MOONS — Story</title><style>html,body{height:100%;margin:0;overflow:hidden}iframe{display:block;width:100%;height:100%;border:0}</style><style>body{display:flex;flex-direction:column;height:100svh}#story{flex:1;min-height:0;height:0}</style></head><body><div id="nm-site-nav"><a class="nm-mark" href="https://ninjamoons.vercel.app/">🥷 NINJA MOONS <span aria-hidden="true" style="color:#ffda7b">◔</span></a><nav aria-label="NINJA MOONS main navigation"><a href="https://ninjamoons.vercel.app/">Home</a><a href="https://ninjamoons.vercel.app/dashboard">My dashboard</a><a href="https://ninjamoons.vercel.app/reader?level=All">Library</a><a href="https://ninjamoons.vercel.app/teacher-dashboard">Teachers</a><a href="https://ninjamoons.vercel.app/about.html">About</a></nav></div><style>
+#nm-site-nav{position:sticky;top:0;z-index:10000;isolation:isolate;box-sizing:border-box;flex:0 0 auto;width:100%;margin:0;background:#07182cf7;border-bottom:1px solid #36546b;color:#e9f6ff;font:700 13px/1.3 system-ui;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px max(16px,calc((100vw - 1200px)/2));text-align:left;backdrop-filter:blur(12px)}#nm-site-nav *{box-sizing:border-box}#nm-site-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;color:#e9f6ff;text-decoration:none;border:0;box-shadow:none;margin:0;white-space:nowrap}#nm-site-nav .nm-mark{font-size:17px;font-weight:950;letter-spacing:.035em;gap:5px;flex-shrink:0}#nm-site-nav nav{position:static;display:flex;gap:3px;align-items:center;flex-wrap:wrap;margin:0;padding:0;width:auto;background:none;border:0}#nm-site-nav nav a{padding:10px 11px;border-radius:8px;font-size:13px;font-style:normal;text-transform:none;letter-spacing:0}#nm-site-nav nav a:hover,#nm-site-nav nav a:focus-visible{background:#183750;outline:2px solid #6ee5ff;outline-offset:1px}@media(max-width:700px){#nm-site-nav{padding:8px 12px;gap:3px;flex-wrap:wrap}#nm-site-nav .nm-mark{min-height:33px;font-size:16px}#nm-site-nav nav{width:100%;justify-content:space-between;gap:0}#nm-site-nav nav a{padding:8px 7px;font-size:12px;min-height:40px}}@media print{#nm-site-nav{display:none!important}}
+</style><iframe id="story" title="NINJA MOONS story" src="/api/story" allow="autoplay"></iframe><script>
+(function(){
+var f=document.getElementById('story');
+var levels=[['K','K'],['1–2','1-2'],['3–4','3-4'],['5–6','5-6'],['7–8','7-8'],['9–10','9-10'],['11–12','11-12']];
+f.addEventListener('load',function(){
+try{
+var doc=f.contentDocument;if(!doc)return;
+var links=Array.from(doc.querySelectorAll('a'));
+var home=links.find(function(a){return a.textContent.trim().toLowerCase()==='home'});
+var nav=home?(home.closest('.nav')||home.parentElement):doc.querySelector('.nav');
+if(!nav||doc.getElementById('nm-reading-trainer-link'))return;
+var css=doc.createElement('style');css.id='nm-grade-navigation-style';css.textContent=
+'.nm-menu{display:flex!important;align-items:center!important;gap:6px!important;flex-wrap:nowrap!important;overflow-x:auto!important;max-width:calc(100vw - 205px);scrollbar-width:thin;scrollbar-color:#348db3 transparent;flex:0 1 auto!important;padding:3px 1px!important}'+
+'.nm-menu a{flex-shrink:0!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;border-bottom:0!important;border-radius:7px!important;outline:1px solid rgba(89,190,241,.3)!important;background:rgba(22,70,116,.32)!important;padding:7px 9px!important;margin:0!important;text-decoration:none!important;white-space:nowrap!important;font-size:12px!important;line-height:1.15!important;letter-spacing:.01em!important;text-transform:none!important;transition:background .16s,box-shadow .16s!important}'+
+'.nm-menu a:hover,.nm-menu a:focus-visible{background:rgba(40,132,190,.45)!important;box-shadow:0 0 10px rgba(61,201,255,.35)!important;outline:1px solid #61c9ff!important}'+
+'.nm-menu a.nm-grade-link{font-weight:750!important;color:#cdefff!important;background:rgba(7,36,73,.75)!important}'+
+'.nm-menu a.nm-grade-start{margin-left:10px!important;box-shadow:-9px 0 0 -8px #55b9ee!important}'+
+'@media(max-width:720px){.nm-menu{max-width:calc(100vw - 105px)}.nm-menu a{font-size:11px!important;padding:6px 7px!important}}';
+doc.head.appendChild(css);
+var group=doc.createElement('span');group.className='nm-menu';if(home){home.parentNode.insertBefore(group,home);group.appendChild(home)}else nav.appendChild(group);var frag=doc.createDocumentFragment();
+var trainer=doc.createElement('a');trainer.id='nm-reading-trainer-link';trainer.href='/reading-trainer';trainer.target='_top';trainer.textContent='Reading Trainer';trainer.setAttribute('aria-label','Open Reading Trainer');frag.appendChild(trainer);
+levels.forEach(function(pair,i){var a=doc.createElement('a');a.className='nm-grade-link'+(i===0?' nm-grade-start':'');a.href='/grades?level='+encodeURIComponent(pair[1]);a.target='_top';a.textContent=pair[0];a.setAttribute('aria-label','Stories for grade '+pair[0]);frag.appendChild(a)});
+group.appendChild(trainer);group.appendChild(frag);
+}catch(e){console.warn('Reading navigation unavailable',e)}
+});
+})();
+</script><script id="nm-touch-to-speak">
+(function(){
+'use strict';
+const frame=document.getElementById('story');
+function install(){
+  let doc,win;
+  try{doc=frame.contentDocument;win=frame.contentWindow;if(!doc||!doc.body||!win)return;}catch(e){return;}
+  if(doc.getElementById('nm-tap-speak-button'))return;
+  const style=doc.createElement('style');
+  style.id='nm-tap-speak-style';
+  style.textContent='#nm-tap-speak-button{position:fixed!important;z-index:2147483647!important;display:none;align-items:center;gap:6px;min-height:44px;min-width:44px;padding:8px 13px!important;background:#075e9d!important;color:#fff!important;border:2px solid #70e5ff!important;border-radius:24px!important;font:700 15px system-ui,-apple-system,sans-serif!important;box-shadow:0 4px 18px #0009!important;cursor:pointer!important;touch-action:manipulation!important}#nm-tap-speak-button.nm-visible{display:flex!important}#nm-tap-speak-button:focus-visible{outline:3px solid #fff!important}';
+  (doc.head||doc.documentElement).appendChild(style);
+  const button=doc.createElement('button');button.type='button';button.id='nm-tap-speak-button';button.textContent='🔊 Speak';button.setAttribute('aria-label','Speak selected word');doc.body.appendChild(button);
+  let word='',lastTarget=null;
+  function extract(node,offset){
+    const s=node&&node.textContent||'';
+    if(!s)return '';
+    let p=Math.max(0,Math.min(offset,s.length));
+    if(p>0&&!/[A-Za-zÀ-ÿ]/.test(s[p]||'')&&/[A-Za-zÀ-ÿ]/.test(s[p-1]||''))p--;
+    let a=p,b=p;
+    while(a>0&&/[A-Za-zÀ-ÿ’'-]/.test(s[a-1]))a--;
+    while(b<s.length&&/[A-Za-zÀ-ÿ’'-]/.test(s[b]))b++;
+    return s.slice(a,b).replace(/^[’'-]+|[’'-]+$/g,'').trim();
+  }
+  function fromPoint(x,y){
+    try{
+      const range=doc.caretRangeFromPoint?doc.caretRangeFromPoint(x,y):null;
+      if(range&&range.startContainer.nodeType===3)return extract(range.startContainer,range.startOffset);
+      if(doc.caretPositionFromPoint){const p=doc.caretPositionFromPoint(x,y);if(p&&p.offsetNode.nodeType===3)return extract(p.offsetNode,p.offset);}
+    }catch(e){}
+    return '';
+  }
+  function candidate(e){
+    let target=e.target;
+    if(!target||!target.closest||target===button||target.closest('#nm-tap-speak-button'))return '';
+    if(target.closest('a,input,textarea,select,nav,header,[role="navigation"],[contenteditable="true"]'))return '';
+    let text=fromPoint(e.clientX,e.clientY);
+    if(!text){
+      const el=target.closest('[data-word],.vocab,.vocab-word,.word,.wordUnit,[data-vocab],.glossary-word,.term');
+      if(el){const s=(el.getAttribute('data-text')||el.textContent||'').trim();text=(s.match(/[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ’'-]*/)||[])[0]||'';}
+    }
+    return text&&text.length<=45&&/^[A-Za-zÀ-ÿ]/.test(text)?text:'';
+  }
+  function show(e){
+    if(e.target===button||button.contains(e.target))return;
+    const w=candidate(e);
+    if(!w)return;
+    word=w;lastTarget=e.target;
+    button.setAttribute('aria-label','Speak '+w);
+    button.textContent='🔊 Speak '+w;
+    const left=Math.max(8,Math.min(win.innerWidth-170,e.clientX+8));
+    const top=e.clientY>80?e.clientY-62:e.clientY+18;
+    button.style.left=left+'px';button.style.top=Math.max(8,Math.min(win.innerHeight-50,top))+'px';
+    button.classList.add('nm-visible');
+  }
+  doc.addEventListener('pointerup',show,true);
+  doc.addEventListener('click',function(e){if(e.target===button)return;if(e.target&&e.target.closest&&e.target.closest('a,input,textarea,select,nav,header'))button.classList.remove('nm-visible');},true);
+  doc.addEventListener('pointerover',function(e){if(e.pointerType==='mouse'&&e.target!==lastTarget)show(e)},true);
+  button.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    if(!word)return;
+    try{
+      if(!('speechSynthesis' in win))throw Error('Speech not supported');
+      const u=new win.SpeechSynthesisUtterance(word);
+      u.lang='en-US';u.rate=.85;
+      const voices=win.speechSynthesis.getVoices();
+      const best=voices.find(v=>/en[-_]US/i.test(v.lang)&&/natural|online|neural/i.test(v.name))||voices.find(v=>/en[-_]US/i.test(v.lang)&&/samantha|allison|ava|jenny/i.test(v.name));
+      if(best)u.voice=best;
+      win.speechSynthesis.cancel();
+      win.speechSynthesis.speak(u);
+      button.textContent='🔊 '+word;
+    }catch(err){button.textContent='Speech unavailable';}
+  });
+  doc.addEventListener('keydown',e=>{if(e.key==='Escape')button.classList.remove('nm-visible')});
+}
+frame.addEventListener('load',install);
+if(frame.contentDocument&&frame.contentDocument.readyState==='complete')install();
+})();
+</script><script id="nm-skip-spoken-sentence-numbers">
+(function(){
+  'use strict';
+  const frame=document.getElementById('story');
+  function install(){
+    let win;
+    try{win=frame.contentWindow;if(!win||!frame.contentDocument||!frame.contentDocument.body)return;}catch(e){return;}
+    if(win.__nmSkipSpokenSentenceNumbers)return;
+    const synth=win.speechSynthesis;
+    if(!synth||typeof synth.speak!=='function')return;
+    const original=synth.speak.bind(synth);
+    const label=/^\s*(?:sentence\s*(?:\d{1,4}|one|two|three|four|five|six|seven|eight|nine|ten)\s*(?:[:.)\-–—]\s*|\s+(?=[A-Z])|(?=$))|(?:\(?\d{1,4}\)?\s*[:.)\-–—]\s*))+/i;
+    const inner=/(^|[.!?]\s+)(?:sentence\s*(?:\d{1,4}|one|two|three|four|five|six|seven|eight|nine|ten)\s*[:.)\-–—]\s*)/gi;
+    function clean(value){let s=String(value);let prior;do{prior=s;s=s.replace(label,'');}while(s!==prior);return s.replace(inner,'$1');}
+    try{
+      synth.speak=function(utterance){
+        if(utterance&&typeof utterance.text==='string'){
+          const before=utterance.text;
+          const after=clean(before);
+          if(after!==before){try{utterance.text=after;}catch(e){}}
+        }
+        return original(utterance);
+      };
+      win.__nmSkipSpokenSentenceNumbers=true;
+    }catch(e){}
+  }
+  frame.addEventListener('load',install);
+  if(frame.contentDocument&&frame.contentDocument.readyState==='complete')install();
+})();
+</script></body></html>

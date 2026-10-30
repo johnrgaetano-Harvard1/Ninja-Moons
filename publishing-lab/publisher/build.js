@@ -9,9 +9,13 @@ function digest(file){return crypto.createHash("sha256").update(fs.readFileSync(
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function generate(story){
  const p=JSON.stringify(story.pages.map(p=>({page:p.page,lines:p.lines,image:p.image}))).replace(/</g,"\\u003c");
- const header='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(story.title)+' — NINJA MOONS</title><style>body{background:#0a1830;color:white;font-family:system-ui;margin:auto;max-width:1000px;padding:20px}a{color:#8ee9ff}img{width:100%;aspect-ratio:16/9;object-fit:contain;background:#06112a}p{font-size:clamp(23px,3vw,34px);line-height:1.5}button{border:0;border-radius:10px;background:#9ee8ff;color:#07142b;padding:12px 18px;font-weight:800;margin:5px}button:disabled{opacity:.4}</style></head><body><a href="/">← All stories</a><h1>'+esc(story.title)+'</h1><div id="number"></div><img id="art" alt="Story illustration"><div id="lines"></div><nav><button id="back">← Back</button><button id="hear">🔊 Hear</button><button id="stop">Stop</button><button id="next">Next →</button></nav>';
+ const header='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(story.title)+' — NINJA MOONS</title><style>body{background:#0a1830;color:white;font-family:system-ui;margin:auto;max-width:1000px;padding:20px}a{color:#8ee9ff}img{width:100%;aspect-ratio:16/9;object-fit:contain;background:#06112a}p{font-size:clamp(23px,3vw,34px);line-height:1.5}button{border:0;border-radius:10px;background:#9ee8ff;color:#07142b;padding:12px 18px;font-weight:800;margin:5px}button:disabled{opacity:.4}</style></head><body><a href="https://ninjamoons.vercel.app/reader?level=All">← All stories</a><h1>'+esc(story.title)+'</h1><div id="number"></div><img id="art" alt="Story illustration"><div id="lines"></div><nav><button id="back">← Back</button><button id="hear">🔊 Hear</button><button id="stop">Stop</button><button id="next">Next →</button></nav>';
  const script="const pages="+p+";let n=0;const el=id=>document.getElementById(id);function say(t){if(!('speechSynthesis' in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';window.speechSynthesis.speak(u)}function draw(){const p=pages[n];el('number').textContent='Page '+(n+1)+' of '+pages.length;el('art').src=p.image;el('art').alt='Illustration for page '+p.page;el('lines').replaceChildren(...p.lines.map(x=>{let e=document.createElement('p');e.textContent=x;e.onclick=()=>say(x);return e}));el('back').disabled=n===0;el('next').textContent=n===pages.length-1?'Start again ↻':'Next →'}el('back').onclick=()=>{n=Math.max(0,n-1);draw()};el('next').onclick=()=>{n=(n+1)%pages.length;draw()};el('hear').onclick=()=>say(pages[n].lines.join(' '));el('stop').onclick=()=>window.speechSynthesis?.cancel();draw()";
  return header+"<script>"+script+"</script></body></html>";
+}
+function addNavigation(html){
+ const nav=fs.readFileSync(path.resolve(__dirname,'../../integrations/navigation/site-nav.html'),'utf8');
+ return html.replace(/<body[^>]*>/i,match=>match+nav);
 }
 function main(){
  ensure(isFile(path.join(root,"index.html")),"library home missing");
@@ -46,7 +50,7 @@ function main(){
   const sentences=m.pages.flatMap(p=>p.lines.map(text=>({text,page:p.page,simple:''}))).map((line,i)=>({...line,number:i+1}));
   fs.writeFileSync(path.join(out,'stories',s.slug,'reader.json'),JSON.stringify({version:1,slug:s.slug,title:m.title,grade:s.grade,sentences,vocabulary:m.vocabulary||[]},null,2));
   const navigation='<nav aria-label="NINJA MOONS reading links" style="padding:16px;text-align:center;background:#071a32;color:#b4edff"><a style="color:inherit;margin:12px" href="https://ninjamoons.vercel.app/reader?level='+s.grade+'">← Story library</a><a style="color:inherit;margin:12px" href="https://ninjamoons.vercel.app/reading-helper?story='+s.slug+'">Read with NINJA Helper →</a></nav>';
-  fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace('</body>',navigation+'</body>'));
+  fs.writeFileSync(f,addNavigation(fs.readFileSync(f,'utf8').replace('</body>',navigation+'</body>').replace('href="/">← Publishing Lab Library','href="https://ninjamoons.vercel.app/reader?level=All">← Story library')));
  }
  fs.writeFileSync(path.join(out,"catalog.json"),JSON.stringify({version:1,stories:library},null,2));
 
@@ -76,7 +80,7 @@ function main(){
  })();
  </script>`;
  ensure(homepage.includes("</body>"),"library homepage missing closing body");
- fs.writeFileSync(homepagePath,homepage.replace("</body>",insert+"</body>"));
+ fs.writeFileSync(homepagePath,addNavigation(homepage.replace("</body>",insert+"</body>")));
 
  fs.writeFileSync(path.join(out,"health.json"),JSON.stringify({service:"ninja-moons-publishing-lab",status:"ok",mode:"isolated",validatedStories:library.length,validatedPages:library.reduce((v,s)=>v+s.pages,0),illustrations:"complete"},null,2));
  console.log("PUBLISH VALIDATION PASSED:",library.length,"stories,",library.reduce((v,s)=>v+s.pages,0),"pages; illustration checksums match");

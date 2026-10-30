@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>NINJA MOONS — The Secret Garden</title><style>
+:root{color-scheme:light;--ink:#172640;--blue:#062755;--red:#b7222e}*{box-sizing:border-box}body{margin:0;background:#eaf2fb;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.72}.hero{background:linear-gradient(115deg,#071b3e,#09569d);color:white;padding:36px 20px 30px;text-align:center}.brand{letter-spacing:.12em;font-size:clamp(28px,6vw,54px);font-weight:900}.hero h1{font-size:clamp(24px,4.5vw,42px);margin:4px 0}.subtitle{opacity:.88}.container{max-width:1030px;margin:auto;padding:22px 18px 70px}.chapter{background:white;border-radius:18px;overflow:hidden;margin:28px 0 42px;box-shadow:0 12px 40px #12345a16}.chapter figure{margin:0}.chapter img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#092445}.chapter-content{padding:clamp(22px,4vw,46px)}h2{font-size:clamp(24px,3vw,34px);margin:0 0 18px;color:#073b77}.chapter-number{display:inline-block;background:#e6f2ff;border-radius:50%;width:42px;height:42px;text-align:center;line-height:42px;margin-right:8px;font-weight:900;color:#08529c}.chapter p{font-size:clamp(18px,2vw,21px);margin:0 0 18px;line-height:1.85}.chapter p:last-child{margin-bottom:0}.sentence-no{font-size:.78em;color:#56769a;font-weight:800;white-space:nowrap}.term{color:#0b1b32;font-weight:850}.definition{color:var(--red)}footer{text-align:center;color:#50647c;padding:18px}.note{font-size:14px;color:#687990}.print-btn{background:white;color:#083c73;border:0;border-radius:24px;padding:10px 18px;font-weight:700;cursor:pointer;margin-top:14px}@media print{body{background:white}.hero{padding:20px}.chapter{box-shadow:none;break-inside:avoid;border:1px solid #ddd}.print-btn{display:none}.container{padding:0}.chapter p{font-size:13px}.chapter-content{padding:15px}h2{font-size:20px}}
+</style><style data-ninja-dictionary>
+/* Reusable NINJA MOONS touch dictionary — deliberately leaves normal story typography unchanged. */
+.nw-tappable{cursor:pointer;border-radius:3px;-webkit-tap-highlight-color:rgba(12,100,179,.2)}
+.nw-tappable:focus-visible{outline:2px solid #1461a2;outline-offset:2px;background:#e6f3ff}
+.term.nw-tappable{text-decoration:underline dotted;text-decoration-thickness:1.5px;text-underline-offset:4px}
+.nw-help{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:9px;font-size:15px;color:white;margin:15px auto 0;line-height:1.5}
+.nw-help button{border:1px solid #c2d6ee;border-radius:999px;padding:7px 15px;font:inherit;font-weight:700;background:white;color:#064276;cursor:pointer}
+.nw-help button:focus-visible{outline:3px solid gold;outline-offset:2px}
+.nw-shade{position:fixed;inset:0;background:rgba(6,21,41,.4);z-index:9997}
+.nw-pop{position:fixed;bottom:0;left:0;right:0;max-height:min(80vh,580px);overflow-y:auto;overscroll-behavior:contain;z-index:9998;box-sizing:border-box;border-top:5px solid #0969b0;border-radius:24px 24px 0 0;background:white;color:#172b46;box-shadow:0 -15px 50px #152f4a30;padding:22px max(20px,env(safe-area-inset-right)) calc(22px + env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left));font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
+.nw-pop[hidden],.nw-shade[hidden]{display:none!important}
+.nw-inner{max-width:650px;margin:0 auto}
+.nw-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nw-kicker{font-size:12px;letter-spacing:.08em;color:#2d5b82}
+.nw-x{width:41px;height:41px;border-radius:50%;border:1px solid #bbccda;background:#f2f7fc;color:#163b62;font-size:27px;line-height:32px;cursor:pointer;flex:none}
+.nw-pop .nw-word{font-size:clamp(28px,6vw,39px)!important;color:#074379!important;margin:8px 0 4px!important;line-height:1.24!important;overflow-wrap:anywhere}
+.nw-phonetic{font-size:17px;color:#476480;font-weight:650}
+.nw-meaning{font-size:clamp(18px,4vw,23px);line-height:1.5;margin:15px 0 17px}
+.nw-actions{display:flex;gap:10px;flex-wrap:wrap}
+.nw-actions button{font-size:16px;border:0;border-radius:12px;padding:11px 17px;font-weight:750;color:white;background:#0962a5;cursor:pointer}
+.nw-actions .nw-stop{background:#eaf2f9;color:#123d64}
+.nw-status{margin-top:12px;font-size:13px;color:#5c7284;min-height:1.5em}
+body.nw-open{overflow:hidden}
+@media(min-width:700px){.nw-pop{width:min(690px,calc(100vw - 50px));left:50%;right:auto;transform:translateX(-50%);bottom:24px;border-radius:24px;padding:25px 30px}}
+@media print{.nw-shade,.nw-pop,.nw-help{display:none!important}.term.nw-tappable{text-decoration:none}}
+</style></head><body><div id="nm-site-nav"><a class="nm-mark" href="https://ninjamoons.vercel.app/">🥷 NINJA MOONS <span aria-hidden="true" style="color:#ffda7b">◔</span></a><nav aria-label="NINJA MOONS main navigation"><a href="https://ninjamoons.vercel.app/">Home</a><a href="https://ninjamoons.vercel.app/dashboard">My dashboard</a><a href="https://ninjamoons.vercel.app/reader?level=All">Library</a><a href="https://ninjamoons.vercel.app/teacher-dashboard">Teachers</a><a href="https://ninjamoons.vercel.app/about.html">About</a></nav></div><style>
+#nm-site-nav{position:sticky;top:0;z-index:10000;isolation:isolate;box-sizing:border-box;flex:0 0 auto;width:100%;margin:0;background:#07182cf7;border-bottom:1px solid #36546b;color:#e9f6ff;font:700 13px/1.3 system-ui;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px max(16px,calc((100vw - 1200px)/2));text-align:left;backdrop-filter:blur(12px)}#nm-site-nav *{box-sizing:border-box}#nm-site-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;color:#e9f6ff;text-decoration:none;border:0;box-shadow:none;margin:0;white-space:nowrap}#nm-site-nav .nm-mark{font-size:17px;font-weight:950;letter-spacing:.035em;gap:5px;flex-shrink:0}#nm-site-nav nav{position:static;display:flex;gap:3px;align-items:center;flex-wrap:wrap;margin:0;padding:0;width:auto;background:none;border:0}#nm-site-nav nav a{padding:10px 11px;border-radius:8px;font-size:13px;font-style:normal;text-transform:none;letter-spacing:0}#nm-site-nav nav a:hover,#nm-site-nav nav a:focus-visible{background:#183750;outline:2px solid #6ee5ff;outline-offset:1px}@media(max-width:700px){#nm-site-nav{padding:8px 12px;gap:3px;flex-wrap:wrap}#nm-site-nav .nm-mark{min-height:33px;font-size:16px}#nm-site-nav nav{width:100%;justify-content:space-between;gap:0}#nm-site-nav nav a{padding:8px 7px;font-size:12px;min-height:40px}}@media print{#nm-site-nav{display:none!important}}
+</style><header class="hero"><div class="brand">🥷 NINJA MOONS</div><h1>Story #2: The Secret Garden</h1><div class="subtitle">Grade 6 · 10 NEW cinematic illustrations · 84 numbered sentences · 20 vocabulary definitions</div><button class="print-btn" onclick="window.print()">Print / Save as PDF</button><p><a href="https://ninjamoons.vercel.app/grades" style="color:#fff;font-weight:700;text-decoration:underline;">← Back to Grade Library</a></p><p><a href="https://ninjamoons.vercel.app/reading-helper?story=secret-garden" style="display:inline-block;padding:10px 18px;border-radius:12px;background:#dcf2ff;color:#093969;font-weight:800;text-decoration:none;margin-top:6px">🥷 Read with NINJA Helper</a></p></header><main class="container"><section class="chapter" id="chapter-1"><figure><img alt="Illustration 1: The Thirty-Day Tree" decoding="async" height="941" loading="lazy" src="https://ninja-moons-secret-garden.vercel.app/picture_01.png" width="1672"/></figure><div class="chapter-content"><h2><span class="chapter-number">1</span>The Thirty-Day Tree</h2><p><span class="sentence-no">1.</span> Seven seconds after leaving Earth, the Ninja explorers stood beneath unfamiliar stars. <span class="sentence-no">2.</span> Across the moon's silver valley, a glowing <strong class="term">biodome</strong> <span class="definition">(BY-oh-dohm)—an enclosed space for growing living things</span>—rose like a glass mountain. <span class="sentence-no">3.</span> Inside, one golden-fruited tree stretched higher than every other plant. <span class="sentence-no">4.</span> Maya checked her wrist screen, which displayed a surprising <strong class="term">measurement</strong> <span class="definition">(MEH-zhur-ment)—a number describing something observed</span>: TREE AGE: 30 DAYS.</p><p><span class="sentence-no">5.</span> "A tree that big in one month?" Kai asked. <span class="sentence-no">6.</span> Maya zoomed in and spotted five glowing rings around its trunk. <span class="sentence-no">7.</span> The rings lit up one after another, almost as though the garden were inviting them inside. <span class="sentence-no">8.</span> "I think," Maya said, "we've found our next mystery."</p></div></section><section class="chapter" id="chapter-2"><figure><img alt="Illustration 2: Five Glowing Clues" decoding="async" height="941" loading="lazy" src="https://ninja-moons-secret-garden.vercel.app/picture_02.png" width="1672"/></figure><div class="chapter-content"><h2><span class="chapter-number">2</span>Five Glowing Clues</h2><p><span class="sentence-no">9.</span> The doors opened onto towers of strawberries, bright flowers, and streams beneath clear walkways. <span class="sentence-no">10.</span> A cheerful robot rolled forward and introduced itself as Luma, the garden's guide. <span class="sentence-no">11.</span> Above its head appeared a <strong class="term">hologram</strong> <span class="definition">(HOL-oh-gram)—an image that seems three-dimensional</span>—showing the giant tree surrounded by five symbols. <span class="sentence-no">12.</span> "Each symbol hides a clue," Luma explained, "and together they reveal the garden's secret."</p><p><span class="sentence-no">13.</span> Kai noticed a glowing <strong class="term">indicator</strong> <span class="definition">(IN-di-kay-tur)—a sign that shows information</span>—pointing toward some lettuce. <span class="sentence-no">14.</span> "We have to solve this ourselves?" he asked. <span class="sentence-no">15.</span> "You get to," Luma answered, its eyes flashing blue. <span class="sentence-no">16.</span> Maya followed the light, determined to discover whether the thirty-day tree was real.</p></div></section><section class="chapter" id="chapter-3"><figure><img alt="Illustration 3: Roots Without Dirt" decoding="async" height="941" loading="lazy" src="https://ninja-moons-secret-garden.vercel.app/picture_03.png" width="1672"/></figure><div class="chapter-content"><h2><span class="chapter-number">3</span>Roots Without Dirt</h2><p><span class="sentence-no">17.</span> Beneath the lettuce, white roots dangled in clear water instead of soil. <span class="sentence-no">18.</span> "Somebody forgot the dirt," Kai whispered, but Maya was already examining the flowing channels. <span class="sentence-no">19.</span> Luma called the method <strong class="term">hydroponics</strong> <span class="definition">(HY-droh-PON-iks)—growing plants without soil using water that supplies what their roots need</span>. <span class="sentence-no">20.</span> The water carried <strong class="term">nutrients</strong> <span class="definition">(NOO-tree-ents)—substances that help living things grow</span>.</p><p><span class="sentence-no">21.</span> Maya traced a channel until it disappeared beneath the giant tree. <span class="sentence-no">22.</span> "So roots can get what they need without soil," she said. <span class="sentence-no">23.</span> The first ring turned green, displaying: ROOTS NEED THE RIGHT CONDITIONS. <span class="sentence-no">24.</span> Kai grinned, but Maya noticed that the tree's roots were hidden behind a wall. <span class="sentence-no">25.</span> "Interesting," she said, "but we still haven't seen what's underneath that tree."</p></div></section><section class="chapter" id="chapter-4"><figure><img alt="Illustration 4: A Sky Built by Scientists" decoding="async" height="941" loading="lazy" src="https://ninja-moons-secret-garden.vercel.app/picture_04.png" width="1672"/></figure><div class="chapter-content"><h2><span class="chapter-number">4</span>A Sky Built by Scientists</h2><p><span class="sentence-no">26.</span> The next light led them upstairs beneath rows of red, blue, and white lamps. <span class="sentence-no">27.</span> "It's like someone built a second sky," Kai said. <span class="sentence-no">28.</span> Luma explained <strong class="term">photosynthesis</strong> <span class="definition">(FOH-toh-SIN-thuh-sis)—the process plants use to make sugars from light, water, and carbon dioxide</span>. <span class="sentence-no">29.</span> Different colors belonged to the visible <strong class="term">spectrum</strong> <span class="definition">(SPEK-trum)—the range of colors in light</span>.</p><p><span class="sentence-no">30.</span> Maya watched the lamps above the giant tree brighten in a carefully timed pattern. <span class="sentence-no">31.</span> "You can give plants useful light even when sunlight is limited," she realized. <span class="sentence-no">32.</span> The second ring flashed green, but a narrow beam swept across the trunk and stopped at a glass panel. <span class="sentence-no">33.</span> On the panel appeared another message: LOOK CLOSER AT THE WATER.</p></div></section><section class="chapter" id="chapter-5"><figure><img alt="Illustration 5: The Water's Return Trip" decoding="async" height="941" loading="lazy" src="https://ninja-moons-secret-garden.vercel.app/picture_05.png" width="1672"/></figure><div class="chapter-content"><h2><span class="chapter-number">5</span>The Water's Return Trip</h2><p><span class="sentence-no">34.</span> Behind the panel, clear pipes twisted overhead like a transparent maze. <span class="sentence-no">35.</span> Kai watched water move through a repeating <strong class="term">circulation</strong> <span class="definition">(sur-kyuh-LAY-shun)—a path that carries something around and back again</span>. <span class="sentence-no">36.</span> Some returning water passed through <strong class="term">filtration</strong> <span class="definition">(fil-TRAY-shun)—cleaning that removes unwanted material</span>. <span class="sentence-no">37.</span> Elsewhere, cool surfaces collected moisture released by leaves.</p><p><span class="sentence-no">38.</span> "So the garden catches water and uses some again," Maya said. <span class="sentence-no">39.</span> "Yes, though we still replace what the system loses," Luma replied. <span class="sentence-no">40.</span> The third ring glowed green as a pipe beside the tree lit up from bottom to top. <span class="sentence-no">41.</span> At its highest point, the ninjas spotted a small silver robot waiting beside the branches.</p></div></section><section class="chapter" id="chapter-6"><figure><img alt="Illustration 6: The Tiny Garden Detectives" decoding="async" height="941" loading="lazy" src="https://ninja-moons-secret-garden.vercel.app/picture_06.png" width="1672"/></figure><div class="chapter-content"><h2><span class="chapter-number">6</span>The Tiny Garden Detectives</h2><p><span class="sentence-no">42.</span> The robot floated from leaf to leaf, recording information without touching the fruit. <span class="sentence-no">43.</span> Luma said its <strong class="term">sensors</strong> <span class="definition">(SEN-surz)—devices that detect or measure conditions</span>—checked temperature, light, and moisture. <span class="sentence-no">44.</span> The garden also used <strong class="term">automation</strong> <span class="definition">(aw-tuh-MAY-shun)—machines carrying out tasks with limited direct human control</span>. <span class="sentence-no">45.</span> Kai watched another robot adjust a lamp after receiving a measurement.</p><p><span class="sentence-no">46.</span> "It's like the whole garden is paying attention," he said. <span class="sentence-no">47.</span> Maya examined a screen and discovered that the giant tree had arrived exactly thirty days earlier. <span class="sentence-no">48.</span> Before she could mention it, the fourth ring flashed green and sparkling golden mist filled the room. <span class="sentence-no">49.</span> Luma rolled toward the tree and announced, "One clue remains."</p></div></section><section class="chapter" id="chapter-7"><figure><img alt="Illustration 7: The Golden Rain" decoding="async" height="941" loading="lazy" src="https://ninja-moons-secret-garden.vercel.app/picture_07.png" width="1672"/></figure><div class="chapter-content"><h2><span class="chapter-number">7</span>The Golden Rain</h2><p><span class="sentence-no">50.</span> Fine droplets shimmered above the branches, turning ordinary water into a curtain of gold. <span class="sentence-no">51.</span> "It's beautiful," Maya said, catching a drop on her glove. <span class="sentence-no">52.</span> Luma explained <strong class="term">humidity</strong> <span class="definition">(hyoo-MID-uh-tee)—the amount of water vapor in the air</span>—and showed how the garden controlled it. <span class="sentence-no">53.</span> Careful <strong class="term">conservation</strong> <span class="definition">(kon-sur-VAY-shun)—using resources without needless waste</span>—helped the system collect and reuse water.</p><p><span class="sentence-no">54.</span> Kai counted four green rings and one still silver. <span class="sentence-no">55.</span> "We know about roots, light, water, and robots," he said, "so what's missing?" <span class="sentence-no">56.</span> Maya looked from the mist to the pipes, then toward the hidden roots. <span class="sentence-no">57.</span> "Maybe the answer isn't another machine," she whispered.</p></div></section><section class="chapter" id="chapter-8"><figure><img alt="Illustration 8: The Fifth Ring" decoding="async" height="941" loading="lazy" src="https://ninja-moons-secret-garden.vercel.app/picture_08.png" width="1672"/></figure><div class="chapter-content"><h2><span class="chapter-number">8</span>The Fifth Ring</h2><p><span class="sentence-no">58.</span> Maya called up the hologram and placed the four discoveries together. <span class="sentence-no">59.</span> The pipes fed the roots, the lamps lit the leaves, and the sensors helped control both. <span class="sentence-no">60.</span> "They work together," she said, "instead of working alone." <span class="sentence-no">61.</span> Luma called this <strong class="term">integration</strong> <span class="definition">(in-tuh-GRAY-shun)—joining parts into one system</span>—and <strong class="term">optimization</strong> <span class="definition">(op-tuh-muh-ZAY-shun)—adjusting things to get better results</span>.</p><p><span class="sentence-no">62.</span> The fifth ring burst into green light, and the hologram displayed: MYSTERY SOLVED. <span class="sentence-no">63.</span> Kai cheered, but Maya held up her hand. <span class="sentence-no">64.</span> "Not quite," she said, pointing to the original message on her wrist. <span class="sentence-no">65.</span> "We've explained how the garden works, but have we proved this huge tree grew in thirty days?"</p></div></section><section class="chapter" id="chapter-9"><figure><img alt="Illustration 9: The Number That Changed Everything" decoding="async" height="941" loading="lazy" src="https://ninja-moons-secret-garden.vercel.app/picture_09.png" width="1672"/></figure><div class="chapter-content"><h2><span class="chapter-number">9</span>The Number That Changed Everything</h2><p><span class="sentence-no">66.</span> Luma opened the hidden panel, revealing a photograph of the tree arriving on a transport platform. <span class="sentence-no">67.</span> It was already tall, with thick branches and golden fruit beginning to form. <span class="sentence-no">68.</span> "Thirty days <em>in this garden</em>," Maya realized, "not thirty days since the seed sprouted!" <span class="sentence-no">69.</span> The tree had undergone <strong class="term">transplantation</strong> <span class="definition">(trans-plan-TAY-shun)—moving a plant to a new growing place</span>—after years of <strong class="term">cultivation</strong> <span class="definition">(kul-tuh-VAY-shun)—growing and caring for plants</span>.</p><p><span class="sentence-no">70.</span> Kai laughed. <span class="sentence-no">71.</span> "We solved five clues, but the biggest mystery was what the number meant!" <span class="sentence-no">72.</span> Luma changed the display to read: TIME IN BIODOME: 30 DAYS. <span class="sentence-no">73.</span> Maya smiled at the towering branches. <span class="sentence-no">74.</span> "Good scientists don't just collect facts," she said. <span class="sentence-no">75.</span> "They check what those facts actually tell them."</p></div></section><section class="chapter" id="chapter-10"><figure><img alt="Illustration 10: The Garden of Tomorrow" decoding="async" height="941" loading="lazy" src="https://ninja-moons-secret-garden.vercel.app/picture_10.png" width="1672"/></figure><div class="chapter-content"><h2><span class="chapter-number">10</span>The Garden of Tomorrow</h2><p><span class="sentence-no">76.</span> At sunset, Luma projected future cities with vegetable gardens climbing their buildings. <span class="sentence-no">77.</span> It described <strong class="term">sustainability</strong> <span class="definition">(suh-stay-nuh-BIL-uh-tee)—meeting needs while caring for future resources</span>. <span class="sentence-no">78.</span> The ninjas saw how <strong class="term">innovation</strong> <span class="definition">(in-uh-VAY-shun)—finding new ideas or improving old ones</span>—could help grow food in cities, deserts, and spacecraft.</p><p><span class="sentence-no">79.</span> "Our biggest discovery wasn't a magical tree," Kai said as the dome glowed behind them. <span class="sentence-no">80.</span> "It was learning how real science works," Maya replied. <span class="sentence-no">81.</span> She saved the corrected measurement beside a picture of the five glowing rings. <span class="sentence-no">82.</span> Then Luma showed them one final image: a small garden floating inside a spacecraft far from any planet. <span class="sentence-no">83.</span> "Now," Luma asked, "how would you grow food where there is almost no gravity?" <span class="sentence-no">84.</span> The ninjas exchanged excited looks, already imagining their next adventure.</p></div></section><footer><strong>End of Story #2</strong><p>Next mystery: How could a garden grow food in almost no gravity?</p><p class="note">Artwork is adapted from the approved storyboard and enlarged for widescreen display. Enlarging does not create additional original image detail.</p></footer></main><script data-ninja-dictionary>
+/* Shared NINJA MOONS Reader: tap a story word for its meaning and spoken pronunciation.
+   Author-defined vocabulary: <strong class="term">word</strong> <span class="definition">(phonetic)—definition</span>.
+   Other words use dictionaryapi.dev (internet needed), but can always be spoken offline. */
+(function(){
+"use strict";
+if(window.__ninjaWordReader)return;
+window.__ninjaWordReader=true;
+function start(){
+  const root=document.querySelector("main");
+  if(!root)return;
+  const paragraphs=Array.from(root.querySelectorAll(".chapter-content p,.story-content p,[data-ninja-readable],article p"));
+  if(!paragraphs.length)return;
+  const known=new Map(), canSpeak=("speechSynthesis" in window && "SpeechSynthesisUtterance" in window);
+  const badTags=new Set(["A","BUTTON","SCRIPT","STYLE","CODE","INPUT","TEXTAREA","SELECT"]);
+  let selected=null,revision=0,previous=null;
+  function key(s){return s.toLowerCase().replace(/’/g,"'").trim();}
+  function parse(s){
+    const t=(s||"").trim();
+    const m=t.match(/^\(([^)]+)\)\s*[—–-]?\s*(.*)$/s);
+    return m?{phonetic:m[1].trim(),meaning:m[2].trim()}:{phonetic:"",meaning:t.replace(/^[—–-]\s*/,"")};
+  }
+  function make(tag,className,txt){
+    const el=document.createElement(tag);
+    if(className)el.className=className;
+    if(txt!==undefined)el.textContent=txt;
+    return el;
+  }
+  const shade=make("div","nw-shade");shade.hidden=true;
+  const pop=make("section","nw-pop");pop.hidden=true;
+  pop.setAttribute("role","dialog");pop.setAttribute("aria-modal","true");
+  pop.setAttribute("aria-label","Word meaning and pronunciation");
+  const inner=make("div","nw-inner");
+  const head=make("div","nw-head");
+  const kicker=make("strong","nw-kicker","🥷 NINJA WORD EXPLORER");
+  const closeBtn=make("button","nw-x","×");closeBtn.type="button";closeBtn.setAttribute("aria-label","Close dictionary");
+  head.append(kicker,closeBtn);
+  const wordHeading=make("h2","nw-word");
+  const phonetic=make("div","nw-phonetic");
+  const meaning=make("p","nw-meaning");
+  const actions=make("div","nw-actions");
+  const play=make("button","nw-play","🔊 Listen again");play.type="button";
+  const stop=make("button","nw-stop","Stop audio");stop.type="button";
+  actions.append(play,stop);
+  const status=make("div","nw-status");status.setAttribute("aria-live","polite");
+  inner.append(head,wordHeading,phonetic,meaning,actions,status);
+  pop.append(inner);document.body.append(shade,pop);
+  if(!canSpeak){play.hidden=true;stop.hidden=true;}
+  function cancelVoice(){if(canSpeak){try{speechSynthesis.cancel();}catch(e){}}}
+  function say(text){
+    if(!canSpeak){status.textContent="This browser does not support spoken audio.";return;}
+    cancelVoice();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang="en-US";u.rate=.88;u.pitch=1;
+    const english=speechSynthesis.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    u.voice=english.find(v=>/enhanced|premium|samantha|ava|jenny|aria/i.test(v.name))||english.find(v=>/^en-US/i.test(v.lang))||english[0]||null;
+    u.onerror=()=>{status.textContent="Audio could not play. Try again or check your volume.";};
+    try{speechSynthesis.speak(u);}catch(e){status.textContent="Audio is unavailable right now.";}
+  }
+  function utterance(){return selected?selected.word+(selected.meaning?". "+selected.meaning:""):"";}
+  function paint(){
+    wordHeading.textContent=selected.word;
+    phonetic.textContent=selected.phonetic?"Say it: "+selected.phonetic:"";
+    meaning.textContent=selected.meaning||"Searching for the definition…";
+  }
+  function dismiss(){
+    revision++;cancelVoice();shade.hidden=true;pop.hidden=true;
+    document.body.classList.remove("nw-open");
+    if(previous&&previous.isConnected&&previous.focus)previous.focus();
+  }
+  async function lookup(word,at){
+    const k=key(word);
+    if(known.has(k)){
+      if(at!==revision)return;
+      selected={word,...known.get(k)};paint();
+      status.textContent="Tap Listen again to hear the meaning.";
+      return;
+    }
+    try{
+      const controller=new AbortController();
+      const timeout=setTimeout(()=>controller.abort(),6500);
+      let response;
+      try{response=await fetch("https://api.dictionaryapi.dev/api/v2/entries/en/"+encodeURIComponent(k),{signal:controller.signal});}
+      finally{clearTimeout(timeout);}
+      if(!response.ok)throw Error("No definition");
+      const data=await response.json();
+      const entry=Array.isArray(data)?data[0]:null;
+      const defs=(entry?.meanings||[]).flatMap(m=>m.definitions||[]);
+      const first=defs.find(d=>d.definition&&typeof d.definition==="string");
+      if(!first)throw Error("No definition");
+      const found={meaning:first.definition,phonetic:entry.phonetic||""};
+      known.set(k,found);
+      if(at!==revision)return;
+      selected={word,...found};paint();
+      status.textContent="Definition found. Tap Listen again to hear it.";
+    }catch(e){
+      if(at!==revision)return;
+      meaning.textContent="A definition isn't available right now. Tap Listen again to hear the word.";
+      status.textContent="Story vocabulary works offline; other words need internet for their meaning.";
+    }
+  }
+  function openWord(word,info){
+    if(!word)return;
+    const token=++revision;
+    previous=document.activeElement;
+    selected={word,phonetic:info?.phonetic||"",meaning:info?.meaning||""};
+    paint();
+    status.textContent=info?"Story vocabulary · approved definition":"Looking up an additional word…";
+    shade.hidden=false;pop.hidden=false;
+    document.body.classList.add("nw-open");closeBtn.focus({preventScroll:true});
+    say(utterance());
+    if(!info)lookup(word,token);
+  }
+  function addActivation(el,word,definition){
+    el.classList.add("nw-tappable");el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label","Hear and define "+word);
+    el.addEventListener("click",()=>openWord(word,definition||known.get(key(word))||null));
+    el.addEventListener("keydown",e=>{
+      if(e.key==="Enter"||e.key===" "){e.preventDefault();openWord(word,definition||known.get(key(word))||null);}
+    });
+  }
+  for(const el of root.querySelectorAll(".term")){
+    const word=el.textContent.trim();
+    const def=el.nextElementSibling?.classList.contains("definition")
+      ?parse(el.nextElementSibling.textContent):null;
+    if(def)known.set(key(word),def);
+    addActivation(el,word,def);
+  }
+  for(const p of paragraphs){
+    const walker=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,{
+      acceptNode(node){
+        if(!node.nodeValue||!/[A-Za-z]/.test(node.nodeValue))return NodeFilter.FILTER_REJECT;
+        for(let n=node.parentElement;n&&n!==p;n=n.parentElement){
+          if(badTags.has(n.tagName)||n.classList.contains("term")||
+             n.classList.contains("definition")||n.classList.contains("sentence-no")||
+             n.classList.contains("nw-tappable"))return NodeFilter.FILTER_REJECT;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const originals=[];while(walker.nextNode())originals.push(walker.currentNode);
+    for(const node of originals){
+      const txt=node.nodeValue,rx=/[A-Za-z]+(?:['’][A-Za-z]+)*/g,frag=document.createDocumentFragment();
+      let cursor=0,match,count=0;
+      while((match=rx.exec(txt))){
+        count++;
+        if(match.index>cursor)frag.append(document.createTextNode(txt.slice(cursor,match.index)));
+        const word=match[0],el=make("span","nw-plain",word);
+        addActivation(el,word,null);frag.append(el);cursor=rx.lastIndex;
+      }
+      if(!count)continue;
+      if(cursor<txt.length)frag.append(document.createTextNode(txt.slice(cursor)));
+      node.replaceWith(frag);
+    }
+  }
+  shade.addEventListener("click",dismiss);closeBtn.addEventListener("click",dismiss);
+  play.addEventListener("click",()=>{if(selected)say(utterance());});
+  stop.addEventListener("click",()=>{cancelVoice();status.textContent="Audio stopped.";});
+  document.addEventListener("keydown",e=>{
+    if(pop.hidden)return;
+    if(e.key==="Escape"){e.preventDefault();dismiss();}
+    if(e.key==="Tab"){
+      const focus=[closeBtn,play,stop].filter(x=>!x.hidden);
+      const pos=focus.indexOf(document.activeElement);
+      if(e.shiftKey&&pos<=0){e.preventDefault();focus[focus.length-1].focus();}
+      else if(!e.shiftKey&&pos===focus.length-1){e.preventDefault();focus[0].focus();}
+    }
+  });
+  const hero=document.querySelector(".hero,header");
+  if(hero){
+    const help=make("div","nw-help");
+    const label=make("span","","Tap any word to see its meaning and hear it aloud.");
+    const demo=make("button","","Try a word 🔊");demo.type="button";
+    demo.addEventListener("click",()=>openWord("biodome",known.get("biodome")||null));
+    help.append(label,demo);hero.append(help);
+  }
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});
+else start();
+})();
+</script></body></html>
