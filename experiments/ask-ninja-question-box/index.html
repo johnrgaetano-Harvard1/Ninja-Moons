@@ -101,8 +101,8 @@ footer{margin-top:30px;color:#829eb5;font-size:12px;line-height:1.7}
 <div class="panel">
 <div class="eyebrow">🥷 ASK NINJA • SIMPLE QUESTION BOX</div>
 <h2>Students can type questions as they read.</h2>
-<p>The question box stays on the reader page. It currently offers built-in sample answers, not AI. Transcription is separate and does not analyze student performance.</p>
-<div class="pill">Preview only • AI not connected</div>
+<p>Ask NINJA can use real text-only AI once an administrator enables a protected test and sets a spending budget. Until then, built-in sample answers remain available. Free browser transcription is separate and doesn't analyze students.</p>
+<div class="pill">Text AI endpoint prepared • activation required</div>
 </div>
 </div>
 <div id="reader" class="hidden">
@@ -137,12 +137,12 @@ footer{margin-top:30px;color:#829eb5;font-size:12px;line-height:1.7}
 <div class="suggest-title">Try a sample question</div>
 <div class="suggestions"><button type="button" class="suggestion" data-example="What is a spaceship?">What is a spaceship?</button><button type="button" class="suggestion" data-example="What does among mean?">What does among mean?</button><button type="button" class="suggestion" data-example="How can plants grow in space?">How can plants grow in space?</button></div>
 <div id="ninjaAnswerPanel" class="ninja-answer hidden" role="status" aria-live="polite"><div class="eyebrow" id="answerLabel">SAMPLE ANSWER</div><div id="ninjaAsked" class="asked"></div><p id="ninjaAnswer"></p></div>
-<div id="aiStatus" class="ai-status"><strong>Preview mode:</strong> The question box works, but real AI is not connected. Sample questions get built-in example answers. Other questions are saved nowhere and will not be sent to a service.</div>
+<div id="aiStatus" class="ai-status">Checking the Ask NINJA text-answer connection. The free sample questions will remain available.</div>
 </div>
 <div class="help" id="readerLabel"></div>
 </div>
-<div class="privacy"><b>Adult-only test, not for students yet.</b> The room is shared and unauthenticated, using third-party signaling. Do not use it with children or confidential information. Browser speech recognition may send microphone audio to the browser provider, depending on your browser. Transcript text is sent live to the connected teacher using the same test signaling service; the page does not save it. Ask NINJA does not send typed questions to AI or store them. Microphone audio streams to the selected teacher during live listening. Classroom use requires authentication, private rooms, consent, and a security review.</div>
-<footer>Separate Ask NINJA test with restored live browser transcription, teacher listening, story narration, hover definitions, and typed questions. Real AI is not connected. Original NINJA MOONS and earlier experiments remain untouched.</footer>
+<div class="privacy"><b>Adult-only test, not for students yet.</b> The room is shared and unauthenticated, using third-party signaling. Do not use it with children or confidential information. Browser speech recognition may send microphone audio to the browser provider; transcript text is sent live to the teacher over the test connection. The page doesn't save it. If text AI is enabled, only typed Ask NINJA questions and the current example story sentence are sent to the AI provider for an answer; no microphone audio or transcript is sent by Ask NINJA. Live audio goes to the selected teacher. Classroom use needs proper authentication, private rooms, permission, privacy review, and a spending budget.</div>
+<footer>Separate Ask NINJA test with restored live browser transcription, teacher listening, story narration, hover definitions, and typed questions. Text-only AI endpoint is installed but requires activation and an adult-only access code; the page continues to offer example answers without charge. Original NINJA MOONS and earlier experiments remain untouched.</footer>
 </main>
 <script>
 (()=>{
@@ -363,22 +363,64 @@ function hearFrom(index=0){
   window.speechSynthesis.speak(speech);
  }catch(e){$("wordTip").textContent="This device couldn't play narration.";}
 }
-function submitNinjaQuestion(q){
- const question=String(q||"").trim().slice(0,400);
- if(!question)return;
- $("ninjaAsked").textContent=question;
+
+let ninjaEnabled=false,ninjaBusy=false,labAccess="";
+const updateAIStatus=(message)=>{if(role==="reader")$("aiStatus").textContent=message;};
+async function readNinjaConnection(){
+ if(role!=="reader")return;
+ try{
+  const response=await fetch("/api/ask",{method:"GET",cache:"no-store"});
+  const data=await response.json();
+  ninjaEnabled=response.ok&&data.enabled===true;
+  updateAIStatus(ninjaEnabled?
+   "Real AI answering is available for this adult-only test. Text questions (not microphone audio or transcripts) go securely to the AI provider. A private test access code is needed.":
+   "Ask NINJA connection is installed, but real AI responses are not activated. The free sample-answer questions still work. No paid questions will be sent.");
+ }catch(e){ninjaEnabled=false;updateAIStatus("Sample-answer mode. The AI service is not available.");}
+}
+function showSampleNinja(question,reason=""){
  const matched=canned.find(item=>item.test(question));
- $("answerLabel").textContent=matched?"BUILT-IN SAMPLE ANSWER • NOT AI":"PREVIEW ONLY • AI NOT CONNECTED";
- $("ninjaAnswer").textContent=matched?matched.text:"Your question box is ready! When we securely connect NINJA Reading Advice to an AI service, the answer to this question will appear here. This test version does not submit your question anywhere.";
+ $("answerLabel").textContent=matched?"BUILT-IN SAMPLE ANSWER • NOT AI":"AI NOT ACTIVE YET";
+ $("ninjaAnswer").textContent=matched?matched.text:
+ "The question box is working. Actual AI answers will appear when the teacher activates the secure, low-cost text service.";
+ if(reason&&!matched)$("ninjaAnswer").textContent+=" "+reason;
+}
+async function submitNinjaQuestion(q){
+ const question=String(q||"").trim().slice(0,400);
+ if(!question||ninjaBusy)return;
+ $("ninjaAsked").textContent=question;
  $("ninjaAnswerPanel").classList.remove("hidden");
+ if(!ninjaEnabled){showSampleNinja(question);return;}
+ if(!labAccess){
+  const entered=window.prompt("Adult-only AI test access code (provided through the teacher's Vercel settings):");
+  if(!entered){showSampleNinja(question,"Test access was not provided.");return}
+  labAccess=entered.trim().slice(0,100);
+ }
+ ninjaBusy=true;
+ $("ninjaSend").disabled=true;
+ $("answerLabel").textContent="🥷 NINJA IS THINKING";
+ $("ninjaAnswer").textContent="Finding a clear answer…";
+ try{
+  const result=await fetch("/api/ask",{
+   method:"POST",headers:{"Content-Type":"application/json","X-Ninja-Test-Access":labAccess},
+   body:JSON.stringify({question,story:readerSentence()})
+  });
+  const data=await result.json();
+  if(!result.ok){
+   if(result.status===401)labAccess="";
+   if(result.status===503){ninjaEnabled=false;showSampleNinja(question,data.message||"");}
+   else{$("answerLabel").textContent="NINJA CONNECTION NOTICE";$("ninjaAnswer").textContent=data.message||"Please try that question again.";}
+   return;
+  }
+  $("answerLabel").textContent="🥷 NINJA ANSWER • REAL AI";
+  $("ninjaAnswer").textContent=String(data.answer||"No answer received.").slice(0,1600);
+ }catch(e){$("answerLabel").textContent="CONNECTION NOT AVAILABLE";$("ninjaAnswer").textContent="The AI answer service could not be reached. You can still use story reading and the teacher listener.";}
+ finally{ninjaBusy=false;$("ninjaSend").disabled=false;}
 }
 $("ninjaForm")?.addEventListener("submit",e=>{e.preventDefault();submitNinjaQuestion($("ninjaQuestion").value)});
 for(const button of document.querySelectorAll("[data-example]")){
- button.addEventListener("click",()=>{
-  const q=button.getAttribute("data-example");
-  $("ninjaQuestion").value=q;submitNinjaQuestion(q);
- });
+ button.addEventListener("click",()=>{const q=button.getAttribute("data-example");$("ninjaQuestion").value=q;submitNinjaQuestion(q);});
 }
+if(role==="reader")readNinjaConnection();
 $("hearSentence")?.addEventListener("click",()=>hearFrom(0));
 
 
