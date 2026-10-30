@@ -45,6 +45,17 @@ footer{margin-top:30px;color:#829eb5;font-size:12px;line-height:1.7}
 .story-word:hover,.story-word:focus{background:#23695f;color:white;outline:1px solid #6cd4af}
 @keyframes appear{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:550px){.ask-form{flex-direction:column}.ask-form input,.ask-form button{width:100%;margin-top:3px}.ask-heading h2{font-size:18px}}
+
+/* Blue transcript, separate from green-toned Ask NINJA */
+.transcript-panel{background:linear-gradient(135deg,#0d284b 0%,#153763 100%);border:1px solid #457bc1;box-shadow:inset 0 1px 0 #5b91d122}
+.transcript-heading{display:flex;align-items:start;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.transcript-heading h2{font-size:19px;margin-bottom:10px;color:#eef6ff}
+.transcript-panel .eyebrow{color:#8cbdff}
+.transcript-pill{color:#e5f1ff;font-size:11px;font-weight:750;border:1px solid #619de4;background:#1d4983;padding:7px 10px;border-radius:24px}
+.transcript-output{border:1px solid #4d83c8;background:#0a1e3a;color:#e9f5ff;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:14px;padding:16px;min-height:105px;line-height:1.65;font-size:17px;margin-top:10px}
+.transcript-note{font-size:12px;margin:12px 0 0;color:#aacaf1}
+.transcript-tools{display:flex;justify-content:flex-end;margin-top:10px}.transcript-tools button{width:auto;min-height:38px;font-size:12px;padding:8px 13px}
+@media(max-width:450px){.transcript-heading h2{font-size:17px}.transcript-output{font-size:16px;padding:13px}}
 </style>
 <script defer src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js"></script>
 </head><body>
@@ -53,20 +64,20 @@ footer{margin-top:30px;color:#829eb5;font-size:12px;line-height:1.7}
 <div id="home">
 <div class="tag">ASK NINJA • QUESTION BOX PREVIEW</div>
 <h1>Read. Wonder.<br>Ask NINJA.</h1>
-<p class="lead">A simple question box alongside the story. Type a question and tap Ask. No speech-to-text, no reading analysis, and no changes to school computers.</p>
+<p class="lead">A simple Ask NINJA question box, the original live transcription on both screens, and teacher listening. No AI reading analysis and no installations.</p>
 <a href="/teacher.html" class="entry">🎧 Teacher Dashboard</a>
 <a href="/student.html" class="entry reader">🥷 Reader + Ask NINJA</a>
 <div class="panel">
 <div class="eyebrow">One website • Simple setup</div>
 <div class="step"><div class="num">1</div><div><b>Teacher opens their dashboard</b><small>On an iPhone or computer. Tap Start Listening to monitor a reader.</small></div></div>
 <div class="step"><div class="num">2</div><div><b>Readers open the story</b><small>They can tap Start Microphone if the teacher wants to listen, but asking a question needs no microphone.</small></div></div>
-<div class="step"><div class="num">3</div><div><b>Readers type a question in Ask NINJA</b><small>Try sample answers now. A real AI connection will be added later.</small></div></div>
+<div class="step"><div class="num">3</div><div><b>Transcription and Ask NINJA</b><small>Words appear on the reader and teacher screens when the browser supports recognition; students can also type questions.</small></div></div>
 </div>
 </div>
 <div id="teacher" class="hidden">
 <a href="/" class="back">‹ Home</a><div class="tag">TEACHER • ASK NINJA PREVIEW</div>
 <h1>Your Teacher Dashboard.</h1>
-<p class="lead">The listening controls are preserved. Students now have an Ask NINJA question box on their reader page—no automatic transcription or analysis.</p>
+<p class="lead">Listen to readers and see their spoken words appear below. Students also have the Ask NINJA question box. There is no automatic reading analysis.</p>
 <div class="panel">
 <div class="btnrow"><button id="teacherStart">🎧 Start Listening</button><button id="teacherStop" class="secondary hidden">■ Stop</button><button id="mute" class="secondary hidden">🔇 Mute</button></div>
 <div class="status" style="margin-top:18px"><span class="dot" id="teacherDot"></span><div><strong id="teacherStatus">Ready</strong><small id="teacherInfo">Tap Start Listening. Then open the reader page on another device.</small></div></div>
@@ -82,10 +93,15 @@ footer{margin-top:30px;color:#829eb5;font-size:12px;line-height:1.7}
 <div id="selectedSentence" class="sentence">Select a reader to see their current sentence.</div>
 <div class="help" id="selectedHelp">Only the selected reader can transmit audio to your device.</div>
 </div>
+<div class="panel transcript-panel" id="teacherTranscriptPanel">
+<div class="transcript-heading"><div><div class="eyebrow">🎙️ LIVE TRANSCRIPTION</div><h2>What your reader is saying</h2></div><div class="transcript-pill" id="teacherTranscriptionState">Waiting for reader</div></div>
+<div class="transcript-output" id="teacherTranscript" role="log" aria-live="polite">Select a connected reader to see their words appear here.</div>
+<p class="transcript-note">The words appear as the reader's browser recognizes them. You can keep listening separately.</p>
+</div>
 <div class="panel">
 <div class="eyebrow">🥷 ASK NINJA • SIMPLE QUESTION BOX</div>
 <h2>Students can type questions as they read.</h2>
-<p>The question box is on the reader's page. No speech transcription or automated reading analysis is running. The sample answers currently come from built-in examples, not AI.</p>
+<p>The question box stays on the reader page. It currently offers built-in sample answers, not AI. Transcription is separate and does not analyze student performance.</p>
 <div class="pill">Preview only • AI not connected</div>
 </div>
 </div>
@@ -106,6 +122,12 @@ footer{margin-top:30px;color:#829eb5;font-size:12px;line-height:1.7}
 <div id="wordTip" class="word-tip" aria-live="polite">Hover over a word for its meaning, or tap a word to hear narration from there.</div>
 <div class="btnrow"><button id="hearSentence" type="button" class="secondary">🔊 Hear sentence</button><button id="nextSentence" type="button" class="secondary">Next →</button></div>
 </div>
+<div class="panel transcript-panel" id="readerTranscriptPanel">
+<div class="transcript-heading"><div><div class="eyebrow">🎙️ LIVE TRANSCRIPTION</div><h2>Your spoken words</h2></div><div class="transcript-pill" id="readerTranscriptionState">Mic off</div></div>
+<div class="transcript-output" id="readerTranscript" role="log" aria-live="polite">Tap Start Microphone and read your sentence aloud. Your words will show here.</div>
+<div class="transcript-tools"><button class="secondary" type="button" id="clearTranscript">Clear words</button></div>
+<p class="transcript-note">This uses the browser's speech recognition where supported. Some browsers send speech to their provider. No AI reading analysis is running.</p>
+</div>
 <div class="panel ask-panel" id="askNinja">
 <div class="ask-heading"><div class="ask-emoji" aria-hidden="true">🥷</div><div><div class="eyebrow">NINJA READING ADVICE</div><h2>Ask NINJA anything about the story.</h2></div></div>
 <form id="ninjaForm">
@@ -119,8 +141,8 @@ footer{margin-top:30px;color:#829eb5;font-size:12px;line-height:1.7}
 </div>
 <div class="help" id="readerLabel"></div>
 </div>
-<div class="privacy"><b>Adult-only test, not for students yet.</b> Teacher-listening uses a shared, unauthenticated room and third-party signaling. Do not use it with actual children or confidential information. Ask NINJA is a local-only question-box preview: no questions are sent to AI, and no typed questions are stored. Microphone audio only streams to the selected teacher in the live test. Before real classroom use we must add teacher authentication, private classrooms, consent and privacy safeguards.</div>
-<footer>Separate Ask NINJA question-box lab. It does not transcribe or analyze speech. AI answers are not yet connected. The original NINJA MOONS and earlier audio experiments are unchanged.</footer>
+<div class="privacy"><b>Adult-only test, not for students yet.</b> The room is shared and unauthenticated, using third-party signaling. Do not use it with children or confidential information. Browser speech recognition may send microphone audio to the browser provider, depending on your browser. Transcript text is sent live to the connected teacher using the same test signaling service; the page does not save it. Ask NINJA does not send typed questions to AI or store them. Microphone audio streams to the selected teacher during live listening. Classroom use requires authentication, private rooms, consent, and a security review.</div>
+<footer>Separate Ask NINJA test with restored live browser transcription, teacher listening, story narration, hover definitions, and typed questions. Real AI is not connected. Original NINJA MOONS and earlier experiments remain untouched.</footer>
 </main>
 <script>
 (()=>{
@@ -142,6 +164,11 @@ const destroy=(p)=>{try{p?.destroy()}catch(e){}};
 const stopMic=()=>{if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}};
 const closeCall=()=>{if(mediaCall){let c=mediaCall;mediaCall=null;try{c.close()}catch(e){}}};
 function disconnectAudio(){if(audioSrc){try{audioSrc.disconnect()}catch(e){}audioSrc=null}}
+function showTeacherTranscript(){
+ const s=selectedId?readers.get(selectedId):null;
+ $("teacherTranscriptionState").textContent=s?s.transcriptState:"Waiting for reader";
+ $("teacherTranscript").textContent=s?(s.transcript||"No words recognized yet."):"Select a connected reader to see their words appear here.";
+}
 function teacherShow(){
  $("readerCount").textContent=String(readers.size);
  $("empty").classList.toggle("hidden",readers.size>0);
@@ -158,6 +185,7 @@ function teacherShow(){
  $("selectedName").textContent=s?s.label:"No reader selected";
  $("selectedSentence").textContent=s?.sentence||"Select a reader to see their current sentence.";
  $("selectedHelp").textContent=s?(s.live?"You are hearing only this reader. Tap another name to switch.":"Connecting this reader's microphone…"):"Only the selected reader can transmit audio to your device.";
+ showTeacherTranscript();
 }
 function teacherSelect(id){
  if(!active||!readers.has(id))return;
@@ -209,7 +237,7 @@ async function startTeacher(){
     if(readers.size>=30){safeSend(conn,{type:"error",message:"Test room full (30 readers)."});conn.close();return;}
     if(readers.has(id))removeReader(id);
     readerNum++;
-    const s={conn,label:"Reader "+String(readerNum).padStart(2,"0"),sentence:sentences[0],call:null,live:false};
+    const s={conn,label:"Reader "+String(readerNum).padStart(2,"0"),sentence:sentences[0],call:null,live:false,transcript:"",transcriptState:"Waiting for microphone"};
     readers.set(id,s);
     safeSend(conn,{type:"welcome",label:s.label});
     teacherShow();
@@ -224,6 +252,12 @@ async function startTeacher(){
       else if(selectedId===id&&!s.call)safeSend(conn,{type:"startAudio"});
     }
     if(msg.type==="sentence"&&typeof msg.text==="string")s.sentence=msg.text.slice(0,240);
+    if(msg.type==="transcript"&&typeof msg.text==="string"){
+      s.transcript=msg.text.slice(-5000);
+      if(typeof msg.state==="string")s.transcriptState=msg.state.slice(0,100);
+      if(selectedId===id)showTeacherTranscript();
+      return;
+    }
     teacherShow();
    });
    conn.on("close",()=>removeReader(id));
@@ -347,6 +381,93 @@ for(const button of document.querySelectorAll("[data-example]")){
 }
 $("hearSentence")?.addEventListener("click",()=>hearFrom(0));
 
+
+/* Local-browser SpeechRecognition: no AI model or paid cloud transcription from this site. */
+const SpeechRecognizer=window.SpeechRecognition||window.webkitSpeechRecognition;
+let recognizer=null,recognitionDesired=false,recognitionFailures=0,retryRecognitionTimer=null;
+let finalizedWords="",interimWords="",transcriptionState="Mic off",lastTranscriptSentAt=0,pendingTranscriptTimer=null;
+function publishTranscript(force=false){
+ if(role!=="reader")return;
+ const recognized=(finalizedWords+(interimWords?" "+interimWords:"")).trim().slice(-5000);
+ $("readerTranscriptionState").textContent=transcriptionState;
+ $("readerTranscript").textContent=recognized||"No words recognized yet. Read your sentence aloud.";
+ function send(){
+  clearTimeout(pendingTranscriptTimer);pendingTranscriptTimer=null;
+  lastTranscriptSentAt=Date.now();
+  safeSend(connection,{type:"transcript",text:recognized,state:transcriptionState});
+ }
+ if(force||Date.now()-lastTranscriptSentAt>250)send();
+ else if(!pendingTranscriptTimer)pendingTranscriptTimer=setTimeout(send,250);
+}
+function stopTranscription(){
+ recognitionDesired=false;
+ clearTimeout(retryRecognitionTimer);retryRecognitionTimer=null;
+ clearTimeout(pendingTranscriptTimer);pendingTranscriptTimer=null;
+ if(recognizer){try{recognizer.onend=null;recognizer.abort()}catch(e){}recognizer=null;}
+ interimWords="";
+ transcriptionState="Microphone off";
+ if(role==="reader")publishTranscript(true);
+}
+function beginTranscription(){
+ if(role!=="reader")return;
+ finalizedWords="";interimWords="";recognitionFailures=0;
+ recognitionDesired=true;
+ if(!SpeechRecognizer){
+  recognitionDesired=false;transcriptionState="Browser speech recognition unavailable";
+  publishTranscript(true);return;
+ }
+ recognizer=new SpeechRecognizer();
+ recognizer.lang="en-US";recognizer.continuous=true;recognizer.interimResults=true;
+ recognizer.maxAlternatives=1;
+ recognizer.onstart=()=>{recognitionFailures=0;transcriptionState="Listening • transcribing";publishTranscript(true);};
+ recognizer.onresult=event=>{
+  let nextInterim="";
+  let newFinal="";
+  for(let i=event.resultIndex;i<event.results.length;i++){
+    const t=event.results[i][0]?.transcript||"";
+    if(event.results[i].isFinal)newFinal+=" "+t;else nextInterim+=" "+t;
+  }
+  if(newFinal.trim())finalizedWords=(finalizedWords+" "+newFinal.trim()).trim().slice(-5000);
+  interimWords=nextInterim.trim();
+  transcriptionState="Listening • transcribing";
+  publishTranscript(Boolean(newFinal.trim()));
+ };
+ recognizer.onerror=event=>{
+  if(!recognitionDesired)return;
+  if(event.error==="no-speech"){transcriptionState="Listening for your words…";publishTranscript(true);return;}
+  if(event.error==="not-allowed"||event.error==="service-not-allowed"){
+   recognitionDesired=false;transcriptionState="Speech transcription permission denied";
+  }else if(event.error==="network"){
+   transcriptionState="Speech recognition service unavailable";
+   recognitionDesired=false;
+  }else if(event.error==="audio-capture"){
+   recognitionDesired=false;transcriptionState="Speech input unavailable";
+  }else{
+   transcriptionState="Speech recognition interrupted";
+  }
+  publishTranscript(true);
+ };
+ recognizer.onend=()=>{
+  if(!recognitionDesired||!active)return;
+  clearTimeout(retryRecognitionTimer);
+  retryRecognitionTimer=setTimeout(()=>{
+   if(!recognitionDesired||!active)return;
+   try{recognizer.start()}catch(e){
+    recognitionFailures++;
+    if(recognitionFailures>=3){
+     recognitionDesired=false;transcriptionState="Unable to restart transcription";
+     publishTranscript(true);
+    }else{retryRecognitionTimer=setTimeout(()=>{if(recognitionDesired&&active){try{recognizer.start()}catch(e){}}},1000);}
+   }
+  },400);
+ };
+ try{recognizer.start();transcriptionState="Starting transcription…";publishTranscript(true);}
+ catch(e){recognitionDesired=false;transcriptionState="Could not start browser transcription";publishTranscript(true);}
+}
+$("clearTranscript")?.addEventListener("click",()=>{
+ finalizedWords="";interimWords="";transcriptionState=recognitionDesired?"Listening • transcribing":transcriptionState;
+ publishTranscript(true);
+});
 function readerSentence(){return sentences[sentenceIndex]}
 function sendSentence(){safeSend(connection,{type:"sentence",text:readerSentence()})}
 function beginAudio(){
@@ -379,6 +500,7 @@ function connectReader(){
   const name=clean($("readerName").value);
   safeSend(c,{type:"hello",name});
   sendSentence();
+  publishTranscript(true);
   say("reader","Connected • microphone on","Waiting for the teacher to select you.","wait");
  });
  c.on("data",msg=>{
@@ -407,6 +529,7 @@ async function startReader(){
   stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
   if(!active||epoch!==now){stopMic();return;}
   say("reader","Microphone on • waiting","Looking for the teacher dashboard.","wait");
+  beginTranscription();
   peer=new Peer(undefined,options);
   peer.on("open",()=>{if(active){connectReader();interval=setInterval(connectReader,2600)}});
   peer.on("error",err=>{
@@ -417,7 +540,7 @@ async function startReader(){
  }catch(e){stopReader();say("reader","Could not use microphone",String(e.message||e),"err")}
 }
 function stopReader(){
- active=false;epoch++;clearInterval(interval);clearTimeout(attemptTimeout);interval=null;
+ active=false;epoch++;stopTranscription();clearInterval(interval);clearTimeout(attemptTimeout);interval=null;
  haltAudio();
  try{connection?.close()}catch(e){}connection=null;connected=false;connecting=false;
  destroy(peer);peer=null;stopMic();activeForTeacher=false;
@@ -431,7 +554,7 @@ $("nextSentence")?.addEventListener("click",()=>{
  sentenceIndex=(sentenceIndex+1)%sentences.length;
  renderWords();sendSentence();
 });
-if(role==="reader")renderWords();
+if(role==="reader"){renderWords();publishTranscript(true);}
 window.addEventListener("pagehide",()=>{if(active){if(role==="teacher")stopTeacher();else stopReader()}});
 })();
 </script></body></html>
