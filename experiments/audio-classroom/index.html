@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071327">
+<title>NINJA MOONS — Multi-Reader Listening Lab</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif;background:#071327;color:#f2f8ff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 60% -10%,#163b70,transparent 58%),#071327}
+main{max-width:850px;margin:auto;padding:22px 17px 48px}.brand{display:flex;align-items:center;justify-content:space-between;font-weight:900;letter-spacing:.09em;font-size:14px}.brand .logo{display:flex;align-items:center;gap:12px}.brand .logo span{font-size:27px}.small{font-size:12px;color:#9fb3cc}
+.tag{display:inline-block;margin:26px 0 9px;color:#a5e8fc;background:#173952;border:1px solid #397e93;border-radius:25px;padding:7px 12px;font-size:11px;font-weight:850;letter-spacing:.1em}
+h1{font-size:clamp(32px,7vw,49px);line-height:1.07;letter-spacing:-.04em;margin:13px 0}p{line-height:1.55;color:#b9cae1}p.lead{font-size:16px;margin:0 0 27px}
+.panel{background:#111f34;border:1px solid #2a4664;border-radius:20px;padding:20px;margin:16px 0}
+a{color:inherit;text-decoration:none}.roles{display:grid;gap:14px;margin-top:24px}.role{display:flex;align-items:center;justify-content:center;background:#55d7f5;color:#082039;border-radius:15px;padding:20px;font-weight:900;font-size:18px;min-height:68px}.role.alt{background:#c7ef87;color:#243710}
+button{width:100%;border:0;border-radius:14px;background:#55d7f5;color:#071c33;padding:18px;font-size:17px;font-weight:850;min-height:56px;cursor:pointer}
+button:disabled{opacity:.55;cursor:wait}button.secondary{background:#273e56;color:#f4faff;border:1px solid #4f7899}
+button.ghost{background:#1a2c42;color:#c7e5fc;border:1px solid #385978}
+button.danger{background:#3d2836;color:#ffc7cd;border:1px solid #9a5366}
+.hidden{display:none!important}.two{display:grid;grid-template-columns:1fr 1fr;gap:11px}.back{display:inline-block;margin-top:27px;color:#aadfff;font-size:14px}
+.label{font-size:11px;font-weight:850;letter-spacing:.14em;color:#96bdd8;text-transform:uppercase;margin-bottom:13px}
+.state{display:flex;gap:13px;align-items:flex-start}.dot{width:12px;height:12px;background:#829ab3;border-radius:50%;margin-top:5px;flex-shrink:0;box-shadow:0 0 0 5px #89a2bf21}
+.dot.on{background:#55e7a2;box-shadow:0 0 0 5px #55e7a21a}.dot.wait{background:#ffd27b;box-shadow:0 0 0 5px #ffd27b24}.dot.err{background:#ff7b90;box-shadow:0 0 0 5px #ff7b9022}
+.state strong{font-size:18px;display:block}.state small{display:block;font-size:13px;color:#b0c3dc;line-height:1.5;margin-top:4px}
+.stats{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.pill{padding:8px 12px;border:1px solid #3f6080;background:#182f48;border-radius:30px;font-size:12px;font-weight:750;color:#bedcff}
+.readerGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:11px}
+.readerCard{text-align:left;background:#192c44;color:#f1f7fd;border:1px solid #3d5d7b;border-radius:14px;padding:16px;min-height:92px;box-shadow:none;display:flex;flex-direction:column;align-items:stretch;gap:7px}
+.readerCard.selected{background:#173c49;border:2px solid #6ceec6}.readerCard .name{font-size:16px;font-weight:850}.readerCard small{font-size:12px;color:#afc5dc}.readerCard .right{float:right;color:#5ee8aa}.readerCard:hover{border-color:#78bce8}
+.empty{color:#aec7db;border:1px dashed #54728f;padding:24px;text-align:center;border-radius:15px;font-size:14px;line-height:1.6}
+.sent{font-size:21px;line-height:1.5;font-weight:750}.muted{color:#a8bdd1}.foot{font-size:12px;color:#a5b8ca;line-height:1.6;border-top:1px solid #24435e;padding-top:18px;margin-top:28px}.ai{border-left:4px solid #7295b5}.ai h3{margin:4px 0}.ai .planned{color:#edcf81;font-weight:800}
+@media(max-width:450px){.two{grid-template-columns:1fr}.panel{padding:16px}.readerGrid{grid-template-columns:1fr 1fr;gap:8px}.readerCard{padding:12px;min-height:87px}.readerCard .name{font-size:14px}}
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js" integrity="sha512-XEKeWX+mI3Ov+tg2evDlVQFzVOIp4T8J3cNcCEPaEUGpxJV3eZaN8rHuvnFPvQpGJBHPmrozJDMpm2xcDvtmyQ==" crossorigin="anonymous"></script>
+</head>
+<body>
+<main>
+<div class="brand"><div class="logo"><span>🥷🌙</span> NINJA MOONS</div><span class="small">CLASSROOM AUDIO LAB</span></div>
+<section id="home">
+<span class="tag">MULTI-READER • ADULT DEMO</span>
+<h1>One class.<br>One voice at a time.</h1>
+<p class="lead">The teacher starts the dashboard. Each reader taps one button. The teacher taps anyone to hear that reader.</p>
+<div class="roles"><a class="role" href="/teacher.html">🎧 Open Teacher Dashboard</a><a class="role alt" href="/student.html">🎤 Open Reader Microphone</a></div>
+<div class="panel"><div class="label">How the classroom works</div>
+<p>Up to 30 reader devices can appear. You can switch between them with one tap. Everyone else's microphone stays available, but only your selected reader streams live audio to you.</p></div>
+<div class="foot"><b>Adult-only test.</b> This demonstration has no school login, private rooms, or identity verification. Do not use actual students or private information until those safeguards are built. No audio is intentionally recorded or stored.</div>
+</section>
+<section id="teacher" class="hidden">
+<a href="/" class="back">‹ Back</a>
+<span class="tag">TEACHER DASHBOARD • UP TO 30 READERS</span>
+<h1>Hear your class.</h1>
+<p class="lead">Tap Start Class. Readers will appear automatically. Tap a reader to listen.</p>
+<button id="teacherStart">🎧 Start Class Listening</button>
+<button id="teacherStop" class="danger hidden">■ Stop Listening & Close Class</button>
+<div class="panel"><div class="state"><div class="dot" id="teacherDot"></div><div><strong id="teacherStatus">Ready to start</strong><small id="teacherDetail">Start here. Each reader can start on their own device.</small></div></div><div class="stats"><span class="pill" id="readerCount">0 / 30 connected</span><span class="pill" id="selectedLabel">No reader selected</span></div></div>
+<div class="panel"><div class="label">Readers — tap to listen</div><div class="readerGrid" id="readerGrid"></div><div class="empty" id="emptyReaders">No readers connected yet.<br>Each reader opens the Reader page and taps Start Microphone.</div></div>
+<div class="panel hidden" id="selectedBox"><div class="label">Now listening</div><div class="sent" id="selectedName">Reader</div><p class="muted" id="selectedSentence">Waiting for the reader's sentence.</p><div class="two"><button id="toggleMute" class="secondary">🔊 Mute Speaker</button><button id="retrySound" class="ghost">▶ Enable Sound</button></div></div>
+<div class="panel ai"><div class="label">CHATGPT READING COACH</div><h3>Coming after audio testing</h3><p><span class="planned">AI analysis is OFF.</span> No audio or transcripts are being sent to an AI service. First we verify reader switching; then we can add opt-in, age-appropriate feedback with school-approved permissions.</p></div>
+<div class="foot">This shared pilot room has no authentication and is not safe for real student use. Names are generic labels (Reader 01, Reader 02…). WebRTC connections may require TURN on school networks. Audio is not recorded by this application.</div>
+</section>
+<section id="reader" class="hidden">
+<a href="/" class="back">‹ Back</a>
+<span class="tag">READER • MICROPHONE</span><h1>Read aloud.</h1>
+<p class="lead">Tap Start Microphone and allow access if asked. Your teacher sees you automatically.</p>
+<button id="readerStart">🎤 Start Microphone</button>
+<button id="readerStop" class="danger hidden">■ Stop Microphone</button>
+<div class="panel"><div class="state"><div class="dot" id="readerDot"></div><div><strong id="readerStatus">Microphone is off</strong><small id="readerDetail">When the teacher starts listening, your device can connect automatically.</small></div></div><div class="stats"><span class="pill" id="readerBadge">Waiting to start</span></div></div>
+<div class="panel"><div class="label">Practice sentence</div><div class="sent" id="readerSentence">The spaceship traveled among the stars.</div><button class="secondary" id="nextSentence" style="margin-top:20px">Next sentence →</button></div>
+<div class="foot">Adult-only test. Your microphone streams only when the teacher selects your device. Stop Microphone turns off the device's media tracks. This app does not record audio or send it to an AI service.</div>
+</section>
+</main>
+<script>
+(function(){
+"use strict";
+const path=window.location.pathname;
+const role=path.endsWith("/teacher.html")||path.endsWith("/teacher")?"teacher":path.endsWith("/student.html")||path.endsWith("/reader")?"reader":"home";
+document.getElementById(role).classList.remove("hidden");
+if(role==="home")return;
+const $=id=>document.getElementById(id);
+const TEACHER_ID="ninja-classroom-demo-t-7ff381a9";
+const maxReaders=30;
+const peerSettings={host:"0.peerjs.com",port:443,path:"/",secure:true,config:{iceServers:[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"}]}};
+let teacherActive=false,readerActive=false,teacherPeer=null,readerPeer=null,readerConn=null,mic=null,call=null,speakerCtx=null,source=null,gainNode=null,speakerMuted=false;
+let readers=new Map(),selectedId=null,nextNumber=0,epoch=0,connectTimer=null,connectDeadline=null,readerCall=null;
+let studentLabel="Unassigned",currentSentence=0,readerIsSelected=false;
+const sentences=["The spaceship traveled among the stars.","The explorers saw a beautiful new moon.","A small garden grew inside the space station.","Everyone was excited to learn something new."];
+function ui(who,title,detail,tone){$(who+"Status").textContent=title;$(who+"Detail").textContent=detail;$(who+"Dot").className="dot "+(tone||"");}
+function err(e){return (e&&e.type==="unavailable-id")?"Another teacher dashboard is open. Close it and try again.":(e&&e.message)||"Check your connection and try again.";}
+function send(conn,msg){if(conn&&conn.open){try{conn.send(msg)}catch(e){}}}
+function closeMedia(){try{call&&call.close()}catch(e){}call=null;if(source){try{source.disconnect()}catch(e){}source=null;}}
+function drawReaders(){
+ const grid=$("readerGrid");grid.replaceChildren();
+ $("readerCount").textContent=readers.size+" / "+maxReaders+" connected";
+ $("emptyReaders").classList.toggle("hidden",readers.size>0);
+ $("selectedLabel").textContent=selectedId&&readers.has(selectedId)?readers.get(selectedId).label:"No reader selected";
+ for(const [id,r] of readers){
+  const btn=document.createElement("button");btn.type="button";btn.className="readerCard"+(selectedId===id?" selected":"");
+  const top=document.createElement("span");top.className="name";top.textContent=r.label+(selectedId===id?"  ✓":"");
+  const bottom=document.createElement("small");bottom.textContent=selectedId===id?(call?"🔊 Listening / connecting":"🎧 Selected"):"Tap to hear";
+  btn.append(top,bottom);btn.addEventListener("click",()=>selectReader(id,true));grid.appendChild(btn);
+ }
+ if(selectedId&&readers.has(selectedId)){
+  $("selectedBox").classList.remove("hidden");
+  $("selectedName").textContent=readers.get(selectedId).label;
+  $("selectedSentence").textContent=readers.get(selectedId).sentence||"Waiting for reader's sentence…";
+ }else $("selectedBox").classList.add("hidden");
+}
+function selectReader(id,viaTap){
+ if(!teacherActive||!readers.has(id))return;
+ if(selectedId===id){if(viaTap&&speakerCtx)void speakerCtx.resume();return;}
+ const previous=readers.get(selectedId);
+ if(previous)send(previous.conn,{type:"pause"});
+ closeMedia();
+ selectedId=id;drawReaders();
+ const current=readers.get(id);
+ if(current)send(current.conn,{type:"listen"});
+ ui("teacher","Connecting to "+current.label,"Your selected reader will stream sound to this device.","wait");
+}
+function removeReader(id,conn){
+ const r=readers.get(id);if(!r||r.conn!==conn)return;
+ readers.delete(id);
+ if(selectedId===id){closeMedia();selectedId=null;const first=readers.keys().next();if(!first.done)selectReader(first.value,false);else ui("teacher","Waiting for readers","Readers will appear here when they tap Start Microphone.","wait");}
+ drawReaders();
+}
+async function startTeacher(){
+ if(teacherActive)return;teacherActive=true;const currentEpoch=++epoch;
+ $("teacherStart").classList.add("hidden");$("teacherStop").classList.remove("hidden");
+ ui("teacher","Starting classroom…","Connecting to the listening service.","wait");
+ try{
+  if(typeof Peer!=="function")throw Error("Audio library failed to load. Check your internet connection.");
+  speakerCtx=new (window.AudioContext||window.webkitAudioContext)();
+  gainNode=speakerCtx.createGain();gainNode.connect(speakerCtx.destination);speakerMuted=false;gainNode.gain.value=1;
+  await speakerCtx.resume();
+  if(!teacherActive||epoch!==currentEpoch)return;
+  teacherPeer=new Peer(TEACHER_ID,peerSettings);
+  teacherPeer.on("open",()=>{
+   if(!teacherActive||epoch!==currentEpoch)return;
+   ui("teacher","Classroom is ready","Ask readers to tap Start Microphone. They appear automatically.","wait");
+  });
+  teacherPeer.on("connection",c=>{
+   if(!teacherActive){c.close();return;}
+   c.on("open",()=>{
+    if(!teacherActive)return;
+    if(readers.size>=maxReaders&&!readers.has(c.peer)){send(c,{type:"full"});c.close();return;}
+    const prior=readers.get(c.peer);if(prior&&prior.conn!==c){try{prior.conn.close()}catch(e){}}
+    if(!prior)nextNumber++;
+    const label=prior?prior.label:"Reader "+String(nextNumber).padStart(2,"0");
+    const r={conn:c,label:label,sentence:""};readers.set(c.peer,r);
+    send(c,{type:"assigned",label:label});
+    drawReaders();
+    if(!selectedId)selectReader(c.peer,false);
+    else if(selectedId===c.peer)send(c,{type:"listen"});
+    else send(c,{type:"standby"});
+   });
+   c.on("data",msg=>{
+    if(!teacherActive||!msg||typeof msg!=="object")return;
+    const r=readers.get(c.peer);if(!r||r.conn!==c)return;
+    if(msg.type==="sentence"&&typeof msg.text==="string"){r.sentence=msg.text.slice(0,350);if(c.peer===selectedId)drawReaders();}
+    if(msg.type==="ready"&&c.peer===selectedId)send(c,{type:"listen"});
+   });
+   c.on("close",()=>removeReader(c.peer,c));
+   c.on("error",()=>removeReader(c.peer,c));
+  });
+  teacherPeer.on("call",incoming=>{
+   if(!teacherActive||!readers.has(incoming.peer)||selectedId!==incoming.peer){try{incoming.close()}catch(e){}return;}
+   closeMedia();call=incoming;
+   incoming.on("stream",async stream=>{
+    if(!teacherActive||call!==incoming||selectedId!==incoming.peer)return;
+    try{
+     if(source)source.disconnect();
+     source=speakerCtx.createMediaStreamSource(stream);source.connect(gainNode);
+     await speakerCtx.resume();
+     if(speakerCtx.state!=="running")$("retrySound").classList.remove("hidden");
+     ui("teacher","Listening: "+readers.get(selectedId).label,"Only the selected reader is being streamed.","on");
+     drawReaders();
+    }catch(e){ui("teacher","Reader connected","Tap Enable Sound if necessary.","wait");}
+   });
+   incoming.on("close",()=>{if(call!==incoming)return;closeMedia();if(teacherActive&&selectedId){ui("teacher","Reader paused","Tap that reader again if you need to reconnect.","wait");drawReaders();}});
+   incoming.on("error",()=>{if(teacherActive)ui("teacher","Audio connection interrupted","Select another reader or try again.","err");});
+   incoming.answer();
+  });
+  teacherPeer.on("error",e=>{if(teacherActive)ui("teacher","Connection problem",err(e),"err");});
+  teacherPeer.on("disconnected",()=>{if(teacherActive){ui("teacher","Reconnecting…","Check the network connection.","wait");try{teacherPeer.reconnect()}catch(e){}}});
+ }catch(e){stopTeacher(false);ui("teacher","Unable to start",err(e),"err");}
+}
+function stopTeacher(clear=true){
+ teacherActive=false;epoch++;closeMedia();
+ for(const r of readers.values()){send(r.conn,{type:"pause"});try{r.conn.close()}catch(e){}}
+ readers.clear();selectedId=null;
+ try{teacherPeer&&teacherPeer.destroy()}catch(e){}teacherPeer=null;
+ try{speakerCtx&&speakerCtx.close()}catch(e){}speakerCtx=null;gainNode=null;
+ $("teacherStart").classList.remove("hidden");$("teacherStop").classList.add("hidden");
+ drawReaders();
+ if(clear)ui("teacher","Class stopped","Start Class again when ready.");
+}
+function switchMute(){
+ speakerMuted=!speakerMuted;if(gainNode)gainNode.gain.value=speakerMuted?0:1;
+ $("toggleMute").textContent=speakerMuted?"🔇 Unmute Speaker":"🔊 Mute Speaker";
+}
+function stopCallStudent(){
+ try{readerCall&&readerCall.close()}catch(e){}readerCall=null;readerIsSelected=false;
+}
+function readerSendSentence(){send(readerConn,{type:"sentence",text:sentences[currentSentence]});}
+function checkReaderConnection(){
+ if(!readerActive||!readerPeer||!readerPeer.open||(readerConn&&(readerConn.open||readerConn._attempting)))return;
+ const c=readerPeer.connect(TEACHER_ID,{reliable:true});c._attempting=true;readerConn=c;
+ const timeout=setTimeout(()=>{if(!c.open){c._attempting=false;try{c.close()}catch(e){}if(readerConn===c)readerConn=null;}},4800);
+ c.on("open",()=>{
+  clearTimeout(timeout);c._attempting=false;
+  if(!readerActive){c.close();return;}
+  readerSendSentence();
+  send(c,{type:"ready"});
+  ui("reader","Connected to classroom","Microphone is on. The teacher can select you to listen.","on");
+ });
+ c.on("data",msg=>{
+  if(!readerActive||readerConn!==c||!msg||typeof msg!=="object")return;
+  if(msg.type==="assigned"){studentLabel=String(msg.label).slice(0,50);$("readerBadge").textContent=studentLabel;readerSendSentence();}
+  if(msg.type==="standby"){stopCallStudent();ui("reader","Microphone ready","Teacher is listening to another reader. Keep the page open.","on");}
+  if(msg.type==="pause"){stopCallStudent();ui("reader","Microphone ready","Teacher switched to another reader.","on");}
+  if(msg.type==="listen"){
+   if(readerCall&&readerCall.open){return;}
+   stopCallStudent();readerIsSelected=true;
+   const active=readerPeer.call(TEACHER_ID,mic);
+   if(!active){readerIsSelected=false;return;}
+   readerCall=active;
+   ui("reader","Teacher selected you","Your live voice is connecting. Speak toward the microphone.","wait");
+   active.on("close",()=>{
+    if(readerCall!==active)return;readerCall=null;readerIsSelected=false;
+    if(readerActive){ui("reader","Microphone ready","Waiting for the teacher to listen again.","on");send(c,{type:"ready"});}
+   });
+   active.on("error",()=>{if(readerCall===active){readerCall=null;readerIsSelected=false;}if(readerActive)ui("reader","Audio retry needed","Teacher can switch to you again.","wait");});
+   active.on("willCloseOnRemote",()=>{if(readerActive&&readerCall===active)ui("reader","Teacher is listening","Read aloud at your own pace.","on");});
+  }
+  if(msg.type==="full"){ui("reader","Classroom full","The demo already has 30 connected readers.","err");}
+ });
+ c.on("close",()=>{
+  clearTimeout(timeout);c._attempting=false;if(readerConn!==c)return;
+  readerConn=null;stopCallStudent();
+  if(readerActive)ui("reader","Waiting for teacher","Microphone remains on. We'll reconnect automatically.","wait");
+ });
+ c.on("error",()=>{clearTimeout(timeout);c._attempting=false;if(readerConn===c)readerConn=null;});
+}
+async function startReader(){
+ if(readerActive)return;readerActive=true;const currentEpoch=++epoch;
+ $("readerStart").classList.add("hidden");$("readerStop").classList.remove("hidden");
+ ui("reader","Requesting microphone…","Allow microphone permission if prompted.","wait");
+ try{
+  if(typeof Peer!=="function")throw Error("Audio library failed to load. Check your internet.");
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)throw Error("Microphone unavailable. Use a modern browser on HTTPS.");
+  mic=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
+  if(!readerActive||epoch!==currentEpoch){mic.getTracks().forEach(x=>x.stop());return;}
+  $("readerBadge").textContent="Microphone on";
+  ui("reader","Microphone is on","Waiting for the teacher dashboard. Connection happens automatically.","wait");
+  readerPeer=new Peer(undefined,peerSettings);
+  readerPeer.on("open",()=>{if(readerActive){checkReaderConnection();connectTimer=setInterval(checkReaderConnection,3000);}});
+  readerPeer.on("error",e=>{if(readerActive&&e.type!=="peer-unavailable")ui("reader","Connection problem",err(e),"err");});
+  readerPeer.on("disconnected",()=>{if(readerActive){ui("reader","Reconnecting…","Your microphone is still on.","wait");try{readerPeer.reconnect()}catch(e){}}});
+  mic.getAudioTracks()[0].addEventListener("ended",()=>{if(readerActive)stopReader();});
+ }catch(e){stopReader(false);ui("reader","Could not start microphone",err(e),"err");}
+}
+function stopReader(clear=true){
+ readerActive=false;epoch++;clearInterval(connectTimer);connectTimer=null;
+ stopCallStudent();try{readerConn&&readerConn.close()}catch(e){}readerConn=null;
+ try{readerPeer&&readerPeer.destroy()}catch(e){}readerPeer=null;
+ if(mic){for(const t of mic.getTracks())t.stop();mic=null;}
+ $("readerStart").classList.remove("hidden");$("readerStop").classList.add("hidden");$("readerBadge").textContent="Microphone off";
+ if(clear)ui("reader","Microphone is off","Tap Start Microphone whenever you're ready.");
+}
+if(role==="teacher"){
+ $("teacherStart").addEventListener("click",startTeacher);$("teacherStop").addEventListener("click",()=>stopTeacher());
+ $("toggleMute").addEventListener("click",switchMute);
+ $("retrySound").addEventListener("click",async()=>{try{await speakerCtx?.resume();if(speakerCtx?.state==="running")$("retrySound").textContent="✓ Sound enabled";}catch(e){}});
+ drawReaders();
+}else{
+ $("readerStart").addEventListener("click",startReader);$("readerStop").addEventListener("click",()=>stopReader());
+ $("nextSentence").addEventListener("click",()=>{currentSentence=(currentSentence+1)%sentences.length;$("readerSentence").textContent=sentences[currentSentence];readerSendSentence();});
+}
+window.addEventListener("pagehide",()=>{if(role==="teacher")stopTeacher(false);else stopReader(false);});
+})();
+</script>
+</body>
+</html>
