@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#071328">
+<title>NINJA MOONS • One-Tap Live Audio Test</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#f4f8ff;background:#071328;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 65% -15%,#183c6c 0,transparent 60%),#071328}
+main{max-width:560px;margin:auto;padding:30px 19px 48px}a{color:inherit;text-decoration:none}.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:.13em;font-size:15px}.mark{font-size:26px}.tag{display:inline-flex;padding:7px 12px;border:1px solid #386488;background:#183652;color:#aadeff;border-radius:30px;font-size:11px;letter-spacing:.14em;font-weight:800;margin-top:32px}
+h1{font-size:clamp(32px,8vw,46px);line-height:1.08;margin:16px 0 11px;letter-spacing:-.045em}p{line-height:1.6;color:#b9cadf;font-size:15px}p.lead{font-size:17px;margin:0 0 25px}
+.panel{background:#101f36;border:1px solid #2c4867;border-radius:20px;padding:20px;margin:18px 0;box-shadow:0 12px 34px #0003}
+button,.roleLink{appearance:none;border:0;border-radius:15px;background:#55d3fd;color:#061827;font-weight:850;font-size:18px;padding:19px 20px;min-height:60px;width:100%;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:11px;box-shadow:0 6px 20px #48bde137}
+button:disabled{opacity:.65;cursor:wait}.secondary{background:#283a52;color:#f3f8ff;border:1px solid #55708e;box-shadow:none;font-size:16px}.roleLink{margin:14px 0}.roleLink.reader{background:#caee8d;color:#1c340b;box-shadow:0 6px 20px #a6ce6340}
+.help{font-size:13px;color:#99abc3;text-align:center;margin-top:13px}.status{display:flex;align-items:flex-start;gap:12px}.dot{width:11px;height:11px;flex-shrink:0;border-radius:50%;background:#74869e;margin-top:5px;box-shadow:0 0 0 5px #7187a41a}.dot.waiting{background:#ffca6f;box-shadow:0 0 0 5px #ffca6f20}.dot.live{background:#5bdf9b;box-shadow:0 0 0 5px #5bdf9b20}.dot.error{background:#ff7689;box-shadow:0 0 0 5px #ff768920}
+.status strong{display:block;font-size:17px;margin-bottom:4px}.status small{display:block;color:#afc1d8;line-height:1.55;font-size:13px}
+.hidden{display:none!important}.back{display:inline-flex;align-items:center;font-size:14px;color:#acd3f0;margin-top:26px}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:#99bbd6;font-weight:800;margin-bottom:11px}.sentence{font-size:19px;line-height:1.45;font-weight:650;color:white}
+.note{border-top:1px solid #2a415e;padding-top:17px;margin-top:24px;font-size:12px;line-height:1.65;color:#9cb0c7}
+.step{display:flex;gap:12px;margin:17px 0}.num{border:1px solid #53718d;border-radius:12px;min-width:32px;height:32px;display:grid;place-items:center;font-weight:800;color:#8bdcff}.step b{display:block}.step span{font-size:13px;color:#adbed2}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js" integrity="sha512-XEKeWX+mI3Ov+tg2evDlVQFzVOIp4T8J3cNcCEPaEUGpxJV3eZaN8rHuvnFPvQpGJBHPmrozJDMpm2xcDvtmyQ==" crossorigin="anonymous"></script>
+</head>
+<body>
+<main>
+<div class="brand"><span class="mark">🥷🌙</span> NINJA MOONS</div>
+<section id="home">
+<span class="tag">ONE-TAP AUDIO • TEST VERSION</span>
+<h1>Hear the reader.<br>Nothing to pair.</h1>
+<p class="lead">Two devices. Two buttons. No codes, no messages, no copying or pasting.</p>
+<a class="roleLink" href="/teacher.html">🎧 I'm the teacher</a>
+<a class="roleLink reader" href="/student.html">🎤 I'm the reader</a>
+<div class="panel">
+<div class="label">How it works</div>
+<div class="step"><div class="num">1</div><div><b>Teacher taps Listen</b><span>On your iPhone or computer.</span></div></div>
+<div class="step"><div class="num">2</div><div><b>Reader taps Start Microphone</b><span>On a second device. Allow microphone access if asked.</span></div></div>
+<div class="step"><div class="num">3</div><div><b>Speak and listen</b><span>The connection is automatic. Either person can start first.</span></div></div>
+</div>
+<p class="note">Adult-only prototype. No teacher login or private class rooms yet. Do not use with students. Live WebRTC audio is not recorded or saved by this app; it uses a third-party signaling service and may not connect on networks that block WebRTC.</p>
+</section>
+<section id="teacher" class="hidden">
+<a class="back" href="/">‹ Choose another role</a>
+<span class="tag">TEACHER • LIVE LISTENING</span>
+<h1>Hear your reader.</h1>
+<p class="lead">Put in your earbuds. Tap the button. That's all you do.</p>
+<button id="listenBtn" type="button">🎧 Start Listening</button>
+<button class="secondary hidden" id="stopListenBtn" type="button" style="margin-top:12px">■ Stop Listening</button>
+<div class="panel"><div class="status"><div id="teacherDot" class="dot"></div><div><strong id="teacherState">Ready to listen</strong><small id="teacherDetail">Start on this device, then have the reader tap Start Microphone on the other device.</small></div></div></div>
+<div class="panel hidden" id="teacherReading"><div class="label">Sentence reader is viewing</div><div class="sentence" id="teacherSentence">...</div></div>
+<button class="secondary hidden" id="soundBtn" type="button">🔊 Enable sound</button>
+<p class="help">Your microphone is not used. Only the reader's microphone is transmitted.</p>
+<p class="note">Adult-only test: this shared demo room has no login, so it is not appropriate for classroom use. WebRTC may need a TURN server on restrictive school Wi-Fi.</p>
+</section>
+<section id="reader" class="hidden">
+<a class="back" href="/">‹ Choose another role</a>
+<span class="tag">READER • MICROPHONE</span>
+<h1>Read aloud.</h1>
+<p class="lead">Tap Start. Allow the microphone if your device asks. Your voice connects automatically.</p>
+<button id="readBtn" type="button">🎤 Start Microphone</button>
+<button id="stopReadBtn" type="button" class="secondary hidden" style="margin-top:12px">■ Stop Microphone</button>
+<div class="panel"><div class="status"><div id="readerDot" class="dot"></div><div><strong id="readerState">Microphone is off</strong><small id="readerDetail">The teacher can tap Start Listening on a different device.</small></div></div></div>
+<div class="panel"><div class="label">Practice sentence</div><div class="sentence" id="readerSentence">The spaceship traveled among the stars.</div><button id="nextBtn" class="secondary" type="button" style="min-height:44px;padding:12px;margin-top:22px;font-size:14px">Next sentence →</button></div>
+<p class="help">Tap Stop Microphone to turn it off immediately.</p>
+<p class="note">Adult-only test: no account verification is available yet. This website does not record or store the audio. Do not use it with students.</p>
+</section>
+</main>
+<script>
+(()=>{
+"use strict";
+const role=/teacher(?:\.html)?\/?$/.test(location.pathname)?"teacher":/student(?:\.html)?\/?$|reader\/?$/.test(location.pathname)?"reader":"home";
+document.getElementById(role).classList.remove("hidden");
+if(role==="home")return;
+const ROOM="ninja-moons-adult-prototype-82c4f09ab753ee120d3a";
+const TEACHER_ID="ninjamoons-t-"+ROOM.split("-").pop();
+const iceConfig={iceServers:[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"}]};
+const peerOptions={host:"0.peerjs.com",port:443,path:"/",secure:true,config:iceConfig};
+const $=id=>document.getElementById(id);
+let session=0,peer=null,connection=null,call=null,mic=null,audioContext=null,audioSource=null;
+let retryTimer=null,attemptTimer=null,readerConnected=false,teacherRunning=false,readerRunning=false,connecting=false;
+let currentSentence=0;
+const sentences=["The spaceship traveled among the stars.","The explorers saw a beautiful new moon.","A small garden grew inside the space station.","Everyone was excited to learn something new."];
+const setState=(who,title,detail,tone="")=>{ $(who+"State").textContent=title;$(who+"Detail").textContent=detail;$(who+"Dot").className="dot "+tone;};
+const clearTimers=()=>{clearInterval(retryTimer);clearTimeout(attemptTimer);retryTimer=null;attemptTimer=null;};
+const closeConnection=()=>{try{call?.close()}catch(e){}call=null;try{connection?.close()}catch(e){}connection=null;};
+const tearDown=()=>{session++;clearTimers();closeConnection();try{peer?.destroy()}catch(e){}peer=null;readerConnected=false;connecting=false;};
+const errorText=e=>e?.type==="network"?"Connection to signaling service is unavailable. Check internet/Wi-Fi.":e?.type==="unavailable-id"?"A teacher is already listening on another device. Close that teacher page first.":e?.message||"Connection issue. Try again.";
+function onTeacherCall(incoming){
+ if(!teacherRunning){incoming.close();return;}
+ try{call?.close()}catch(e){}
+ call=incoming;
+ setState("teacher","Connecting sound…","The reader has started speaking. Connecting their audio.","waiting");
+ incoming.on("stream",async stream=>{
+   if(!teacherRunning||call!==incoming)return;
+   try{
+     if(!audioContext)audioContext=new (window.AudioContext||window.webkitAudioContext)();
+     if(audioSource){try{audioSource.disconnect()}catch(e){}}
+     audioSource=audioContext.createMediaStreamSource(stream);
+     audioSource.connect(audioContext.destination);
+     await audioContext.resume();
+     if(audioContext.state!=="running")$("soundBtn").classList.remove("hidden");
+     else $("soundBtn").classList.add("hidden");
+     setState("teacher","Live: reader connected","You should now hear the reader. Adjust your volume if needed.","live");
+   }catch(e){$("soundBtn").classList.remove("hidden");setState("teacher","Reader connected","Tap Enable sound if the audio is not playing.","waiting");}
+ });
+ incoming.on("close",()=>{if(call!==incoming)return;call=null;if(audioSource){try{audioSource.disconnect()}catch(e){}audioSource=null;}if(teacherRunning){setState("teacher","Waiting for reader","The reader disconnected. They can tap Start Microphone again.","waiting");$("teacherReading").classList.add("hidden");}});
+ incoming.on("error",()=>{if(teacherRunning)setState("teacher","Audio connection problem","Both devices can tap Stop and start again.","error");});
+ incoming.answer();
+}
+async function startTeacher(){
+ if(teacherRunning)return;
+ teacherRunning=true;const mySession=++session;
+ $("listenBtn").classList.add("hidden");$("stopListenBtn").classList.remove("hidden");
+ setState("teacher","Starting listening…","Connecting to the audio service.","waiting");
+ try{
+   if(!window.Peer)throw Error("Audio library did not load. Check your internet connection.");
+   audioContext=new (window.AudioContext||window.webkitAudioContext)();
+   await audioContext.resume();
+   if(!teacherRunning||session!==mySession)return;
+   peer=new Peer(TEACHER_ID,peerOptions);
+   peer.on("open",()=>{
+     if(!teacherRunning||session!==mySession)return;
+     setState("teacher","Listening is on","Waiting for the reader. Ask them to tap Start Microphone.","waiting");
+   });
+   peer.on("connection",c=>{
+     if(!teacherRunning){c.close();return;}
+     connection=c;
+     c.on("open",()=>{if(teacherRunning){c.send({type:"ready"});}});
+     c.on("data",msg=>{
+       if(msg?.type==="sentence" && typeof msg.text==="string"){
+         $("teacherSentence").textContent=msg.text.slice(0,400);
+         $("teacherReading").classList.remove("hidden");
+       }
+     });
+   });
+   peer.on("call",onTeacherCall);
+   peer.on("error",e=>{
+     if(!teacherRunning)return;
+     setState("teacher","Connection problem",errorText(e),"error");
+   });
+   peer.on("disconnected",()=>{if(teacherRunning)setState("teacher","Reconnecting…","Network connection was interrupted.","waiting");});
+ }catch(e){setState("teacher","Could not start",errorText(e),"error");stopTeacher(false);}
+}
+function stopTeacher(clear=true){
+ teacherRunning=false;tearDown();
+ if(audioSource){try{audioSource.disconnect()}catch(e){}audioSource=null;}
+ if(audioContext){try{audioContext.close()}catch(e){}audioContext=null;}
+ $("listenBtn").classList.remove("hidden");$("stopListenBtn").classList.add("hidden");$("soundBtn").classList.add("hidden");$("teacherReading").classList.add("hidden");
+ if(clear)setState("teacher","Listening stopped","Tap Start Listening whenever you're ready.");
+}
+$("listenBtn")?.addEventListener("click",startTeacher);
+$("stopListenBtn")?.addEventListener("click",()=>stopTeacher());
+$("soundBtn")?.addEventListener("click",async()=>{try{await audioContext?.resume();if(audioContext?.state==="running")$("soundBtn").classList.add("hidden");}catch(e){}});
+function sendSentence(){if(connection?.open){try{connection.send({type:"sentence",text:sentences[currentSentence]})}catch(e){}}}
+function attemptReader(){
+ if(!readerRunning||!peer?.open||readerConnected||connecting)return;
+ connecting=true;
+ const c=peer.connect(TEACHER_ID,{reliable:true});
+ connection=c;
+ let finished=false;
+ attemptTimer=setTimeout(()=>{if(!finished){try{c.close()}catch(e){}connecting=false;}},4500);
+ c.on("open",()=>{
+   if(!readerRunning){c.close();return;}
+   finished=true;clearTimeout(attemptTimer);connecting=false;
+   c.send({type:"hello"});
+   sendSentence();
+ });
+ c.on("data",msg=>{
+   if(!readerRunning||msg?.type!=="ready"||readerConnected)return;
+   readerConnected=true;
+   setState("reader","Connecting to teacher…","Keep reading aloud while the audio connects.","waiting");
+   const active=peer.call(TEACHER_ID,mic);
+   if(!active){readerConnected=false;return;}
+   call=active;
+   active.on("close",()=>{
+     if(call!==active)return;
+     call=null;readerConnected=false;
+     if(readerRunning)setState("reader","Waiting for teacher","Microphone is still on. We'll reconnect automatically.","waiting");
+   });
+   active.on("error",()=>{readerConnected=false;if(readerRunning)setState("reader","Reconnecting…","Keep the page open. Trying again.","waiting");});
+   // On the student side, an SDP answer indicates the receiver accepted the call.
+   setState("reader","Microphone is on","Teacher is connecting. Speak toward your device.","waiting");
+   c.send({type:"sentence",text:sentences[currentSentence]});
+ });
+ c.on("close",()=>{
+   if(connection===c)connection=null;
+   connecting=false;readerConnected=false;
+   if(readerRunning)setState("reader","Waiting for teacher","Microphone remains on. Connection will retry automatically.","waiting");
+ });
+ c.on("error",()=>{connecting=false;});
+}
+async function startReader(){
+ if(readerRunning)return;
+ readerRunning=true;const mySession=++session;
+ $("readBtn").classList.add("hidden");$("stopReadBtn").classList.remove("hidden");
+ setState("reader","Requesting microphone…","Allow microphone access if your device asks.","waiting");
+ try{
+   if(!window.Peer)throw Error("Audio library did not load. Check internet or school Wi-Fi.");
+   if(!navigator.mediaDevices?.getUserMedia)throw Error("This browser does not allow microphone access. Try Chrome or Safari over HTTPS.");
+   mic=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
+   if(!readerRunning||session!==mySession){mic.getTracks().forEach(t=>t.stop());return;}
+   setState("reader","Microphone is on","Waiting for the teacher. Your voice will connect automatically.","waiting");
+   peer=new Peer(undefined,peerOptions);
+   peer.on("open",()=>{if(readerRunning){attemptReader();retryTimer=setInterval(attemptReader,2600);}});
+   peer.on("error",e=>{if(!readerRunning)return;if(e?.type!=="peer-unavailable")setState("reader","Connection problem",errorText(e),"error");});
+   peer.on("disconnected",()=>{if(readerRunning)setState("reader","Reconnecting…","Checking Wi-Fi connection.","waiting");});
+   mic.getAudioTracks()[0]?.addEventListener("ended",()=>{if(readerRunning)stopReader();});
+ }catch(e){
+   const err=errorText(e);
+   stopReader(false);
+   setState("reader","Microphone could not start",err,"error");
+ }
+}
+function stopReader(clear=true){
+ readerRunning=false;tearDown();
+ if(mic){mic.getTracks().forEach(t=>t.stop());mic=null;}
+ $("readBtn").classList.remove("hidden");$("stopReadBtn").classList.add("hidden");
+ if(clear)setState("reader","Microphone is off","Tap Start Microphone to read again.");
+}
+$("readBtn")?.addEventListener("click",startReader);
+$("stopReadBtn")?.addEventListener("click",()=>stopReader());
+$("nextBtn")?.addEventListener("click",()=>{currentSentence=(currentSentence+1)%sentences.length;$("readerSentence").textContent=sentences[currentSentence];sendSentence();});
+window.addEventListener("pagehide",()=>{if(role==="teacher")stopTeacher(false);else stopReader(false);});
+})();
+</script>
+</body></html>
