@@ -1,0 +1,204 @@
+{
+  "title": "The Zoom Trip",
+  "collection": "NINJA MOONS",
+  "readingLevel": "Kindergarten",
+  "version": "1.0.0",
+  "status": "ready",
+  "imageStatus": "complete",
+  "pages": [
+    {
+      "page": 1,
+      "lines": [
+        "Kai is a ninja.",
+        "Mira is a ninja."
+      ],
+      "image": "images/page-01.webp",
+      "sha256": "c522014301c38d0622150be207d51658f4f6bba91e34a608ffb320dfbb4eaf7c",
+      "imageBytes": 166422,
+      "alt": "Kai in blue and Mira in pink ninja outfits smile at their beautiful sunny academy."
+    },
+    {
+      "page": 2,
+      "lines": [
+        "“Look!” said Mira.",
+        "“A ship!”"
+      ],
+      "image": "images/page-02.webp",
+      "sha256": "6c3d8b7590abfa6dec0b0d4db80a2435f97e77c1a929a7fb9c44a9fc6d9bfa49",
+      "imageBytes": 201870,
+      "alt": "Kai and Mira notice a blue spaceship flying high over the academy."
+    },
+    {
+      "page": 3,
+      "lines": [
+        "The ship is big.",
+        "The ship is blue."
+      ],
+      "image": "images/page-03.webp",
+      "sha256": "baeb81b4c05d1c58a4949e4e8262f3b1db7326d846540681cda041c999a31530",
+      "imageBytes": 219604,
+      "alt": "The large blue spaceship rests by the academy, ready for a friendly adventure."
+    },
+    {
+      "page": 4,
+      "lines": [
+        "Pip is a little robot.",
+        "“Hop in!” said Pip."
+      ],
+      "image": "images/page-04.webp",
+      "sha256": "6f1f3ab10877c1ba7b1c470c66743c5e912bc29534985cbb69da38eb812abd8c",
+      "imageBytes": 176076,
+      "alt": "Pip the small white robot welcomes Kai and Mira aboard the ship."
+    },
+    {
+      "page": 5,
+      "lines": [
+        "“We go to Nox. Nox is a moon.”",
+        "“Is it far?”",
+        "“Far, far, far!”"
+      ],
+      "image": "images/page-05.webp",
+      "sha256": "e79d930fb1fdd8aff8857a0e710d942617486eab07bf076e69f16381546a6e66",
+      "imageBytes": 151642,
+      "alt": "Kai, Mira and Pip study a glowing map showing the faraway moon Nox."
+    },
+    {
+      "page": 6,
+      "lines": [
+        "Pip has a clock.",
+        "“We get there in seven!”",
+        "“Just seven?” said Kai.",
+        "“Just seven!”"
+      ],
+      "image": "images/page-06.webp",
+      "sha256": "b607f6c3c1a42a007d869dd746cf97fb159e4b5fe303aee4f88a0eaf2f386135",
+      "imageBytes": 146714,
+      "alt": "Pip shows the number seven as Kai and Mira look excited about the trip."
+    },
+    {
+      "page": 7,
+      "lines": [
+        "A blue ring lights up.",
+        "The stars go wiggle, wiggle, wiggle!"
+      ],
+      "image": "images/page-07.webp",
+      "sha256": "f98f0b847cbdf38bd37cda31155a60fce85b46e3378e76e6dcfefea4c7e36f41",
+      "imageBytes": 180482,
+      "alt": "Inside the cockpit, blue light bends around a strange glowing ring in space."
+    },
+    {
+      "page": 8,
+      "lines": [
+        "“One!”",
+        "“Two!”",
+        "“Three!”",
+        "“ZOOM!”"
+      ],
+      "image": "images/page-08.webp",
+      "sha256": "e9011f0f38438047698339abd617317eaa7706d222b1af01804a0f69b5363d3a",
+      "imageBytes": 194158,
+      "alt": "The blue ship zips through a bright circular gateway surrounded by stars."
+    },
+    {
+      "page": 9,
+      "lines": [
+        "“We are here!” said Pip.",
+        "Kai looks at the clock.",
+        "Seven! Just seven!"
+      ],
+      "image": "images/page-09.webp",
+      "sha256": "1a9c2a18235a7fad2976bf319967566dbbb5d1cfabcac6011a24d9c7c0b7a93c",
+      "imageBytes": 196458,
+      "alt": "Kai, Mira and Pip look out at the welcoming moon city."
+    },
+    {
+      "page": 10,
+      "lines": [
+        "Tavi waves.",
+        "“The plants are dry. Can you help?”",
+        "“Yes!” said Mira."
+      ],
+      "image": "images/page-10.webp",
+      "sha256": "51c55529b4fff0b4b6e5fd59cf71192d06c7286ab1348af06a147f4be6ff35cb",
+      "imageBytes": 236864,
+      "alt": "The young ninjas meet Tavi beside a beautiful moon garden."
+    },
+    {
+      "page": 11,
+      "lines": [
+        "Kai turns the wheel.",
+        "The big mirror turns, too.",
+        "Sunlight hits a panel.",
+        "The pump starts!"
+      ],
+      "image": "images/page-11.webp",
+      "sha256": "be29d0f792f2539c7bca23656710e8e82497840f387905c025294fd0b44b26e4",
+      "imageBytes": 224390,
+      "alt": "Kai and Mira turn a large mirror toward the sunlight by the moon garden."
+    },
+    {
+      "page": 12,
+      "lines": [
+        "Splash! The plants get a drink.",
+        "“We did it!” said the ninjas."
+      ],
+      "image": "images/page-12.webp",
+      "sha256": "3a1576ca222795eb368cdc2f0a64f06a8860bb3ade4f3fcd1c0e470c3892d66b",
+      "imageBytes": 276720,
+      "alt": "The friends celebrate while the moon garden plants receive water."
+    },
+    {
+      "page": 13,
+      "lines": [
+        "That night, Master Ren has a cloth.",
+        "He gives it a wiggle.",
+        "“Space can wiggle, too,” he said."
+      ],
+      "image": "images/page-13.webp",
+      "sha256": "b5cd86405e07f670f140b4047f877546eb68fb2fb89ce063b4afdabaf574ff0c",
+      "imageBytes": 199936,
+      "alt": "Master Ren wiggles a cloth while the young ninjas watch carefully."
+    },
+    {
+      "page": 14,
+      "lines": [
+        "Kai looks at the blue ring.",
+        "Mira looks at the wiggly stars.",
+        "“How did we get here so fast?”"
+      ],
+      "image": "images/page-14.webp",
+      "sha256": "a54556d84758152fd900d864f33677f0fc8c7aca04f4df519ad8b41aef11cf45",
+      "imageBytes": 222812,
+      "alt": "Kai and Mira look up at a swirling blue circle in the bright night sky."
+    }
+  ],
+  "glossary": [
+    {
+      "word": "robot",
+      "say": "ROH-bot",
+      "meaning": "A machine that helps."
+    },
+    {
+      "word": "clock",
+      "say": "KLOK",
+      "meaning": "It tells time."
+    },
+    {
+      "word": "ring",
+      "say": "RING",
+      "meaning": "A round shape."
+    },
+    {
+      "word": "moon",
+      "say": "MOON",
+      "meaning": "A round world in space."
+    },
+    {
+      "word": "mirror",
+      "say": "MEER-er",
+      "meaning": "The sun bounces off it."
+    }
+  ],
+  "storyHref": "/stories/zoom-trip/",
+  "note": "Fourteen illustrations supplied by prior NINJA MOONS story package; image files optimized for the web; 4K upscaled exports retained separately."
+}

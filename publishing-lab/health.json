@@ -1,0 +1,11 @@
+{
+  "service": "ninja-moons-publishing-lab",
+  "status": "ok",
+  "mode": "isolated",
+  "publishedStories": 1,
+  "storyPages": 14,
+  "illustrations": "complete",
+  "microphone": "not-used",
+  "productionWebsiteUnchanged": true,
+  "version": "1.0.0"
+}
