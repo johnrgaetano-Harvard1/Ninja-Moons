@@ -32,13 +32,21 @@ function main(){
    ensure(fs.statSync(f).size===p.imageBytes,"image size mismatch "+slug+" page "+p.page);
    ensure(digest(f)===p.sha256,"image SHA256 mismatch "+slug+" page "+p.page);
   }
-  library.push({slug,title:m.title,readingLevel:m.readingLevel||"",pages:m.pages.length,href:"/stories/"+slug+"/",cover:"/stories/"+slug+"/"+m.pages[0].image});
+  const level=String(m.readingLevel||'');
+  const grade=/^(K|Kindergarten)$/i.test(level)?'K':Number(level.match(/^(?:Grade\s+)?(1[0-2]|[1-9])$/i)?.[1]);
+  ensure(grade==='K'||(grade>=1&&grade<=12),'readingLevel must identify K or Grade 1–12: '+slug);
+  ensure(!m.vocabulary||(Array.isArray(m.vocabulary)&&m.vocabulary.every(v=>v&&['word','meaning'].every(k=>typeof v[k]==='string'&&v[k].trim())&&(!v.say||typeof v.say==='string'))),'invalid vocabulary '+slug);
+  library.push({grade,description:typeof m.description==='string'?m.description:'Explore '+m.title+' with illustrations and reading support.',topics:Array.isArray(m.topics)?m.topics.filter(t=>typeof t==='string'):['Adventure'],slug,title:m.title,readingLevel:m.readingLevel||"",pages:m.pages.length,href:"/stories/"+slug+"/",cover:"/stories/"+slug+"/"+m.pages[0].image});
  }
  ensure(json(path.join(root,"health.json")).service==="ninja-moons-publishing-lab","wrong publishing project");
  fs.rmSync(out,{recursive:true,force:true});fs.cpSync(root,out,{recursive:true,filter:p=>!p.includes(path.sep+"publisher"+path.sep)});
  for(const s of library){
   const f=path.join(out,"stories",s.slug,"index.html"),m=json(path.join(root,"stories",s.slug,"manifest.json"));
   if(m.generatedReader===true||!isFile(f))fs.writeFileSync(f,generate(m));
+  const sentences=m.pages.flatMap(p=>p.lines.map(text=>({text,page:p.page,simple:''}))).map((line,i)=>({...line,number:i+1}));
+  fs.writeFileSync(path.join(out,'stories',s.slug,'reader.json'),JSON.stringify({version:1,slug:s.slug,title:m.title,grade:s.grade,sentences,vocabulary:m.vocabulary||[]},null,2));
+  const navigation='<nav aria-label="NINJA MOONS reading links" style="padding:16px;text-align:center;background:#071a32;color:#b4edff"><a style="color:inherit;margin:12px" href="https://ninjamoons.vercel.app/reader?level='+s.grade+'">← Story library</a><a style="color:inherit;margin:12px" href="https://ninjamoons.vercel.app/reading-helper?story='+s.slug+'">Read with NINJA Helper →</a></nav>';
+  fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace('</body>',navigation+'</body>'));
  }
  fs.writeFileSync(path.join(out,"catalog.json"),JSON.stringify({version:1,stories:library},null,2));
 

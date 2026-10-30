@@ -200,5 +200,32 @@
     }
   ],
   "storyHref": "/stories/zoom-trip/",
-  "note": "Fourteen illustrations supplied by prior NINJA MOONS story package; image files optimized for the web; 4K upscaled exports retained separately."
+  "note": "Fourteen illustrations supplied by prior NINJA MOONS story package; image files optimized for the web; 4K upscaled exports retained separately.",
+  "vocabulary": [
+    {
+      "word": "robot",
+      "say": "ROH-bot",
+      "meaning": "A machine that helps."
+    },
+    {
+      "word": "clock",
+      "say": "KLOK",
+      "meaning": "It tells time."
+    },
+    {
+      "word": "ring",
+      "say": "RING",
+      "meaning": "A round shape."
+    },
+    {
+      "word": "moon",
+      "say": "MOON",
+      "meaning": "A round world in space."
+    },
+    {
+      "word": "mirror",
+      "say": "MEER-er",
+      "meaning": "The sun bounces off it."
+    }
+  ]
 }

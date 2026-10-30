@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#06172f">
+<title>NINJA READER — Learn to Read</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173049;background:#06172f}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(140deg,#06172f,#0c3258 60%,#081b37);min-height:100svh}
+a{color:inherit}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #fdbb50;outline-offset:3px}
+.top{color:#e8f8ff;max-width:900px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 16px}
+.brand{font-size:19px;font-weight:850;text-decoration:none}.back{font-size:14px;text-decoration:none;border:1px solid #567c9c;padding:8px 12px;border-radius:12px}
+main{max-width:860px;margin:8px auto 35px;background:#fff;box-shadow:0 20px 70px #020d1b88;border-radius:22px;overflow:hidden}
+.hero{background:linear-gradient(120deg,#0c3966,#12639b);color:white;padding:23px clamp(17px,4vw,34px)}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;color:#b8edff}
+h1{margin:7px 0 5px;font-size:clamp(25px,5vw,35px);line-height:1.14}.sub{opacity:.89;font-size:15px}
+.progress{display:flex;gap:5px;margin-top:19px}.bar{height:6px;border-radius:30px;background:#779bbb;flex:1}.bar.done{background:#8fecc3}
+.content{padding:clamp(17px,4vw,32px)}
+.row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+small,.muted{color:#617286}.step{font-size:13px;font-weight:800;letter-spacing:.04em;color:#315c79;text-transform:uppercase}
+.title{font-size:clamp(20px,4vw,26px);color:#102c48;margin:8px 0 12px;line-height:1.35}
+.card{background:#f2f8fc;border:1px solid #d9eaf4;border-radius:18px;padding:clamp(17px,4vw,28px);margin-top:12px;min-height:240px}
+.sentence{font-size:clamp(24px,5vw,33px);line-height:1.8;font-weight:600;overflow-wrap:break-word}
+.sentence.helps{font-size:clamp(20px,3.6vw,25px);line-height:2.35}
+.word{border-radius:5px;cursor:pointer;padding:1px 2px;display:inline-block;touch-action:manipulation}
+.word:hover,.word:focus-visible{background:#d6edff}.word.active{background:#ffe17c;color:#173049}
+.token{display:inline-flex;flex-direction:row;vertical-align:baseline;align-items:baseline;gap:4px;line-height:1.45;margin:4px 7px 4px 0;white-space:normal}
+.token .word{font-weight:750}.phon{font-size:clamp(12px,2.5vw,15px);color:#435f7a;font-weight:600;line-height:1.4}
+.glosses{display:flex;flex-direction:column;gap:12px;padding:0;margin:0;list-style:none}.gloss{font-size:20px;line-height:1.5}.gloss button{font-size:20px;background:transparent;border:0;padding:0 4px 0 0;text-align:left;color:#135e96;font-weight:800;text-decoration:underline dotted;text-underline-offset:4px}
+.meaning{font-size:18px;color:#9c2637}.plain{font-size:clamp(21px,4.5vw,27px);line-height:1.6}
+.tip{font-size:14px;color:#486880;margin:17px 0 0}.ctrl{display:flex;flex-wrap:wrap;gap:9px;margin:19px 0 10px}
+.btn{background:#0a64a7;color:#fff;border:0;padding:12px 18px;border-radius:12px;font-weight:750;min-height:47px}
+.btn.secondary{background:#e3f0fa;color:#12466c}.btn.light{background:#fff;border:1px solid #abc5d8;color:#174b77}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:11px;border-top:1px solid #dce8f0;padding-top:17px;margin-top:22px}
+.navbuttons{display:flex;flex-wrap:wrap;gap:8px}.screen-reader{position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden}
+.select{padding:8px 10px;border:1px solid #a9c9db;border-radius:9px;color:#17426a;background:white}
+.error{background:#fff2e6;border:1px solid #ffc8a8;border-radius:14px;padding:18px;color:#824b2c;line-height:1.6}
+.note{font-size:14px;color:#58738a}.hide{display:none!important}
+@media(max-width:540px){main{margin:0 8px 20px;border-radius:18px}.top{padding:11px}.ctrl .btn{flex:1}.navbuttons .btn{flex:1}}
+</style></head><body>
+<header class="top"><a class="brand" href="/grades">🥷 NINJA READER</a><a class="back" href="/grades">← Story Library</a></header>
+<main>
+<section class="hero"><div class="eyebrow">READING HELPER · LEARN ONE SENTENCE AT A TIME</div><h1 id="story-title">Loading your story…</h1><div class="sub" id="progress-label">Your pace. Your adventure.</div><div class="progress" id="steps" aria-label="Four learning stages"></div></section>
+<div class="content">
+<div id="loading" class="note" role="status">Opening the story you selected…</div>
+<div id="error" class="error hide" role="alert"></div>
+<div id="reader" class="hide">
+<div class="row"><span class="step" id="step-label"></span><label class="note" for="speed">Voice speed <select class="select" id="speed" aria-label="Speaking speed"><option value=".7">Slow</option><option selected value=".87">Normal</option><option value="1">Fast</option></select></label></div>
+<h2 class="title" id="stage-title"></h2>
+<div class="card" id="stage-content" aria-live="polite"></div>
+<p class="tip" id="tip"></p>
+<div class="ctrl">
+<button class="btn" id="play" type="button">▶ Play / Read aloud</button>
+<button class="btn secondary" id="stop" type="button">■ Stop</button>
+</div>
+<div class="nav"><div class="navbuttons"><button class="btn light" id="previous" type="button">← Back</button><button class="btn" id="next" type="button">Next step →</button></div>
+<div class="navbuttons"><button class="btn light" id="prev-sentence" type="button">◀ Previous sentence</button><button class="btn light" id="next-sentence" type="button">Next sentence ▶</button></div></div>
+<p class="note">Nothing advances automatically. Replay any stage as many times as you want. Touch any word to hear it from that point.</p>
+</div></div></main>
+<script>(()=>{
+"use strict";
+const id=x=>document.getElementById(x),params=new URLSearchParams(location.search);
+const slug=params.get("story")||"";
+const stages=["Hear the sentence","Read with pronunciation","Understand every word","Understand the sentence"];
+const tips=[
+"Tap Play to hear the sentence. Tap any word to start hearing it from there.",
+"Read the sentence again with pronunciation beside each word. Tap words to hear them.",
+"Every word has a short meaning. Tap any word to hear that word and its meaning.",
+"Read and listen to what the entire sentence means. You decide when to go on."
+];
+const common={
+the:["thuh","a particular thing"],a:["uh","one thing"],an:["an","one thing"],
+and:["and","joins words and ideas"],or:["or","gives a choice"],but:["but","shows a difference"],
+to:["too","toward or for"],of:["uv","shows a connection"],in:["in","inside"],on:["on","resting upon"],
+from:["frum","where something starts"],with:["with","together"],for:["for","meant for"],
+at:["at","a place or time"],by:["by","near or done by"],as:["az","in the way described"],
+was:["wuz","happened in the past"],were:["wur","past form of are"],is:["iz","exists or has a quality"],
+are:["ar","more than one is"],be:["bee","to exist"],been:["bin","has existed"],
+it:["it","the thing being discussed"],its:["its","belonging to it"],they:["thay","those people or things"],
+them:["them","those people or things"],their:["thair","belonging to them"],
+he:["hee","a male person"],she:["shee","a female person"],her:["hur","belonging to her"],
+his:["hiz","belonging to him"],we:["wee","you and I"],you:["yoo","the person spoken to"],
+this:["this","the thing nearby"],that:["that","the thing mentioned"],those:["thohz","the things farther away"],
+who:["hoo","asks about a person"],what:["wut","asks about a thing"],why:["wy","asks for a reason"],
+how:["how","asks the way"],when:["wen","asks about a time"],where:["wair","asks about a place"],
+one:["wun","the number 1"],two:["too","the number 2"],three:["three","the number 3"],
+four:["for","the number 4"],five:["fyv","the number 5"],six:["siks","the number 6"],
+seven:["SEV-un","the number 7"],ten:["ten","the number 10"],
+not:["not","the opposite of yes"],no:["noh","not any"],only:["OHN-lee","nothing more than"],
+all:["awl","every one"],every:["EV-ree","all without leaving one out"],each:["eech","one at a time"],
+some:["sum","part of a group"],other:["UH-ther","different"],more:["mor","a larger amount"],
+after:["AF-ter","later than"],before:["bih-FOR","earlier than"],then:["then","after that"],
+now:["now","at this time"],still:["stil","continuing"],again:["uh-GEN","one more time"],
+above:["uh-BUV","higher than"],under:["UN-der","lower than"],beneath:["bih-NEETH","under"],
+between:["bih-TWEEN","in the middle"],inside:["in-SYD","within"],into:["IN-too","toward the inside"],
+through:["throo","from one side to another"],over:["OH-ver","above"],
+could:["kood","was able or might be able"],would:["wood","might happen"],
+can:["kan","is able to"],will:["wil","is going to happen"],
+said:["sed","spoke words"],saw:["saw","looked at"],looked:["lookt","used their eyes to see"],
+found:["fownd","discovered"],went:["went","traveled to"],came:["kaym","arrived"],
+entered:["EN-terd","went inside"],stood:["stood","was standing"],left:["left","went away"],
+walked:["wawkt","moved on foot"],made:["mayd","created"],
+earth:["urth","our home planet"],moon:["moon","an object that circles a planet"],
+sun:["sun","the star that lights Earth"],stars:["starz","bright suns far away"],
+tree:["tree","a large plant with a trunk"],garden:["GAR-dun","a place for growing plants"],
+plant:["plant","a growing living thing"],plants:["plants","living things that grow"],
+sky:["sky","the space above us"],water:["WAW-ter","a liquid people drink"],
+seconds:["SEK-undz","small parts of a minute"],days:["dayz","parts of a week"],
+light:["lyt","what helps us see"],new:["noo","not seen before"],old:["ohld","not new"],
+big:["big","large"],small:["smawl","little"],high:["hy","far above the ground"],
+higher:["HY-er","farther up"],far:["far","a long way away"],
+maya:["MAY-uh","the explorer named Maya"],kai:["kye","the explorer named Kai"],
+explorers:["ik-SPLOR-erz","people who visit new places"],ninja:["NIN-juh","an explorer in this story"],
+ninjas:["NIN-juhz","explorers in this story"]
+};
+const plainPhrases=[
+[/\bunfamiliar stars\b/gi,"stars they had never seen before"],
+[/\bstood beneath\b/gi,"were standing under"],
+[/\bglowing\b/gi,"shining"],
+[/\bbiodome\b/gi,"enclosed garden where plants grow"],
+[/\bmeasurement\b/gi,"measured number"],
+[/\btransplanted\b/gi,"moved from one growing place to another"],
+[/\bobserved\b/gi,"noticed"],[/\bdiscovered\b/gi,"found"],
+[/\bentered\b/gi,"went inside"],[/\bexamined\b/gi,"looked carefully at"],
+[/\bapproximately\b/gi,"about"],[/\bconcluded\b/gi,"decided after checking the clues"]
+];
+const glossary=new Map(),cache=new Map(),pending=new Map();
+const state={sentences:[],title:"",index:0,stage:0,run:0};
+try{for(const [k,v] of Object.entries(JSON.parse(localStorage.getItem("ninja-reader-gloss-v1")||"{}")).slice(0,400))cache.set(k,v);}catch(e){}
+function key(s){return s.toLowerCase().replace(/’/g,"'").replace(/[^a-z0-9'-]/g,"");}
+function dictionary(w){const k=key(w);if(glossary.has(k))return glossary.get(k);
+if(common[k])return {phonetic:common[k][0],meaning:common[k][1]};
+return cache.get(k)||null;}
+function tok(s){return [...s.matchAll(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*|[^A-Za-z0-9]+/g)].map(m=>({text:m[0],start:m.index,isWord:/^[A-Za-z0-9]/.test(m[0])}));}
+function node(tag,cl,t){const n=document.createElement(tag);if(cl)n.className=cl;if(t!==undefined)n.textContent=t;return n;}
+function explain(s,manual){
+ if(manual)return manual;
+ let simple=s;for(const [reg,repl] of plainPhrases)simple=simple.replace(reg,repl);
+ if(simple!==s)return "In simpler words: "+simple;
+ const match=s.match(/\b([A-Z][a-z]+)\b/);
+ return match ? "This sentence tells us about "+match[1]+": "+s[0].toLowerCase()+s.slice(1) : "This sentence tells us: "+s;
+}
+async function lookUp(w){
+ const k=key(w);if(!k||dictionary(w))return dictionary(w);
+ if(pending.has(k))return pending.get(k);
+ const task=(async()=>{
+  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),5500);
+  try{
+   const res=await fetch("https://api.dictionaryapi.dev/api/v2/entries/en/"+encodeURIComponent(k),{signal:controller.signal});
+   if(!res.ok)throw Error("Not found");
+   const data=await res.json(),entry=data?.[0],def=entry?.meanings?.flatMap(x=>x.definitions||[]).find(x=>x.definition)?.definition;
+   if(!def)throw Error("No definition");
+   const record={phonetic:entry.phonetic||entry.phonetics?.map(x=>x.text).find(Boolean)||"",meaning:def.slice(0,125)};
+   cache.set(k,record);
+   try{localStorage.setItem("ninja-reader-gloss-v1",JSON.stringify(Object.fromEntries([...cache].slice(-400))));}catch(e){}
+   return record;
+  }catch(e){return null;}finally{clearTimeout(timeout);pending.delete(k);}
+ })();
+ pending.set(k,task);return task;
+}
+function updateLookups(){
+ const sentence=state.sentences[state.index],stage=state.stage;
+ if(!sentence||![1,2].includes(stage))return;
+ const unseen=[...new Set(tok(sentence.text).filter(t=>t.isWord).map(t=>key(t.text)))].filter(w=>!dictionary(w));
+ let next=0;
+ async function worker(){while(next<unseen.length){const w=unseen[next++];await lookUp(w);
+   if(sentence===state.sentences[state.index]&&[1,2].includes(state.stage))updateDisplayed();
+ }}
+ Promise.all(Array.from({length:Math.min(4,unseen.length)},worker)).catch(()=>{});
+}
+function updateDisplayed(){for(const x of id("stage-content").querySelectorAll("[data-dict]")){
+ const info=dictionary(x.dataset.dict);if(info)x.textContent=x.dataset.kind==="phon"?"("+(info.phonetic||"🔊 tap")+")":"("+info.meaning+")";
+}}
+function cancel(){state.run++;try{speechSynthesis.cancel();}catch(e){}
+for(const el of id("stage-content").querySelectorAll(".word.active"))el.classList.remove("active");}
+function voice(){if(!("speechSynthesis" in window))return null;const v=speechSynthesis.getVoices();
+return v.find(a=>/^en-US$/i.test(a.lang)&&/enhanced|premium|ava|jenny|samantha/i.test(a.name))||v.find(a=>/^en-US$/i.test(a.lang))||v.find(a=>/^en/i.test(a.lang))||null;}
+function say(text,start=0,offsets=null){
+ if(!("speechSynthesis" in window)){id("tip").textContent="Audio isn't available in this browser.";return;}
+ cancel();const run=state.run,u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=Number(id("speed").value)||.87;u.voice=voice();
+ const nodes=[...id("stage-content").querySelectorAll(".word[data-pos]")];
+ function highlight(n){for(const item of nodes)item.classList.toggle("active",Number(item.dataset.pos)===n);}
+ highlight(start);
+ u.onboundary=e=>{if(run!==state.run||!offsets)return;const chars=e.charIndex;
+ let j=0;for(let i=0;i<offsets.length;i++)if(chars>=offsets[i])j=i;
+ highlight(start+j);};
+ u.onend=()=>{if(run===state.run)highlight(-1);};
+ try{speechSynthesis.speak(u);}catch(e){id("tip").textContent="Try Play again, or check your volume.";}
+}
+function speakFrom(i){
+ const t=tok(state.sentences[state.index].text).filter(x=>x.isWord);
+ if(!t[i])return;
+ const part=state.sentences[state.index].text.slice(t[i].start);
+ say(part,i,t.slice(i).map(x=>x.start-t[i].start));
+}
+function speakStage(){
+ const item=state.sentences[state.index];
+ if(state.stage===3){say(explain(item.text,item.simple));return;}
+ if(state.stage===2){say(tok(item.text).filter(t=>t.isWord).map(t=>t.text+". "+(dictionary(t.text)?.meaning||"")).join(". "));return;}
+ speakFrom(0);
+}
+function words(s,phonetics){
+ const wrap=node("div",phonetics?"sentence helps":"sentence");let i=0;
+ for(const t of tok(s)){
+  if(!t.isWord){wrap.append(document.createTextNode(t.text));continue;}
+  const idx=i++,span=node("span","word",t.text);
+  span.dataset.pos=idx;span.setAttribute("role","button");span.tabIndex=0;span.setAttribute("aria-label","Speak from "+t.text);
+  span.addEventListener("click",()=>speakFrom(idx));
+  span.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();speakFrom(idx);}});
+  if(!phonetics){wrap.append(span);continue;}
+  const group=node("span","token"),cue=node("span","phon","("+(dictionary(t.text)?.phonetic||"🔊 tap")+")");
+  cue.dataset.dict=t.text;cue.dataset.kind="phon";group.append(span,cue);wrap.append(group);
+ }
+ return wrap;
+}
+function meanings(s){
+ const list=node("ul","glosses");
+ for(const t of tok(s).filter(t=>t.isWord)){
+  const row=node("li","gloss"),word=node("button","",t.text),info=dictionary(t.text);
+  const val=node("span","meaning",info?"("+info.meaning+")":"(Looking up a simple meaning…)");
+  val.dataset.dict=t.text;val.dataset.kind="meaning";word.type="button";
+  word.addEventListener("click",()=>say(t.text+(dictionary(t.text)?". "+dictionary(t.text).meaning:"")));
+  row.append(word,document.createTextNode(" "),val);list.append(row);
+ }
+ return list;
+}
+function render(){
+ cancel();const item=state.sentences[state.index];if(!item)return;
+ id("story-title").textContent=state.title;
+ id("progress-label").textContent="Sentence "+(state.index+1)+" of "+state.sentences.length+" · You choose when to continue";
+ id("steps").replaceChildren(...stages.map((s,i)=>{const n=node("span","bar"+(i<=state.stage?" done":""));n.title=s;return n;}));
+ id("step-label").textContent="STAGE "+(state.stage+1)+" OF 4";
+ id("stage-title").textContent=stages[state.stage];id("tip").textContent=tips[state.stage];
+ id("previous").disabled=state.stage===0;id("next").disabled=state.stage===3;
+ id("prev-sentence").disabled=state.index===0;id("next-sentence").disabled=state.index===state.sentences.length-1;
+ const box=id("stage-content");box.replaceChildren();
+ if(state.stage===0)box.append(words(item.text,false));
+ if(state.stage===1)box.append(words(item.text,true));
+ if(state.stage===2)box.append(meanings(item.text));
+ if(state.stage===3)box.append(node("p","plain",explain(item.text,item.simple)));
+ if(state.stage===1||state.stage===2)updateLookups();
+ try{sessionStorage.setItem("ninja-helper-progress-"+slug,JSON.stringify([state.index,state.stage]));}catch(e){}
+}
+function parse(doc){
+ for(const el of doc.querySelectorAll(".term")){
+  const d=el.nextElementSibling;if(!d?.classList.contains("definition"))continue;
+  const m=d.textContent.trim().match(/^\(([^)]*)\)\s*[—–-]?\s*(.+)$/s);
+  if(m)glossary.set(key(el.textContent),{phonetic:m[1],meaning:m[2]});
+ }
+ let paragraphs=[];
+ for(const selector of [".chapter-content p","[data-story-content] p",".story-content p","article p","main p"]){
+  paragraphs=[...doc.querySelectorAll(selector)];if(paragraphs.length)break;
+ }
+ const out=[];
+ for(const p0 of paragraphs){
+  if(p0.closest("header,footer,nav,.nw-pop"))continue;
+  const p=p0.cloneNode(true);
+  p.querySelectorAll(".definition,script,style,button").forEach(x=>x.remove());
+  p.querySelectorAll(".sentence-no").forEach(x=>{const n=x.textContent.trim().replace(/\.$/,"");x.replaceWith(doc.createTextNode("\uE000"+n+"\uE001"));});
+  const text=p.textContent.replace(/\s+/g," ").trim();
+  if(text.length<9)continue;
+  const simple=p0.getAttribute("data-simple-meaning")||"";
+  if(text.includes("\uE000")){
+   let number=0;
+   for(const part of text.split(/(\uE000\d+\uE001)/g)){
+    if(/^\uE000\d+\uE001$/.test(part)){number=Number(part.slice(1,-1));continue;}
+    if(part.trim().length>8)out.push({text:part.trim(),number:number||out.length+1,simple});
+   }
+  }else{
+   for(const chunk of text.match(/[^.!?]+(?:[.!?]+["'”’]?|$)/g)||[text])if(chunk.trim().length>8)out.push({text:chunk.trim(),number:out.length+1,simple});
+  }
+ }
+ return out;
+}
+function error(message,login=false){
+ id("loading").classList.add("hide");id("reader").classList.add("hide");
+ const box=id("error");box.replaceChildren(document.createTextNode(message));
+ if(login){const link=node("a",""," Open the original story to sign in first.");link.href="/read/"+slug;box.append(link);}
+ box.classList.remove("hide");id("story-title").textContent="Reading Helper";
+}
+function finishLoad(){
+ try{const p=JSON.parse(sessionStorage.getItem("ninja-helper-progress-"+slug)||"null");if(Array.isArray(p)){state.index=Math.min(Math.max(0,p[0]|0),state.sentences.length-1);state.stage=Math.min(Math.max(0,p[1]|0),3);}}catch(e){}
+ id("loading").classList.add("hide");id("reader").classList.remove("hide");render();
+}
+async function load(){
+ if(!/^[a-z0-9][a-z0-9-]{0,99}$/i.test(slug)){error("Choose a story from the NINJA READER library first.");return;}
+ try{
+  const origin=location.hostname==="ninjamoons.vercel.app"?"":"https://ninjamoons.vercel.app";
+  if(!['ninja-moons','secret-garden'].includes(slug)){
+   const response=await fetch(origin+'/published/stories/'+encodeURIComponent(slug)+'/reader.json',{cache:'no-store'});
+   if(!response.ok)throw Error('Published story unavailable');
+   const data=await response.json();
+   if(data.version!==1||data.slug!==slug||typeof data.title!=='string'||!Array.isArray(data.sentences)||!data.sentences.length||!data.sentences.every(s=>typeof s.text==='string'&&s.text.trim()))throw Error('Invalid reading data');
+   state.sentences=data.sentences.map((s,i)=>({text:s.text,number:i+1,simple:typeof s.simple==='string'?s.simple:''}));state.title=data.title;
+   for(const v of data.vocabulary||[])if(typeof v.word==='string'&&typeof v.meaning==='string')glossary.set(key(v.word),{phonetic:v.say||'',meaning:v.meaning});
+   finishLoad();return;
+  }
+  let r=await fetch(origin+"/read/"+encodeURIComponent(slug),{credentials:"include"});
+  if(!r.ok)throw Error("Story not available");
+  let doc=new DOMParser().parseFromString(await r.text(),"text/html");
+  let content=parse(doc);
+  if(content.length<2){
+   const iframe=doc.querySelector("iframe[src]");
+   if(iframe){
+    const src=new URL(iframe.getAttribute("src"),origin||location.origin);
+    if(src.origin===(origin||location.origin)){
+     r=await fetch(src.href,{credentials:"include"});
+     if(r.ok){doc=new DOMParser().parseFromString(await r.text(),"text/html");content=parse(doc);}
+    }
+   }
+  }
+  if(content.length<2){
+   const login=!!doc.querySelector("input[type=password]")||/Enter the Adventure|Sign in/i.test(doc.title);
+   error(login?"This story requires a student sign-in before its text can be opened.":"This story's reading text could not be loaded yet.",login);return;
+  }
+  state.sentences=content;state.title=(doc.querySelector("header h1,.hero h1,article h1,main h1,h1")?.textContent||doc.title||slug).trim();
+  finishLoad();
+ }catch(e){error("This story couldn't load right now. Please try again from the library.");}
+}
+id("play").addEventListener("click",speakStage);id("stop").addEventListener("click",cancel);
+id("previous").addEventListener("click",()=>{if(state.stage>0){state.stage--;render();}});
+id("next").addEventListener("click",()=>{if(state.stage<3){state.stage++;render();}});
+id("prev-sentence").addEventListener("click",()=>{if(state.index>0){state.index--;state.stage=0;render();}});
+id("next-sentence").addEventListener("click",()=>{if(state.index<state.sentences.length-1){state.index++;state.stage=0;render();}});
+document.addEventListener("visibilitychange",()=>{if(document.hidden)cancel();});
+window.addEventListener("pagehide",cancel);
+load();
+})();</script>
+</body></html>

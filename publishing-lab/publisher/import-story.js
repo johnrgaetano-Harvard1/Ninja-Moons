@@ -29,6 +29,8 @@ function importStory(){
  const story=JSON.parse(fs.readFileSync(input,"utf8"));
  if(!validText(story.title)||story.title.length>200)fail("invalid story title");
  if(!Array.isArray(story.pages)||!story.pages.length||story.pages.length>200)fail("page count must be 1..200");
+ if(!/^(K|Kindergarten|(?:Grade\s+)?(?:1[0-2]|[1-9]))$/i.test(story.readingLevel||''))fail('readingLevel must be K, Kindergarten, or Grade 1–12');
+ if(story.vocabulary&&(!Array.isArray(story.vocabulary)||!story.vocabulary.every(v=>v&&validText(v.word)&&validText(v.meaning)&&(!v.say||validText(v.say)))))fail('invalid vocabulary');
  const destination=path.resolve(__dirname,"..","stories",slug);
  if(fs.existsSync(destination))fail("destination already exists: "+slug+"; existing stories are protected");
  const outPages=[],images=[];
@@ -46,7 +48,7 @@ function importStory(){
    outPages.push({page:idx+1,lines:p.lines,image:dst,imageBytes:buf.length,sha256:hash});
    images.push({source:f,target:dst});
  }
- const manifest={title:story.title,readingLevel:story.readingLevel||"Reader",status:"ready",imageStatus:"complete",generatedReader:story.generatedReader!==false,pages:outPages};
+ const manifest={title:story.title,readingLevel:story.readingLevel||"Reader",status:"ready",imageStatus:"complete",generatedReader:story.generatedReader!==false,pages:outPages,vocabulary:story.vocabulary||[],description:typeof story.description==="string"?story.description:"",topics:Array.isArray(story.topics)?story.topics.filter(t=>typeof t==="string"):[]};
  if(check){console.log(JSON.stringify({result:"PASS",slug,pages:outPages.length,totalImageBytes:outPages.reduce((v,p)=>v+p.imageBytes,0),mode:"check-only"},null,2));return}
  const tmp=fs.mkdtempSync(path.join(os.tmpdir(),"nm-import-"));
  try{
