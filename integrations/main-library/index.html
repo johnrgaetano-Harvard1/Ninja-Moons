@@ -24,14 +24,17 @@ a.helper-read{margin-top:10px;background:#d5f0ff!important;color:#074472!importa
 'use strict';
 const stories=[{id:'ninja-moons',title:'NINJA MOONS',subtitle:'THE SEVEN-SECOND JOURNEY',grade:6,topics:['Space','Science','Adventure'],description:'Join the Ninja Moons explorers on an extraordinary journey to a distant moon. How did they travel so far in just seven seconds?',cover:'/assets/hero.avif',url:'/read/ninja-moons'},{"id":"secret-garden","title":"THE SECRET GARDEN","subtitle":"NINJA MOONS · STORY #2","grade":6,"topics":["Space","Plants","Science","Adventure"],"description":"A giant golden-fruit tree, five glowing clues, and a science mystery on a distant moon. Can Maya and Kai discover the secret of the garden?","cover":"https://ninja-moons-secret-garden.vercel.app/scene_01.jpg","url":"https://ninjamoons.vercel.app/read/secret-garden"}];
 const grades=['All','K',...Array.from({length:12},(_,i)=>String(i+1))];
+const gradeGroups=['1-2','3-4','5-6','7-8','9-10','11-12'];
 let active='6',query='';
 const chipBox=document.getElementById('grades'),results=document.getElementById('results'),empty=document.getElementById('empty');
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function render(){
-chipBox.innerHTML=grades.map(g=>'<button type="button" data-grade="'+g+'" aria-pressed="'+(g===active)+'">'+(g==='All'?'All Grades':g==='K'?'K':g)+'</button>').join('');
-const list=stories.filter(s=>(active==='All'||String(s.grade)===active)&&(!query||[s.title,s.subtitle,s.description,...s.topics].join(' ').toLowerCase().includes(query)));
-document.getElementById('gradeHint').textContent=active==='All'?'Showing every grade':active==='K'?'Kindergarten selected':'Grade '+active+' selected';
-document.getElementById('resultsTitle').textContent=active==='All'?'All stories':active==='K'?'Kindergarten stories':'Grade '+active+' stories';
+const range=gradeGroups.includes(active)?active.split('-').map(Number):null;
+const label=range?'Grades '+active.replace('-','–'):'Grade '+active;
+chipBox.innerHTML=(range?['All',active,...grades.slice(1)]:grades).map(g=>'<button type="button" data-grade="'+g+'" aria-pressed="'+(g===active)+'">'+(g==='All'?'All Grades':g==='K'?'K':g.replace('-','–'))+'</button>').join('');
+const list=stories.filter(s=>(active==='All'||String(s.grade)===active||(range&&Number(s.grade)>=range[0]&&Number(s.grade)<=range[1]))&&(!query||[s.title,s.subtitle,s.description,...s.topics].join(' ').toLowerCase().includes(query)));
+document.getElementById('gradeHint').textContent=active==='All'?'Showing every grade':active==='K'?'Kindergarten selected':label+' selected';
+document.getElementById('resultsTitle').textContent=active==='All'?'All stories':active==='K'?'Kindergarten stories':label+' stories';
 document.getElementById('resultsCount').textContent=list.length+' '+(list.length===1?'story':'stories');
 document.getElementById('totalCount').textContent=stories.length;
 empty.hidden=list.length!==0;results.hidden=list.length===0;
@@ -40,7 +43,7 @@ results.innerHTML=list.map(s=>'<article class="book"><div class="cover"><img src
 chipBox.addEventListener('click',e=>{const b=e.target.closest('button[data-grade]');if(!b)return;active=b.dataset.grade;render()});
 document.getElementById('search').addEventListener('input',e=>{query=e.target.value.trim().toLowerCase();render()});
 document.getElementById('reset').addEventListener('click',()=>{active='All';query='';document.getElementById('search').value='';render()});
-const initial=new URLSearchParams(location.search).get('level');if(initial){const normalized=initial==='5-6'?'6':initial;if(grades.includes(normalized))active=normalized;}
+const initial=new URLSearchParams(location.search).get('level');if(initial){if(grades.includes(initial)||gradeGroups.includes(initial))active=initial;}
 results.addEventListener('click',event=>{
  const a=event.target.closest('a');if(!a)return;
  const story=stories.find(s=>a.getAttribute('href')===s.url||a.getAttribute('href')==='/reading-helper?story='+encodeURIComponent(s.id));
