@@ -176,7 +176,7 @@ async function startTeacher(){
    let id=conn.peer;
    conn.on("open",()=>{
     if(!active)return;
-    if(readers.size>=12){safeSend(conn,{type:"error",message:"Test room full (12 readers)."});conn.close();return;}
+    if(readers.size>=30){safeSend(conn,{type:"error",message:"Test room full (30 readers)."});conn.close();return;}
     if(readers.has(id))removeReader(id);
     readerNum++;
     const s={conn,label:"Reader "+String(readerNum).padStart(2,"0"),sentence:sentences[0],call:null,live:false};
