@@ -2,6 +2,23 @@
 "use strict";
 const fs=require("node:fs"),path=require("node:path"),crypto=require("node:crypto");
 const root=path.resolve(__dirname,".."),out=path.resolve(process.cwd(),"dist");
+// Approved original ocean illustrations: immutable Vercel source, SHA-256 verified on every clean build.
+const oceanAssetSources=[{"file":"ocean-sprite.webp","sha256":"5f3ab49bee36ade8f15f7f567ca8b4d88cc010c3060920e2352f8477499347a9","url":"https://ninja-moons-publishing-glw3bj329-ninja-fitt.vercel.app/stories/ocean-that-glows/images/ocean-sprite.webp"},{"file":"cover.webp","sha256":"c68ee4c5fb6b39f4fb2f00bef5e37b964b90500f01eab42dd0b7c3b030e34513","url":"https://ninja-moons-publishing-glw3bj329-ninja-fitt.vercel.app/stories/ocean-that-glows/images/cover.webp"}];
+async function installOceanArt(){
+ const folder=path.join(root,"stories","ocean-that-glows","images");
+ if(!fs.existsSync(path.join(root,"stories","ocean-that-glows","manifest.json")))return;
+ fs.mkdirSync(folder,{recursive:true});
+ for(const asset of oceanAssetSources){
+  const target=path.join(folder,asset.file);
+  if(isFile(target)&&digest(target)===asset.sha256)continue;
+  const response=await fetch(asset.url,{redirect:"follow"});
+  ensure(response.ok,"approved ocean artwork unavailable: "+asset.file);
+  const buffer=Buffer.from(await response.arrayBuffer());
+  ensure(crypto.createHash("sha256").update(buffer).digest("hex")===asset.sha256,"ocean art integrity failure: "+asset.file);
+  fs.writeFileSync(target,buffer);
+ }
+}
+
 function ensure(cond,why){if(!cond)throw Error("PUBLISH BLOCKED: "+why)}
 function json(file){return JSON.parse(fs.readFileSync(file,"utf8"))}
 function isFile(file){return fs.statSync(file,{throwIfNoEntry:false})?.isFile()}
@@ -19,7 +36,8 @@ function addNavigation(html){
  const branded=html.split(/(<script\b[^>]*>[\s\S]*?<\/script>|<style\b[^>]*>[\s\S]*?<\/style>)/i).map(part=>/^<(script|style)\b/i.test(part)?part:part.replace(/>([^<]*)</g,(_,text)=>'>'+text.replace(/🥷/g,mascot)+'<')).join('');
  return branded.replace(/<body[^>]*>/i,match=>match+nav);
 }
-function main(){
+async function main(){
+ await installOceanArt();
  ensure(isFile(path.join(root,"index.html")),"library home missing");
  const dirs=fs.readdirSync(path.join(root,"stories"),{withFileTypes:true}).filter(d=>d.isDirectory()).map(d=>d.name).sort();
  ensure(dirs.length>0,"no stories present");
@@ -42,7 +60,7 @@ function main(){
   const grade=/^(K|Kindergarten)$/i.test(level)?'K':Number(level.match(/^(?:Grade\s+)?(1[0-2]|[1-9])$/i)?.[1]);
   ensure(grade==='K'||(grade>=1&&grade<=12),'readingLevel must identify K or Grade 1–12: '+slug);
   ensure(!m.vocabulary||(Array.isArray(m.vocabulary)&&m.vocabulary.every(v=>v&&['word','meaning'].every(k=>typeof v[k]==='string'&&v[k].trim())&&(!v.say||typeof v.say==='string'))),'invalid vocabulary '+slug);
-  library.push({grade,description:typeof m.description==='string'?m.description:'Explore '+m.title+' with illustrations and reading support.',topics:Array.isArray(m.topics)?m.topics.filter(t=>typeof t==='string'):['Adventure'],slug,title:m.title,readingLevel:m.readingLevel||"",pages:m.pages.length,href:"/stories/"+slug+"/",cover:"/stories/"+slug+"/"+m.pages[0].image});
+  library.push({grade,description:typeof m.description==='string'?m.description:'Explore '+m.title+' with illustrations and reading support.',topics:Array.isArray(m.topics)?m.topics.filter(t=>typeof t==='string'):['Adventure'],slug,title:m.title,readingLevel:m.readingLevel||"",pages:m.pages.length,href:"/stories/"+slug+"/",cover:"/stories/"+slug+"/"+(m.coverImage||m.pages[0].image)});
  }
  ensure(json(path.join(root,"health.json")).service==="ninja-moons-publishing-lab","wrong publishing project");
  fs.rmSync(out,{recursive:true,force:true});fs.cpSync(root,out,{recursive:true,filter:p=>!p.includes(path.sep+"publisher"+path.sep)});
@@ -88,4 +106,4 @@ function main(){
  fs.writeFileSync(path.join(out,"health.json"),JSON.stringify({service:"ninja-moons-publishing-lab",status:"ok",mode:"isolated",validatedStories:library.length,validatedPages:library.reduce((v,s)=>v+s.pages,0),illustrations:"complete"},null,2));
  console.log("PUBLISH VALIDATION PASSED:",library.length,"stories,",library.reduce((v,s)=>v+s.pages,0),"pages; illustration checksums match");
 }
-try{main()}catch(e){console.error(e.message);process.exit(1)}
+main().catch(e=>{console.error(e.message);process.exit(1)})

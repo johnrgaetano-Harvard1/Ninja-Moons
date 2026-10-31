@@ -1,0 +1,350 @@
+{
+  "title": "The Ocean That Glows",
+  "collection": "NINJA MOONS",
+  "readingLevel": "Grade 6",
+  "version": "1.0.0",
+  "status": "ready",
+  "imageStatus": "complete",
+  "generatedReader": false,
+  "coverImage": "images/cover.webp",
+  "storyHref": "/stories/ocean-that-glows/",
+  "storyWords": 1201,
+  "numberedSentences": 105,
+  "pages": [
+    {
+      "page": 1,
+      "lines": [
+        "Kai stood at a round window as their ship neared Neruma, a moon wrapped in shifting blue oceans and thin cloud trails.",
+        "Maya leaned close, watching silver islands of foam sweep under sunlight.",
+        "Luma lit the floor with a pale map that shimmered like water.",
+        "Beyond the window, the horizon curved beneath a sky the color of a pearl.",
+        "The station came into view, a ring of white platforms surrounding a clear central pool.",
+        "Walkways connected round rooms with roofs like seashells.",
+        "Kai followed the map with one finger, tracing their route from the landing deck to the ocean below.",
+        "Their expedition was about to continue underwater."
+      ],
+      "image": "images/ocean-sprite.webp",
+      "sha256": "5f3ab49bee36ade8f15f7f567ca8b4d88cc010c3060920e2352f8477499347a9",
+      "imageBytes": 2810042,
+      "alt": "Arrival at Neruma"
+    },
+    {
+      "page": 2,
+      "lines": [
+        "They had come to a research station that floated on the tide, quiet enough for their own breathing to feel loud.",
+        "Doctor Sol greeted them holding a journal softened by many hands.",
+        "Inside was a sketch of the Lumara: clear fins spread wide, tail curved like a fern.",
+        "The sailors had drawn three rounded stones and a pale reef.",
+        "A narrow ribbon marked a page filled with careful observations.",
+        "Beside the drawing, a sailor had recorded dates and changes in the reef.",
+        "Doctor Sol placed a modern photograph next to it.",
+        "The same three stones stood beneath the same broad arch.",
+        "Generations separated the two pictures, yet their shapes matched."
+      ],
+      "image": "images/ocean-sprite.webp",
+      "sha256": "5f3ab49bee36ade8f15f7f567ca8b4d88cc010c3060920e2352f8477499347a9",
+      "imageBytes": 2810042,
+      "alt": "The Sailor’s Journal"
+    },
+    {
+      "page": 3,
+      "lines": [
+        "“They said it passed over a reef and later the coral brightened,” Doctor Sol said.",
+        "She played a video: pale coral under a stone arch, a huge shape drifting through, silver threads falling like dust through light.",
+        "Later images showed that coral opening and warming with color while coral beyond the threads stayed pale.",
+        "Maya whispered, “What did the sailors actually see?”",
+        "“A pattern worth checking,” Doctor Sol replied.",
+        "“Not a cure for everything—evidence comes first.”",
+        "The recording showed several visits over many days.",
+        "Each image carried a date, so the explorers could compare the reef before and after the creature passed.",
+        "Doctor Sol explained that the ancient account had inspired a legend about healing.",
+        "Their new observation offered something specific to investigate.",
+        "Kai opened a notebook and drew two columns, one for what they noticed and another for questions."
+      ],
+      "image": "images/ocean-sprite.webp",
+      "sha256": "5f3ab49bee36ade8f15f7f567ca8b4d88cc010c3060920e2352f8477499347a9",
+      "imageBytes": 2810042,
+      "alt": "A Clue to Investigate"
+    },
+    {
+      "page": 4,
+      "lines": [
+        "They settled into a transparent submarine.",
+        "Water light poured through every wall.",
+        "Purple fans swayed beside orange coral towers.",
+        "Fish gathered and scattered like ribbon sparks.",
+        "Kai said, “Everything seems connected.”",
+        "Doctor Sol nodded.",
+        "“An ecosystem is living things plus surroundings.",
+        "Today we explore one.”",
+        "Even the floor beneath their shoes was clear.",
+        "Looking down felt like floating above a garden spread across the ocean bottom.",
+        "Sunlight made moving golden squares on their seats.",
+        "Farther below, rounded stones lay among pink branches and soft green ribbons.",
+        "The submarine drifted slowly enough for Maya to notice tiny striped fish peeking between the coral.",
+        "Through the curved roof, the surface sparkled like thousands of little mirrors."
+      ],
+      "image": "images/ocean-sprite.webp",
+      "sha256": "5f3ab49bee36ade8f15f7f567ca8b4d88cc010c3060920e2352f8477499347a9",
+      "imageBytes": 2810042,
+      "alt": "The Coral Garden"
+    },
+    {
+      "page": 5,
+      "lines": [
+        "Near the three stones, the Lumara appeared, fins slow as curtains, blue spots glowing.",
+        "It looped over golden coral without breaking a branch.",
+        "Tiny golden specks drifted from coral toward its tail.",
+        "As they settled, its spots shone brighter.",
+        "Maya sketched the exchange and wrote, “What might the specks be doing?”",
+        "The creature was longer than their submarine, with a smooth silver back and fins edged in violet.",
+        "When it turned, each blue spot seemed to become a small star.",
+        "Its graceful movement stirred the golden branches, sending more specks upward.",
+        "Kai watched a single speck land beside one shining spot.",
+        "Luma saved the moment without adding an explanation."
+      ],
+      "image": "images/ocean-sprite.webp",
+      "sha256": "5f3ab49bee36ade8f15f7f567ca8b4d88cc010c3060920e2352f8477499347a9",
+      "imageBytes": 2810042,
+      "alt": "Meet the Lumara"
+    },
+    {
+      "page": 6,
+      "lines": [
+        "They watched from a distance as the creature traced a circle through its garden, brushing golden coral in one place, leaving silver threads above pale coral in another.",
+        "Beyond that garden stood purple fans beside a sandy clearing.",
+        "The Lumara floated past them, then curved back toward the golden branches.",
+        "Maya marked its route on their map.",
+        "They returned on two more evenings and watched it follow a similar path.",
+        "After it moved onward, Doctor Sol guided a collecting tube into the drifting threads.",
+        "A little seawater carried them into a sealed sample container."
+      ],
+      "image": "images/ocean-sprite.webp",
+      "sha256": "5f3ab49bee36ade8f15f7f567ca8b4d88cc010c3060920e2352f8477499347a9",
+      "imageBytes": 2810042,
+      "alt": "Golden Specks and Silver Threads"
+    },
+    {
+      "page": 7,
+      "lines": [
+        "Back at the station, they examined a thread sample under a microscope.",
+        "Tiny organisms clustered along a clear coating, like beads and twisting chains.",
+        "A lens made the microorganisms appear large enough to study.",
+        "Kai adjusted the screen until separate shapes became clear.",
+        "Luma placed a picture of the silver coating beside a picture of water from near the golden branches.",
+        "Matching specks appeared in both.",
+        "Maya labeled each image with its location and date.",
+        "They could now compare details that their eyes alone could never have shown them."
+      ],
+      "image": "images/ocean-sprite.webp",
+      "sha256": "5f3ab49bee36ade8f15f7f567ca8b4d88cc010c3060920e2352f8477499347a9",
+      "imageBytes": 2810042,
+      "alt": "A Tiny World"
+    },
+    {
+      "page": 8,
+      "lines": [
+        "The team planned a fair test with sealed containers and equal light.",
+        "Some got measured golden material, some did not.",
+        "Kai checked that each container began with the same amount of organisms and seawater.",
+        "Maya measured the temperature and wrote it beside the other conditions.",
+        "They also measured the silver substance already present.",
+        "That starting measurement would help them recognize a change later.",
+        "Doctor Sol asked them to describe their experiment before beginning, including what they would change and what they would keep equal."
+      ],
+      "image": "images/ocean-sprite.webp",
+      "sha256": "5f3ab49bee36ade8f15f7f567ca8b4d88cc010c3060920e2352f8477499347a9",
+      "imageBytes": 2810042,
+      "alt": "The Fair Test"
+    },
+    {
+      "page": 9,
+      "lines": [
+        "Over days, containers with golden material made more silvery substance than those without.",
+        "The same pattern appeared when they repeated it.",
+        "Maya said quietly, \"Something huge might depend on something almost invisible.\"",
+        "Doctor Sol answered, \"That’s why we ask more questions.\"",
+        "Their next project was a small growing chamber with clear walls and curved tubes.",
+        "They tried different settings and recorded each result.",
+        "Eventually, one setting produced a steady supply of the silvery material.",
+        "Doctor Sol called this biotechnology: using living things to make useful products.",
+        "The samples would stay in Neruma's laboratory while their findings traveled to Earth.",
+        "Scientists could investigate the compounds, repeat the tests, and explore whether any might help develop medicines.",
+        "Coral recovery alone could not establish that.",
+        "Kai pictured a discovery beginning with a notebook, a question, and someone willing to look closely.",
+        "Before their last evening ended, they visited the ocean once more.",
+        "Their submarine rested above the sandy clearing while the garden slowly filled with blue light.",
+        "The Lumara moved through the arch, passed the purple fans, and turned toward the golden branches again.",
+        "Maya checked the time beside her earlier notes.",
+        "Kai drew arrows showing the direction of the floating specks and silver threads.",
+        "On the ride back, he arranged their pictures across a table.",
+        "One showed the creature beside the coral.",
+        "Another showed the tiny shapes under the microscope.",
+        "A third showed the containers and their labels.",
+        "Each picture held part of the story, but none explained everything alone.",
+        "Maya opened a fresh page.",
+        "She wanted the next readers to compare those pictures, notice the repeated changes, and decide which clues mattered most.",
+        "Luma gathered the records into a single folder.",
+        "Outside the station, the ocean reflected a sky full of stars.",
+        "Somewhere beneath that bright surface, the Lumara continued its quiet journey through the branches of its extraordinary, beautifully glowing underwater garden."
+      ],
+      "image": "images/ocean-sprite.webp",
+      "sha256": "5f3ab49bee36ade8f15f7f567ca8b4d88cc010c3060920e2352f8477499347a9",
+      "imageBytes": 2810042,
+      "alt": "Growing Possibilities"
+    },
+    {
+      "page": 10,
+      "lines": [
+        "For the next explorers, Luma stored one mystery: Why does the Lumara return to this garden?",
+        "Clues are the golden specks, the tail glow, and the container results.",
+        "Explain the mystery with evidence.",
+        "Imagine one careful question you would ask next."
+      ],
+      "image": "images/ocean-sprite.webp",
+      "sha256": "5f3ab49bee36ade8f15f7f567ca8b4d88cc010c3060920e2352f8477499347a9",
+      "imageBytes": 2810042,
+      "alt": "The Garden at Night"
+    }
+  ],
+  "description": "Explore Neruma's glowing seas and discover what the Lumara's golden specks reveal through careful scientific experiments.",
+  "topics": [
+    "Science",
+    "Oceans",
+    "Mystery",
+    "Space",
+    "Adventure"
+  ],
+  "vocabulary": [
+    {
+      "word": "horizon",
+      "say": "huh-RY-zun",
+      "meaning": "where the sky seems to meet the land or sea"
+    },
+    {
+      "word": "expedition",
+      "say": "ek-spuh-DISH-un",
+      "meaning": "a journey to explore"
+    },
+    {
+      "word": "generations",
+      "say": "jen-uh-RAY-shunz",
+      "meaning": "groups born at different times"
+    },
+    {
+      "word": "observations",
+      "say": "ob-zur-VAY-shunz",
+      "meaning": "things noticed carefully"
+    },
+    {
+      "word": "legend",
+      "say": "LEJ-und",
+      "meaning": "an old story passed from person to person"
+    },
+    {
+      "word": "evidence",
+      "say": "EV-uh-duns",
+      "meaning": "information used to test an idea"
+    },
+    {
+      "word": "transparent",
+      "say": "trans-PAIR-unt",
+      "meaning": "clear enough to see through"
+    },
+    {
+      "word": "ecosystem",
+      "say": "EE-koh-sis-tum",
+      "meaning": "living things and their surroundings"
+    },
+    {
+      "word": "graceful",
+      "say": "GRAYS-ful",
+      "meaning": "moving smoothly and easily"
+    },
+    {
+      "word": "exchange",
+      "say": "eks-CHAYNJ",
+      "meaning": "a giving and receiving"
+    },
+    {
+      "word": "route",
+      "say": "ROOT",
+      "meaning": "a path followed"
+    },
+    {
+      "word": "sample",
+      "say": "SAM-pul",
+      "meaning": "a small part collected to study"
+    },
+    {
+      "word": "microscope",
+      "say": "MY-kruh-skohp",
+      "meaning": "a tool that makes tiny things look larger"
+    },
+    {
+      "word": "microorganisms",
+      "say": "my-kroh-OR-guh-niz-umz",
+      "meaning": "very tiny living things"
+    },
+    {
+      "word": "containers",
+      "say": "kun-TAY-nerz",
+      "meaning": "things used to hold other things"
+    },
+    {
+      "word": "experiment",
+      "say": "ek-SPAIR-uh-munt",
+      "meaning": "a planned test of an idea"
+    },
+    {
+      "word": "biotechnology",
+      "say": "by-oh-tek-NOL-uh-jee",
+      "meaning": "using living things to make useful products"
+    },
+    {
+      "word": "compounds",
+      "say": "KOM-powndz",
+      "meaning": "substances made from joined chemical elements"
+    },
+    {
+      "word": "mystery",
+      "say": "MIS-tuh-ree",
+      "meaning": "something waiting to be explained"
+    },
+    {
+      "word": "clues",
+      "say": "KLOOZ",
+      "meaning": "details that help solve a question"
+    },
+    {
+      "word": "Lumara",
+      "say": "",
+      "meaning": "A fictional gentle ocean creature with blue spots and long violet fins."
+    },
+    {
+      "word": "Neruma",
+      "say": "",
+      "meaning": "The fictional ocean moon the explorers visit."
+    },
+    {
+      "word": "Kai",
+      "say": "",
+      "meaning": "A student ninja explorer."
+    },
+    {
+      "word": "Maya",
+      "say": "",
+      "meaning": "A student ninja explorer."
+    },
+    {
+      "word": "Luma",
+      "say": "",
+      "meaning": "The team's friendly digital exploration assistant."
+    },
+    {
+      "word": "Doctor Sol",
+      "say": "",
+      "meaning": "The marine scientist guiding the explorers."
+    }
+  ]
+}
