@@ -1,8 +1,9 @@
-/* Scoped image sizes prevent story and tool styles from stretching the brand. */
+/* Shared compact brand: original transparent wordmark, unchanged friendly mascot. */
 img.nm-mascot{display:inline-block!important;width:1.5em!important;height:1.5em!important;min-width:1.5em!important;max-width:none!important;object-fit:contain!important;vertical-align:middle!important;aspect-ratio:1;filter:none!important;border:0!important;border-radius:0!important;margin:0 .15em 0 0!important;padding:0!important;background:none!important}
-img.nm-inline-wordmark{display:inline-block!important;width:160px!important;height:auto!important;max-width:100%!important;object-fit:contain!important;vertical-align:middle!important;filter:none!important;border:0!important;border-radius:4px!important;aspect-ratio:782/345}
-#nm-site-nav .nm-mark{gap:7px!important;line-height:1!important;padding:0!important}
-#nm-site-nav img.nm-header-mascot{width:56px!important;height:66px!important;min-width:56px!important;margin:0!important}
-#nm-site-nav img.nm-wordmark{display:block!important;width:200px!important;height:auto!important;max-width:none!important;object-fit:contain!important;aspect-ratio:782/345;filter:none!important;border:0!important;border-radius:5px!important;margin:0!important;padding:0!important}
-@media(max-width:800px){#nm-site-nav{flex-wrap:wrap!important;gap:4px!important;padding-top:6px!important;padding-bottom:6px!important}#nm-site-nav nav{width:100%!important;justify-content:space-between!important}#nm-site-nav img.nm-header-mascot{width:44px!important;height:56px!important;min-width:44px!important}#nm-site-nav img.nm-wordmark{width:172px!important}}
+img.nm-inline-wordmark{display:inline-block!important;width:auto!important;height:44px!important;max-width:100%!important;object-fit:contain!important;vertical-align:middle!important;filter:none!important;border:0!important;border-radius:0!important;aspect-ratio:auto}
+#nm-site-nav{padding-top:6px!important;padding-bottom:6px!important;gap:8px!important}
+#nm-site-nav .nm-mark{gap:7px!important;line-height:1!important;padding:0!important;min-height:44px!important}
+#nm-site-nav img.nm-header-mascot{width:44px!important;height:44px!important;min-width:44px!important;margin:0!important}
+#nm-site-nav img.nm-wordmark{display:block!important;width:auto!important;height:44px!important;max-width:160px!important;object-fit:contain!important;aspect-ratio:auto!important;filter:none!important;border:0!important;border-radius:0!important;margin:0!important;padding:0!important;background:none!important}
+@media(max-width:800px){#nm-site-nav{flex-wrap:wrap!important;gap:0!important;padding-top:4px!important;padding-bottom:4px!important}#nm-site-nav nav{width:100%!important;justify-content:space-between!important}#nm-site-nav nav a{min-height:40px!important;padding-top:7px!important;padding-bottom:7px!important}}
 @media print{#nm-site-nav{display:none!important}img.nm-mascot{width:1em!important;height:1em!important}}

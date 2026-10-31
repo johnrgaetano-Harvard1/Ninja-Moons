@@ -12,10 +12,12 @@
   if(root.nodeType===3){replaceText(root);return;}
   if(!root.querySelectorAll||root.matches?.('script,style,textarea,input,select,option,[data-nm-mascot]'))return;
   const doc=root.ownerDocument;
+  const marks=root.matches?.('img.nm-wordmark,img.nm-inline-wordmark')?[root]:[...root.querySelectorAll('img.nm-wordmark,img.nm-inline-wordmark')];
+  for(const img of marks){if(!img.src.endsWith('/wordmark-compact.webp'))img.src=base+'wordmark-compact.webp';img.height=44;img.removeAttribute('width');}
   const walker=doc.createTreeWalker(root,4),nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);nodes.forEach(replaceText);
   for(const el of root.querySelectorAll('.brand,.site-logo,.logo')){
    if(el.closest('#nm-site-nav')||el.dataset.nmWordmark||el.querySelector('button,input,select')||!/NINJA\s*M[O☾◔🌙\s]*ONS/i.test(el.textContent))continue;
-   const img=doc.createElement('img');img.src=base+'wordmark.jpg';img.alt='NINJA MOONS';img.className='nm-inline-wordmark';img.width=160;img.height=71;el.replaceChildren(img);el.dataset.nmWordmark='true';
+   const img=doc.createElement('img');img.src=base+'wordmark-compact.webp';img.alt='NINJA MOONS';img.className='nm-inline-wordmark';img.width=132;img.height=44;el.replaceChildren(img);el.dataset.nmWordmark='true';
    if(el.tagName==='A')el.href='https://ninjamoons.vercel.app/';
   }
   const candidates=root.matches?.('iframe')?[root]:[...root.querySelectorAll('iframe')];
