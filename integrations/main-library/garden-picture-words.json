@@ -42,139 +42,156 @@
     "y": 100
   },
   "tree": {
-    "page": 1,
-    "caption": "A giant tree towers above the explorers.",
-    "zoom": 170,
-    "x": 83,
-    "y": 45
+    "src": "word-pictures/tree.webp",
+    "caption": "A real tree with a trunk, branches, and leaves.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "trees": {
-    "page": 1,
-    "caption": "A giant tree towers above the explorers.",
-    "zoom": 170,
-    "x": 83,
-    "y": 45
+    "src": "word-pictures/tree.webp",
+    "caption": "A real tree with a trunk, branches, and leaves.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "tree's": {
-    "page": 1,
-    "caption": "A giant tree towers above the explorers.",
-    "zoom": 170,
-    "x": 83,
-    "y": 45
+    "src": "word-pictures/tree.webp",
+    "caption": "A real tree with a trunk, branches, and leaves.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "trunk": {
-    "page": 1,
-    "caption": "A giant tree towers above the explorers.",
-    "zoom": 170,
-    "x": 83,
-    "y": 45
+    "src": "word-pictures/tree.webp",
+    "caption": "The trunk is the main woody stem of a tree.",
+    "fit": "210%",
+    "x": 50,
+    "y": 85,
+    "kind": "photo"
   },
   "branches": {
-    "page": 1,
-    "caption": "A giant tree towers above the explorers.",
-    "zoom": 170,
-    "x": 83,
-    "y": 45
+    "src": "word-pictures/tree.webp",
+    "caption": "Branches spread out from the tree’s trunk.",
+    "fit": "180%",
+    "x": 50,
+    "y": 38,
+    "kind": "photo"
   },
   "tall": {
-    "page": 1,
-    "caption": "A giant tree towers above the explorers.",
-    "zoom": 170,
-    "x": 83,
-    "y": 45
+    "src": "word-pictures/tree.webp",
+    "caption": "A tall tree growing in a field.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "towering": {
-    "page": 1,
-    "caption": "A giant tree towers above the explorers.",
-    "zoom": 170,
-    "x": 83,
-    "y": 45
+    "src": "word-pictures/tree.webp",
+    "caption": "A tall tree growing in a field.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "giant": {
-    "page": 1,
-    "caption": "A giant tree towers above the explorers.",
-    "zoom": 170,
-    "x": 83,
-    "y": 45
+    "src": "word-pictures/tree.webp",
+    "caption": "A tall tree growing in a field.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "huge": {
-    "page": 1,
-    "caption": "A giant tree towers above the explorers.",
-    "zoom": 170,
-    "x": 83,
-    "y": 45
+    "src": "word-pictures/tree.webp",
+    "caption": "A tall tree growing in a field.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "big": {
-    "page": 1,
-    "caption": "A giant tree towers above the explorers.",
-    "zoom": 170,
-    "x": 83,
-    "y": 45
+    "src": "word-pictures/tree.webp",
+    "caption": "A tall tree growing in a field.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "biodome": {
-    "page": 1,
-    "caption": "The garden is inside a transparent, protective dome.",
-    "zoom": 120,
-    "x": 80,
-    "y": 40
+    "src": "word-pictures/biodome.webp",
+    "caption": "Real biodomes at the Eden Project enclose growing spaces.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "dome": {
-    "page": 1,
-    "caption": "The garden is inside a transparent, protective dome.",
-    "zoom": 120,
-    "x": 80,
-    "y": 40
+    "src": "word-pictures/biodome.webp",
+    "caption": "Real biodomes at the Eden Project enclose growing spaces.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "glass": {
-    "page": 1,
-    "caption": "The garden is inside a transparent, protective dome.",
-    "zoom": 120,
-    "x": 80,
-    "y": 40
+    "src": "word-pictures/roots.webp",
+    "caption": "A clear glass bottle lets you see the plant’s roots inside.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "transparent": {
-    "page": 1,
-    "caption": "The garden is inside a transparent, protective dome.",
-    "zoom": 120,
-    "x": 80,
-    "y": 40
+    "src": "word-pictures/roots.webp",
+    "caption": "A clear glass bottle lets you see the plant’s roots inside.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "garden": {
-    "page": 2,
-    "caption": "A lush garden full of growing plants.",
-    "zoom": 110,
-    "x": 65,
-    "y": 50
+    "src": "word-pictures/garden.webp",
+    "caption": "A real garden with planted flower beds and a path.",
+    "fit": "cover",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "gardens": {
-    "page": 2,
-    "caption": "A lush garden full of growing plants.",
-    "zoom": 110,
-    "x": 65,
-    "y": 50
+    "src": "word-pictures/garden.webp",
+    "caption": "A real garden with planted flower beds and a path.",
+    "fit": "cover",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "garden's": {
-    "page": 2,
-    "caption": "A lush garden full of growing plants.",
-    "zoom": 110,
-    "x": 65,
-    "y": 50
+    "src": "word-pictures/garden.webp",
+    "caption": "A real garden with planted flower beds and a path.",
+    "fit": "cover",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "lettuce": {
-    "page": 3,
-    "caption": "Lettuce is a leafy vegetable.",
-    "zoom": 100,
+    "src": "word-pictures/lettuce-head.webp",
+    "caption": "A whole head of lettuce. Lettuce is a leafy vegetable.",
+    "fit": "contain",
     "x": 50,
     "y": 50,
-    "src": "word-pictures/lettuce.jpg"
+    "kind": "photo"
   },
   "vegetable": {
-    "page": 3,
-    "caption": "Lettuce is a leafy vegetable.",
-    "zoom": 100,
+    "src": "word-pictures/lettuce-head.webp",
+    "caption": "A whole head of lettuce. Lettuce is a leafy vegetable.",
+    "fit": "contain",
     "x": 50,
     "y": 50,
-    "src": "word-pictures/lettuce.jpg"
+    "kind": "photo"
   },
   "strawberries": {
     "page": 2,
@@ -225,74 +242,76 @@
     "src": "word-pictures/soil.jpg"
   },
   "roots": {
-    "page": 3,
-    "caption": "Roots hang down into water to absorb water and nutrients.",
-    "zoom": 210,
-    "x": 86,
-    "y": 65
+    "src": "word-pictures/roots.webp",
+    "caption": "Roots grow down from a plant and absorb water.",
+    "fit": "200%",
+    "x": 50,
+    "y": 68,
+    "kind": "photo"
   },
   "hydroponics": {
-    "page": 3,
-    "caption": "Hydroponics grows plants with nutrient-rich water instead of soil.",
-    "zoom": 150,
-    "x": 85,
-    "y": 50
-  },
-  "nutrients": {
-    "page": 3,
-    "caption": "Hydroponics grows plants with nutrient-rich water instead of soil.",
-    "zoom": 150,
-    "x": 85,
-    "y": 50
+    "src": "word-pictures/hydroponics.webp",
+    "caption": "A real hydroponic tower grows plants without soil.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "plants": {
-    "page": 3,
-    "caption": "Plants grow leaves and roots. Cultivation means growing and caring for plants.",
-    "zoom": 160,
-    "x": 80,
-    "y": 15
+    "src": "word-pictures/roots.webp",
+    "caption": "A real basil plant growing roots in water.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "plant": {
-    "page": 3,
-    "caption": "Plants grow leaves and roots. Cultivation means growing and caring for plants.",
-    "zoom": 160,
-    "x": 80,
-    "y": 15
+    "src": "word-pictures/roots.webp",
+    "caption": "A real basil plant growing roots in water.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "leaf": {
-    "page": 3,
-    "caption": "Plants grow leaves and roots. Cultivation means growing and caring for plants.",
-    "zoom": 160,
-    "x": 80,
-    "y": 15
+    "src": "word-pictures/leaf.webp",
+    "caption": "A real green leaf with water droplets on its surface.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "leaves": {
-    "page": 3,
-    "caption": "Plants grow leaves and roots. Cultivation means growing and caring for plants.",
-    "zoom": 160,
-    "x": 80,
-    "y": 15
+    "src": "word-pictures/leaf.webp",
+    "caption": "A real green leaf with water droplets on its surface.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "flowers": {
-    "page": 7,
-    "caption": "Flowers growing in the garden.",
-    "zoom": 220,
-    "x": 80,
-    "y": 65
+    "src": "word-pictures/flowers.webp",
+    "caption": "Real pink flowers with petals.",
+    "fit": "cover",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "fruit": {
-    "page": 6,
-    "caption": "A golden fruit from the garden tree.",
-    "zoom": 270,
-    "x": 55,
-    "y": 55
+    "src": "word-pictures/fruit.webp",
+    "caption": "A yellow apple growing on a branch. Apples are fruit.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "golden": {
-    "page": 6,
-    "caption": "A golden fruit from the garden tree.",
-    "zoom": 270,
-    "x": 55,
-    "y": 55
+    "src": "word-pictures/fruit.webp",
+    "caption": "A yellow apple growing on a branch. Apples are fruit.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "gold": {
     "kind": "color",
@@ -300,25 +319,28 @@
     "caption": "The color gold."
   },
   "lamp": {
-    "page": 4,
-    "caption": "Grow lamps shine light onto plants. Plants use light to make their food.",
-    "zoom": 130,
-    "x": 65,
-    "y": 15
+    "src": "word-pictures/lamp.webp",
+    "caption": "A real lamp gives off light.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "lamps": {
-    "page": 4,
-    "caption": "Grow lamps shine light onto plants. Plants use light to make their food.",
-    "zoom": 130,
-    "x": 65,
-    "y": 15
+    "src": "word-pictures/lamp.webp",
+    "caption": "A real lamp gives off light.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "light": {
-    "page": 4,
-    "caption": "Grow lamps shine light onto plants. Plants use light to make their food.",
-    "zoom": 130,
-    "x": 65,
-    "y": 15
+    "src": "word-pictures/lamp.webp",
+    "caption": "A real lamp gives off light.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "red": {
     "kind": "color",
@@ -335,61 +357,61 @@
     "color": "#fff",
     "caption": "The color white."
   },
-  "colors": {
-    "page": 4,
-    "caption": "Grow lamps shine light onto plants. Plants use light to make their food.",
-    "zoom": 130,
-    "x": 65,
-    "y": 15
-  },
   "sunlight": {
-    "page": 4,
-    "caption": "Grow lamps shine light onto plants. Plants use light to make their food.",
-    "zoom": 130,
-    "x": 65,
-    "y": 15
+    "src": "word-pictures/garden.webp",
+    "caption": "Sunlight lights up this outdoor garden.",
+    "fit": "cover",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "pipe": {
-    "page": 5,
-    "caption": "Water flows through pipes and returns to the garden for reuse.",
-    "zoom": 135,
-    "x": 75,
-    "y": 35
+    "src": "word-pictures/pipes.webp",
+    "caption": "Water flows through these pipes.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "pipes": {
-    "page": 5,
-    "caption": "Water flows through pipes and returns to the garden for reuse.",
-    "zoom": 135,
-    "x": 75,
-    "y": 35
+    "src": "word-pictures/pipes.webp",
+    "caption": "Water flows through these pipes.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "channel": {
-    "page": 5,
-    "caption": "Water flows through pipes and returns to the garden for reuse.",
-    "zoom": 135,
-    "x": 75,
-    "y": 35
+    "src": "word-pictures/pipes.webp",
+    "caption": "Water flows through these pipes.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "channels": {
-    "page": 5,
-    "caption": "Water flows through pipes and returns to the garden for reuse.",
-    "zoom": 135,
-    "x": 75,
-    "y": 35
+    "src": "word-pictures/pipes.webp",
+    "caption": "Water flows through these pipes.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "streams": {
-    "page": 5,
-    "caption": "Water flows through pipes and returns to the garden for reuse.",
-    "zoom": 135,
-    "x": 75,
-    "y": 35
+    "src": "word-pictures/stream.webp",
+    "caption": "A real stream of water flowing through a park.",
+    "fit": "cover",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "screen": {
-    "page": 8,
-    "caption": "The garden monitor tracks conditions such as light, water, and temperature. Humidity is water vapor in the air.",
-    "zoom": 150,
-    "x": 66,
-    "y": 40
+    "src": "word-pictures/screen.webp",
+    "caption": "A real computer screen displays information.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "robot": {
     "page": 6,
@@ -425,18 +447,20 @@
     "y": 20
   },
   "hand": {
-    "page": 6,
-    "caption": "A gloved hand holds a garden fruit.",
-    "zoom": 260,
-    "x": 55,
-    "y": 60
+    "src": "word-pictures/gloves.webp",
+    "caption": "Hands wearing gardening gloves while holding a plant.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "glove": {
-    "page": 6,
-    "caption": "A gloved hand holds a garden fruit.",
-    "zoom": 260,
-    "x": 55,
-    "y": 60
+    "src": "word-pictures/gloves.webp",
+    "caption": "Hands wearing gardening gloves while holding a plant.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "hologram": {
     "page": 2,
@@ -494,26 +518,28 @@
     "y": 50
   },
   "stars": {
-    "page": 10,
-    "caption": "A future space garden: the story imagines growing food beyond Earth.",
-    "zoom": 105,
-    "x": 62,
-    "y": 50
+    "src": "word-pictures/stars.webp",
+    "caption": "Real stars photographed in the night sky.",
+    "fit": "cover",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "sky": {
-    "page": 10,
-    "caption": "A future space garden: the story imagines growing food beyond Earth.",
-    "zoom": 105,
-    "x": 62,
-    "y": 50
+    "src": "word-pictures/sky.webp",
+    "caption": "The sky above us, with blue sky and white clouds.",
+    "fit": "cover",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "earth": {
-    "page": 1,
-    "caption": "Earth is the explorers’ home planet.",
-    "zoom": 430,
-    "x": 52,
-    "y": 10,
-    "src": "https://ninjamoons.vercel.app/published/stories/zoom-trip/images/page-05.webp"
+    "src": "word-pictures/earth.webp",
+    "caption": "Earth photographed from space. Photo: NASA.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "one": {
     "kind": "number",
@@ -551,11 +577,12 @@
     "caption": "Five: 5."
   },
   "panel": {
-    "page": 8,
-    "caption": "The garden monitor tracks conditions such as light, water, and temperature. Humidity is water vapor in the air.",
-    "zoom": 150,
-    "x": 66,
-    "y": 40
+    "src": "word-pictures/screen.webp",
+    "caption": "A real computer screen displays information.",
+    "fit": "contain",
+    "x": 50,
+    "y": 50,
+    "kind": "photo"
   },
   "platform": {
     "page": 9,
