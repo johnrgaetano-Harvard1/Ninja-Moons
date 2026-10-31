@@ -42,6 +42,29 @@ small,.muted{color:#617286}.step{font-size:13px;font-weight:800;letter-spacing:.
 </style><script src="https://ninja-reader-story-library.vercel.app/garden-pictures.js"></script>
 <style>
 .paragraph-check{border-top:2px solid #c8e0ee;margin-top:24px;padding-top:24px}.check-eyebrow{font-size:12px;font-weight:850;letter-spacing:.08em;color:#28617d}.paragraph-check h3{font-size:clamp(22px,4vw,28px);line-height:1.35;color:#17394e}.check-options{display:grid;gap:12px}.check-choice{font:700 18px/1.5 system-ui;border-radius:12px;min-height:58px;cursor:pointer;white-space:normal;text-align:left!important;background:#fff!important;color:#18394e!important;border:2px solid #bdd6e5!important;line-height:1.5;padding:15px!important;width:100%}.check-choice[aria-pressed=true]{border-color:#176fa6!important;background:#e8f4ff!important}.check-choice.check-correct{border-color:#25875d!important;background:#e6f6ed!important}.check-choice:focus-visible,.check-tools button:focus-visible{outline:3px solid #126d9d;outline-offset:3px}.check-feedback,.check-clue{font-size:16px;line-height:1.6;color:#244d63}.check-tools{display:flex;gap:10px;flex-wrap:wrap}.check-tools button,.check-hear{font:700 15px system-ui;padding:12px 16px;border:1px solid #8ebbd3;border-radius:10px;background:#e2f2ff;color:#184566;min-height:44px;cursor:pointer}.check-hear{margin:0 0 14px}.check-passage{padding:18px;background:white;border:1px solid #cfdfeb;border-radius:14px;font-size:19px;line-height:1.9;color:#20394b}.check-highlight{background:#ffeb96;color:#132e44;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}.paragraph-check h4{font-size:17px;margin-bottom:10px}
+
+/* NINJA READER touch-to-define: compact, accessible and phone-friendly. */
+.nm-def-tappable{text-decoration:underline dotted #52b9db;text-underline-offset:5px;cursor:pointer;touch-action:manipulation}
+.nm-def-tappable:focus-visible{outline:3px solid #258cb8;outline-offset:2px;background:#ccefff}
+#nm-def-shade[hidden],#nm-def-card[hidden]{display:none!important}
+#nm-def-shade{position:fixed;inset:0;z-index:30000;background:#061b368a}
+#nm-def-card{position:fixed;bottom:0;left:0;right:0;z-index:30001;box-sizing:border-box;background:#fff;color:#142e45;
+ max-height:min(82dvh,630px);overflow-y:auto;border-top:5px solid #187fb7;border-radius:24px 24px 0 0;
+ padding:21px max(20px,env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left));
+ box-shadow:0 -22px 65px #06132655;font:17px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+#nm-def-card .nm-def-inner{max-width:620px;margin:0 auto}
+#nm-def-card .nm-def-heading{display:flex;justify-content:space-between;gap:12px;align-items:center}
+#nm-def-card .nm-def-label{font-weight:900;font-size:12px;letter-spacing:.08em;color:#276486}
+#nm-def-card #nm-def-close{width:44px;height:44px;border-radius:50%;border:1px solid #bdd2de;font-size:24px;line-height:1;background:#eaf3fa;color:#123951}
+#nm-def-card h2{font-size:clamp(29px,6vw,40px);line-height:1.25;color:#093d65;margin:9px 0}
+#nm-def-card .nm-def-say{font-size:17px;color:#405e75;font-weight:700}
+#nm-def-card .nm-def-meaning{font-size:clamp(19px,4.5vw,24px);line-height:1.55;color:#892d45;margin:15px 0}
+#nm-def-card .nm-def-buttons{display:flex;flex-wrap:wrap;gap:8px}
+#nm-def-card .nm-def-buttons button{background:#09649c;border:0;border-radius:11px;color:white;min-height:46px;padding:10px 15px;font-weight:800;font-size:16px}
+#nm-def-card .nm-def-buttons button:last-child{background:#e2f1fb;color:#154d70}
+#nm-def-card .nm-def-status{color:#57758b;font-size:13px;min-height:1.3em}
+@media(min-width:720px){#nm-def-card{width:min(670px,calc(100vw - 40px));left:50%;right:auto;bottom:20px;transform:translateX(-50%);border-radius:24px;padding:24px 30px}}
+@media print{#nm-def-shade,#nm-def-card{display:none!important}}
 </style></head><body><div id="nm-site-nav"><a class="nm-mark" href="https://ninjamoons.vercel.app/" aria-label="NINJA MOONS home"><img class="nm-mascot nm-header-mascot" src="https://ninjamoons.vercel.app/brand/mascot.webp" alt="" aria-hidden="true" width="44" height="44"><img class="nm-wordmark" src="https://ninjamoons.vercel.app/brand/wordmark-compact.webp" alt="NINJA MOONS" width="132" height="44"></a><nav aria-label="NINJA MOONS main navigation"><a href="https://ninjamoons.vercel.app/">Home</a><a href="https://ninjamoons.vercel.app/dashboard">My dashboard</a><a href="https://ninjamoons.vercel.app/reader?level=All">Library</a><a href="https://ninjamoons.vercel.app/teacher-dashboard">Teachers</a><a href="https://ninjamoons.vercel.app/about.html">About</a></nav></div><style>
 #nm-site-nav{position:sticky;top:0;z-index:10000;isolation:isolate;box-sizing:border-box;flex:0 0 auto;width:100%;margin:0;background:#07182cf7;border-bottom:1px solid #36546b;color:#e9f6ff;font:700 13px/1.3 system-ui;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px max(16px,calc((100vw - 1200px)/2));text-align:left;backdrop-filter:blur(12px)}#nm-site-nav *{box-sizing:border-box}#nm-site-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;color:#e9f6ff;text-decoration:none;border:0;box-shadow:none;margin:0;white-space:nowrap}#nm-site-nav .nm-mark{font-size:17px;font-weight:950;letter-spacing:.035em;gap:5px;flex-shrink:0}#nm-site-nav nav{position:static;display:flex;gap:3px;align-items:center;flex-wrap:wrap;margin:0;padding:0;width:auto;background:none;border:0}#nm-site-nav nav a{padding:10px 11px;border-radius:8px;font-size:13px;font-style:normal;text-transform:none;letter-spacing:0}#nm-site-nav nav a:hover,#nm-site-nav nav a:focus-visible{background:#183750;outline:2px solid #6ee5ff;outline-offset:1px}@media(max-width:700px){#nm-site-nav{padding:8px 12px;gap:3px;flex-wrap:wrap}#nm-site-nav .nm-mark{min-height:33px;font-size:16px}#nm-site-nav nav{width:100%;justify-content:space-between;gap:0}#nm-site-nav nav a{padding:8px 7px;font-size:12px;min-height:40px}}@media print{#nm-site-nav{display:none!important}}
 </style>
@@ -63,17 +86,30 @@ small,.muted{color:#617286}.step{font-size:13px;font-weight:800;letter-spacing:.
 </div>
 <div class="nav"><div class="navbuttons"><button class="btn light" id="previous" type="button">← Back</button><button class="btn" id="next" type="button">Next step →</button></div>
 <div class="navbuttons"><button class="btn light" id="prev-sentence" type="button">◀ Previous sentence</button><button class="btn light" id="next-sentence" type="button">Next sentence ▶</button></div></div>
-<p class="note">Nothing advances automatically. Replay any stage as many times as you want. Touch any word to hear it from that point.</p>
+<p class="note">Nothing advances automatically. Replay any stage as many times as you want. Touch any word for its meaning and pronunciation. Choose Read from here to restart the audio at that word.</p>
 </div></div></main>
+
+<div id="nm-def-shade" hidden></div>
+<section id="nm-def-card" role="dialog" aria-modal="true" aria-labelledby="nm-def-word" hidden>
+  <div class="nm-def-inner"><div class="nm-def-heading"><span class="nm-def-label">🥷 NINJA WORD EXPLORER</span><button type="button" id="nm-def-close" aria-label="Close word definition">×</button></div>
+  <h2 id="nm-def-word"></h2><div class="nm-def-say" id="nm-def-say"></div>
+  <p class="nm-def-meaning" id="nm-def-meaning"></p><div class="nm-def-buttons">
+  <button type="button" id="nm-def-hear">🔊 Hear word</button>
+  <button type="button" id="nm-def-from">▶ Read from here</button>
+  <button type="button" id="nm-def-dismiss">Back to reading</button></div>
+  <p class="nm-def-status" id="nm-def-status" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
 <script>(()=>{
 "use strict";
 const id=x=>document.getElementById(x),params=new URLSearchParams(location.search);
 const slug=params.get("story")||"";
 const stages=["Hear the sentence","Read with pronunciation","Understand every word","Understand the sentence"];
 const tips=[
-"Tap Play to hear the sentence. Tap any word to start hearing it from there.",
-"Read the sentence again with pronunciation beside each word. Tap words to hear them.",
-"Every word has a short meaning. Tap any word to hear that word and its meaning.",
+"Tap Play to hear the sentence. Touch any word for its definition and sound.",
+"Read with pronunciation beside each word. Touch a word for its meaning.",
+"Every word has a meaning. Touch any word to see and hear it.",
 "Read and listen to what the entire sentence means. You decide when to go on."
 ];
 const common={
@@ -244,15 +280,54 @@ function attachPictureWord(el,word){
  el.addEventListener('click',()=>showWordPicture(word,el));
 }
 
+
+/* Touch any word in the four-stage NINJA READER to see its phonetic and simple meaning.
+   Existing speech, reading controls, and picture hover remain available. */
+let nmDefVersion=0,nmDefWord="",nmDefIndex=-1,nmDefReturn=null;
+const nmDefCard=id("nm-def-card"),nmDefShade=id("nm-def-shade");
+function nmDefPaint(word,record){
+ id("nm-def-word").textContent=word;
+ id("nm-def-say").textContent=record?.phonetic?"Say it: "+record.phonetic:"";
+ id("nm-def-meaning").textContent=record?.meaning||"Finding a simple definition…";
+}
+function nmDefClose(){
+ ++nmDefVersion;
+ nmDefCard.hidden=true;nmDefShade.hidden=true;
+ document.body.classList.remove("nm-def-open");
+ if(nmDefReturn&&nmDefReturn.isConnected&&typeof nmDefReturn.focus==="function")nmDefReturn.focus({preventScroll:true});
+}
+function nmDefOpen(word,index){
+ if(!word)return;
+ cancel();const token=++nmDefVersion;
+ nmDefWord=word;nmDefIndex=index;nmDefReturn=document.activeElement;
+ nmDefPaint(word,dictionary(word));id("nm-def-status").textContent=dictionary(word)?"Story vocabulary and easy-word definitions":"Checking the dictionary for an easy meaning…";
+ nmDefShade.hidden=false;nmDefCard.hidden=false;id("nm-def-close").focus();
+ if(!dictionary(word))lookUp(word).then(record=>{
+   if(nmDefVersion!==token||nmDefCard.hidden)return;
+   nmDefPaint(word,record);
+   id("nm-def-status").textContent=record?"Definition ready.":"No definition available right now. You can still hear this word.";
+ }).catch(()=>{if(nmDefVersion===token)id("nm-def-status").textContent="Definition unavailable right now.";});
+}
+id("nm-def-close").addEventListener("click",nmDefClose);
+id("nm-def-dismiss").addEventListener("click",nmDefClose);
+nmDefShade.addEventListener("click",nmDefClose);
+id("nm-def-hear").addEventListener("click",()=>{if(nmDefWord)say(nmDefWord);});
+id("nm-def-from").addEventListener("click",()=>{const index=nmDefIndex;nmDefClose();if(index>=0)speakFrom(index);else if(nmDefWord)say(nmDefWord);});
+document.addEventListener("keydown",e=>{if(nmDefCard.hidden)return;if(e.key==="Escape"){e.preventDefault();nmDefClose();}if(e.key==="Tab"){
+ const cycle=[id("nm-def-close"),id("nm-def-hear"),id("nm-def-from"),id("nm-def-dismiss")].filter(x=>!x.hidden);
+ const i=cycle.indexOf(document.activeElement);if(e.shiftKey&&i===0){e.preventDefault();cycle.at(-1).focus();}
+ else if(!e.shiftKey&&i===cycle.length-1){e.preventDefault();cycle[0].focus();}
+}});
+
 function words(s,phonetics){
  const wrap=node("div",phonetics?"sentence helps":"sentence");let i=0;
  for(const t of tok(s)){
   if(!t.isWord){wrap.append(document.createTextNode(t.text));continue;}
   const idx=i++,span=node("span","word",t.text);
-  span.dataset.pos=idx;span.setAttribute("role","button");span.tabIndex=0;span.setAttribute("aria-label","Speak from "+t.text);
+  span.dataset.pos=idx;span.setAttribute("role","button");span.tabIndex=0;span.setAttribute("aria-label","Define "+t.text);span.classList.add("nm-def-tappable");
   attachPictureWord(span,t.text);
-  span.addEventListener("click",()=>speakFrom(idx));
-  span.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();speakFrom(idx);}});
+  span.addEventListener("click",()=>nmDefOpen(t.text,idx));
+  span.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();nmDefOpen(t.text,idx);}});
   if(!phonetics){wrap.append(span);continue;}
   const group=node("span","token"),cue=node("span","phon","("+(dictionary(t.text)?.phonetic||"🔊 tap")+")");
   cue.dataset.dict=t.text;cue.dataset.kind="phon";group.append(span,cue);wrap.append(group);
@@ -266,7 +341,7 @@ function meanings(s){
   const val=node("span","meaning",info?"("+info.meaning+")":"(Looking up a simple meaning…)");
   val.dataset.dict=t.text;val.dataset.kind="meaning";word.type="button";
   attachPictureWord(word,t.text);
-  word.addEventListener("click",()=>say(t.text+(dictionary(t.text)?". "+dictionary(t.text).meaning:"")));
+  word.classList.add("nm-def-tappable");word.setAttribute("aria-label","Define "+t.text);word.addEventListener("click",()=>nmDefOpen(t.text,-1));
   row.append(word,document.createTextNode(" "),val);list.append(row);
  }
  return list;

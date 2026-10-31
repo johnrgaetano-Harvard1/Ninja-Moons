@@ -73,6 +73,10 @@ async function main(){
   fs.writeFileSync(f,addNavigation(fs.readFileSync(f,'utf8').replace('</body>',navigation+'</body>').replace('href="/">← Publishing Lab Library','href="https://ninjamoons.vercel.app/reader?level=All">← Story library')));
  }
  fs.cpSync(path.resolve(__dirname,'../../integrations/brand'),path.join(out,'brand'),{recursive:true});
+ // Serve the verified universal NINJA READER through the same stable publishing domain.
+ const helperSource=path.resolve(__dirname,"../../integrations/main-library/helper.html");
+ ensure(isFile(helperSource),"universal reading helper source missing");
+ fs.copyFileSync(helperSource,path.join(out,"reading-helper.html"));
  fs.writeFileSync(path.join(out,"catalog.json"),JSON.stringify({version:1,stories:library},null,2));
 
  // Add future stories automatically to the test library without changing the existing featured story.
