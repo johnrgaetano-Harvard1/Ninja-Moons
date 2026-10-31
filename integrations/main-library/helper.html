@@ -306,7 +306,14 @@ function render(){
  id("steps").replaceChildren(...stages.map((s,i)=>{const n=node("span","bar"+(i<=state.stage?" done":""));n.title=s;return n;}));
  id("step-label").textContent="STAGE "+(state.stage+1)+" OF 4";
  id("stage-title").textContent=state.stage===3&&checkFor(item)?"Understand the paragraph":stages[state.stage];id("tip").textContent=state.stage===3&&checkFor(item)?"Choose an answer about the whole paragraph. Replay it or reveal the supporting clue whenever you need.":tips[state.stage];
- id("previous").disabled=state.stage===0;id("next").disabled=state.stage===3;
+ id("previous").disabled=state.stage===0;
+ const gardenFlow=slug==='secret-garden';
+ id("next").disabled=state.stage===3&&(!gardenFlow||state.index===state.sentences.length-1);
+ id("next").textContent=state.stage===3&&gardenFlow?(checkFor(item)?'Next paragraph →':'Continue paragraph →'):'Next step →';
+ if(gardenFlow){const paragraph=state.sentences.filter(s=>s.paragraph===item.paragraph);const position=paragraph.findIndex(s=>s===item)+1;
+ id('progress-label').textContent='Paragraph '+item.paragraph+' of 20 · Sentence '+position+' of '+paragraph.length;
+ if(state.stage===3&&!checkFor(item))id('tip').textContent='This sentence is complete. Tap Continue paragraph. Your question appears after sentence '+paragraph.length+'.';
+ }
  id("prev-sentence").disabled=state.index===0;id("next-sentence").disabled=state.index===state.sentences.length-1;
  const box=id("stage-content");box.replaceChildren();pictureAnchor=null;
  const pictureMode=['zoom-trip','secret-garden'].includes(slug)&&state.stage<3;box.classList.toggle('picture-mode',pictureMode);
@@ -368,6 +375,7 @@ function finishLoad(){
  try{sessionStorage.setItem('nm-last-story-v1',JSON.stringify({title:state.title,url:'/reading-helper?story='+encodeURIComponent(slug)}));}catch(e){}
 
  try{const p=JSON.parse(sessionStorage.getItem("ninja-helper-progress-"+slug)||"null");if(Array.isArray(p)){state.index=Math.min(Math.max(0,p[0]|0),state.sentences.length-1);state.stage=Math.min(Math.max(0,p[1]|0),3);}}catch(e){}
+ if(slug==='secret-garden'&&params.get('start')==='1'){state.index=0;state.stage=0;}
  if(slug==='secret-garden'&&params.get('paragraph-check')){const wanted=Math.min(20,Math.max(1,Number(params.get('paragraph-check'))||1));const check=Object.entries(paragraphChecks).find(([,c])=>c.paragraph===wanted);const i=state.sentences.findIndex(s=>s.number===Number(check?.[0]));if(i>=0){state.index=i;state.stage=3;}}
  id("loading").classList.add("hide");id("reader").classList.remove("hide");render();
 }
@@ -408,7 +416,7 @@ async function load(){
 }
 id("play").addEventListener("click",speakStage);id("stop").addEventListener("click",cancel);
 id("previous").addEventListener("click",()=>{if(state.stage>0){state.stage--;render();}});
-id("next").addEventListener("click",()=>{if(state.stage<3){state.stage++;render();}});
+id("next").addEventListener("click",()=>{if(state.stage<3){state.stage++;render();return;}if(slug==='secret-garden'&&state.index<state.sentences.length-1){state.index++;state.stage=0;render();}});
 id("prev-sentence").addEventListener("click",()=>{if(state.index>0){state.index--;state.stage=0;render();}});
 id("next-sentence").addEventListener("click",()=>{if(checkFor(state.sentences[state.index])&&state.stage<3){state.stage=3;render();return;}if(state.index<state.sentences.length-1){state.index++;state.stage=0;render();}});
 document.addEventListener("visibilitychange",()=>{if(document.hidden)cancel();});
