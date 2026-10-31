@@ -7,3 +7,14 @@ img.nm-inline-wordmark{display:inline-block!important;width:auto!important;heigh
 #nm-site-nav img.nm-wordmark{display:block!important;width:auto!important;height:44px!important;max-width:160px!important;object-fit:contain!important;aspect-ratio:auto!important;filter:none!important;border:0!important;border-radius:0!important;margin:0!important;padding:0!important;background:none!important}
 @media(max-width:800px){#nm-site-nav{flex-wrap:wrap!important;gap:0!important;padding-top:4px!important;padding-bottom:4px!important}#nm-site-nav nav{width:100%!important;justify-content:space-between!important}#nm-site-nav nav a{min-height:40px!important;padding-top:7px!important;padding-bottom:7px!important}}
 @media print{#nm-site-nav{display:none!important}img.nm-mascot{width:1em!important;height:1em!important}}
+
+/* Live teacher and reader tools are reachable from the same menu on every page. */
+#nm-site-nav .nm-live-menu{position:relative;margin:0;color:#b6efff;font-size:12px;flex-shrink:0}
+#nm-site-nav .nm-live-menu summary{list-style:none;cursor:pointer;min-height:40px;display:flex;align-items:center;padding:8px;border-radius:8px;font-weight:800;white-space:nowrap}
+#nm-site-nav .nm-live-menu summary::-webkit-details-marker{display:none}
+#nm-site-nav .nm-live-menu summary:hover,#nm-site-nav .nm-live-menu summary:focus-visible{background:#183750;outline:2px solid #6ee5ff}
+#nm-site-nav .nm-live-links{position:absolute;right:0;top:100%;min-width:280px;background:#0c2942;border:1px solid #629cb9;border-radius:12px;box-shadow:0 12px 30px #0006;padding:8px;z-index:10001}
+#nm-site-nav .nm-live-links a{display:flex;justify-content:flex-start;padding:12px;white-space:normal;line-height:1.4}
+#nm-site-nav .nm-live-menu:not([open])>.nm-live-links{display:none}
+@media(max-width:800px){#nm-site-nav nav{gap:0!important}#nm-site-nav nav>a{font-size:11px!important;padding-left:5px!important;padding-right:5px!important}#nm-site-nav .nm-live-menu summary{font-size:11px;padding:6px 4px}#nm-site-nav .nm-live-links{right:0;min-width:270px;max-width:90vw}}
+@media(max-width:800px){#nm-site-nav .nm-live-menu{position:absolute!important;right:12px;top:4px}#nm-site-nav .nm-live-menu summary{min-height:44px;padding:6px 8px}#nm-site-nav .nm-live-links{right:0;top:100%}}

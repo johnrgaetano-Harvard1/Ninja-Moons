@@ -104,8 +104,8 @@ footer{margin-top:30px;color:#829eb5;font-size:12px;line-height:1.7}
 <div class="panel">
 <div class="eyebrow"><img class="nm-mascot" src="https://ninjamoons.vercel.app/brand/mascot.webp" alt="" aria-hidden="true" width="28" height="28"> ASK NINJA • SIMPLE QUESTION BOX</div>
 <h2>Students can type questions as they read.</h2>
-<p>The protected Ask NINJA text service is enabled for adult testing with a $4 monthly AI Gateway project budget. Real answers are accessed from the Reader page using the adult test code. Transcription remains separate and free of paid AI analysis.</p>
-<div class="pill">Text AI enabled • protected adult test</div>
+<p>The protected Ask NINJA text service is enabled for adult testing with a $4 monthly AI Gateway project budget. Real answers are accessed directly from the Reader page. No access code is needed. Transcription remains separate and free of paid AI analysis.</p>
+<div class="pill">Text AI • no code prompt</div>
 </div>
 </div>
 <div id="reader" class="hidden">
@@ -128,8 +128,8 @@ footer{margin-top:30px;color:#829eb5;font-size:12px;line-height:1.7}
 <div class="panel transcript-panel" id="readerTranscriptPanel">
 <div class="transcript-heading"><div><div class="eyebrow">🎙️ LIVE TRANSCRIPTION</div><h2>Your spoken words</h2></div><div class="transcript-pill" id="readerTranscriptionState">Mic off</div></div>
 <div class="transcript-output" id="readerTranscript" role="log" aria-live="polite">Tap Start Microphone and read your sentence aloud. Your words will show here.</div>
-<div class="transcript-tools"><button class="secondary" type="button" id="clearTranscript">Clear words</button></div>
-<p class="transcript-note">This uses the browser's speech recognition where supported. Some browsers send speech to their provider. No AI reading analysis is running.</p>
+<div class="transcript-tools" style="gap:10px;flex-wrap:wrap"><button class="secondary" type="button" id="retryTranscript">Start / retry transcription</button><button class="secondary" type="button" id="clearTranscript">Clear words</button></div>
+<p class="transcript-note">Transcription runs on the reader’s device. If words do not appear, tap Start / retry transcription and allow speech recognition. Some browsers send speech to their provider. Live listening can still work when speech recognition is unavailable.</p>
 </div>
 <div class="panel ask-panel" id="askNinja">
 <div class="ask-heading"><div class="ask-emoji" aria-hidden="true"><img class="nm-mascot" src="https://ninjamoons.vercel.app/brand/mascot.webp" alt="" aria-hidden="true" width="28" height="28"></div><div><div class="eyebrow"><img class="nm-mascot" src="https://ninjamoons.vercel.app/brand/mascot.webp" alt="" aria-hidden="true" width="28" height="28"> ASK NINJA</div><h2>Ask NINJA anything about the story.</h2></div></div>
@@ -145,7 +145,7 @@ footer{margin-top:30px;color:#829eb5;font-size:12px;line-height:1.7}
 <div class="help" id="readerLabel"></div>
 </div>
 <div class="privacy"><b>Adult-only test, not for students yet.</b> The room is shared and unauthenticated, using third-party signaling. Do not use it with children or confidential information. Browser speech recognition may send microphone audio to the browser provider; transcript text is sent live to the teacher over the test connection. The page doesn't save it. If text AI is enabled, only typed Ask NINJA questions and the current example story sentence are sent to the AI provider for an answer; no microphone audio or transcript is sent by Ask NINJA. Live audio goes to the selected teacher. Classroom use needs proper authentication, private rooms, permission, privacy review, and a spending budget.</div>
-<footer>Separate Ask NINJA test with restored live browser transcription, teacher listening, story narration, hover definitions, and typed questions. Text-only AI endpoint is installed but requires activation and an adult-only access code; the page continues to offer example answers without charge. Original NINJA MOONS and earlier experiments remain untouched.</footer>
+<footer>Separate Ask NINJA test with restored live browser transcription, teacher listening, story narration, hover definitions, and typed questions. Ask NINJA opens without a code prompt, with short answers, automatic sessions, request limits, and the existing project budget. Browser transcription and live audio remain separate. Original NINJA MOONS and earlier experiments remain untouched.</footer>
 </main>
 <script>
 (()=>{
@@ -367,7 +367,7 @@ function hearFrom(index=0){
  }catch(e){$("wordTip").textContent="This device couldn't play narration.";}
 }
 
-let ninjaEnabled=false,ninjaBusy=false,labAccess="";
+let ninjaEnabled=false,ninjaBusy=false;
 const updateAIStatus=(message)=>{if(role==="reader")$("aiStatus").textContent=message;};
 async function readNinjaConnection(){
  if(role!=="reader")return;
@@ -376,7 +376,7 @@ async function readNinjaConnection(){
   const data=await response.json();
   ninjaEnabled=response.ok&&data.enabled===true;
   updateAIStatus(ninjaEnabled?
-   "Real AI answering is available for this adult-only test. Text questions (not microphone audio or transcripts) go securely to the AI provider. A private test access code is needed.":
+   "Real AI answering is available for this adult-only test. Text questions (not microphone audio or transcripts) go securely to the AI provider. No access code is needed.":
    "Ask NINJA connection is installed, but real AI responses are not activated. The free sample-answer questions still work. No paid questions will be sent.");
  }catch(e){ninjaEnabled=false;updateAIStatus("Sample-answer mode. The AI service is not available.");}
 }
@@ -392,24 +392,20 @@ async function submitNinjaQuestion(q){
  if(!question||ninjaBusy)return;
  $("ninjaAsked").textContent=question;
  $("ninjaAnswerPanel").classList.remove("hidden");
- if(!ninjaEnabled){showSampleNinja(question);return;}
- if(!labAccess){
-  const entered=window.prompt("Adult-only AI test access code (provided through the teacher's Vercel settings):");
-  if(!entered){showSampleNinja(question,"Test access was not provided.");return}
-  labAccess=entered.trim().slice(0,100);
- }
+ if(!ninjaEnabled){await readNinjaConnection();if(!ninjaEnabled){showSampleNinja(question);return;}}
  ninjaBusy=true;
  $("ninjaSend").disabled=true;
  $("answerLabel").textContent="🥷 NINJA IS THINKING";
  $("ninjaAnswer").textContent="Finding a clear answer…";
  try{
-  const result=await fetch("/api/ask",{
-   method:"POST",headers:{"Content-Type":"application/json","X-Ninja-Test-Access":labAccess},
+  const sendQuestion=()=>fetch("/api/ask",{
+   method:"POST",credentials:"same-origin",signal:AbortSignal.timeout(35000),headers:{"Content-Type":"application/json"},
    body:JSON.stringify({question,story:readerSentence()})
   });
+  let result=await sendQuestion();
+  if(result.status===401){await readNinjaConnection();result=await sendQuestion();}
   const data=await result.json();
   if(!result.ok){
-   if(result.status===401)labAccess="";
    if(result.status===503){ninjaEnabled=false;showSampleNinja(question,data.message||"");}
    else{$("answerLabel").textContent="NINJA CONNECTION NOTICE";$("ninjaAnswer").textContent=data.message||"Please try that question again.";}
    return;
@@ -427,92 +423,52 @@ if(role==="reader")readNinjaConnection();
 $("hearSentence")?.addEventListener("click",()=>hearFrom(0));
 
 
-/* Local-browser SpeechRecognition: no AI model or paid cloud transcription from this site. */
+/* Speech recognition is separate from the working WebRTC microphone stream. */
 const SpeechRecognizer=window.SpeechRecognition||window.webkitSpeechRecognition;
 let recognizer=null,recognitionDesired=false,recognitionFailures=0,retryRecognitionTimer=null;
 let finalizedWords="",interimWords="",transcriptionState="Mic off",lastTranscriptSentAt=0,pendingTranscriptTimer=null;
+function recognizedText(){return (finalizedWords+(interimWords?" "+interimWords:"")).trim().slice(-5000);}
 function publishTranscript(force=false){
  if(role!=="reader")return;
- const recognized=(finalizedWords+(interimWords?" "+interimWords:"")).trim().slice(-5000);
  $("readerTranscriptionState").textContent=transcriptionState;
- $("readerTranscript").textContent=recognized||"No words recognized yet. Read your sentence aloud.";
- function send(){
-  clearTimeout(pendingTranscriptTimer);pendingTranscriptTimer=null;
-  lastTranscriptSentAt=Date.now();
-  safeSend(connection,{type:"transcript",text:recognized,state:transcriptionState});
- }
- if(force||Date.now()-lastTranscriptSentAt>250)send();
- else if(!pendingTranscriptTimer)pendingTranscriptTimer=setTimeout(send,250);
+ $("readerTranscript").textContent=recognizedText()||"No words recognized yet. Read your sentence aloud.";
+ function send(){clearTimeout(pendingTranscriptTimer);pendingTranscriptTimer=null;lastTranscriptSentAt=Date.now();safeSend(connection,{type:"transcript",text:recognizedText(),state:transcriptionState});}
+ if(force||Date.now()-lastTranscriptSentAt>250)send();else if(!pendingTranscriptTimer)pendingTranscriptTimer=setTimeout(send,250);
 }
 function stopTranscription(){
- recognitionDesired=false;
- clearTimeout(retryRecognitionTimer);retryRecognitionTimer=null;
- clearTimeout(pendingTranscriptTimer);pendingTranscriptTimer=null;
- if(recognizer){try{recognizer.onend=null;recognizer.abort()}catch(e){}recognizer=null;}
- interimWords="";
- transcriptionState="Microphone off";
- if(role==="reader")publishTranscript(true);
+ recognitionDesired=false;clearTimeout(retryRecognitionTimer);retryRecognitionTimer=null;clearTimeout(pendingTranscriptTimer);pendingTranscriptTimer=null;
+ if(recognizer){recognizer.onend=null;recognizer.onerror=null;recognizer.onresult=null;try{recognizer.abort()}catch(e){}recognizer=null;}
+ interimWords="";transcriptionState="Microphone off";if(role==="reader")publishTranscript(true);
 }
 function beginTranscription(){
  if(role!=="reader")return;
- finalizedWords="";interimWords="";recognitionFailures=0;
- recognitionDesired=true;
- if(!SpeechRecognizer){
-  recognitionDesired=false;transcriptionState="Browser speech recognition unavailable";
-  publishTranscript(true);return;
- }
- recognizer=new SpeechRecognizer();
- recognizer.lang="en-US";recognizer.continuous=true;recognizer.interimResults=true;
- recognizer.maxAlternatives=1;
- recognizer.onstart=()=>{recognitionFailures=0;transcriptionState="Listening • transcribing";publishTranscript(true);};
- recognizer.onresult=event=>{
-  let nextInterim="";
-  let newFinal="";
-  for(let i=event.resultIndex;i<event.results.length;i++){
-    const t=event.results[i][0]?.transcript||"";
-    if(event.results[i].isFinal)newFinal+=" "+t;else nextInterim+=" "+t;
-  }
-  if(newFinal.trim())finalizedWords=(finalizedWords+" "+newFinal.trim()).trim().slice(-5000);
-  interimWords=nextInterim.trim();
-  transcriptionState="Listening • transcribing";
-  publishTranscript(Boolean(newFinal.trim()));
+ stopTranscription();recognitionFailures=0;recognitionDesired=true;
+ if(!SpeechRecognizer){recognitionDesired=false;transcriptionState="Speech recognition unavailable in this browser — try the reader page in Chrome or Safari.";publishTranscript(true);return;}
+ recognizer=new SpeechRecognizer();const current=recognizer;
+ current.lang="en-US";current.continuous=!/iPad|iPhone|iPod/.test(navigator.userAgent);current.interimResults=true;current.maxAlternatives=1;
+ current.onstart=()=>{if(recognizer!==current)return;transcriptionState="Listening for your words…";publishTranscript(true);};
+ current.onresult=event=>{
+  if(recognizer!==current)return;let nextInterim="",newFinal="";
+  for(let i=event.resultIndex;i<event.results.length;i++){const t=event.results[i][0]?.transcript||"";if(event.results[i].isFinal)newFinal+=" "+t;else nextInterim+=" "+t;}
+  if(newFinal.trim())finalizedWords=(finalizedWords+" "+newFinal.trim()).trim().slice(-5000);interimWords=nextInterim.trim();recognitionFailures=0;transcriptionState="Transcribing your speech";publishTranscript(!!newFinal.trim());
  };
- recognizer.onerror=event=>{
-  if(!recognitionDesired)return;
-  if(event.error==="no-speech"){transcriptionState="Listening for your words…";publishTranscript(true);return;}
-  if(event.error==="not-allowed"||event.error==="service-not-allowed"){
-   recognitionDesired=false;transcriptionState="Speech transcription permission denied";
-  }else if(event.error==="network"){
-   transcriptionState="Speech recognition service unavailable";
-   recognitionDesired=false;
-  }else if(event.error==="audio-capture"){
-   recognitionDesired=false;transcriptionState="Speech input unavailable";
-  }else{
-   transcriptionState="Speech recognition interrupted";
-  }
+ current.onerror=event=>{
+  if(!recognitionDesired||recognizer!==current)return;
+  if(event.error==='no-speech'){transcriptionState='No speech heard yet — keep reading aloud.';}
+  else if(event.error==='not-allowed'||event.error==='service-not-allowed'){recognitionDesired=false;transcriptionState='Speech permission needed — allow speech recognition, then tap Start / retry transcription.';}
+  else if(event.error==='audio-capture'){recognitionDesired=false;transcriptionState='Speech input unavailable. Live listening is separate; tap Start / retry transcription to try again.';}
+  else{recognitionFailures++;if(recognitionFailures>=3){recognitionDesired=false;transcriptionState='Speech service unavailable — check your connection and tap Start / retry transcription.';}else transcriptionState='Reconnecting speech recognition…';}
   publishTranscript(true);
  };
- recognizer.onend=()=>{
-  if(!recognitionDesired||!active)return;
-  clearTimeout(retryRecognitionTimer);
-  retryRecognitionTimer=setTimeout(()=>{
-   if(!recognitionDesired||!active)return;
-   try{recognizer.start()}catch(e){
-    recognitionFailures++;
-    if(recognitionFailures>=3){
-     recognitionDesired=false;transcriptionState="Unable to restart transcription";
-     publishTranscript(true);
-    }else{retryRecognitionTimer=setTimeout(()=>{if(recognitionDesired&&active){try{recognizer.start()}catch(e){}}},1000);}
-   }
-  },400);
+ current.onend=()=>{
+  if(!recognitionDesired||!active||recognizer!==current)return;clearTimeout(retryRecognitionTimer);
+  retryRecognitionTimer=setTimeout(()=>{if(!recognitionDesired||!active||recognizer!==current)return;try{current.start();}catch(e){recognitionDesired=false;transcriptionState='Tap Start / retry transcription to reconnect speech recognition.';publishTranscript(true);}},recognitionFailures?1200:400);
  };
- try{recognizer.start();transcriptionState="Starting transcription…";publishTranscript(true);}
- catch(e){recognitionDesired=false;transcriptionState="Could not start browser transcription";publishTranscript(true);}
-}
-$("clearTranscript")?.addEventListener("click",()=>{
- finalizedWords="";interimWords="";transcriptionState=recognitionDesired?"Listening • transcribing":transcriptionState;
+ try{transcriptionState='Starting speech recognition…';current.start();}catch(e){recognitionDesired=false;transcriptionState='Tap Start / retry transcription and allow speech recognition.';}
  publishTranscript(true);
-});
+}
+$("retryTranscript")?.addEventListener('click',()=>{if(!active){startReader();return;}beginTranscription();});
+$("clearTranscript")?.addEventListener("click",()=>{finalizedWords="";interimWords="";publishTranscript(true);});
 function readerSentence(){return sentences[sentenceIndex]}
 function sendSentence(){safeSend(connection,{type:"sentence",text:readerSentence()})}
 function beginAudio(){
@@ -571,10 +527,11 @@ async function startReader(){
  try{
   if(!window.Peer)throw Error("Connection library not loaded. Check internet.");
   if(!navigator.mediaDevices?.getUserMedia)throw Error("Microphone unsupported in this browser. Use Chrome or Safari via HTTPS.");
+  // Keep recognition failure independent from the working microphone connection.
+  try{beginTranscription();}catch(e){transcriptionState="Speech recognition could not start — tap Start / retry transcription.";publishTranscript(true);}
   stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
   if(!active||epoch!==now){stopMic();return;}
   say("reader","Microphone on • waiting","Looking for the teacher dashboard.","wait");
-  beginTranscription();
   peer=new Peer(undefined,options);
   peer.on("open",()=>{if(active){connectReader();interval=setInterval(connectReader,2600)}});
   peer.on("error",err=>{

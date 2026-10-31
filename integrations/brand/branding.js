@@ -27,6 +27,13 @@
   if(visited.has(doc)||!doc.body)return;visited.add(doc);
   if(!doc.querySelector('link[data-nm-brand-style]')){const css=doc.createElement('link');css.rel='stylesheet';css.href=base+'branding.css';css.dataset.nmBrandStyle='true';doc.head?.append(css);}
   let favicon=doc.querySelector('link[rel="icon"]');if(!favicon){favicon=doc.createElement('link');favicon.rel='icon';doc.head?.append(favicon);}favicon.href=base+'mascot.webp';favicon.type='image/webp';
+  const nav=doc.getElementById('nm-site-nav')?.querySelector('nav');
+  if(nav&&!nav.querySelector('.nm-live-menu')){
+   const menu=doc.createElement('details');menu.className='nm-live-menu';const summary=doc.createElement('summary');summary.textContent='Live reading ▾';
+   const links=doc.createElement('div');links.className='nm-live-links';
+   for(const [label,url] of [['Teacher · Listen & transcript','teacher.html'],['Reader · Microphone & Ask NINJA','student.html']]){const a=doc.createElement('a');a.textContent=label;a.href='https://ninja-moons-ask-ninja-lab.vercel.app/'+url;links.append(a);}
+   menu.append(summary,links);nav.append(menu);
+  }
   enhance(doc.body);
   const observer=new MutationObserver(records=>{for(const r of records){if(r.type==='characterData')replaceText(r.target);else for(const n of r.addedNodes)enhance(n);}});
   observer.observe(doc.body,{childList:true,subtree:true,characterData:true});

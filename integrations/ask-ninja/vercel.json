@@ -1,0 +1,1 @@
+{"version":2,"rewrites":[{"source":"/teacher.html","destination":"/index.html"},{"source":"/student.html","destination":"/index.html"},{"source":"/teacher","destination":"/index.html"},{"source":"/reader","destination":"/index.html"}],"functions":{"api/ask.mjs":{"maxDuration":30}}}
