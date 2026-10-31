@@ -15,7 +15,9 @@ function generate(story){
 }
 function addNavigation(html){
  const nav=fs.readFileSync(path.resolve(__dirname,'../../integrations/navigation/site-nav.html'),'utf8');
- return html.replace(/<body[^>]*>/i,match=>match+nav);
+ const mascot='<img class="nm-mascot" src="https://ninjamoons.vercel.app/brand/mascot.webp" alt="" aria-hidden="true" width="28" height="28">';
+ const branded=html.split(/(<script\b[^>]*>[\s\S]*?<\/script>|<style\b[^>]*>[\s\S]*?<\/style>)/i).map(part=>/^<(script|style)\b/i.test(part)?part:part.replace(/>([^<]*)</g,(_,text)=>'>'+text.replace(/🥷/g,mascot)+'<')).join('');
+ return branded.replace(/<body[^>]*>/i,match=>match+nav);
 }
 function main(){
  ensure(isFile(path.join(root,"index.html")),"library home missing");
@@ -52,6 +54,7 @@ function main(){
   const navigation='<nav aria-label="NINJA MOONS reading links" style="padding:16px;text-align:center;background:#071a32;color:#b4edff"><a style="color:inherit;margin:12px" href="https://ninjamoons.vercel.app/reader?level='+s.grade+'">← Story library</a><a style="color:inherit;margin:12px" href="https://ninjamoons.vercel.app/reading-helper?story='+s.slug+'">Read with NINJA Helper →</a></nav>';
   fs.writeFileSync(f,addNavigation(fs.readFileSync(f,'utf8').replace('</body>',navigation+'</body>').replace('href="/">← Publishing Lab Library','href="https://ninjamoons.vercel.app/reader?level=All">← Story library')));
  }
+ fs.cpSync(path.resolve(__dirname,'../../integrations/brand'),path.join(out,'brand'),{recursive:true});
  fs.writeFileSync(path.join(out,"catalog.json"),JSON.stringify({version:1,stories:library},null,2));
 
  // Add future stories automatically to the test library without changing the existing featured story.
