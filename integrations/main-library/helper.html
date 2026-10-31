@@ -39,7 +39,8 @@ small,.muted{color:#617286}.step{font-size:13px;font-weight:800;letter-spacing:.
 /* Picture-word support is limited to The Zoom Trip. Cards stay in the document flow. */
 #stage-content.picture-mode{display:grid;grid-template-columns:minmax(0,1fr) 174px;gap:22px;align-items:start}.picture-text{min-width:0}.picture-word{text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#2985b6;text-underline-offset:7px}.picture-word.picture-selected{outline:2px solid #62b7d8;outline-offset:2px}.picture-card{width:174px;max-width:100%;margin:0;background:#fff;border:2px solid #9ad6ea;border-radius:17px;padding:8px;box-shadow:0 6px 18px #17456812;color:#173049;align-self:start}.picture-crop{aspect-ratio:1;background-color:#e2f1fa;background-repeat:no-repeat;border-radius:10px;overflow:hidden}.picture-swatch{background-color:#1583ee!important}.picture-number{display:grid;place-items:center;font-size:86px;font-weight:950;color:#1270b0;background:#def3ff}.picture-label{display:block;font-size:21px;font-weight:850;line-height:1.2;margin:10px 3px 5px;overflow-wrap:anywhere}.picture-caption{font-size:12px;line-height:1.5;color:#4a6477;margin:0 3px 4px}.picture-empty{font-size:13px;line-height:1.6;text-align:center;padding:15px 7px;color:#4a6477}.picture-hint{font-size:12px;color:#38647c;margin:12px 0 0;line-height:1.6}.picture-heading{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:850;margin:3px 3px 8px;color:#38647c}
 @media(max-width:620px){#stage-content.picture-mode{grid-template-columns:minmax(0,1fr);gap:15px}.picture-card{width:100%;display:grid;grid-template-columns:108px minmax(0,1fr);gap:0 14px;align-items:center;padding:10px;border-radius:14px}.picture-heading{grid-column:1/-1;margin-bottom:8px}.picture-crop{width:108px;grid-row:2/5}.picture-label{font-size:23px;margin:0 0 5px}.picture-caption{font-size:13px;margin:0}.picture-empty{grid-column:1/-1;padding:12px}.picture-number{font-size:65px}.picture-hint{margin-top:10px}}
-</style></head><body><div id="nm-site-nav"><a class="nm-mark" href="https://ninjamoons.vercel.app/" aria-label="NINJA MOONS home"><img class="nm-mascot nm-header-mascot" src="https://ninjamoons.vercel.app/brand/mascot.webp" alt="" aria-hidden="true" width="56" height="66"><img class="nm-wordmark" src="https://ninjamoons.vercel.app/brand/wordmark.jpg" alt="NINJA MOONS" width="200" height="88"></a><nav aria-label="NINJA MOONS main navigation"><a href="https://ninjamoons.vercel.app/">Home</a><a href="https://ninjamoons.vercel.app/dashboard">My dashboard</a><a href="https://ninjamoons.vercel.app/reader?level=All">Library</a><a href="https://ninjamoons.vercel.app/teacher-dashboard">Teachers</a><a href="https://ninjamoons.vercel.app/about.html">About</a></nav></div><style>
+</style><script src="https://ninja-reader-story-library.vercel.app/garden-pictures.js"></script>
+</head><body><div id="nm-site-nav"><a class="nm-mark" href="https://ninjamoons.vercel.app/" aria-label="NINJA MOONS home"><img class="nm-mascot nm-header-mascot" src="https://ninjamoons.vercel.app/brand/mascot.webp" alt="" aria-hidden="true" width="56" height="66"><img class="nm-wordmark" src="https://ninjamoons.vercel.app/brand/wordmark.jpg" alt="NINJA MOONS" width="200" height="88"></a><nav aria-label="NINJA MOONS main navigation"><a href="https://ninjamoons.vercel.app/">Home</a><a href="https://ninjamoons.vercel.app/dashboard">My dashboard</a><a href="https://ninjamoons.vercel.app/reader?level=All">Library</a><a href="https://ninjamoons.vercel.app/teacher-dashboard">Teachers</a><a href="https://ninjamoons.vercel.app/about.html">About</a></nav></div><style>
 #nm-site-nav{position:sticky;top:0;z-index:10000;isolation:isolate;box-sizing:border-box;flex:0 0 auto;width:100%;margin:0;background:#07182cf7;border-bottom:1px solid #36546b;color:#e9f6ff;font:700 13px/1.3 system-ui;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px max(16px,calc((100vw - 1200px)/2));text-align:left;backdrop-filter:blur(12px)}#nm-site-nav *{box-sizing:border-box}#nm-site-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;color:#e9f6ff;text-decoration:none;border:0;box-shadow:none;margin:0;white-space:nowrap}#nm-site-nav .nm-mark{font-size:17px;font-weight:950;letter-spacing:.035em;gap:5px;flex-shrink:0}#nm-site-nav nav{position:static;display:flex;gap:3px;align-items:center;flex-wrap:wrap;margin:0;padding:0;width:auto;background:none;border:0}#nm-site-nav nav a{padding:10px 11px;border-radius:8px;font-size:13px;font-style:normal;text-transform:none;letter-spacing:0}#nm-site-nav nav a:hover,#nm-site-nav nav a:focus-visible{background:#183750;outline:2px solid #6ee5ff;outline-offset:1px}@media(max-width:700px){#nm-site-nav{padding:8px 12px;gap:3px;flex-wrap:wrap}#nm-site-nav .nm-mark{min-height:33px;font-size:16px}#nm-site-nav nav{width:100%;justify-content:space-between;gap:0}#nm-site-nav nav a{padding:8px 7px;font-size:12px;min-height:40px}}@media print{#nm-site-nav{display:none!important}}
 </style>
 <link rel="stylesheet" href="https://ninjamoons.vercel.app/brand/branding.css" data-nm-brand-style="true"><script defer src="https://ninjamoons.vercel.app/brand/branding.js"></script>
@@ -185,7 +186,7 @@ function say(text,start=0,offsets=null){
  cancel();const run=state.run,u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=Number(id("speed").value)||.87;u.voice=voice();
  const nodes=[...id("stage-content").querySelectorAll(".word[data-pos]")];
  function highlight(n){for(const item of nodes)item.classList.toggle("active",Number(item.dataset.pos)===n);
-  if(slug==='zoom-trip'&&state.stage<2){const current=nodes.find(item=>Number(item.dataset.pos)===n);if(current)showWordPicture(current.textContent,current);}
+  if(['zoom-trip','secret-garden'].includes(slug)&&state.stage<2){const current=nodes.find(item=>Number(item.dataset.pos)===n);if(current)showWordPicture(current.textContent,current);}
  }
  highlight(start);
  u.onboundary=e=>{if(run!==state.run||!offsets)return;const chars=e.charIndex;
@@ -211,6 +212,7 @@ const zoomPictures={"kai":{"page":1,"caption":"Kai, our blue ninja explorer.","z
 const pictureAliases={looks:'look'};
 let pictureAnchor=null;
 function pictureEntry(word){
+ if(slug==='secret-garden')return window.NinjaGardenPictures?.get(word)||null;
  if(slug!=='zoom-trip')return null;
  const k=key(word),entry=zoomPictures[pictureAliases[k]||k];
  if(k==='ninja'&&/\bMira\b/.test(state.sentences[state.index]?.text||''))return {...zoomPictures.mira,caption:'Mira is a ninja explorer.'};
@@ -225,13 +227,14 @@ function showWordPicture(word,anchor){
  if(!entry){card.append(node('p','picture-empty','Hover over or tap a dotted word to see its picture.'));return;}
  pictureAnchor=anchor;anchor.classList.add('picture-selected');anchor.setAttribute('aria-describedby','word-picture');
  const art=node('div','picture-crop');art.setAttribute('role','img');art.setAttribute('aria-label',entry.caption);
+ if(slug==='secret-garden'){const gardenArt=window.NinjaGardenPictures.art(entry);gardenArt.classList.add('picture-crop');card.append(gardenArt,node('strong','picture-label',word),node('p','picture-caption',entry.caption));return;}
  if(entry.kind==='color')art.classList.add('picture-swatch');
  else if(entry.kind==='number'){art.classList.add('picture-number');art.textContent=entry.number;}
  else {art.style.backgroundImage='url("https://ninjamoons.vercel.app/published/stories/zoom-trip/images/page-'+String(entry.page).padStart(2,'0')+'.webp")';art.style.backgroundSize=entry.zoom+'%';art.style.backgroundPosition=entry.x+'% '+entry.y+'%';}
  card.append(art,node('strong','picture-label',word),node('p','picture-caption',entry.caption));
 }
 function attachPictureWord(el,word){
- if(slug!=='zoom-trip')return;
+ if(!['zoom-trip','secret-garden'].includes(slug))return;
  if(pictureEntry(word)){el.classList.add('picture-word');el.dataset.pictureWord=word;el.setAttribute('aria-controls','word-picture');}
  el.addEventListener('pointerenter',()=>showWordPicture(word,el));
  el.addEventListener('focus',()=>showWordPicture(word,el));
@@ -276,7 +279,7 @@ function render(){
  id("previous").disabled=state.stage===0;id("next").disabled=state.stage===3;
  id("prev-sentence").disabled=state.index===0;id("next-sentence").disabled=state.index===state.sentences.length-1;
  const box=id("stage-content");box.replaceChildren();pictureAnchor=null;
- const pictureMode=slug==='zoom-trip'&&state.stage<3;box.classList.toggle('picture-mode',pictureMode);
+ const pictureMode=['zoom-trip','secret-garden'].includes(slug)&&state.stage<3;box.classList.toggle('picture-mode',pictureMode);
  const reading=pictureMode?node('div','picture-text'):box;
  if(pictureMode)box.append(reading);
  if(state.stage===0)reading.append(words(item.text,false));
@@ -347,7 +350,7 @@ async function load(){
    for(const v of data.vocabulary||[])if(typeof v.word==='string'&&typeof v.meaning==='string')glossary.set(key(v.word),{phonetic:v.say||'',meaning:v.meaning});
    finishLoad();return;
   }
-  let r=await fetch(origin+"/read/"+encodeURIComponent(slug),{credentials:"include"});
+  let r=await fetch(slug==='secret-garden'?(location.hostname==='ninjamoons.vercel.app'?'/read/secret-garden':'/garden.html'):origin+"/read/"+encodeURIComponent(slug),{credentials:"include"});
   if(!r.ok)throw Error("Story not available");
   let doc=new DOMParser().parseFromString(await r.text(),"text/html");
   let content=parse(doc);
@@ -378,4 +381,4 @@ document.addEventListener("visibilitychange",()=>{if(document.hidden)cancel();})
 window.addEventListener("pagehide",cancel);
 load();
 })();</script>
-</body></html>
+<footer style="text-align:center;padding:20px"><a href="https://ninja-reader-story-library.vercel.app/photo-credits.html">Picture credits</a></footer></body></html>
