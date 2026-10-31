@@ -40,7 +40,9 @@ small,.muted{color:#617286}.step{font-size:13px;font-weight:800;letter-spacing:.
 #stage-content.picture-mode{display:grid;grid-template-columns:minmax(0,1fr) 174px;gap:22px;align-items:start}.picture-text{min-width:0}.picture-word{text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#2985b6;text-underline-offset:7px}.picture-word.picture-selected{outline:2px solid #62b7d8;outline-offset:2px}.picture-card{width:174px;max-width:100%;margin:0;background:#fff;border:2px solid #9ad6ea;border-radius:17px;padding:8px;box-shadow:0 6px 18px #17456812;color:#173049;align-self:start}.picture-crop{aspect-ratio:1;background-color:#e2f1fa;background-repeat:no-repeat;border-radius:10px;overflow:hidden}.picture-swatch{background-color:#1583ee!important}.picture-number{display:grid;place-items:center;font-size:86px;font-weight:950;color:#1270b0;background:#def3ff}.picture-label{display:block;font-size:21px;font-weight:850;line-height:1.2;margin:10px 3px 5px;overflow-wrap:anywhere}.picture-caption{font-size:12px;line-height:1.5;color:#4a6477;margin:0 3px 4px}.picture-empty{font-size:13px;line-height:1.6;text-align:center;padding:15px 7px;color:#4a6477}.picture-hint{font-size:12px;color:#38647c;margin:12px 0 0;line-height:1.6}.picture-heading{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:850;margin:3px 3px 8px;color:#38647c}
 @media(max-width:620px){#stage-content.picture-mode{grid-template-columns:minmax(0,1fr);gap:15px}.picture-card{width:100%;display:grid;grid-template-columns:108px minmax(0,1fr);gap:0 14px;align-items:center;padding:10px;border-radius:14px}.picture-heading{grid-column:1/-1;margin-bottom:8px}.picture-crop{width:108px;grid-row:2/5}.picture-label{font-size:23px;margin:0 0 5px}.picture-caption{font-size:13px;margin:0}.picture-empty{grid-column:1/-1;padding:12px}.picture-number{font-size:65px}.picture-hint{margin-top:10px}}
 </style><script src="https://ninja-reader-story-library.vercel.app/garden-pictures.js"></script>
-</head><body><div id="nm-site-nav"><a class="nm-mark" href="https://ninjamoons.vercel.app/" aria-label="NINJA MOONS home"><img class="nm-mascot nm-header-mascot" src="https://ninjamoons.vercel.app/brand/mascot.webp" alt="" aria-hidden="true" width="44" height="44"><img class="nm-wordmark" src="https://ninjamoons.vercel.app/brand/wordmark-compact.webp" alt="NINJA MOONS" width="132" height="44"></a><nav aria-label="NINJA MOONS main navigation"><a href="https://ninjamoons.vercel.app/">Home</a><a href="https://ninjamoons.vercel.app/dashboard">My dashboard</a><a href="https://ninjamoons.vercel.app/reader?level=All">Library</a><a href="https://ninjamoons.vercel.app/teacher-dashboard">Teachers</a><a href="https://ninjamoons.vercel.app/about.html">About</a></nav></div><style>
+<style>
+.paragraph-check{border-top:2px solid #c8e0ee;margin-top:24px;padding-top:24px}.check-eyebrow{font-size:12px;font-weight:850;letter-spacing:.08em;color:#28617d}.paragraph-check h3{font-size:clamp(22px,4vw,28px);line-height:1.35;color:#17394e}.check-options{display:grid;gap:12px}.check-choice{font:700 18px/1.5 system-ui;border-radius:12px;min-height:58px;cursor:pointer;white-space:normal;text-align:left!important;background:#fff!important;color:#18394e!important;border:2px solid #bdd6e5!important;line-height:1.5;padding:15px!important;width:100%}.check-choice[aria-pressed=true]{border-color:#176fa6!important;background:#e8f4ff!important}.check-choice.check-correct{border-color:#25875d!important;background:#e6f6ed!important}.check-choice:focus-visible,.check-tools button:focus-visible{outline:3px solid #126d9d;outline-offset:3px}.check-feedback,.check-clue{font-size:16px;line-height:1.6;color:#244d63}.check-tools{display:flex;gap:10px;flex-wrap:wrap}.check-tools button,.check-hear{font:700 15px system-ui;padding:12px 16px;border:1px solid #8ebbd3;border-radius:10px;background:#e2f2ff;color:#184566;min-height:44px;cursor:pointer}.check-hear{margin:0 0 14px}.check-passage{padding:18px;background:white;border:1px solid #cfdfeb;border-radius:14px;font-size:19px;line-height:1.9;color:#20394b}.check-highlight{background:#ffeb96;color:#132e44;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}.paragraph-check h4{font-size:17px;margin-bottom:10px}
+</style></head><body><div id="nm-site-nav"><a class="nm-mark" href="https://ninjamoons.vercel.app/" aria-label="NINJA MOONS home"><img class="nm-mascot nm-header-mascot" src="https://ninjamoons.vercel.app/brand/mascot.webp" alt="" aria-hidden="true" width="44" height="44"><img class="nm-wordmark" src="https://ninjamoons.vercel.app/brand/wordmark-compact.webp" alt="NINJA MOONS" width="132" height="44"></a><nav aria-label="NINJA MOONS main navigation"><a href="https://ninjamoons.vercel.app/">Home</a><a href="https://ninjamoons.vercel.app/dashboard">My dashboard</a><a href="https://ninjamoons.vercel.app/reader?level=All">Library</a><a href="https://ninjamoons.vercel.app/teacher-dashboard">Teachers</a><a href="https://ninjamoons.vercel.app/about.html">About</a></nav></div><style>
 #nm-site-nav{position:sticky;top:0;z-index:10000;isolation:isolate;box-sizing:border-box;flex:0 0 auto;width:100%;margin:0;background:#07182cf7;border-bottom:1px solid #36546b;color:#e9f6ff;font:700 13px/1.3 system-ui;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px max(16px,calc((100vw - 1200px)/2));text-align:left;backdrop-filter:blur(12px)}#nm-site-nav *{box-sizing:border-box}#nm-site-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;color:#e9f6ff;text-decoration:none;border:0;box-shadow:none;margin:0;white-space:nowrap}#nm-site-nav .nm-mark{font-size:17px;font-weight:950;letter-spacing:.035em;gap:5px;flex-shrink:0}#nm-site-nav nav{position:static;display:flex;gap:3px;align-items:center;flex-wrap:wrap;margin:0;padding:0;width:auto;background:none;border:0}#nm-site-nav nav a{padding:10px 11px;border-radius:8px;font-size:13px;font-style:normal;text-transform:none;letter-spacing:0}#nm-site-nav nav a:hover,#nm-site-nav nav a:focus-visible{background:#183750;outline:2px solid #6ee5ff;outline-offset:1px}@media(max-width:700px){#nm-site-nav{padding:8px 12px;gap:3px;flex-wrap:wrap}#nm-site-nav .nm-mark{min-height:33px;font-size:16px}#nm-site-nav nav{width:100%;justify-content:space-between;gap:0}#nm-site-nav nav a{padding:8px 7px;font-size:12px;min-height:40px}}@media print{#nm-site-nav{display:none!important}}
 </style>
 <link rel="stylesheet" href="https://ninjamoons.vercel.app/brand/branding.css" data-nm-brand-style="true"><script defer src="https://ninjamoons.vercel.app/brand/branding.js"></script>
@@ -203,7 +205,7 @@ function speakFrom(i){
 }
 function speakStage(){
  const item=state.sentences[state.index];
- if(state.stage===3){say(explain(item.text,item.simple));return;}
+ if(state.stage===3){say(checkFor(item)?state.sentences.filter(s=>s.paragraph===item.paragraph).map(s=>s.text).join(" "):explain(item.text,item.simple));return;}
  if(state.stage===2){say(tok(item.text).filter(t=>t.isWord).map(t=>t.text+". "+(dictionary(t.text)?.meaning||"")).join(". "));return;}
  speakFrom(0);
 }
@@ -269,13 +271,41 @@ function meanings(s){
  }
  return list;
 }
+
+// Author-reviewed questions align to the original paragraph boundaries.
+const paragraphChecks={"4":{"question":"Why does the tree surprise the explorers?","options":["It is very large, but the screen says thirty days.","It is smaller than every other plant."],"answer":0,"clue":[3,4],"explanation":"The tree towers over the other plants, while the screen reads TREE AGE: 30 DAYS.","paragraph":1},"8":{"question":"What makes the explorers want to investigate the tree?","options":["A sign explains every answer to them.","Five glowing rings seem to invite them to explore."],"answer":1,"clue":6,"explanation":"Maya spots five glowing rings, and the friends decide they have found a mystery.","paragraph":2},"12":{"question":"What does Luma say the five symbols will help them do?","options":["Discover the garden’s secret.","Choose names for the strawberries."],"answer":0,"clue":12,"explanation":"Luma says each symbol hides a clue and the clues together reveal the secret.","paragraph":3},"16":{"question":"Why does Maya follow the light?","options":["She wants to leave the garden immediately.","She wants to investigate the thirty-day tree."],"answer":1,"clue":16,"explanation":"Maya follows the light to discover whether the thirty-day tree is real.","paragraph":4},"20":{"question":"How do these plants get nutrients without soil?","options":["Their roots receive nutrients carried by water.","Their roots get nutrients from the glass walls."],"answer":0,"clue":20,"explanation":"The water carries nutrients to the roots. This growing method is hydroponics.","paragraph":5},"25":{"question":"Why does Maya still want to look beneath the giant tree?","options":["She has already seen everything beneath it.","Its roots are hidden, so she has not examined them yet."],"answer":1,"clue":24,"explanation":"Maya notices that the tree’s roots are hidden behind a wall.","paragraph":6},"29":{"question":"What do the lamps provide that helps plants make food?","options":["Light.","Soil."],"answer":0,"clue":28,"explanation":"Photosynthesis uses light, water, and carbon dioxide to make sugars.","paragraph":7},"33":{"question":"Why can the lamps be useful when sunlight is limited?","options":["They remove the plants’ need for water.","They give the plants another source of light."],"answer":1,"clue":31,"explanation":"Maya realizes that plants can receive useful light even when sunlight is limited.","paragraph":8},"37":{"question":"Why does some returning water pass through filtration?","options":["To remove unwanted material from the water.","To turn the water into sunlight."],"answer":0,"clue":36,"explanation":"Filtration cleans water by removing unwanted material.","paragraph":9},"41":{"question":"Does reusing water mean the garden never needs more water?","options":["Yes. The same water can stay forever without any loss.","No. Water that the system loses still needs replacing."],"answer":1,"clue":39,"explanation":"Luma explains that they still replace what the system loses.","paragraph":10},"45":{"question":"How does the paragraph show a robot using information?","options":["A robot adjusts a lamp after receiving a measurement.","A robot changes a lamp without receiving any information."],"answer":0,"clue":45,"explanation":"The robot receives a measurement and then adjusts a lamp.","paragraph":11},"49":{"question":"What does Maya learn from the screen?","options":["The tree was planted as a seed that morning.","The tree arrived thirty days earlier."],"answer":1,"clue":47,"explanation":"The screen tells Maya when the tree arrived. It does not say when the seed sprouted.","paragraph":12},"53":{"question":"How does conservation help the garden?","options":["It helps the system collect and reuse water.","It makes the garden stop using water altogether."],"answer":0,"clue":53,"explanation":"Conservation means avoiding waste; the garden collects and reuses water.","paragraph":13},"57":{"question":"Why is Kai still asking what is missing?","options":["They have not learned anything about the garden.","They have learned four things, but one ring is still silver."],"answer":1,"clue":55,"explanation":"Kai lists roots, light, water, and robots, then asks what is missing.","paragraph":14},"61":{"question":"What is Maya’s discovery about the garden’s parts?","options":["They work together as one system.","Each part works completely alone."],"answer":0,"clue":60,"explanation":"Maya says the parts work together instead of working alone.","paragraph":15},"65":{"question":"Why does Maya say the mystery is not quite solved?","options":["They still do not know that plants need light.","They have not proved the tree grew in thirty days."],"answer":1,"clue":65,"explanation":"Explaining the garden’s systems does not prove the tree’s age.","paragraph":16},"69":{"question":"What does the number thirty days actually describe?","options":["How long the grown tree has been in this garden.","How long it took a seed to become this huge tree."],"answer":0,"clue":68,"explanation":"Maya distinguishes time in the garden from time since the seed sprouted.","paragraph":17},"75":{"question":"What lesson about science does Maya explain?","options":["Collect facts without checking what they mean.","Check what the collected facts actually tell you."],"answer":1,"clue":75,"explanation":"Good scientists examine what their facts support.","paragraph":18},"78":{"question":"What possibility do the future gardens illustrate?","options":["New ideas could help people grow food in different places.","Food could only ever grow in ordinary outdoor fields."],"answer":0,"clue":78,"explanation":"The paragraph describes food growing in cities, deserts, and spacecraft.","paragraph":19},"84":{"question":"What question will the explorers investigate next?","options":["How to count the same five rings again.","How to grow food where there is almost no gravity."],"answer":1,"clue":83,"explanation":"Luma asks how food could grow in almost no gravity. This is their next question, not an answer yet.","paragraph":20}};
+const paragraphAnswers=new Map();
+function checkFor(item){return slug==='secret-garden'?paragraphChecks[String(item.number)]:null;}
+function renderParagraphCheck(box,item){
+ const check=checkFor(item);if(!check)return;
+ const group=state.sentences.filter(s=>s.paragraph===item.paragraph);
+ const section=node('section','paragraph-check');section.setAttribute('aria-label','Paragraph comprehension check');
+ section.append(node('div','check-eyebrow','PARAGRAPH '+check.paragraph+' · CHECK YOUR UNDERSTANDING'),node('h3','',check.question));
+ const feedback=node('p','check-feedback');feedback.setAttribute('aria-live','polite');feedback.setAttribute('role','status');
+ const options=node('div','check-options');const saved=paragraphAnswers.get(item.number);
+ check.options.forEach((text,index)=>{const button=node('button','check-choice',String.fromCharCode(65+index)+'. '+text);button.type='button';button.setAttribute('aria-pressed',String(saved===index));
+  button.addEventListener('click',()=>{cancel();paragraphAnswers.set(item.number,index);for(const b of options.children){b.setAttribute('aria-pressed','false');b.classList.remove('check-correct');}button.setAttribute('aria-pressed','true');
+   const correct=index===check.answer;button.classList.toggle('check-correct',correct);feedback.textContent=correct?'That’s right. '+check.explanation:'Let’s look again. Reread or hear the paragraph, then try the other answer.';
+  });options.append(button);
+ });
+ const hearQuestion=node('button','check-hear','Hear question and choices');hearQuestion.type='button';hearQuestion.addEventListener('click',()=>say(check.question+'. A. '+check.options[0]+'. B. '+check.options[1]));section.append(hearQuestion,options,feedback);
+ const tools=node('div','check-tools'),hear=node('button','','Hear the paragraph'),clue=node('button','','Show me the clue');hear.type=clue.type='button';
+ const passage=node('div','check-passage');passage.id='paragraph-passage';passage.setAttribute('aria-label','Paragraph text');
+ const summary=node('p','check-clue');summary.setAttribute('aria-live','polite');
+ for(const sentence of group){const span=node('span','check-source',sentence.text+' ');span.dataset.sentenceNumber=sentence.number;passage.append(span);}
+ hear.addEventListener('click',()=>say(group.map(s=>s.text).join(' ')));
+ clue.setAttribute('aria-controls','paragraph-passage');clue.addEventListener('click',()=>{for(const span of passage.children)span.classList.toggle('check-highlight',(Array.isArray(check.clue)?check.clue:[check.clue]).includes(Number(span.dataset.sentenceNumber)));summary.textContent='Clue: '+check.explanation;});
+ tools.append(hear,clue);section.append(tools,node('h4','','Look back at the paragraph'),passage,summary);box.append(section);
+ if(saved!==undefined){feedback.textContent=saved===check.answer?'That’s right. '+check.explanation:'You can reread or hear the paragraph and try again.';}
+}
+
 function render(){
  cancel();const item=state.sentences[state.index];if(!item)return;
  id("story-title").textContent=state.title;
  id("progress-label").textContent="Sentence "+(state.index+1)+" of "+state.sentences.length+" · You choose when to continue";
  id("steps").replaceChildren(...stages.map((s,i)=>{const n=node("span","bar"+(i<=state.stage?" done":""));n.title=s;return n;}));
  id("step-label").textContent="STAGE "+(state.stage+1)+" OF 4";
- id("stage-title").textContent=stages[state.stage];id("tip").textContent=tips[state.stage];
+ id("stage-title").textContent=state.stage===3&&checkFor(item)?"Understand the paragraph":stages[state.stage];id("tip").textContent=state.stage===3&&checkFor(item)?"Choose an answer about the whole paragraph. Replay it or reveal the supporting clue whenever you need.":tips[state.stage];
  id("previous").disabled=state.stage===0;id("next").disabled=state.stage===3;
  id("prev-sentence").disabled=state.index===0;id("next-sentence").disabled=state.index===state.sentences.length-1;
  const box=id("stage-content");box.replaceChildren();pictureAnchor=null;
@@ -285,12 +315,14 @@ function render(){
  if(state.stage===0)reading.append(words(item.text,false));
  if(state.stage===1)reading.append(words(item.text,true));
  if(state.stage===2)reading.append(meanings(item.text));
- if(state.stage===3)box.append(node("p","plain",explain(item.text,item.simple)));
+ if(state.stage===3&&!checkFor(item))box.append(node("p","plain",explain(item.text,item.simple)));
  if(pictureMode){
   const card=node('aside','picture-card');card.id='word-picture';card.setAttribute('aria-label','Picture for the selected word');card.setAttribute('aria-live','polite');box.append(card);
   const first=reading.querySelector('[data-picture-word]');showWordPicture(first?.dataset.pictureWord||'',first);
   reading.append(node('p','picture-hint','Dotted words have pictures. Hover or tap to see one. Tap a word to hear it.'));
  }
+ if(state.stage===3)renderParagraphCheck(box,item);
+ id('next-sentence').textContent=checkFor(item)&&state.stage<3?'Paragraph check →':'Next sentence ▶';
  if(state.stage===1||state.stage===2)updateLookups();
  try{sessionStorage.setItem("ninja-helper-progress-"+slug,JSON.stringify([state.index,state.stage]));}catch(e){}
 }
@@ -313,14 +345,15 @@ function parse(doc){
   const text=p.textContent.replace(/\s+/g," ").trim();
   if(text.length<9)continue;
   const simple=p0.getAttribute("data-simple-meaning")||"";
+  const paragraph=paragraphs.indexOf(p0)+1;
   if(text.includes("\uE000")){
    let number=0;
    for(const part of text.split(/(\uE000\d+\uE001)/g)){
     if(/^\uE000\d+\uE001$/.test(part)){number=Number(part.slice(1,-1));continue;}
-    if(part.trim().length>8)out.push({text:part.trim(),number:number||out.length+1,simple});
+    if(part.trim().length>8)out.push({text:part.trim(),number:number||out.length+1,simple,paragraph});
    }
   }else{
-   for(const chunk of text.match(/[^.!?]+(?:[.!?]+["'”’]?|$)/g)||[text])if(chunk.trim().length>8)out.push({text:chunk.trim(),number:out.length+1,simple});
+   for(const chunk of text.match(/[^.!?]+(?:[.!?]+["'”’]?|$)/g)||[text])if(chunk.trim().length>8)out.push({text:chunk.trim(),number:out.length+1,simple,paragraph});
   }
  }
  return out;
@@ -335,6 +368,7 @@ function finishLoad(){
  try{sessionStorage.setItem('nm-last-story-v1',JSON.stringify({title:state.title,url:'/reading-helper?story='+encodeURIComponent(slug)}));}catch(e){}
 
  try{const p=JSON.parse(sessionStorage.getItem("ninja-helper-progress-"+slug)||"null");if(Array.isArray(p)){state.index=Math.min(Math.max(0,p[0]|0),state.sentences.length-1);state.stage=Math.min(Math.max(0,p[1]|0),3);}}catch(e){}
+ if(slug==='secret-garden'&&params.get('paragraph-check')){const wanted=Math.min(20,Math.max(1,Number(params.get('paragraph-check'))||1));const check=Object.entries(paragraphChecks).find(([,c])=>c.paragraph===wanted);const i=state.sentences.findIndex(s=>s.number===Number(check?.[0]));if(i>=0){state.index=i;state.stage=3;}}
  id("loading").classList.add("hide");id("reader").classList.remove("hide");render();
 }
 async function load(){
@@ -376,7 +410,7 @@ id("play").addEventListener("click",speakStage);id("stop").addEventListener("cli
 id("previous").addEventListener("click",()=>{if(state.stage>0){state.stage--;render();}});
 id("next").addEventListener("click",()=>{if(state.stage<3){state.stage++;render();}});
 id("prev-sentence").addEventListener("click",()=>{if(state.index>0){state.index--;state.stage=0;render();}});
-id("next-sentence").addEventListener("click",()=>{if(state.index<state.sentences.length-1){state.index++;state.stage=0;render();}});
+id("next-sentence").addEventListener("click",()=>{if(checkFor(state.sentences[state.index])&&state.stage<3){state.stage=3;render();return;}if(state.index<state.sentences.length-1){state.index++;state.stage=0;render();}});
 document.addEventListener("visibilitychange",()=>{if(document.hidden)cancel();});
 window.addEventListener("pagehide",cancel);
 load();
