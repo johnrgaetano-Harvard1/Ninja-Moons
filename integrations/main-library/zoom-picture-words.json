@@ -1,0 +1,343 @@
+{
+  "kai": {
+    "page": 1,
+    "caption": "Kai, our blue ninja explorer.",
+    "zoom": 400,
+    "x": 19,
+    "y": 11
+  },
+  "mira": {
+    "page": 1,
+    "caption": "Mira, our pink ninja explorer.",
+    "zoom": 400,
+    "x": 46,
+    "y": 24
+  },
+  "ninja": {
+    "page": 1,
+    "caption": "A friendly ninja explorer.",
+    "zoom": 400,
+    "x": 19,
+    "y": 11
+  },
+  "ninjas": {
+    "page": 1,
+    "caption": "Kai and Mira are ninja explorers.",
+    "zoom": 210,
+    "x": 28,
+    "y": 30
+  },
+  "look": {
+    "page": 2,
+    "caption": "Use your eyes to see.",
+    "zoom": 190,
+    "x": 50,
+    "y": 40
+  },
+  "ship": {
+    "page": 3,
+    "caption": "A spaceship for their trip.",
+    "zoom": 165,
+    "x": 55,
+    "y": 30
+  },
+  "big": {
+    "page": 3,
+    "caption": "The ship is very large.",
+    "zoom": 140,
+    "x": 50,
+    "y": 40
+  },
+  "blue": {
+    "caption": "This color is blue.",
+    "kind": "color"
+  },
+  "pip": {
+    "page": 4,
+    "caption": "Pip, their friendly robot.",
+    "zoom": 400,
+    "x": 80,
+    "y": 25
+  },
+  "little": {
+    "page": 4,
+    "caption": "Pip is small.",
+    "zoom": 260,
+    "x": 88,
+    "y": 40
+  },
+  "robot": {
+    "page": 4,
+    "caption": "A machine that helps.",
+    "zoom": 400,
+    "x": 80,
+    "y": 25
+  },
+  "hop": {
+    "page": 4,
+    "caption": "Hop in: climb aboard the ship.",
+    "zoom": 170,
+    "x": 65,
+    "y": 55
+  },
+  "go": {
+    "page": 8,
+    "caption": "Travel to a new place.",
+    "zoom": 130,
+    "x": 50,
+    "y": 45
+  },
+  "nox": {
+    "page": 5,
+    "caption": "Nox is the faraway moon.",
+    "zoom": 460,
+    "x": 95,
+    "y": 10
+  },
+  "moon": {
+    "page": 5,
+    "caption": "A moon is a world in space.",
+    "zoom": 460,
+    "x": 95,
+    "y": 10
+  },
+  "far": {
+    "page": 5,
+    "caption": "A long way from Earth.",
+    "zoom": 170,
+    "x": 85,
+    "y": 20
+  },
+  "clock": {
+    "page": 6,
+    "caption": "A clock tells us the time.",
+    "zoom": 450,
+    "x": 65,
+    "y": 20
+  },
+  "seven": {
+    "page": 6,
+    "caption": "Seven: the number 7.",
+    "zoom": 450,
+    "x": 65,
+    "y": 20
+  },
+  "ring": {
+    "page": 8,
+    "caption": "A round shape in space.",
+    "zoom": 150,
+    "x": 60,
+    "y": 20
+  },
+  "lights": {
+    "page": 7,
+    "caption": "The ring begins to shine.",
+    "zoom": 170,
+    "x": 85,
+    "y": 5
+  },
+  "stars": {
+    "page": 7,
+    "caption": "Tiny points of light in the sky.",
+    "zoom": 230,
+    "x": 92,
+    "y": 5
+  },
+  "wiggle": {
+    "page": 13,
+    "caption": "Move back and forth.",
+    "zoom": 240,
+    "x": 63,
+    "y": 40
+  },
+  "one": {
+    "caption": "One: 1.",
+    "kind": "number",
+    "number": "1"
+  },
+  "two": {
+    "caption": "Two: 2.",
+    "kind": "number",
+    "number": "2"
+  },
+  "three": {
+    "caption": "Three: 3.",
+    "kind": "number",
+    "number": "3"
+  },
+  "zoom": {
+    "page": 8,
+    "caption": "Move very fast!",
+    "zoom": 140,
+    "x": 50,
+    "y": 45
+  },
+  "tavi": {
+    "page": 10,
+    "caption": "Tavi, their moon-garden friend.",
+    "zoom": 350,
+    "x": 75,
+    "y": 27
+  },
+  "waves": {
+    "page": 10,
+    "caption": "Tavi lifts a hand to say hello.",
+    "zoom": 260,
+    "x": 82,
+    "y": 20
+  },
+  "plants": {
+    "page": 12,
+    "caption": "Living things that need light and water.",
+    "zoom": 180,
+    "x": 85,
+    "y": 50
+  },
+  "dry": {
+    "page": 10,
+    "caption": "These plants need water.",
+    "zoom": 300,
+    "x": 100,
+    "y": 50
+  },
+  "help": {
+    "page": 12,
+    "caption": "Work together to help the plants.",
+    "zoom": 145,
+    "x": 45,
+    "y": 45
+  },
+  "turns": {
+    "page": 11,
+    "caption": "Kai moves the wheel around.",
+    "zoom": 230,
+    "x": 26,
+    "y": 43
+  },
+  "wheel": {
+    "page": 11,
+    "caption": "Turn this round wheel.",
+    "zoom": 400,
+    "x": 35,
+    "y": 42
+  },
+  "mirror": {
+    "page": 11,
+    "caption": "A mirror reflects light.",
+    "zoom": 230,
+    "x": 64,
+    "y": 5
+  },
+  "sunlight": {
+    "page": 11,
+    "caption": "Light from the sun.",
+    "zoom": 200,
+    "x": 85,
+    "y": 0
+  },
+  "hits": {
+    "page": 11,
+    "caption": "The sunlight reaches the panel.",
+    "zoom": 200,
+    "x": 75,
+    "y": 10
+  },
+  "panel": {
+    "page": 11,
+    "caption": "The panel receives the sunlight.",
+    "zoom": 215,
+    "x": 69,
+    "y": 4
+  },
+  "pump": {
+    "page": 11,
+    "caption": "A pump moves water.",
+    "zoom": 330,
+    "x": 100,
+    "y": 50
+  },
+  "starts": {
+    "page": 11,
+    "caption": "The pump begins to work.",
+    "zoom": 260,
+    "x": 100,
+    "y": 50
+  },
+  "splash": {
+    "page": 12,
+    "caption": "Water splashes onto the plants.",
+    "zoom": 160,
+    "x": 75,
+    "y": 55
+  },
+  "drink": {
+    "page": 12,
+    "caption": "The plants get water to drink.",
+    "zoom": 180,
+    "x": 80,
+    "y": 50
+  },
+  "night": {
+    "page": 13,
+    "caption": "The sky is dark at night.",
+    "zoom": 230,
+    "x": 90,
+    "y": 0
+  },
+  "master": {
+    "page": 13,
+    "caption": "Master Ren, their teacher.",
+    "zoom": 340,
+    "x": 72,
+    "y": 8
+  },
+  "ren": {
+    "page": 13,
+    "caption": "Master Ren, their teacher.",
+    "zoom": 340,
+    "x": 72,
+    "y": 8
+  },
+  "cloth": {
+    "page": 13,
+    "caption": "A soft piece of fabric.",
+    "zoom": 300,
+    "x": 62,
+    "y": 42
+  },
+  "gives": {
+    "page": 13,
+    "caption": "Master Ren gives the cloth a wiggle.",
+    "zoom": 230,
+    "x": 64,
+    "y": 35
+  },
+  "space": {
+    "page": 14,
+    "caption": "The wide universe beyond Earth.",
+    "zoom": 150,
+    "x": 60,
+    "y": 10
+  },
+  "wiggly": {
+    "page": 7,
+    "caption": "The stars look bent and wavy.",
+    "zoom": 230,
+    "x": 92,
+    "y": 5
+  },
+  "fast": {
+    "page": 8,
+    "caption": "The ship moves quickly.",
+    "zoom": 140,
+    "x": 50,
+    "y": 45
+  },
+  "said": {
+    "page": 4,
+    "caption": "The friends speak to each other.",
+    "zoom": 150,
+    "x": 40,
+    "y": 40
+  }
+}

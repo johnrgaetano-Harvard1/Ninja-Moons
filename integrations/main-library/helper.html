@@ -35,6 +35,10 @@ small,.muted{color:#617286}.step{font-size:13px;font-weight:800;letter-spacing:.
 .error{background:#fff2e6;border:1px solid #ffc8a8;border-radius:14px;padding:18px;color:#824b2c;line-height:1.6}
 .note{font-size:14px;color:#58738a}.hide{display:none!important}
 @media(max-width:540px){main{margin:0 8px 20px;border-radius:18px}.top{padding:11px}.ctrl .btn{flex:1}.navbuttons .btn{flex:1}}
+
+/* Picture-word support is limited to The Zoom Trip. Cards stay in the document flow. */
+#stage-content.picture-mode{display:grid;grid-template-columns:minmax(0,1fr) 174px;gap:22px;align-items:start}.picture-text{min-width:0}.picture-word{text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#2985b6;text-underline-offset:7px}.picture-word.picture-selected{outline:2px solid #62b7d8;outline-offset:2px}.picture-card{width:174px;max-width:100%;margin:0;background:#fff;border:2px solid #9ad6ea;border-radius:17px;padding:8px;box-shadow:0 6px 18px #17456812;color:#173049;align-self:start}.picture-crop{aspect-ratio:1;background-color:#e2f1fa;background-repeat:no-repeat;border-radius:10px;overflow:hidden}.picture-swatch{background-color:#1583ee!important}.picture-number{display:grid;place-items:center;font-size:86px;font-weight:950;color:#1270b0;background:#def3ff}.picture-label{display:block;font-size:21px;font-weight:850;line-height:1.2;margin:10px 3px 5px;overflow-wrap:anywhere}.picture-caption{font-size:12px;line-height:1.5;color:#4a6477;margin:0 3px 4px}.picture-empty{font-size:13px;line-height:1.6;text-align:center;padding:15px 7px;color:#4a6477}.picture-hint{font-size:12px;color:#38647c;margin:12px 0 0;line-height:1.6}.picture-heading{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:850;margin:3px 3px 8px;color:#38647c}
+@media(max-width:620px){#stage-content.picture-mode{grid-template-columns:minmax(0,1fr);gap:15px}.picture-card{width:100%;display:grid;grid-template-columns:108px minmax(0,1fr);gap:0 14px;align-items:center;padding:10px;border-radius:14px}.picture-heading{grid-column:1/-1;margin-bottom:8px}.picture-crop{width:108px;grid-row:2/5}.picture-label{font-size:23px;margin:0 0 5px}.picture-caption{font-size:13px;margin:0}.picture-empty{grid-column:1/-1;padding:12px}.picture-number{font-size:65px}.picture-hint{margin-top:10px}}
 </style></head><body><div id="nm-site-nav"><a class="nm-mark" href="https://ninjamoons.vercel.app/">🥷 NINJA MOONS <span aria-hidden="true" style="color:#ffda7b">◔</span></a><nav aria-label="NINJA MOONS main navigation"><a href="https://ninjamoons.vercel.app/">Home</a><a href="https://ninjamoons.vercel.app/dashboard">My dashboard</a><a href="https://ninjamoons.vercel.app/reader?level=All">Library</a><a href="https://ninjamoons.vercel.app/teacher-dashboard">Teachers</a><a href="https://ninjamoons.vercel.app/about.html">About</a></nav></div><style>
 #nm-site-nav{position:sticky;top:0;z-index:10000;isolation:isolate;box-sizing:border-box;flex:0 0 auto;width:100%;margin:0;background:#07182cf7;border-bottom:1px solid #36546b;color:#e9f6ff;font:700 13px/1.3 system-ui;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px max(16px,calc((100vw - 1200px)/2));text-align:left;backdrop-filter:blur(12px)}#nm-site-nav *{box-sizing:border-box}#nm-site-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;color:#e9f6ff;text-decoration:none;border:0;box-shadow:none;margin:0;white-space:nowrap}#nm-site-nav .nm-mark{font-size:17px;font-weight:950;letter-spacing:.035em;gap:5px;flex-shrink:0}#nm-site-nav nav{position:static;display:flex;gap:3px;align-items:center;flex-wrap:wrap;margin:0;padding:0;width:auto;background:none;border:0}#nm-site-nav nav a{padding:10px 11px;border-radius:8px;font-size:13px;font-style:normal;text-transform:none;letter-spacing:0}#nm-site-nav nav a:hover,#nm-site-nav nav a:focus-visible{background:#183750;outline:2px solid #6ee5ff;outline-offset:1px}@media(max-width:700px){#nm-site-nav{padding:8px 12px;gap:3px;flex-wrap:wrap}#nm-site-nav .nm-mark{min-height:33px;font-size:16px}#nm-site-nav nav{width:100%;justify-content:space-between;gap:0}#nm-site-nav nav a{padding:8px 7px;font-size:12px;min-height:40px}}@media print{#nm-site-nav{display:none!important}}
 </style>
@@ -179,7 +183,9 @@ function say(text,start=0,offsets=null){
  if(!("speechSynthesis" in window)){id("tip").textContent="Audio isn't available in this browser.";return;}
  cancel();const run=state.run,u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=Number(id("speed").value)||.87;u.voice=voice();
  const nodes=[...id("stage-content").querySelectorAll(".word[data-pos]")];
- function highlight(n){for(const item of nodes)item.classList.toggle("active",Number(item.dataset.pos)===n);}
+ function highlight(n){for(const item of nodes)item.classList.toggle("active",Number(item.dataset.pos)===n);
+  if(slug==='zoom-trip'&&state.stage<2){const current=nodes.find(item=>Number(item.dataset.pos)===n);if(current)showWordPicture(current.textContent,current);}
+ }
  highlight(start);
  u.onboundary=e=>{if(run!==state.run||!offsets)return;const chars=e.charIndex;
  let j=0;for(let i=0;i<offsets.length;i++)if(chars>=offsets[i])j=i;
@@ -199,12 +205,46 @@ function speakStage(){
  if(state.stage===2){say(tok(item.text).filter(t=>t.isWord).map(t=>t.text+". "+(dictionary(t.text)?.meaning||"")).join(". "));return;}
  speakFrom(0);
 }
+
+const zoomPictures={"kai":{"page":1,"caption":"Kai, our blue ninja explorer.","zoom":400,"x":19,"y":11},"mira":{"page":1,"caption":"Mira, our pink ninja explorer.","zoom":400,"x":46,"y":24},"ninja":{"page":1,"caption":"A friendly ninja explorer.","zoom":400,"x":19,"y":11},"ninjas":{"page":1,"caption":"Kai and Mira are ninja explorers.","zoom":210,"x":28,"y":30},"look":{"page":2,"caption":"Use your eyes to see.","zoom":190,"x":50,"y":40},"ship":{"page":3,"caption":"A spaceship for their trip.","zoom":165,"x":55,"y":30},"big":{"page":3,"caption":"The ship is very large.","zoom":140,"x":50,"y":40},"blue":{"caption":"This color is blue.","kind":"color"},"pip":{"page":4,"caption":"Pip, their friendly robot.","zoom":400,"x":80,"y":25},"little":{"page":4,"caption":"Pip is small.","zoom":260,"x":88,"y":40},"robot":{"page":4,"caption":"A machine that helps.","zoom":400,"x":80,"y":25},"hop":{"page":4,"caption":"Hop in: climb aboard the ship.","zoom":170,"x":65,"y":55},"go":{"page":8,"caption":"Travel to a new place.","zoom":130,"x":50,"y":45},"nox":{"page":5,"caption":"Nox is the faraway moon.","zoom":460,"x":95,"y":10},"moon":{"page":5,"caption":"A moon is a world in space.","zoom":460,"x":95,"y":10},"far":{"page":5,"caption":"A long way from Earth.","zoom":170,"x":85,"y":20},"clock":{"page":6,"caption":"A clock tells us the time.","zoom":450,"x":65,"y":20},"seven":{"page":6,"caption":"Seven: the number 7.","zoom":450,"x":65,"y":20},"ring":{"page":8,"caption":"A round shape in space.","zoom":150,"x":60,"y":20},"lights":{"page":7,"caption":"The ring begins to shine.","zoom":170,"x":85,"y":5},"stars":{"page":7,"caption":"Tiny points of light in the sky.","zoom":230,"x":92,"y":5},"wiggle":{"page":13,"caption":"Move back and forth.","zoom":240,"x":63,"y":40},"one":{"caption":"One: 1.","kind":"number","number":"1"},"two":{"caption":"Two: 2.","kind":"number","number":"2"},"three":{"caption":"Three: 3.","kind":"number","number":"3"},"zoom":{"page":8,"caption":"Move very fast!","zoom":140,"x":50,"y":45},"tavi":{"page":10,"caption":"Tavi, their moon-garden friend.","zoom":350,"x":75,"y":27},"waves":{"page":10,"caption":"Tavi lifts a hand to say hello.","zoom":260,"x":82,"y":20},"plants":{"page":12,"caption":"Living things that need light and water.","zoom":180,"x":85,"y":50},"dry":{"page":10,"caption":"These plants need water.","zoom":300,"x":100,"y":50},"help":{"page":12,"caption":"Work together to help the plants.","zoom":145,"x":45,"y":45},"turns":{"page":11,"caption":"Kai moves the wheel around.","zoom":230,"x":26,"y":43},"wheel":{"page":11,"caption":"Turn this round wheel.","zoom":400,"x":35,"y":42},"mirror":{"page":11,"caption":"A mirror reflects light.","zoom":230,"x":64,"y":5},"sunlight":{"page":11,"caption":"Light from the sun.","zoom":200,"x":85,"y":0},"hits":{"page":11,"caption":"The sunlight reaches the panel.","zoom":200,"x":75,"y":10},"panel":{"page":11,"caption":"The panel receives the sunlight.","zoom":215,"x":69,"y":4},"pump":{"page":11,"caption":"A pump moves water.","zoom":330,"x":100,"y":50},"starts":{"page":11,"caption":"The pump begins to work.","zoom":260,"x":100,"y":50},"splash":{"page":12,"caption":"Water splashes onto the plants.","zoom":160,"x":75,"y":55},"drink":{"page":12,"caption":"The plants get water to drink.","zoom":180,"x":80,"y":50},"night":{"page":13,"caption":"The sky is dark at night.","zoom":230,"x":90,"y":0},"master":{"page":13,"caption":"Master Ren, their teacher.","zoom":340,"x":72,"y":8},"ren":{"page":13,"caption":"Master Ren, their teacher.","zoom":340,"x":72,"y":8},"cloth":{"page":13,"caption":"A soft piece of fabric.","zoom":300,"x":62,"y":42},"gives":{"page":13,"caption":"Master Ren gives the cloth a wiggle.","zoom":230,"x":64,"y":35},"space":{"page":14,"caption":"The wide universe beyond Earth.","zoom":150,"x":60,"y":10},"wiggly":{"page":7,"caption":"The stars look bent and wavy.","zoom":230,"x":92,"y":5},"fast":{"page":8,"caption":"The ship moves quickly.","zoom":140,"x":50,"y":45},"said":{"page":4,"caption":"The friends speak to each other.","zoom":150,"x":40,"y":40}};
+const pictureAliases={looks:'look'};
+let pictureAnchor=null;
+function pictureEntry(word){
+ if(slug!=='zoom-trip')return null;
+ const k=key(word),entry=zoomPictures[pictureAliases[k]||k];
+ if(k==='ninja'&&/\bMira\b/.test(state.sentences[state.index]?.text||''))return {...zoomPictures.mira,caption:'Mira is a ninja explorer.'};
+ return entry||null;
+}
+function showWordPicture(word,anchor){
+ const card=id('word-picture');if(!card)return;
+ if(pictureAnchor){pictureAnchor.classList.remove('picture-selected');pictureAnchor.removeAttribute('aria-describedby');}
+ pictureAnchor=null;card.replaceChildren();
+ const label=node('div','picture-heading','Word + picture');card.append(label);
+ const entry=pictureEntry(word);
+ if(!entry){card.append(node('p','picture-empty','Hover over or tap a dotted word to see its picture.'));return;}
+ pictureAnchor=anchor;anchor.classList.add('picture-selected');anchor.setAttribute('aria-describedby','word-picture');
+ const art=node('div','picture-crop');art.setAttribute('role','img');art.setAttribute('aria-label',entry.caption);
+ if(entry.kind==='color')art.classList.add('picture-swatch');
+ else if(entry.kind==='number'){art.classList.add('picture-number');art.textContent=entry.number;}
+ else {art.style.backgroundImage='url("https://ninjamoons.vercel.app/published/stories/zoom-trip/images/page-'+String(entry.page).padStart(2,'0')+'.webp")';art.style.backgroundSize=entry.zoom+'%';art.style.backgroundPosition=entry.x+'% '+entry.y+'%';}
+ card.append(art,node('strong','picture-label',word),node('p','picture-caption',entry.caption));
+}
+function attachPictureWord(el,word){
+ if(slug!=='zoom-trip')return;
+ if(pictureEntry(word)){el.classList.add('picture-word');el.dataset.pictureWord=word;el.setAttribute('aria-controls','word-picture');}
+ el.addEventListener('pointerenter',()=>showWordPicture(word,el));
+ el.addEventListener('focus',()=>showWordPicture(word,el));
+ // The existing click/keyboard speech listeners stay in place.
+ el.addEventListener('click',()=>showWordPicture(word,el));
+}
+
 function words(s,phonetics){
  const wrap=node("div",phonetics?"sentence helps":"sentence");let i=0;
  for(const t of tok(s)){
   if(!t.isWord){wrap.append(document.createTextNode(t.text));continue;}
   const idx=i++,span=node("span","word",t.text);
   span.dataset.pos=idx;span.setAttribute("role","button");span.tabIndex=0;span.setAttribute("aria-label","Speak from "+t.text);
+  attachPictureWord(span,t.text);
   span.addEventListener("click",()=>speakFrom(idx));
   span.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();speakFrom(idx);}});
   if(!phonetics){wrap.append(span);continue;}
@@ -219,6 +259,7 @@ function meanings(s){
   const row=node("li","gloss"),word=node("button","",t.text),info=dictionary(t.text);
   const val=node("span","meaning",info?"("+info.meaning+")":"(Looking up a simple meaning…)");
   val.dataset.dict=t.text;val.dataset.kind="meaning";word.type="button";
+  attachPictureWord(word,t.text);
   word.addEventListener("click",()=>say(t.text+(dictionary(t.text)?". "+dictionary(t.text).meaning:"")));
   row.append(word,document.createTextNode(" "),val);list.append(row);
  }
@@ -233,11 +274,19 @@ function render(){
  id("stage-title").textContent=stages[state.stage];id("tip").textContent=tips[state.stage];
  id("previous").disabled=state.stage===0;id("next").disabled=state.stage===3;
  id("prev-sentence").disabled=state.index===0;id("next-sentence").disabled=state.index===state.sentences.length-1;
- const box=id("stage-content");box.replaceChildren();
- if(state.stage===0)box.append(words(item.text,false));
- if(state.stage===1)box.append(words(item.text,true));
- if(state.stage===2)box.append(meanings(item.text));
+ const box=id("stage-content");box.replaceChildren();pictureAnchor=null;
+ const pictureMode=slug==='zoom-trip'&&state.stage<3;box.classList.toggle('picture-mode',pictureMode);
+ const reading=pictureMode?node('div','picture-text'):box;
+ if(pictureMode)box.append(reading);
+ if(state.stage===0)reading.append(words(item.text,false));
+ if(state.stage===1)reading.append(words(item.text,true));
+ if(state.stage===2)reading.append(meanings(item.text));
  if(state.stage===3)box.append(node("p","plain",explain(item.text,item.simple)));
+ if(pictureMode){
+  const card=node('aside','picture-card');card.id='word-picture';card.setAttribute('aria-label','Picture for the selected word');card.setAttribute('aria-live','polite');box.append(card);
+  const first=reading.querySelector('[data-picture-word]');showWordPicture(first?.dataset.pictureWord||'',first);
+  reading.append(node('p','picture-hint','Dotted words have pictures. Hover or tap to see one. Tap a word to hear it.'));
+ }
  if(state.stage===1||state.stage===2)updateLookups();
  try{sessionStorage.setItem("ninja-helper-progress-"+slug,JSON.stringify([state.index,state.stage]));}catch(e){}
 }
