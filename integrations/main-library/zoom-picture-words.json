@@ -41,13 +41,6 @@
     "x": 55,
     "y": 30
   },
-  "big": {
-    "page": 3,
-    "caption": "The ship is very large.",
-    "zoom": 140,
-    "x": 50,
-    "y": 40
-  },
   "blue": {
     "caption": "This color is blue.",
     "kind": "color"
@@ -58,13 +51,6 @@
     "zoom": 400,
     "x": 80,
     "y": 25
-  },
-  "little": {
-    "page": 4,
-    "caption": "Pip is small.",
-    "zoom": 260,
-    "x": 88,
-    "y": 40
   },
   "robot": {
     "page": 4,
@@ -80,13 +66,6 @@
     "x": 65,
     "y": 55
   },
-  "go": {
-    "page": 8,
-    "caption": "Travel to a new place.",
-    "zoom": 130,
-    "x": 50,
-    "y": 45
-  },
   "nox": {
     "page": 5,
     "caption": "Nox is the faraway moon.",
@@ -100,13 +79,6 @@
     "zoom": 460,
     "x": 95,
     "y": 10
-  },
-  "far": {
-    "page": 5,
-    "caption": "A long way from Earth.",
-    "zoom": 170,
-    "x": 85,
-    "y": 20
   },
   "clock": {
     "page": 6,
@@ -200,13 +172,6 @@
     "x": 100,
     "y": 50
   },
-  "help": {
-    "page": 12,
-    "caption": "Work together to help the plants.",
-    "zoom": 145,
-    "x": 45,
-    "y": 45
-  },
   "turns": {
     "page": 11,
     "caption": "Kai moves the wheel around.",
@@ -235,13 +200,6 @@
     "x": 85,
     "y": 0
   },
-  "hits": {
-    "page": 11,
-    "caption": "The sunlight reaches the panel.",
-    "zoom": 200,
-    "x": 75,
-    "y": 10
-  },
   "panel": {
     "page": 11,
     "caption": "The panel receives the sunlight.",
@@ -256,26 +214,12 @@
     "x": 100,
     "y": 50
   },
-  "starts": {
-    "page": 11,
-    "caption": "The pump begins to work.",
-    "zoom": 260,
-    "x": 100,
-    "y": 50
-  },
   "splash": {
     "page": 12,
     "caption": "Water splashes onto the plants.",
     "zoom": 160,
     "x": 75,
     "y": 55
-  },
-  "drink": {
-    "page": 12,
-    "caption": "The plants get water to drink.",
-    "zoom": 180,
-    "x": 80,
-    "y": 50
   },
   "night": {
     "page": 13,
@@ -305,13 +249,6 @@
     "x": 62,
     "y": 42
   },
-  "gives": {
-    "page": 13,
-    "caption": "Master Ren gives the cloth a wiggle.",
-    "zoom": 230,
-    "x": 64,
-    "y": 35
-  },
   "space": {
     "page": 14,
     "caption": "The wide universe beyond Earth.",
@@ -325,19 +262,5 @@
     "zoom": 230,
     "x": 92,
     "y": 5
-  },
-  "fast": {
-    "page": 8,
-    "caption": "The ship moves quickly.",
-    "zoom": 140,
-    "x": 50,
-    "y": 45
-  },
-  "said": {
-    "page": 4,
-    "caption": "The friends speak to each other.",
-    "zoom": 150,
-    "x": 40,
-    "y": 40
   }
 }

@@ -32,7 +32,7 @@ body.nw-open{overflow:hidden}
 .garden-inline-picture{display:grid;grid-template-columns:112px 1fr;gap:18px;align-items:center;background:#eef7fe;border:1px solid #cbe1ef;border-radius:18px;padding:16px;margin:12px 0 22px;color:#173b55;max-width:550px}
 .garden-inline-picture p,.garden-modal-picture p{font-size:15px!important;line-height:1.5!important;margin:8px 0!important}
 .garden-modal-picture{float:right;width:170px;margin:0 0 18px 24px;padding:12px;background:#edf6fc;border-radius:16px;color:#173b55}
-.nw-actions{clear:both}.garden-modal-picture[hidden]{display:none}
+.nw-actions{clear:both}.garden-modal-picture[hidden],.garden-inline-picture[hidden]{display:none}
 @media(max-width:560px){.garden-modal-picture{float:none;display:grid;grid-template-columns:90px 1fr;width:auto;gap:14px;margin:12px 0}.garden-inline-picture{grid-template-columns:90px 1fr}}
 </style></head><body><div id="nm-site-nav"><a class="nm-mark" href="https://ninjamoons.vercel.app/" aria-label="NINJA MOONS home"><img class="nm-mascot nm-header-mascot" src="https://ninjamoons.vercel.app/brand/mascot.webp" alt="" aria-hidden="true" width="44" height="44"><img class="nm-wordmark" src="https://ninjamoons.vercel.app/brand/wordmark-compact.webp" alt="NINJA MOONS" width="132" height="44"></a><nav aria-label="NINJA MOONS main navigation"><a href="https://ninjamoons.vercel.app/">Home</a><a href="https://ninjamoons.vercel.app/dashboard">My dashboard</a><a href="https://ninjamoons.vercel.app/reader?level=All">Library</a><a href="https://ninjamoons.vercel.app/teacher-dashboard">Teachers</a><a href="https://ninjamoons.vercel.app/about.html">About</a></nav></div><style>
 #nm-site-nav{position:sticky;top:0;z-index:10000;isolation:isolate;box-sizing:border-box;flex:0 0 auto;width:100%;margin:0;background:#07182cf7;border-bottom:1px solid #36546b;color:#e9f6ff;font:700 13px/1.3 system-ui;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px max(16px,calc((100vw - 1200px)/2));text-align:left;backdrop-filter:blur(12px)}#nm-site-nav *{box-sizing:border-box}#nm-site-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;color:#e9f6ff;text-decoration:none;border:0;box-shadow:none;margin:0;white-space:nowrap}#nm-site-nav .nm-mark{font-size:17px;font-weight:950;letter-spacing:.035em;gap:5px;flex-shrink:0}#nm-site-nav nav{position:static;display:flex;gap:3px;align-items:center;flex-wrap:wrap;margin:0;padding:0;width:auto;background:none;border:0}#nm-site-nav nav a{padding:10px 11px;border-radius:8px;font-size:13px;font-style:normal;text-transform:none;letter-spacing:0}#nm-site-nav nav a:hover,#nm-site-nav nav a:focus-visible{background:#183750;outline:2px solid #6ee5ff;outline-offset:1px}@media(max-width:700px){#nm-site-nav{padding:8px 12px;gap:3px;flex-wrap:wrap}#nm-site-nav .nm-mark{min-height:33px;font-size:16px}#nm-site-nav nav{width:100%;justify-content:space-between;gap:0}#nm-site-nav nav a{padding:8px 7px;font-size:12px;min-height:40px}}@media print{#nm-site-nav{display:none!important}}
@@ -156,11 +156,14 @@ function start(){
     el.classList.add("nw-tappable");el.tabIndex=0;
     if(window.NinjaGardenPictures?.get(word)){
       el.classList.add('garden-picture-word');
-      const show=()=>{const paragraph=el.closest('p');if(!paragraph)return;let card=paragraph.nextElementSibling;
+      const show=()=>{root.querySelectorAll('.garden-inline-picture').forEach(card=>card.hidden=true);const paragraph=el.closest('p');if(!paragraph)return;let card=paragraph.nextElementSibling;
         if(!card?.classList.contains('garden-inline-picture')){card=make('aside','garden-inline-picture');paragraph.after(card);}
         window.NinjaGardenPictures.fill(card,word);
       };
       el.addEventListener('pointerenter',show);el.addEventListener('focus',show);
+    }else{
+      const clearPicture=()=>root.querySelectorAll('.garden-inline-picture').forEach(card=>card.hidden=true);
+      el.addEventListener('pointerenter',clearPicture);el.addEventListener('focus',clearPicture);
     }
     el.setAttribute("role","button");
     el.setAttribute("aria-label","Hear and define "+word);
