@@ -3,47 +3,37 @@
 <meta name="robots" content="noindex"><title>NINJA MOONS — Enter the Adventure</title>
 <meta name="description" content="Enter the NINJA MOONS reading adventure.">
 <style>
-:root{color-scheme:dark}*{box-sizing:border-box}
-html,body{min-height:100%;margin:0;background:#061831;color:#e6f7ff;font-family:Arial,Helvetica,sans-serif}
-body{display:flex;align-items:center;justify-content:center;min-height:100svh;overflow-x:hidden}
-.poster{position:relative;display:block;width:min(100vw,calc(100svh * 1700 / 2200));aspect-ratio:1700/2200;background:#061831;box-shadow:0 12px 60px #0009;container-type:inline-size}
-.poster img{display:block;width:100%;height:auto;object-fit:contain}
-#entrance{position:absolute;inset:0;margin:0}
-#student-password{position:absolute;left:28.5%;top:30.05%;width:29.3%;height:3.42%;margin:0;padding:0 .7%;border:0;outline:0;border-radius:3px;background:#08264f;color:#fff;font-size:clamp(13px,1.9cqw,24px);font-family:Arial,Helvetica,sans-serif;line-height:1;letter-spacing:.02em;min-width:0}
-#student-password::placeholder{color:#a9c4e3;opacity:1}
-#student-password:focus-visible{outline:3px solid #8df7ff;outline-offset:2px}
-#student-login{position:absolute;left:59.3%;top:29.90%;width:15.7%;height:3.78%;border:0;padding:0;margin:0;background:transparent;color:transparent;border-radius:9px;cursor:pointer}
-#student-login:focus-visible{outline:3px solid #fff;outline-offset:3px}
-#student-login:hover{box-shadow:0 0 18px #65e3ff99}
-#student-login:disabled{cursor:progress;opacity:.6}
-#login-message{position:absolute;left:23%;width:54%;top:35.8%;margin:0;padding:5px 8px;color:#fff;background:#772c46e8;font-weight:700;font-size:clamp(12px,1.55cqw,18px);text-align:center;border-radius:7px;box-shadow:0 5px 15px #05172b77}
-#login-message[hidden]{display:none}
-@media(max-width:620px){#student-password{font-size:clamp(12px,2.65cqw,16px);border-radius:2px}#student-login{border-radius:5px}#login-message{font-size:12px;padding:3px 4px}}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
-
-/* NINJA MOONS reusable classroom race — separate from student story sign-in */
-#nm-race-entry{position:fixed;z-index:20;right:clamp(12px,3vw,26px);bottom:max(16px,env(safe-area-inset-bottom));display:flex;align-items:center;gap:9px;background:#073a68ee;border:2px solid #76dfff;color:#fff;text-decoration:none;font:800 clamp(13px,1.7vw,17px)/1.2 Arial,sans-serif;padding:13px 17px;border-radius:999px;box-shadow:0 4px 18px #001329cc}
-#nm-race-entry:hover,#nm-race-entry:focus-visible{background:#125a94;outline:3px solid #a6f7ff;outline-offset:2px}
+:root{color-scheme:dark}*{box-sizing:border-box}html,body{min-height:100%;margin:0;background:#061831;color:#e6f7ff;font-family:Arial,Helvetica,sans-serif}body{overflow-x:hidden}
+.poster{display:block;width:min(100vw,calc(100svh * 1700 / 2200));margin:0 auto 90px;background:#061831;box-shadow:0 12px 60px #0009}.poster>img{display:block;width:100%;height:auto;object-fit:contain}
+.entry-bar{position:relative;width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px) minmax(0,1fr);align-items:center;gap:18px;padding:5px max(12px,calc((100vw - 1100px)/2));min-height:56px;background:#092541;border-bottom:1px solid #37728b;color:#e9f8ff}
+.entry-link{display:flex;align-items:center;justify-content:center;min-height:44px;text-align:center;color:#dbf6ff;text-decoration:none;font-size:13px;font-weight:750;line-height:1.35}.entry-link:last-of-type{color:#ffe39a}.entry-link:hover{color:white;text-decoration:underline;text-underline-offset:4px}
+#entrance{display:flex;align-items:center;justify-content:center;gap:0;width:100%;min-width:0;margin:0;border:1px solid #63c5e5;border-radius:8px;background:#071b33;overflow:hidden;height:40px}
+#student-password{position:static;min-width:0;width:100%;flex:1 1 auto;border:0;margin:0;padding:10px 12px;height:100%;background:transparent;color:white;font:15px Arial,sans-serif;outline:0}#student-password::placeholder{color:#b7d4e7;opacity:1}
+#student-login{position:static;flex:0 0 auto;height:100%;border:0;margin:0;padding:0 18px;background:#74e4ff;color:#07263b;font:800 14px Arial,sans-serif;cursor:pointer}#student-login:hover{background:#b1f4ff}#student-login:disabled{cursor:progress;opacity:.6}
+.entry-link:focus-visible,#student-login:focus-visible{outline:3px solid white;outline-offset:-3px}#entrance:focus-within{outline:2px solid #a4efff;outline-offset:2px}
+#login-message{position:absolute;top:100%;left:50%;transform:translateX(-50%);z-index:20;width:min(94%,520px);margin:4px 0 0;padding:10px 14px;background:#772c46;color:white;border-radius:8px;text-align:center;font-size:14px;box-shadow:0 5px 15px #05172b77}#login-message[hidden]{display:none}
+.sr-only{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+#nm-race-entry{position:fixed;z-index:20;right:clamp(12px,3vw,26px);bottom:max(16px,env(safe-area-inset-bottom));display:flex;align-items:center;gap:9px;background:#073a68ee;border:2px solid #76dfff;color:#fff;text-decoration:none;font:800 clamp(13px,1.7vw,17px)/1.2 Arial,sans-serif;padding:13px 17px;border-radius:999px;box-shadow:0 4px 18px #001329cc}#nm-race-entry:hover,#nm-race-entry:focus-visible{background:#125a94;outline:3px solid #a6f7ff;outline-offset:2px}
+@media(max-width:620px){.entry-bar{grid-template-columns:minmax(0,1fr) minmax(0,1.65fr) minmax(0,1fr);gap:6px;padding:4px 8px;min-height:54px}.entry-link{font-size:11px}.entry-link span{display:block}#entrance{height:38px}#student-password{font-size:12px;padding:8px 6px}#student-login{font-size:12px;padding:0 9px}}
 @media(max-width:440px){#nm-race-entry{left:12px;right:12px;justify-content:center;padding:12px 10px}}
-
-#nm-visitor-links{position:absolute;left:23%;top:34.5%;width:54%;display:flex;gap:8px;justify-content:center;z-index:4;flex-wrap:wrap}
-#nm-visitor-links a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:#092b50ed;color:#e8faff;border:1px solid #8deaff9c;border-radius:999px;padding:7px 12px;font-size:clamp(10px,1.6cqw,17px);font-weight:700;box-shadow:0 3px 15px #00152e88;min-height:28px}
-#nm-visitor-links a:last-child{color:#ffe59c;border-color:#ffe59caa}#nm-visitor-links a:hover,#nm-visitor-links a:focus-visible{background:#16588c;outline:2px solid #a5f7ff;outline-offset:3px}
-#login-message{top:42%}
-@media(max-width:620px){#nm-visitor-links{left:13%;width:74%;top:34.3%;gap:5px}#nm-visitor-links a{padding:6px 9px;font-size:clamp(10px,2.2cqw,13px)}}
-body{display:block}.poster{margin:0 auto 90px}</style></head>
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style></head>
 <body><div id="nm-site-nav"><a class="nm-mark" href="https://ninjamoons.vercel.app/" aria-label="NINJA MOONS home"><img class="nm-mascot nm-header-mascot" src="https://ninjamoons.vercel.app/brand/mascot.webp" alt="" aria-hidden="true" width="44" height="44"><img class="nm-wordmark" src="https://ninjamoons.vercel.app/brand/wordmark-compact.webp" alt="NINJA MOONS" width="132" height="44"></a><nav aria-label="NINJA MOONS main navigation"><a href="https://ninjamoons.vercel.app/">Home</a><a href="https://ninjamoons.vercel.app/dashboard">My dashboard</a><a href="https://ninjamoons.vercel.app/reader?level=All">Library</a><a href="https://ninjamoons.vercel.app/teacher-dashboard">Teachers</a><a href="https://ninjamoons.vercel.app/about.html">About</a></nav></div><style>
 #nm-site-nav{position:sticky;top:0;z-index:10000;isolation:isolate;box-sizing:border-box;flex:0 0 auto;width:100%;margin:0;background:#07182cf7;border-bottom:1px solid #36546b;color:#e9f6ff;font:700 13px/1.3 system-ui;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px max(16px,calc((100vw - 1200px)/2));text-align:left;backdrop-filter:blur(12px)}#nm-site-nav *{box-sizing:border-box}#nm-site-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;color:#e9f6ff;text-decoration:none;border:0;box-shadow:none;margin:0;white-space:nowrap}#nm-site-nav .nm-mark{font-size:17px;font-weight:950;letter-spacing:.035em;gap:5px;flex-shrink:0}#nm-site-nav nav{position:static;display:flex;gap:3px;align-items:center;flex-wrap:wrap;margin:0;padding:0;width:auto;background:none;border:0}#nm-site-nav nav a{padding:10px 11px;border-radius:8px;font-size:13px;font-style:normal;text-transform:none;letter-spacing:0}#nm-site-nav nav a:hover,#nm-site-nav nav a:focus-visible{background:#183750;outline:2px solid #6ee5ff;outline-offset:1px}@media(max-width:700px){#nm-site-nav{padding:8px 12px;gap:3px;flex-wrap:wrap}#nm-site-nav .nm-mark{min-height:33px;font-size:16px}#nm-site-nav nav{width:100%;justify-content:space-between;gap:0}#nm-site-nav nav a{padding:8px 7px;font-size:12px;min-height:40px}}@media print{#nm-site-nav{display:none!important}}
 </style>
 <link rel="stylesheet" href="https://ninjamoons.vercel.app/brand/branding.css" data-nm-brand-style="true"><script defer src="https://ninjamoons.vercel.app/brand/branding.js"></script>
-<main class="poster" aria-label="NINJA MOONS: The Seven-Second Journey">
-<img src="/assets/login.avif" width="1700" height="2200" alt="NINJA MOONS entrance: Kai, Mira, Pip and Master Ren race across the bridges of a brilliant futuristic moon city, with a blue password panel.">
+<section class="entry-bar" aria-label="Sign in or discover NINJA MOONS">
+<a class="entry-link" href="/about.html"><span>About <span>NINJA MOONS</span></span></a>
 <form id="entrance" action="/api/login" method="post">
-<label for="student-password" style="position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden">Story password</label>
+<label for="student-password" class="sr-only">Story password</label>
 <input id="student-password" type="password" name="password" placeholder="Enter password" autocomplete="current-password" required maxlength="72" spellcheck="false">
-<button id="student-login" type="submit" aria-label="Login and begin the NINJA MOONS story">Login</button>
+<button id="student-login" type="submit" aria-label="Login and begin the NINJA MOONS story">Login →</button>
+</form>
+<a class="entry-link" href="/about.html#join"><span>New here? <span>Start here →</span></span></a>
 <p id="login-message" role="alert" aria-live="polite" hidden></p>
-</form><nav id="nm-visitor-links" aria-label="New visitors"><a href="/about.html">About NINJA MOONS</a><a href="/about.html#join">New here? Start here →</a></nav>
+</section>
+<main class="poster" aria-label="NINJA MOONS: The Seven-Second Journey">
+<img src="https://ninja-reader-story-library.vercel.app/entrance-art.webp" width="1700" height="2200" alt="Kai, Mira, Pip and Master Ren exploring a brilliant futuristic moon city beneath the NINJA MOONS logo.">
 </main>
 <a id="nm-race-entry" href="https://ninja-reading-race.vercel.app/" aria-label="Open the NINJA MOONS reading race for teachers and students">🚀 Reading Race · Join or Host</a>
 <script>
