@@ -1,0 +1,17 @@
+{
+  "name": "ninja-moons-accounts-lab",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite --host 0.0.0.0",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.0.0"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}
