@@ -3,7 +3,7 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const config={url:import.meta.env.VITE_SUPABASE_URL||"",key:import.meta.env.VITE_SUPABASE_ANON_KEY||"",enabled:import.meta.env.VITE_ENABLE_AUTH==="true"};
 const backendConfigured=/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(config.url)&&config.key.length>40;
 const authEnabled=config.enabled&&backendConfigured;
-const supabase=authEnabled?createClient(config.url,config.key,{auth:{flowType:"pkce",persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}):null;
+const supabase=authEnabled?createClient(config.url,config.key,{auth:{flowType:"implicit",persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}):null;
 const status=$("#auth-status"),message=$("#auth-message");
 const say=txt=>{message.textContent=txt;};
 const panel=(id)=>{$$(".panel").forEach(p=>p.hidden=p.id!==id);$$(".tabs [data-panel]").forEach(b=>{if(b.dataset.panel===id)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");});};
@@ -11,9 +11,12 @@ $$(".tabs [data-panel]").forEach(b=>b.addEventListener("click",()=>panel(b.datas
 const demo=[{id:"Student A",progress:83,sentences:105,words:26},{id:"Student B",progress:61,sentences:78,words:22},{id:"Student C",progress:94,sentences:111,words:29},{id:"Student D",progress:44,sentences:33,words:12}];
 const demoBox=$("#sample-students");
 for(const s of demo){const item=document.createElement("article");item.className="sample-student";const title=document.createElement("h4");title.textContent=s.id;const bar=document.createElement("div");bar.className="bar";bar.setAttribute("role","progressbar");bar.setAttribute("aria-valuemin","0");bar.setAttribute("aria-valuemax","100");bar.setAttribute("aria-valuenow",String(s.progress));bar.setAttribute("aria-label",s.id+" progress");const inner=document.createElement("span");inner.style.width=s.progress+"%";bar.append(inner);const sub=document.createElement("p");sub.textContent=s.progress+"% sample progress · "+s.sentences+" sentence practices · "+s.words+" word lookups";item.append(title,bar,sub);demoBox.append(item);}
-status.textContent=authEnabled?"Private sign-in available for pre-approved accounts only.":backendConfigured?"Supabase database connected · Student sign-in and data collection safely disabled during verification.":"Demo mode · Supabase database and sign-in are not connected.";
+status.textContent=authEnabled?"Invitation-only test login is available by secure email link. No password needed.":backendConfigured?"Supabase database connected · Student sign-in and data collection safely disabled during verification.":"Demo mode · Supabase database and sign-in are not connected.";
 $("#database-status").textContent=authEnabled?"Authentication enabled · Verify privacy and role isolation before enrolling students.":backendConfigured?"Supabase connected · Student-progress tables created · Real student login and recording disabled pending testing.":"Not connected · Database migration is prepared, but no student records are stored.";
-$$("[data-requires-auth]").forEach(el=>el.disabled=!authEnabled);
+$("[data-requires-auth]").forEach(el=>el.disabled=!authEnabled);
+// Pilot only: password and social providers are not yet configured for users.
+const passwordSubmit=$("#password-form button[type=submit]");if(passwordSubmit){passwordSubmit.disabled=true;passwordSubmit.title="Email link only during the fictional student pilot";}
+$("[data-provider]").forEach(el=>{el.disabled=true;el.title="Provider integration is planned but not yet configured";});
 $$("#password-form input").forEach(el=>el.disabled=!authEnabled);
 if(!authEnabled){say("Account preview only: login is disabled until privacy review, role-isolation tests, verified consent and approved account provisioning are complete.");}
 let current=null;
@@ -22,7 +25,7 @@ async function updateSession(session){
  const {data:profile,error}=await supabase.from("profiles").select("id,display_name,role,is_active").eq("id",session.user.id).maybeSingle();
  if(error||!profile||!profile.is_active){await supabase.auth.signOut();say("This account has not been approved by your school or the NINJA MOONS administrator.");return;}
  current=profile;$("#signout").hidden=false;$("#sample-dashboard").hidden=true;$("#real-account").hidden=false;$("#real-welcome").textContent="Signed in as "+profile.display_name+" · "+profile.role+". Your data is visible only where your role permits.";
- await fetchProgress();
+ await fetchProgress();panel("progress");
 }
 async function fetchProgress(){
  if(!current)return;
