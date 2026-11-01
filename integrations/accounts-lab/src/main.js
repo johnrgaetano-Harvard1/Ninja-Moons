@@ -1,7 +1,8 @@
 import {createClient} from "@supabase/supabase-js";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const config={url:import.meta.env.VITE_SUPABASE_URL||"",key:import.meta.env.VITE_SUPABASE_ANON_KEY||"",enabled:import.meta.env.VITE_ENABLE_AUTH==="true"};
-const authEnabled=config.enabled&&/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(config.url)&&config.key.length>40;
+const backendConfigured=/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(config.url)&&config.key.length>40;
+const authEnabled=config.enabled&&backendConfigured;
 const supabase=authEnabled?createClient(config.url,config.key,{auth:{flowType:"pkce",persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}):null;
 const status=$("#auth-status"),message=$("#auth-message");
 const say=txt=>{message.textContent=txt;};
@@ -10,11 +11,11 @@ $$(".tabs [data-panel]").forEach(b=>b.addEventListener("click",()=>panel(b.datas
 const demo=[{id:"Student A",progress:83,sentences:105,words:26},{id:"Student B",progress:61,sentences:78,words:22},{id:"Student C",progress:94,sentences:111,words:29},{id:"Student D",progress:44,sentences:33,words:12}];
 const demoBox=$("#sample-students");
 for(const s of demo){const item=document.createElement("article");item.className="sample-student";const title=document.createElement("h4");title.textContent=s.id;const bar=document.createElement("div");bar.className="bar";bar.setAttribute("role","progressbar");bar.setAttribute("aria-valuemin","0");bar.setAttribute("aria-valuemax","100");bar.setAttribute("aria-valuenow",String(s.progress));bar.setAttribute("aria-label",s.id+" progress");const inner=document.createElement("span");inner.style.width=s.progress+"%";bar.append(inner);const sub=document.createElement("p");sub.textContent=s.progress+"% sample progress · "+s.sentences+" sentence practices · "+s.words+" word lookups";item.append(title,bar,sub);demoBox.append(item);}
-status.textContent=authEnabled?"Private sign-in available for pre-approved accounts only.":"Demo mode · Supabase database and sign-in are not connected.";
-$("#database-status").textContent=authEnabled?"Auth configured; database migration and access testing still require verification.":"Not connected · Database migration is prepared, but no student records are stored.";
+status.textContent=authEnabled?"Private sign-in available for pre-approved accounts only.":backendConfigured?"Supabase database connected · Student sign-in and data collection safely disabled during verification.":"Demo mode · Supabase database and sign-in are not connected.";
+$("#database-status").textContent=authEnabled?"Authentication enabled · Verify privacy and role isolation before enrolling students.":backendConfigured?"Supabase connected · Student-progress tables created · Real student login and recording disabled pending testing.":"Not connected · Database migration is prepared, but no student records are stored.";
 $$("[data-requires-auth]").forEach(el=>el.disabled=!authEnabled);
 $$("#password-form input").forEach(el=>el.disabled=!authEnabled);
-if(!authEnabled){say("Preview only: login controls are disabled until a Supabase project is connected, migrations and access tests pass, and permitted accounts are provisioned.");}
+if(!authEnabled){say("Account preview only: login is disabled until privacy review, role-isolation tests, verified consent and approved account provisioning are complete.");}
 let current=null;
 async function updateSession(session){
  if(!session){current=null;$("#signout").hidden=true;$("#real-account").hidden=true;$("#sample-dashboard").hidden=false;return;}
