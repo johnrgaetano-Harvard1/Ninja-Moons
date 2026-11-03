@@ -1,5 +1,5 @@
 {
-  "title": "The Zoom Trip",
+  "title": "The Seven Second Journey",
   "collection": "NINJA MOONS",
   "readingLevel": "Kindergarten",
   "version": "1.0.0",
@@ -227,5 +227,6 @@
       "say": "MEER-er",
       "meaning": "The sun bounces off it."
     }
-  ]
+  ],
+  "description": "Explore The Seven Second Journey with illustrations and reading support."
 }
