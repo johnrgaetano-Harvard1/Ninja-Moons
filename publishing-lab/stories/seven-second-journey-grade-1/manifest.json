@@ -26,8 +26,8 @@
         "The friends cheered beneath the stars."
       ],
       "image": "images/page-01.png",
-      "imageBytes": null,
-      "sha256": null
+      "imageBytes": 16383613,
+      "sha256": "33620142285063dda616cde0e1ec7469caf6531dcc0ed8632ba622590eacb3a8"
     },
     {
       "page": 2,
@@ -42,8 +42,8 @@
         "Kai gasped."
       ],
       "image": "images/page-02.png",
-      "imageBytes": null,
-      "sha256": null
+      "imageBytes": 13150009,
+      "sha256": "468fc8e38efc6f8ce5bf1623eaaa251da3b2ae5c5da34676adc0bb026622e3ee"
     },
     {
       "page": 3,
@@ -59,8 +59,8 @@
         "The doors opened."
       ],
       "image": "images/page-03.png",
-      "imageBytes": null,
-      "sha256": null
+      "imageBytes": 12488568,
+      "sha256": "5355aa9364f31a80dc58d5d372855315daf0d68550d1f9f50e873cd5c25b945c"
     },
     {
       "page": 4,
@@ -77,8 +77,8 @@
         "Where were they?"
       ],
       "image": "images/page-04.png",
-      "imageBytes": null,
-      "sha256": null
+      "imageBytes": 15420517,
+      "sha256": "7427f1293e51d4a8e2ca8836fb2978ca9509fc8cce8161bef5f769da85c09210"
     },
     {
       "page": 5,
@@ -92,8 +92,8 @@
         "What a strange, bright world!"
       ],
       "image": "images/page-05.png",
-      "imageBytes": null,
-      "sha256": null
+      "imageBytes": 16658729,
+      "sha256": "052767139206bbdb8923ce6293ec771c5c82b27a6d82cd1c217d3c853de8463d"
     },
     {
       "page": 6,
@@ -107,8 +107,8 @@
         "What else could they find?"
       ],
       "image": "images/page-06.png",
-      "imageBytes": null,
-      "sha256": null
+      "imageBytes": 15721457,
+      "sha256": "07146f95003d32c53ac65fc825410819dd2f6ae7604e049fd76becf46efd8e4f"
     },
     {
       "page": 7,
@@ -122,8 +122,8 @@
         "Kai ran to the window."
       ],
       "image": "images/page-07.png",
-      "imageBytes": null,
-      "sha256": null
+      "imageBytes": 15064710,
+      "sha256": "fd39af7b2d01fe3728e4d5aa54c616790b0e5672b7072260fcc2c0999daf41ca"
     },
     {
       "page": 8,
@@ -138,8 +138,8 @@
         "Mira waved goodbye."
       ],
       "image": "images/page-08.png",
-      "imageBytes": null,
-      "sha256": null
+      "imageBytes": 17311377,
+      "sha256": "5d643ada66e53edadab51578717ec02edb0b1306f0b17a76ff070cabf40ffe27"
     },
     {
       "page": 9,
@@ -156,8 +156,8 @@
         "Pip beeped with joy."
       ],
       "image": "images/page-09.png",
-      "imageBytes": null,
-      "sha256": null
+      "imageBytes": 15691750,
+      "sha256": "40d723e407da09f81a4e6db9552d28515e9974145e2bd03fdac7b60541c532ba"
     },
     {
       "page": 10,
@@ -173,8 +173,8 @@
         "A new adventure was waiting."
       ],
       "image": "images/page-10.png",
-      "imageBytes": null,
-      "sha256": null
+      "imageBytes": 16587308,
+      "sha256": "03d95eefb9d6e53ec8008608c443e10ec58a364089181decfb83039897cde351"
     }
   ],
   "vocabulary": [
