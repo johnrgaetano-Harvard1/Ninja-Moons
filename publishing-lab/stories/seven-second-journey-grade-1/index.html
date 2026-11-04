@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#081c39">
+<title>NINJA MOONS · The Seven-Second Journey · Grade 1</title>
+<style>
+:root{--deep:#06152e;--blue:#166ac5;--sky:#80dfff;--ink:#17304b;--paper:#f9fcff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(160deg,#06152e,#103d70 60%,#061a35);color:#ecf7ff;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+button,select{font:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #80dfff;outline-offset:3px}
+main{max-width:1160px;margin:auto;padding:16px 14px 70px}.head{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;padding:8px 4px 20px}.eyebrow{color:#91e4ff;font-size:12px;font-weight:900;letter-spacing:.14em}.head h1{font-size:clamp(27px,5vw,49px);letter-spacing:-.03em;line-height:1.13;margin:4px 0 7px}.head p{font-size:14px;color:#c0dbef;margin:0}
+.helper{display:inline-flex;background:#dcf6ff;color:#073b68;padding:11px 16px;border-radius:12px;text-decoration:none;font-weight:900}
+.controls{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:7px;flex-wrap:wrap;background:#092643ef;border:1px solid #39719e;backdrop-filter:blur(12px);border-radius:16px;padding:10px;box-shadow:0 8px 26px #0004}
+.controls button{background:#0f66b4;color:white;border:1px solid #70bfe9;border-radius:11px;padding:11px 13px;min-height:44px;font-size:14px;font-weight:850}.controls button.secondary{background:#173a5e;border-color:#476b91}
+.controls select{min-height:43px;padding:8px 10px;background:#f3faff;color:#0a315a;border:1px solid #8fc9ec;border-radius:11px;max-width:220px;font-weight:800}.controls label{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:750}.controls input{width:19px;height:19px;accent-color:#1589da}
+.book{background:var(--paper);color:var(--ink);margin:16px 0 0;border-radius:21px;overflow:hidden;box-shadow:0 20px 65px #0006}
+.visual{aspect-ratio:16/9;background:#071d3c;position:relative}.visual img{display:block;width:100%;height:100%;object-fit:contain}.visual .number{position:absolute;top:14px;left:14px;background:#effaffec;color:#123d70;border-radius:90px;padding:7px 13px;font-weight:950}
+.progress{height:7px;background:#b2d9ee}.progress div{height:100%;background:#248ad6;transition:width .2s}
+.text{padding:clamp(22px,5vw,43px) clamp(18px,6vw,68px)}.level{color:#4777a0;letter-spacing:.12em;font-size:12px;font-weight:950}.text h2{font-size:clamp(24px,4vw,37px);color:#14508c;margin:4px 0 20px}
+#sentences p{font:clamp(21px,3vw,31px)/1.67 Georgia,"Times New Roman",serif;margin:0 0 8px}.sentenceNum{font:850 .61em/1.7 system-ui;color:#1c66a6;margin-right:9px}
+.w{font:inherit;color:inherit;background:transparent;border:0;padding:0 1px;border-radius:5px}.w.vocab{font-weight:bold;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#238bc7;text-underline-offset:5px}.w:hover{background:#dff2ff}.w.active{background:#afe6ff;color:#073b65}
+.hint{color:#68839b;font-size:13px;margin:15px 0 0}
+.gloss{border-top:1px solid #d3e5f1;background:#edf6ff;padding:18px 22px 23px}.gloss h3{margin:0 0 12px;color:#2a5577;font-size:16px}
+.twowords{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.wordcard{padding:12px 15px;border:1px solid #b8d7ef;border-radius:13px;background:white;color:#19344e;text-align:left}.wordcard strong{color:#1166a5;font-size:19px}.wordcard em{font-style:normal;color:#547b9a}.wordcard small{display:block;margin-top:5px;font-size:14px;line-height:1.4}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:11px;padding:17px;background:#e7f3ff;border-top:1px solid #c6e0f2}.nav button{background:#136cba;color:white;border:0;border-radius:11px;padding:12px 19px;min-width:119px;font-weight:900}.nav button:disabled{opacity:.4}.nav span{font-size:14px;font-weight:800;color:#346488}
+footer{text-align:center;padding:15px;color:#acd3ed;font-size:13px}
+dialog{border:1px solid #62afe8;border-radius:18px;background:#fff;color:#19324c;padding:24px;width:min(440px,92vw);box-shadow:0 16px 50px #0008}dialog::backdrop{background:#07183299}dialog h2{margin:0;color:#075eac}dialog p{font-size:18px}dialog button{margin:8px 8px 0 0;background:#126db8;color:white;border:0;border-radius:9px;padding:11px 16px;font-weight:850}
+@media(max-width:650px){.controls{padding:7px;gap:5px}.controls button{padding:7px 10px;font-size:13px}.controls select{max-width:138px;font-size:13px}.twowords{grid-template-columns:1fr}.nav button{min-width:95px;padding:10px}.visual .number{top:9px;left:9px}#sentences p{line-height:1.73}}
+</style></head><body>
+<main>
+<div class="head"><div><div class="eyebrow">NINJA MOONS · FIRST GRADE · TEN PICTURE ADVENTURE</div><h1>The Seven-Second Journey</h1><p>400 story words · 20 definitions · One exciting adventure</p></div>
+<a class="helper" href="https://ninjamoons.vercel.app/reading-helper?story=seven-second-journey-grade-1">🥷 Four-stage NINJA Reading Helper</a></div>
+<div class="controls" role="group" aria-label="Story audio controls">
+<button type="button" id="play">▶ Play page</button><button type="button" id="all">▶ Read all</button>
+<button type="button" id="pause" class="secondary">Ⅱ Pause</button><button type="button" id="stop" class="secondary">■ Stop</button>
+<select id="voice" aria-label="Choose device voice"><option value="">Device voice</option></select>
+<select id="speed" aria-label="Reading speed"><option value=".75">Slow</option><option value="1" selected>1×</option><option value="1.15">1.15×</option></select>
+<label><input id="follow" type="checkbox" checked> Follow cursor</label></div>
+<div class="book">
+<div class="visual"><img id="art" alt="NINJA MOONS story illustration" src="images/page-01.png" decoding="async"><span class="number" id="pagenum">01 / 10</span></div>
+<div class="progress"><div id="progressbar"></div></div>
+<div class="text"><div class="level" id="level">NINJA MOONS · PAGE 1 OF 10</div><h2 id="title">The Big Mission</h2><div id="sentences" aria-live="polite"></div><p class="hint">Tap any word to hear it. Underlined words have easy definitions.</p></div>
+<div class="gloss"><h3>Two words to know</h3><div class="twowords" id="glossary"></div></div>
+<div class="nav"><button id="back" type="button">← Back</button><span id="status" role="status">Loading story…</span><button id="next" type="button">Next →</button></div>
+</div><footer>More stories, teacher tools, and translations are available through the NINJA MOONS navigation.</footer>
+</main>
+<dialog id="dictionary"><h2 id="word"></h2><p id="phonetic"></p><p id="meaning"></p><button id="hearword">🔊 Hear word</button><button id="closeword">Close</button></dialog>
+<script>
+"use strict";
+const titles=["The Big Mission","A Secret Way","Ready to Fly","Seven Seconds!","A New World","The Blue Stones","The Hidden Clue","The Blue Path","Home Again!","The Next Adventure"];
+const el=id=>document.getElementById(id), norm=s=>s.toLowerCase().replace(/^[^a-z]+|[^a-z]+$/g,"");
+let story=null, page=0, fullRead=false, isSpeaking=false, paused=false, voiceList=[],positions=[];
+function clearHighlight(){for(const v of positions)v.node.classList.remove("active");}
+function stop(){fullRead=false;isSpeaking=false;paused=false;if("speechSynthesis" in window)speechSynthesis.cancel();clearHighlight();el("pause").textContent="Ⅱ Pause";}
+function getVoice(){return voiceList.find(v=>v.name===el("voice").value)||null;}
+function sayWord(raw){if(!("speechSynthesis" in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(raw);u.lang="en-US";u.rate=Number(el("speed").value);u.voice=getVoice();speechSynthesis.speak(u);}
+function showWord(raw){const v=story.vocabulary.find(v=>norm(v.word)===norm(raw));if(!v){sayWord(raw);return;}el("word").textContent=v.word;el("phonetic").textContent=v.say;el("meaning").textContent=v.meaning;el("hearword").onclick=()=>sayWord(v.word);el("dictionary").showModal();}
+function voices(){if(!("speechSynthesis" in window))return;const old=el("voice").value;voiceList=speechSynthesis.getVoices().filter(v=>v.lang&&v.lang.toLowerCase().startsWith("en"));el("voice").replaceChildren(new Option("Device voice",""));for(const v of voiceList)el("voice").append(new Option(v.name,v.name));el("voice").value=old;}
+function draw(){stop();const p=story.pages[page];el("art").src=p.image;el("art").alt="Picture "+p.page+": "+titles[page];el("pagenum").textContent=String(page+1).padStart(2,"0")+" / 10";el("level").textContent="NINJA MOONS · PAGE "+(page+1)+" OF 10";el("title").textContent=titles[page];el("status").textContent="Page "+(page+1)+" of "+story.pages.length;el("progressbar").style.width=(100*(page+1)/story.pages.length)+"%";el("back").disabled=page===0;el("next").textContent=page===9?"Read again ↻":"Next →";
+const container=el("sentences");container.replaceChildren();positions=[];let offset=0;
+const prior=story.pages.slice(0,page).reduce((n,p)=>n+p.lines.length,0);
+for(const [i,line] of p.lines.entries()){const row=document.createElement("p"),number=document.createElement("span");number.className="sentenceNum";number.textContent=(prior+i+1)+".";row.append(number);
+for(const token of line.match(/\S+|\s+/g)||[]){if(/^\s+$/.test(token)){row.append(document.createTextNode(token));offset+=token.length;continue;}const b=document.createElement("button");b.type="button";b.className="w";b.textContent=token;if(story.vocabulary.some(v=>norm(v.word)===norm(token)))b.classList.add("vocab");b.onclick=()=>showWord(token);row.append(b);positions.push({offset,node:b});offset+=token.length;}container.append(row);offset++;}
+const glossary=el("glossary");glossary.replaceChildren();for(const v of story.vocabulary.filter(x=>x.page===p.page)){const b=document.createElement("button");b.className="wordcard";b.type="button";const title=document.createElement("strong");title.textContent=v.word+" ";const pron=document.createElement("em");pron.textContent="("+v.say+")";const def=document.createElement("small");def.textContent=v.meaning;b.append(title,pron,def);b.onclick=()=>showWord(v.word);glossary.append(b);}
+}
+function highlight(charIndex){if(!el("follow").checked)return;let target=positions[0];for(const pos of positions){if(pos.offset>charIndex)break;target=pos;}clearHighlight();if(target){target.node.classList.add("active");target.node.scrollIntoView({behavior:"smooth",block:"nearest"});}}
+function narrate(all){if(!story||!("speechSynthesis" in window))return;speechSynthesis.cancel();clearHighlight();fullRead=all;isSpeaking=true;paused=false;
+const u=new SpeechSynthesisUtterance(story.pages[page].lines.join(" "));u.lang="en-US";u.rate=Number(el("speed").value);u.voice=getVoice();u.onboundary=e=>{if(e.name==="word")highlight(e.charIndex)};u.onend=()=>{isSpeaking=false;clearHighlight();if(fullRead&&page<story.pages.length-1){page++;draw();narrate(true);}else fullRead=false;};speechSynthesis.speak(u);}
+el("play").onclick=()=>narrate(false);el("all").onclick=()=>narrate(true);el("stop").onclick=stop;
+el("pause").onclick=()=>{if(!isSpeaking||!("speechSynthesis" in window))return;if(!paused){speechSynthesis.pause();paused=true;el("pause").textContent="▶ Resume";}else{speechSynthesis.resume();paused=false;el("pause").textContent="Ⅱ Pause";}};
+el("back").onclick=()=>{if(page>0){page--;draw();}};el("next").onclick=()=>{page=(page+1)%story.pages.length;draw();};el("closeword").onclick=()=>el("dictionary").close();
+if("speechSynthesis" in window){voices();speechSynthesis.onvoiceschanged=voices;}
+fetch("manifest.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Missing story data");return r.json()}).then(x=>{if(x.pages.length!==10||x.vocabulary.length!==20)throw Error("Incomplete story");story=x;draw()}).catch(e=>{el("status").textContent="Story unavailable: "+e.message;});
+</script></body></html>
