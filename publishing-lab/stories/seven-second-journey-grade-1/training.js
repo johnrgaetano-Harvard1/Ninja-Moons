@@ -151,10 +151,10 @@ function addWordButtons(container,which,text){
   const b=node("button","nt-word",w);b.type="button";b.dataset.active=String(active);
   if(typeof nounInfo==="function"&&nounInfo(w)){b.dataset.noun="true";b.title=spanishOnly()?"Toca para ver una foto real":"Tap for a real photo";}
   const vocab=vocabFor(which).find(v=>lex(v.word)===lex(w));
-  if(vocab&&state.phonetics>0&&i%100<state.phonetics){
+  if(vocab&&state.phonetics>0&&(i*37)%100<state.phonetics){
    b.append(node("span","nt-phonetic",vocab.say));
   }
-  b.onclick=()=>{state.word=i;render();const phrase=all.slice(i).join(" ");speakParts([{text:phrase,lang:which==="es"?"es-ES":"en-US"}]);};
+  b.onclick=()=>{state.word=i;render();const phrase=all.slice(i).join(" ");if(typeof nounInfo==="function"&&nounInfo(w))nounPopup(w,which);else speakParts([{text:phrase,lang:which==="es"?"es-ES":"en-US"}]);};
   if(vocab)b.ondblclick=()=>popup(vocab,which);
   if(typeof nounInfo==="function"&&nounInfo(w)){
    b.onpointerenter=()=>{if(typeof showPreview==="function")showPreview(w)};
@@ -172,7 +172,7 @@ function addVocab(container,which,vocab){
   const b=node("button");b.type="button";
   const en=vocabFor("en").find(x=>x.page===page+1&&items.indexOf(v)===vocabFor(which).filter(x=>x.page===page+1).indexOf(v));
   b.append(node("strong","",v.word+" "),node("small","",v.say));
-  if(state.definitions>0){
+  if(state.definitions>0&&((items.indexOf(v)*53)%100)<state.definitions){
    b.append(node("div","",v.meaning));
    if(isDual()&&which==="en"){
     const counterpart=ES_VOCAB.filter(x=>x.page===page+1)[items.indexOf(v)];
@@ -184,22 +184,38 @@ function addVocab(container,which,vocab){
  }
  if(wrap.children.length)container.append(wrap);
 }
+function tapEveryWord(container,which,text){
+ const bar=node("div","nt-words");
+ for(const w of words(text)){
+  const b=node("button","nt-word",w);b.type="button";
+  const v=vocabFor(which).find(x=>lex(x.word)===lex(w));
+  if(typeof nounInfo==="function"&&nounInfo(w))b.dataset.noun="true";
+  b.onclick=()=>{if(v)popup(v,which);else nounPopup(w,which);};
+  if(typeof nounInfo==="function"&&nounInfo(w)){
+   b.onpointerenter=()=>{if(typeof showPreview==="function")showPreview(w)};
+   b.onpointerleave=()=>{if(typeof hidePreview==="function")hidePreview()};
+  }
+  bar.append(b);
+ }
+ container.append(node("p","nt-tip",which==="es"?"Toca cada palabra: significado, sonido o foto.":"Tap a word for its meaning, sound, or photo."));
+ container.append(bar);
+}
 function checks(container){
- const loc=spanishOnly()?"es":"en";
- const title=loc==="es"?"Comprueba lo que entendiste":"Check what you understood";
+ const loc=spanishOnly()?"es":"en",dual=isDual();
+ const title=dual?"Check what you understood / Comprueba lo que entendiste":loc==="es"?"Comprueba lo que entendiste":"Check what you understood";
  container.append(node("p","nt-meta",title));
  questions[page].forEach((q,i)=>{
-  const card=node("div","nt-check"),question=node("h4","",loc==="es"?q[1]:q[0]);
+  const card=node("div","nt-check"),question=node("h4","",dual?q[0]+" / "+q[1]:loc==="es"?q[1]:q[0]);
   const options=node("div","nt-options"),feedback=node("p","nt-feedback");
   const selected=state.answers[page+"-"+i];
   const arr=loc==="es"?q[3]:q[2];
   arr.forEach((o,j)=>{
-   const b=node("button","",String.fromCharCode(65+j)+". "+o);
+   const b=node("button","",String.fromCharCode(65+j)+". "+(dual?q[2][j]+" / "+q[3][j]:o));
    b.type="button";b.setAttribute("aria-pressed",String(selected===j));
    b.onclick=()=>{state.answers[page+"-"+i]=j;save();render();};
    options.append(b);
   });
-  if(selected!==undefined)feedback.textContent=selected===q[4]?(loc==="es"?"¡Correcto!":"Correct!"):(loc==="es"?"Inténtalo otra vez.":"Try again.");
+  if(selected!==undefined)feedback.textContent=selected===q[4]?(dual?"Correct! / ¡Correcto!":loc==="es"?"¡Correcto!":"Correct!"):(dual?"Try again. / Inténtalo otra vez.":loc==="es"?"Inténtalo otra vez.":"Try again.");
   card.append(question,options,feedback);container.append(card);
  });
 }
@@ -230,8 +246,8 @@ function render(){
   const all=words(es?S.es:S.en),start=Math.min(state.word,Math.max(0,all.length-1));
   card.append(node("p","nt-tip",(es?"Grupo de palabras: ":"Word group: ")+all.slice(start,start+Number(state.group)).join(" ")));
  }else if(state.stage===2){
-  if(dual){oneLine(card,"ENGLISH",S.en,"nt-sentence");oneLine(card,"ESPAÑOL",S.es,"nt-trans");addVocab(card,"en");}
-  else{oneLine(card,"",es?S.es:S.en,es?"nt-trans":"nt-sentence");addVocab(card,which);}
+  if(dual){oneLine(card,"ENGLISH",S.en,"nt-sentence");tapEveryWord(card,"en",S.en);oneLine(card,"ESPAÑOL",S.es,"nt-trans");tapEveryWord(card,"es",S.es);addVocab(card,"en");}
+  else{oneLine(card,"",es?S.es:S.en,es?"nt-trans":"nt-sentence");tapEveryWord(card,which,es?S.es:S.en);addVocab(card,which);}
  }else{
   if(dual){oneLine(card,"ENGLISH",S.en,"nt-sentence");oneLine(card,"ESPAÑOL",S.es,"nt-trans");}
   else oneLine(card,"",es?S.es:S.en,es?"nt-trans":"nt-sentence");
