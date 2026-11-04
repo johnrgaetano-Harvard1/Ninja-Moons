@@ -1,0 +1,40 @@
+
+/* Grade 1 — shared NINJA READER learning method, bilingual edition */
+#ninja-training{margin:24px 0 32px;border:1px solid #4e96d6;border-radius:22px;background:#eff8ff;color:#17334e;overflow:hidden;box-shadow:0 18px 45px #0005}
+#ninja-training .nt-head{background:linear-gradient(120deg,#092f62,#33428e);color:#f3faff;padding:20px 26px}
+#ninja-training .nt-head h2{font-size:clamp(23px,4vw,32px);margin:0 0 5px}
+#ninja-training .nt-head p{margin:0;color:#c9eeff;font-size:14px}
+#ninja-training .nt-progress{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:14px 0 0}
+#ninja-training .nt-step{color:#c9e7ff;background:#173f75;border:1px solid #659bcc;border-radius:9px;padding:9px 5px;font-size:12px;text-align:center;font-weight:850}
+#ninja-training .nt-step[aria-current="step"]{background:#c1eaff;color:#05305a;border-color:#c8f5ff}
+#ninja-training .nt-body{padding:clamp(15px,3vw,26px)}
+#ninja-training .nt-settings{display:flex;flex-wrap:wrap;align-items:center;gap:15px;margin-bottom:15px}
+#ninja-training .nt-settings label{font-weight:800;display:inline-flex;align-items:center;gap:7px;font-size:13px;color:#173c6d}
+#ninja-training select{min-height:38px;border:1px solid #75afd2;background:#fff;color:#12385e;border-radius:9px;padding:6px 8px;font-size:14px}
+#ninja-training .nt-card{border:1px solid #b3d5ee;background:white;padding:clamp(15px,3vw,26px);border-radius:15px;min-height:165px}
+#ninja-training .nt-meta{font-size:13px;font-weight:900;color:#23659e;letter-spacing:.06em}
+#ninja-training .nt-sentence{font-size:clamp(20px,3.1vw,30px);line-height:1.5;font-weight:650;color:#0e3055;margin:13px 0}
+#ninja-training .nt-trans{font-size:clamp(17px,2.5vw,24px);line-height:1.45;color:#553590;margin:6px 0 13px}
+#ninja-training .nt-tip{font-size:15px;color:#4d6882;margin:8px 0}
+#ninja-training .nt-words{display:flex;flex-wrap:wrap;gap:7px;margin:15px 0}
+#ninja-training .nt-word{background:#eef8ff;border:1px solid #77b3de;color:#0d4b7e;border-radius:9px;padding:8px 10px;min-height:42px;font-weight:800;cursor:pointer}
+#ninja-training .nt-word[data-active="true"]{background:#a8d9ff;border-color:#1166c5}
+#ninja-training .nt-word[data-noun="true"]{text-decoration:underline dotted #784bb4;text-underline-offset:4px}
+#ninja-training .nt-phonetic{color:#4c6286;font-size:12px;font-weight:600;display:block}
+#ninja-training .nt-vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0}
+#ninja-training .nt-vocab button{border:1px solid #a2c8e7;background:#f4faff;color:#183a58;border-radius:11px;padding:12px;text-align:left;font-size:14px;cursor:pointer}
+#ninja-training .nt-vocab strong{color:#0e6dae;font-size:19px}
+#ninja-training .nt-vocab small{font-size:12px;color:#5a7492}
+#ninja-training .nt-check{margin:12px 0;padding:13px;background:#f3f8ff;border:1px solid #cee1f0;border-radius:11px}
+#ninja-training .nt-check h4{font-size:16px;margin:4px 0 10px;color:#203c65}
+#ninja-training .nt-options{display:flex;gap:8px;flex-wrap:wrap}
+#ninja-training .nt-options button{border:1px solid #86bce0;border-radius:8px;background:white;color:#123a68;padding:8px 12px;font-size:14px;text-align:left;cursor:pointer}
+#ninja-training .nt-options button[aria-pressed="true"]{background:#b5e9ff;border-color:#367eb3}
+#ninja-training .nt-feedback{font-size:13px;font-weight:800;color:#245880;min-height:1.2em;margin:8px 0 0}
+#ninja-training .nt-actions{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:16px}
+#ninja-training .nt-actions button{background:#0d64b3;color:#fff;border:1px solid #0968c5;border-radius:10px;padding:11px 16px;min-height:43px;font-size:14px;font-weight:850;cursor:pointer}
+#ninja-training .nt-actions button.nt-secondary{background:#243c6e;border-color:#487bae}
+#ninja-training .nt-actions button:disabled{opacity:.4;cursor:default}
+#ninja-training .nt-actions .nt-label{color:#416b91;font-size:13px;font-weight:800;margin-left:auto}
+#ninja-training [hidden]{display:none!important}
+@media(max-width:640px){#ninja-training .nt-progress{grid-template-columns:repeat(2,1fr)}#ninja-training .nt-head{padding:15px}#ninja-training .nt-actions button{flex:1 1 auto;padding:9px 12px}#ninja-training .nt-actions .nt-label{width:100%;text-align:center;margin:0}}
