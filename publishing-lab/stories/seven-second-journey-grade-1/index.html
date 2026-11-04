@@ -30,10 +30,10 @@ dialog{border:1px solid #62afe8;border-radius:18px;background:#fff;color:#19324c
 #nounFigure figcaption{font-size:12px;padding:7px 10px;color:#3e5971}#nounPeek{position:fixed;bottom:16px;right:16px;width:210px;max-width:45vw;z-index:25;border-radius:13px;overflow:hidden;background:#fff;box-shadow:0 12px 40px #0007;border:2px solid #69c8ff;color:#082744}
 #nounPeek img{display:block;width:100%;height:140px;object-fit:cover}#nounPeek span{display:block;padding:6px 9px;font-size:13px;font-weight:800}
 @media(hover:none){#nounPeek{display:none!important}}
-</style></head><body>
+</style><link rel="stylesheet" href="training.css"></head><body>
 <main>
 <div class="head"><div><div class="eyebrow">NINJA MOONS · FIRST GRADE · TEN PICTURE ADVENTURE</div><h1>The Seven-Second Journey</h1><p>400 story words · 20 definitions · One exciting adventure</p></div>
-<a class="helper" href="https://ninjamoons.vercel.app/reading-helper?story=seven-second-journey-grade-1">🥷 Four-stage NINJA Reading Helper</a></div>
+<a class="helper" href="#ninja-training">🥷 Four-stage Bilingual NINJA READER ↓</a></div>
 <div class="controls" role="group" aria-label="Story audio controls"><label class="language-switch" for="language">🌎 Language / Idioma <select id="language" aria-label="Reading language"><option value="en">English</option><option value="es">Español</option><option value="both">English + Español</option></select></label>
 <button type="button" id="hearSpanish">▶ Escuchar español</button><button type="button" id="play">▶ Play page</button><button type="button" id="all">▶ Read all</button>
 <button type="button" id="pause" class="secondary">Ⅱ Pause</button><button type="button" id="stop" class="secondary">■ Stop</button>
@@ -46,7 +46,43 @@ dialog{border:1px solid #62afe8;border-radius:18px;background:#fff;color:#19324c
 <div class="text"><div class="level" id="level">NINJA MOONS · PAGE 1 OF 10</div><h2 id="title">The Big Mission</h2><div id="sentences" aria-live="polite"></div><p class="hint" id="readerHint">Tap any word to hear it. Dotted-underlined nouns show real pictures; bold words have definitions.</p></div>
 <div class="gloss"><h3>Two words to know</h3><div class="twowords" id="glossary"></div></div>
 <div class="nav"><button id="back" type="button">← Back</button><span id="status" role="status">Loading story…</span><button id="next" type="button">Next →</button></div>
-</div><footer>More stories, teacher tools, and translations are available through the NINJA MOONS navigation.</footer>
+</div><section id="ninja-training" aria-label="NINJA READER four-stage bilingual sentence training">
+  <div class="nt-head"><h2>🥷 NINJA READER — Four-Stage Training</h2>
+    <p>Hear → Pronounce → Definitions → Understand · English, Spanish, or both · Choose your own pace</p>
+    <nav id="nt-steps" class="nt-progress" aria-label="Learning stages"></nav>
+  </div>
+  <div class="nt-body">
+    <div class="nt-settings">
+      <label>Words per group <select id="nt-group" aria-label="Words per practice group">
+        <option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option>
+        <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
+      </select></label>
+      <label>Pronunciation guides <select id="nt-phon" aria-label="Pronunciation hint percentage">
+        <option value="0">0%</option><option value="25">25%</option><option value="50">50%</option>
+        <option value="75">75%</option><option value="100" selected>100%</option>
+      </select></label>
+      <label>Definition guides <select id="nt-def" aria-label="Definition hint percentage">
+        <option value="0">0%</option><option value="50">50%</option><option value="100" selected>100%</option>
+      </select></label>
+    </div>
+    <div id="nt-card" class="nt-card" aria-live="polite">
+      <p class="nt-tip">Preparing the illustrated story and reading trainer…</p>
+    </div>
+    <div class="nt-actions" aria-label="Reading trainer controls">
+      <button id="nt-prev" type="button" class="nt-secondary">← Back</button>
+      <button id="nt-play" type="button">▶ Play</button>
+      <button id="nt-repeat" type="button">↺ Repeat</button>
+      <button id="nt-pause" type="button" class="nt-secondary">Ⅱ Pause</button>
+      <button id="nt-stop" type="button" class="nt-secondary">■ Stop</button>
+      <button id="nt-next" type="button">Next →</button>
+      <button id="nt-prevgroup" type="button" class="nt-secondary">← Words</button>
+      <button id="nt-nextgroup" type="button" class="nt-secondary">Words →</button>
+      <span id="nt-count" class="nt-label">4 learning stages</span>
+    </div>
+    <p id="nt-status" class="nt-tip" role="status" aria-live="polite">You choose when to advance.</p>
+  </div>
+</section>
+<footer>More stories, teacher tools, and translations are available through the NINJA MOONS navigation.</footer>
 </main>
 <dialog id="dictionary"><h2 id="word"></h2><p id="phonetic"></p><p id="meaning"></p><figure id="nounFigure" hidden><img id="nounPhoto" loading="lazy" alt="Real photo for a noun"><figcaption id="nounCredit"></figcaption></figure><button id="hearword">🔊 Hear word</button><button id="closeword">Close</button></dialog>
 <div id="nounPeek" hidden role="tooltip"><img id="peekPhoto" alt=""><span id="peekName"></span></div>
@@ -102,5 +138,5 @@ el("hearSpanish").onclick=()=>narrate(false,true);el("language").onchange=()=>ap
 el("pause").onclick=()=>{if(!isSpeaking||!("speechSynthesis" in window))return;if(!paused){speechSynthesis.pause();paused=true;el("pause").textContent="▶ Resume";}else{speechSynthesis.resume();paused=false;el("pause").textContent="Ⅱ Pause";}};
 el("back").onclick=()=>{if(page>0){page--;draw();}};el("next").onclick=()=>{page=(page+1)%story.pages.length;draw();};el("closeword").onclick=()=>el("dictionary").close();
 if("speechSynthesis" in window){voices();speechSynthesis.onvoiceschanged=voices;}
-fetch("manifest.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Missing story data");return r.json()}).then(x=>{if(x.pages.length!==10||x.vocabulary.length!==20)throw Error("Incomplete story");story=x;EN_LINES=x.pages.map(p=>p.lines.slice());EN_VOCAB=x.vocabulary.map(v=>({...v}));applyLanguage()}).catch(e=>{el("status").textContent="Story unavailable: "+e.message;});
-</script></body></html>
+fetch("manifest.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Missing story data");return r.json()}).then(x=>{if(x.pages.length!==10||x.vocabulary.length!==20)throw Error("Incomplete story");story=x;EN_LINES=x.pages.map(p=>p.lines.slice());EN_VOCAB=x.vocabulary.map(v=>({...v}));applyLanguage();window.NM_TRAINER?.sync()}).catch(e=>{el("status").textContent="Story unavailable: "+e.message;});
+</script><script src="training.js"></script></body></html>
