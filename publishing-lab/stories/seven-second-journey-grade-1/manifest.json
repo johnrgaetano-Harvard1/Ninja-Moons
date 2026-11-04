@@ -1,0 +1,302 @@
+{
+  "title": "NINJA MOONS: The Seven-Second Journey",
+  "readingLevel": "Grade 1",
+  "status": "ready",
+  "imageStatus": "complete",
+  "generatedReader": false,
+  "description": "An exciting 400-word first-grade space adventure with ten illustrations and 20 vocabulary words.",
+  "topics": [
+    "Space Adventure",
+    "Mystery",
+    "Friendship"
+  ],
+  "coverImage": "images/page-01.png",
+  "pages": [
+    {
+      "page": 1,
+      "lines": [
+        "Kai, Mira, and Leo ran to the blue ship.",
+        "Master Ren waved.",
+        "“You have a new mission!”",
+        "“Find a faraway moon!”",
+        "Kai jumped.",
+        "“Can we go?”",
+        "Ren smiled.",
+        "“All three of you!”",
+        "The friends cheered beneath the stars."
+      ],
+      "image": "images/page-01.png",
+      "imageBytes": null,
+      "sha256": null
+    },
+    {
+      "page": 2,
+      "lines": [
+        "Inside, two bright stars floated above a table.",
+        "One was near. One was far.",
+        "Leo tried to touch one.",
+        "His hand went right through it!",
+        "Mira smiled.",
+        "“Maybe there is a secret way!”",
+        "The blue stars moved close together.",
+        "Kai gasped."
+      ],
+      "image": "images/page-02.png",
+      "imageBytes": null,
+      "sha256": null
+    },
+    {
+      "page": 3,
+      "lines": [
+        "The friends climbed into the Horizon.",
+        "Its lights blinked like stars.",
+        "Pip, their round robot, rolled aboard.",
+        "“All set!” he beeped.",
+        "Kai sat down.",
+        "Mira held the map.",
+        "Leo buckled his belt.",
+        "The ship hummed.",
+        "The doors opened."
+      ],
+      "image": "images/page-03.png",
+      "imageBytes": null,
+      "sha256": null
+    },
+    {
+      "page": 4,
+      "lines": [
+        "A ring of blue light opened in space.",
+        "“Seven!” cried Pip.",
+        "“Six! Five! Four!”",
+        "The ship rushed toward the ring.",
+        "“Three! Two! One!”",
+        "ZOOM!",
+        "Stars flashed all around.",
+        "Then everything grew quiet.",
+        "Kai looked out.",
+        "Where were they?"
+      ],
+      "image": "images/page-04.png",
+      "imageBytes": null,
+      "sha256": null
+    },
+    {
+      "page": 5,
+      "lines": [
+        "A new moon filled the window.",
+        "Blue rocks sparkled below.",
+        "A huge purple planet hung in the sky.",
+        "“We did it!” cried Leo.",
+        "The ship landed with a bump.",
+        "The friends ran outside.",
+        "What a strange, bright world!"
+      ],
+      "image": "images/page-05.png",
+      "imageBytes": null,
+      "sha256": null
+    },
+    {
+      "page": 6,
+      "lines": [
+        "Mira found a blue stone shaped like a star.",
+        "Kai found one like glass.",
+        "Leo saw water drops under a sheet of ice.",
+        "“Look!” he called.",
+        "They ran into a shining cave.",
+        "Blue rocks lit the walls.",
+        "What else could they find?"
+      ],
+      "image": "images/page-06.png",
+      "imageBytes": null,
+      "sha256": null
+    },
+    {
+      "page": 7,
+      "lines": [
+        "A flash of blue lit the rocks.",
+        "The friends climbed a tall hill.",
+        "They found a glass room.",
+        "Inside, a map showed the stars.",
+        "One bright line curled across it.",
+        "“That looks like our trip!” said Leo.",
+        "Kai ran to the window."
+      ],
+      "image": "images/page-07.png",
+      "imageBytes": null,
+      "sha256": null
+    },
+    {
+      "page": 8,
+      "lines": [
+        "Suddenly, a blue path opened in the sky.",
+        "“It’s back!” shouted Mira.",
+        "Pip called from their ship.",
+        "“Time to go home!”",
+        "The friends raced over the rocks.",
+        "Leo held their stones tight.",
+        "Kai jumped onto the ramp.",
+        "Mira waved goodbye."
+      ],
+      "image": "images/page-08.png",
+      "imageBytes": null,
+      "sha256": null
+    },
+    {
+      "page": 9,
+      "lines": [
+        "The Horizon flew into the blue path.",
+        "Bright lights spun outside.",
+        "Kai held his seat.",
+        "“Three! Two! One!” cried Mira.",
+        "WHOOSH!",
+        "The lights were gone.",
+        "A blue world waited ahead.",
+        "“Earth!” cheered Leo.",
+        "“We’re home!”",
+        "Pip beeped with joy."
+      ],
+      "image": "images/page-09.png",
+      "imageBytes": null,
+      "sha256": null
+    },
+    {
+      "page": 10,
+      "lines": [
+        "The friends stood on a hill.",
+        "Earth glowed above them.",
+        "Kai held a blue stone.",
+        "“We went so far!” he said.",
+        "“And came back!” laughed Mira.",
+        "Leo pointed at the stars.",
+        "“Where will we go next?”",
+        "The friends smiled.",
+        "A new adventure was waiting."
+      ],
+      "image": "images/page-10.png",
+      "imageBytes": null,
+      "sha256": null
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "Mission",
+      "say": "MISH-un",
+      "meaning": "A special job to complete.",
+      "page": 1
+    },
+    {
+      "word": "Faraway",
+      "say": "FAR-uh-way",
+      "meaning": "A long way from here.",
+      "page": 1
+    },
+    {
+      "word": "Secret",
+      "say": "SEE-krit",
+      "meaning": "Something not everyone knows.",
+      "page": 2
+    },
+    {
+      "word": "Through",
+      "say": "THROO",
+      "meaning": "Going in one side and out the other.",
+      "page": 2
+    },
+    {
+      "word": "Blinked",
+      "say": "BLINKT",
+      "meaning": "Flashed on and off.",
+      "page": 3
+    },
+    {
+      "word": "Buckled",
+      "say": "BUK-uld",
+      "meaning": "Fastened a belt to stay safe.",
+      "page": 3
+    },
+    {
+      "word": "Ring",
+      "say": "RING",
+      "meaning": "A round shape with a hole in the middle.",
+      "page": 4
+    },
+    {
+      "word": "Quiet",
+      "say": "KWY-et",
+      "meaning": "Making little or no sound.",
+      "page": 4
+    },
+    {
+      "word": "Sparkled",
+      "say": "SPAR-kuld",
+      "meaning": "Shone with little flashes of light.",
+      "page": 5
+    },
+    {
+      "word": "Planet",
+      "say": "PLAN-it",
+      "meaning": "A large, round world that moves around a star.",
+      "page": 5
+    },
+    {
+      "word": "Shaped",
+      "say": "SHAYPT",
+      "meaning": "Having a certain form or look.",
+      "page": 6
+    },
+    {
+      "word": "Sheet",
+      "say": "SHEET",
+      "meaning": "A wide, thin layer of something.",
+      "page": 6
+    },
+    {
+      "word": "Flash",
+      "say": "FLASH",
+      "meaning": "A quick burst of light.",
+      "page": 7
+    },
+    {
+      "word": "Curled",
+      "say": "KURLD",
+      "meaning": "Bent or twisted into a curve.",
+      "page": 7
+    },
+    {
+      "word": "Suddenly",
+      "say": "SUD-un-lee",
+      "meaning": "Happening quickly without warning.",
+      "page": 8
+    },
+    {
+      "word": "Raced",
+      "say": "RAYST",
+      "meaning": "Moved very fast.",
+      "page": 8
+    },
+    {
+      "word": "Spun",
+      "say": "SPUN",
+      "meaning": "Turned around and around.",
+      "page": 9
+    },
+    {
+      "word": "Ahead",
+      "say": "uh-HED",
+      "meaning": "In front of you.",
+      "page": 9
+    },
+    {
+      "word": "Glowed",
+      "say": "GLOHD",
+      "meaning": "Gave off a soft light.",
+      "page": 10
+    },
+    {
+      "word": "Pointed",
+      "say": "POYN-tid",
+      "meaning": "Used a finger to show something.",
+      "page": 10
+    }
+  ]
+}
