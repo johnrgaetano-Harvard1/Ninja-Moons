@@ -36,8 +36,48 @@ function addNavigation(html){
  const branded=html.split(/(<script\b[^>]*>[\s\S]*?<\/script>|<style\b[^>]*>[\s\S]*?<\/style>)/i).map(part=>/^<(script|style)\b/i.test(part)?part:part.replace(/>([^<]*)</g,(_,text)=>'>'+text.replace(/🥷/g,mascot)+'<')).join('');
  return branded.replace(/<body[^>]*>/i,match=>match+nav);
 }
+
+async function installFirstGradeArt(){
+ const slug="seven-second-journey-grade-1",dir=path.join(root,"stories",slug),manifestFile=path.join(dir,"manifest.json");
+ if(!isFile(manifestFile))return;
+ const manifest=json(manifestFile),sources=json(path.join(dir,"image-sources.json"));
+ fs.mkdirSync(path.join(dir,"images"),{recursive:true});
+ for(const page of manifest.pages){
+  const source=sources.find(x=>x.page===page.page);
+  ensure(source&&typeof source.url==="string","first-grade source missing "+page.page);
+  const target=path.join(dir,page.image);
+  if(isFile(target)&&(!page.sha256||digest(target)===page.sha256))continue;
+  const stable="https://ninja-moons-publisher.vercel.app/stories/"+slug+"/"+page.image;
+  let stored=false;
+  for(const url of [stable,source.url]){
+   try{
+    const response=await fetch(url,{redirect:"follow",signal:AbortSignal.timeout(45000)});
+    if(!response.ok)continue;
+    const data=Buffer.from(await response.arrayBuffer());
+    if(data.length<1000||data.length>30*1024*1024)continue;
+    if(data.subarray(1,4).toString()!=="PNG")continue;
+    const width=data.readUInt32BE(16),height=data.readUInt32BE(20);
+    if(width<3500||height<1900||Math.abs(width/height-16/9)>.03)continue;
+    const sha=crypto.createHash("sha256").update(data).digest("hex");
+    if(page.sha256&&page.sha256!==sha)continue;
+    if(page.imageBytes&&page.imageBytes!==data.length)continue;
+    fs.writeFileSync(target,data);
+    page.sha256=sha;page.imageBytes=data.length;stored=true;break;
+   }catch(_e){/* try the next authorized image source */}
+  }
+  ensure(stored,"first-grade 4K illustration unavailable or failed integrity check: page "+page.page);
+ }
+ for(const p of manifest.pages){
+  ensure(isFile(path.join(dir,p.image)),"first-grade picture missing "+p.page);
+  p.sha256=digest(path.join(dir,p.image));
+  p.imageBytes=fs.statSync(path.join(dir,p.image)).size;
+ }
+ fs.writeFileSync(manifestFile,JSON.stringify(manifest,null,2));
+}
+
 async function main(){
  await installOceanArt();
+ await installFirstGradeArt();
  ensure(isFile(path.join(root,"index.html")),"library home missing");
  const dirs=fs.readdirSync(path.join(root,"stories"),{withFileTypes:true}).filter(d=>d.isDirectory()).map(d=>d.name).sort();
  ensure(dirs.length>0,"no stories present");
@@ -63,7 +103,7 @@ async function main(){
   library.push({grade,description:typeof m.description==='string'?m.description:'Explore '+m.title+' with illustrations and reading support.',topics:Array.isArray(m.topics)?m.topics.filter(t=>typeof t==='string'):['Adventure'],slug,title:m.title,readingLevel:m.readingLevel||"",pages:m.pages.length,href:"/stories/"+slug+"/",cover:"/stories/"+slug+"/"+(m.coverImage||m.pages[0].image)});
  }
  ensure(json(path.join(root,"health.json")).service==="ninja-moons-publishing-lab","wrong publishing project");
- fs.rmSync(out,{recursive:true,force:true});fs.cpSync(root,out,{recursive:true,filter:p=>!p.includes(path.sep+"publisher"+path.sep)});
+ fs.rmSync(out,{recursive:true,force:true});fs.cpSync(root,out,{recursive:true,filter:p=>!p.includes(path.sep+"publisher"+path.sep)&&!p.endsWith("image-sources.json")});
  for(const s of library){
   const f=path.join(out,"stories",s.slug,"index.html"),m=json(path.join(root,"stories",s.slug,"manifest.json"));
   if(m.generatedReader===true||!isFile(f))fs.writeFileSync(f,generate(m));
