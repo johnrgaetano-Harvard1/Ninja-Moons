@@ -1,0 +1,326 @@
+{
+  "version": 1,
+  "slug": "seven-second-journey-grade-1",
+  "questions": [
+    [
+      [
+        "Who got a new mission?",
+        "¿Quiénes recibieron una nueva misión?",
+        [
+          "Kai, Mira, and Leo",
+          "Pip alone",
+          "Nobody"
+        ],
+        [
+          "Kai, Mira y Leo",
+          "Pip solo",
+          "Nadie"
+        ],
+        0
+      ],
+      [
+        "What will they find?",
+        "¿Qué van a buscar?",
+        [
+          "A faraway moon",
+          "A lost hat",
+          "A big dog"
+        ],
+        [
+          "Una luna lejana",
+          "Un sombrero perdido",
+          "Un perro grande"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What floated above the table?",
+        "¿Qué flotaba sobre la mesa?",
+        [
+          "Two stars",
+          "Three books",
+          "A flower"
+        ],
+        [
+          "Dos estrellas",
+          "Tres libros",
+          "Una flor"
+        ],
+        0
+      ],
+      [
+        "What did Mira think might exist?",
+        "¿Qué pensó Mira que podía existir?",
+        [
+          "A secret way",
+          "A new cake",
+          "A song"
+        ],
+        [
+          "Un camino secreto",
+          "Un pastel nuevo",
+          "Una canción"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What was the ship called?",
+        "¿Cómo se llamaba la nave?",
+        [
+          "Horizon",
+          "Rainbow",
+          "Turtle"
+        ],
+        [
+          "Horizon",
+          "Arcoíris",
+          "Tortuga"
+        ],
+        0
+      ],
+      [
+        "What did Leo buckle?",
+        "¿Qué se abrochó Leo?",
+        [
+          "His belt",
+          "His shoes",
+          "His coat"
+        ],
+        [
+          "Su cinturón",
+          "Sus zapatos",
+          "Su abrigo"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What opened in space?",
+        "¿Qué se abrió en el espacio?",
+        [
+          "A blue ring",
+          "A door in a tree",
+          "A white box"
+        ],
+        [
+          "Un anillo azul",
+          "Una puerta en un árbol",
+          "Una caja blanca"
+        ],
+        0
+      ],
+      [
+        "What did Pip count?",
+        "¿Qué contó Pip?",
+        [
+          "Seven to one",
+          "Ten to twenty",
+          "Only two"
+        ],
+        [
+          "De siete a uno",
+          "De diez a veinte",
+          "Solo dos"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What color were the rocks?",
+        "¿De qué color eran las rocas?",
+        [
+          "Blue",
+          "Red",
+          "Green"
+        ],
+        [
+          "Azules",
+          "Rojas",
+          "Verdes"
+        ],
+        0
+      ],
+      [
+        "What hung in the sky?",
+        "¿Qué había en el cielo?",
+        [
+          "A purple planet",
+          "A bird",
+          "A kite"
+        ],
+        [
+          "Un planeta morado",
+          "Un pájaro",
+          "Una cometa"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What did Mira find?",
+        "¿Qué encontró Mira?",
+        [
+          "A blue stone",
+          "A red balloon",
+          "A shoe"
+        ],
+        [
+          "Una piedra azul",
+          "Un globo rojo",
+          "Un zapato"
+        ],
+        0
+      ],
+      [
+        "Where did the friends run?",
+        "¿A dónde corrieron los amigos?",
+        [
+          "A shining cave",
+          "A school hall",
+          "A pond"
+        ],
+        [
+          "A una cueva brillante",
+          "A un pasillo de escuela",
+          "A un estanque"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What did they find on the hill?",
+        "¿Qué encontraron en la colina?",
+        [
+          "A glass room",
+          "A tall tree",
+          "A train"
+        ],
+        [
+          "Una sala de vidrio",
+          "Un árbol alto",
+          "Un tren"
+        ],
+        0
+      ],
+      [
+        "What curled across the map?",
+        "¿Qué se curvaba en el mapa?",
+        [
+          "A bright line",
+          "A long worm",
+          "A rope"
+        ],
+        [
+          "Una línea brillante",
+          "Un gusano largo",
+          "Una cuerda"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What came back in the sky?",
+        "¿Qué volvió a aparecer en el cielo?",
+        [
+          "A blue path",
+          "A snowstorm",
+          "A rainbow cake"
+        ],
+        [
+          "Un camino azul",
+          "Una tormenta de nieve",
+          "Un pastel arcoíris"
+        ],
+        0
+      ],
+      [
+        "Where did the team run?",
+        "¿A dónde corrió el equipo?",
+        [
+          "Back to their ship",
+          "Into the ocean",
+          "To a shop"
+        ],
+        [
+          "A su nave",
+          "Al océano",
+          "A una tienda"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What world was ahead?",
+        "¿Qué mundo estaba adelante?",
+        [
+          "Earth",
+          "The blue moon",
+          "The Sun"
+        ],
+        [
+          "La Tierra",
+          "La luna azul",
+          "El Sol"
+        ],
+        0
+      ],
+      [
+        "How did Pip feel?",
+        "¿Cómo se sentía Pip?",
+        [
+          "Happy",
+          "Angry",
+          "Sleepy"
+        ],
+        [
+          "Feliz",
+          "Enojado",
+          "Dormido"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What did Kai hold?",
+        "¿Qué sostenía Kai?",
+        [
+          "A blue stone",
+          "A guitar",
+          "A glass cup"
+        ],
+        [
+          "Una piedra azul",
+          "Una guitarra",
+          "Un vaso"
+        ],
+        0
+      ],
+      [
+        "What did Leo ask?",
+        "¿Qué preguntó Leo?",
+        [
+          "Where will we go next?",
+          "Where is my lunch?",
+          "What is two plus two?"
+        ],
+        [
+          "¿A dónde iremos después?",
+          "¿Dónde está mi almuerzo?",
+          "¿Cuánto es dos más dos?"
+        ],
+        0
+      ]
+    ]
+  ]
+}
