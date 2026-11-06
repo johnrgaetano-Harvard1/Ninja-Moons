@@ -108,8 +108,8 @@ function renderStory(){
   const number=node("button","sentence-select",String(i+1)+".");number.type="button";
   number.setAttribute("aria-label","Read sentence "+(i+1));
   number.onclick=()=>{setSentence(i);speakSegments(makeSegments(pg.lines[i],spanish?.lines?.[page]?.[i]))};row.append(number);
-  for(const fragment of line.match(/\\s+|\\S+/g)||[]){
-   if(/^\\s+$/.test(fragment)){row.append(document.createTextNode(fragment));continue;}
+  for(const fragment of line.match(/\s+|\S+/g)||[]){
+   if(/^\s+$/.test(fragment)){row.append(document.createTextNode(fragment));continue;}
    const w=fragment,v=vocabOf(w),photo=nounInfo(w),btn=node("button","word-tap"+(v?" vocab-tap":"")+(photo?" noun-tap":""),w);
    btn.type="button";btn.title=photo?"View a real photograph of "+clean(w):v?"Hear and define "+clean(w):"Hear "+clean(w);
    btn.onclick=()=>{
