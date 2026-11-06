@@ -109,7 +109,7 @@ async function main(){
   if(m.generatedReader===true||!isFile(f))fs.writeFileSync(f,generate(m));
   const sentences=m.pages.flatMap(p=>p.lines.map(text=>({text,page:p.page,simple:''}))).map((line,i)=>({...line,number:i+1}));
   fs.writeFileSync(path.join(out,'stories',s.slug,'reader.json'),JSON.stringify({version:1,slug:s.slug,title:m.title,grade:s.grade,sentences,vocabulary:m.vocabulary||[]},null,2));
-  const navigation='<nav aria-label="NINJA MOONS reading links" style="padding:16px;text-align:center;background:#071a32;color:#b4edff"><a style="color:inherit;margin:12px" href="https://ninjamoons.vercel.app/reader?level='+s.grade+'">← Story library</a><a style="color:inherit;margin:12px" href="https://ninjamoons.vercel.app/reading-helper?story='+s.slug+'">Read with NINJA Helper →</a></nav>';
+  const navigation='<nav aria-label="NINJA MOONS reading links" style="padding:16px;text-align:center;background:#071a32;color:#b4edff"><a style="color:inherit;margin:12px" href="https://ninjamoons.vercel.app/reader?level='+s.grade+'">← Story library</a><a style="color:inherit;margin:12px" href="/station/?story='+s.slug+'">🥷 All tools · NINJA Toolbox</a><a style="color:inherit;margin:12px" href="https://ninjamoons.vercel.app/reading-helper?story='+s.slug+'">Original Reading Helper</a></nav>';
   fs.writeFileSync(f,addNavigation(fs.readFileSync(f,'utf8').replace('</body>',navigation+'</body>').replace('href="/">← Publishing Lab Library','href="https://ninjamoons.vercel.app/reader?level=All">← Story library')));
  }
  fs.cpSync(path.resolve(__dirname,'../../integrations/brand'),path.join(out,'brand'),{recursive:true});
