@@ -45,6 +45,24 @@
       "name": "Map / Mapa",
       "src": "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=760&q=82",
       "credit": "Unsplash photography"
+    },
+    "clock": {
+      "name": "Clock / Reloj",
+      "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Clock_on_wall.jpg",
+      "credit": "Paolo Neo / Wikimedia Commons · Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Clock_on_wall.jpg"
+    },
+    "garden": {
+      "name": "Garden plants / Plantas del jardín",
+      "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Vegetable.garden.jpg",
+      "credit": "Stevenmattern / Wikimedia Commons · Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Vegetable.garden.jpg"
+    },
+    "coral": {
+      "name": "Coral reef / Arrecife de coral",
+      "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Underwater_photo_of_coral_reef.jpg",
+      "credit": "Jerry Reid / U.S. Fish & Wildlife Service · Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Underwater_photo_of_coral_reef.jpg"
     }
   },
   "aliases": {
@@ -81,6 +99,23 @@
     "montanas": "hill",
     "robot": "robot",
     "map": "map",
-    "mapa": "map"
+    "mapa": "map",
+    "clock": "clock",
+    "clocks": "clock",
+    "reloj": "clock",
+    "relojes": "clock",
+    "garden": "garden",
+    "gardens": "garden",
+    "jardin": "garden",
+    "jardines": "garden",
+    "plant": "garden",
+    "plants": "garden",
+    "planta": "garden",
+    "plantas": "garden",
+    "coral": "coral",
+    "reef": "coral",
+    "reefs": "coral",
+    "arrecife": "coral",
+    "arrecifes": "coral"
   }
 }
