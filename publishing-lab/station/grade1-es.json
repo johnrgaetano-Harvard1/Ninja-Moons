@@ -1,0 +1,246 @@
+{
+  "version": 1,
+  "slug": "seven-second-journey-grade-1",
+  "spanish": {
+    "lines": [
+      [
+        "Kai, Mira y Leo corrieron hacia la nave azul.",
+        "El maestro Ren saludó con la mano.",
+        "«¡Tienen una nueva misión!»",
+        "«¡Encuentren una luna lejana!»",
+        "Kai saltó.",
+        "«¿Podemos ir?»",
+        "Ren sonrió.",
+        "«¡Los tres!»",
+        "Los amigos celebraron bajo las estrellas."
+      ],
+      [
+        "Adentro, dos estrellas brillantes flotaban sobre una mesa.",
+        "Una estaba cerca. La otra estaba lejos.",
+        "Leo trató de tocar una.",
+        "¡Su mano pasó a través de ella!",
+        "Mira sonrió.",
+        "«¡Tal vez hay un camino secreto!»",
+        "Las estrellas azules se juntaron.",
+        "Kai abrió mucho los ojos."
+      ],
+      [
+        "Los amigos subieron a la nave Horizon.",
+        "Sus luces parpadearon como estrellas.",
+        "Pip, su robot redondo, subió también.",
+        "«¡Todo listo!», pitó.",
+        "Kai se sentó.",
+        "Mira sostuvo el mapa.",
+        "Leo se abrochó el cinturón.",
+        "La nave zumbó.",
+        "Las puertas se abrieron."
+      ],
+      [
+        "Un anillo de luz azul se abrió en el espacio.",
+        "«¡Siete!», gritó Pip.",
+        "«¡Seis! ¡Cinco! ¡Cuatro!»",
+        "La nave voló hacia el anillo.",
+        "«¡Tres! ¡Dos! ¡Uno!»",
+        "¡ZUM!",
+        "Las estrellas brillaron por todas partes.",
+        "Entonces todo quedó tranquilo.",
+        "Kai miró afuera.",
+        "¿Dónde estaban?"
+      ],
+      [
+        "Una luna nueva llenó la ventana.",
+        "Abajo brillaban rocas azules.",
+        "Un enorme planeta morado colgaba en el cielo.",
+        "«¡Lo logramos!», gritó Leo.",
+        "La nave aterrizó con un pequeño golpe.",
+        "Los amigos corrieron afuera.",
+        "¡Qué mundo tan extraño y brillante!"
+      ],
+      [
+        "Mira encontró una piedra azul con forma de estrella.",
+        "Kai encontró otra parecida al vidrio.",
+        "Leo vio gotas de agua bajo una capa de hielo.",
+        "«¡Miren!», llamó.",
+        "Corrieron a una cueva brillante.",
+        "Las rocas azules iluminaban las paredes.",
+        "¿Qué más podrían encontrar?"
+      ],
+      [
+        "Un destello azul iluminó las rocas.",
+        "Los amigos subieron una colina alta.",
+        "Encontraron una sala de vidrio.",
+        "Adentro, un mapa mostraba las estrellas.",
+        "Una línea brillante se curvaba sobre él.",
+        "«¡Se parece a nuestro viaje!», dijo Leo.",
+        "Kai corrió hacia la ventana."
+      ],
+      [
+        "De repente, un camino azul se abrió en el cielo.",
+        "«¡Volvió!», gritó Mira.",
+        "Pip llamó desde la nave.",
+        "«¡Es hora de volver a casa!»",
+        "Los amigos corrieron a toda velocidad sobre las rocas.",
+        "Leo abrazó fuerte las piedras.",
+        "Kai saltó a la rampa.",
+        "Mira se despidió con la mano."
+      ],
+      [
+        "La Horizon voló dentro del camino azul.",
+        "Luces brillantes giraron afuera.",
+        "Kai se agarró del asiento.",
+        "«¡Tres! ¡Dos! ¡Uno!», gritó Mira.",
+        "¡FUUUSH!",
+        "Las luces desaparecieron.",
+        "Un mundo azul los esperaba adelante.",
+        "«¡La Tierra!», celebró Leo.",
+        "«¡Estamos en casa!»",
+        "Pip pitó de alegría."
+      ],
+      [
+        "Los amigos se pararon en una colina.",
+        "La Tierra brillaba sobre ellos.",
+        "Kai sostenía una piedra azul.",
+        "«¡Fuimos muy lejos!», dijo.",
+        "«¡Y regresamos!», rio Mira.",
+        "Leo señaló las estrellas.",
+        "«¿A dónde iremos después?»",
+        "Los amigos sonrieron.",
+        "Una nueva aventura los esperaba."
+      ]
+    ],
+    "titles": [
+      "La gran misión",
+      "Un camino secreto",
+      "Listos para volar",
+      "¡Siete segundos!",
+      "Un mundo nuevo",
+      "Las piedras azules",
+      "La pista escondida",
+      "El camino azul",
+      "¡De vuelta a casa!",
+      "La próxima aventura"
+    ],
+    "vocabulary": [
+      {
+        "word": "misión",
+        "say": "mee-SYOHN",
+        "meaning": "Un trabajo especial que debemos hacer.",
+        "page": 1
+      },
+      {
+        "word": "lejana",
+        "say": "leh-HAH-nah",
+        "meaning": "Que está muy lejos.",
+        "page": 1
+      },
+      {
+        "word": "secreto",
+        "say": "seh-KREH-toh",
+        "meaning": "Algo que no todos saben.",
+        "page": 2
+      },
+      {
+        "word": "través",
+        "say": "trah-VEHS",
+        "meaning": "De un lado al otro.",
+        "page": 2
+      },
+      {
+        "word": "parpadearon",
+        "say": "par-pah-deh-AH-rohn",
+        "meaning": "Se encendieron y apagaron rápido.",
+        "page": 3
+      },
+      {
+        "word": "abrochó",
+        "say": "ah-broh-CHOH",
+        "meaning": "Cerró el cinturón para estar seguro.",
+        "page": 3
+      },
+      {
+        "word": "anillo",
+        "say": "ah-NEE-yoh",
+        "meaning": "Un círculo con espacio en el centro.",
+        "page": 4
+      },
+      {
+        "word": "tranquilo",
+        "say": "trahn-KEE-loh",
+        "meaning": "Sin mucho ruido o movimiento.",
+        "page": 4
+      },
+      {
+        "word": "brillaban",
+        "say": "bree-YAH-bahn",
+        "meaning": "Daban pequeños destellos de luz.",
+        "page": 5
+      },
+      {
+        "word": "planeta",
+        "say": "plah-NEH-tah",
+        "meaning": "Un mundo grande que gira alrededor de una estrella.",
+        "page": 5
+      },
+      {
+        "word": "forma",
+        "say": "FOR-mah",
+        "meaning": "El aspecto que tiene algo.",
+        "page": 6
+      },
+      {
+        "word": "capa",
+        "say": "KAH-pah",
+        "meaning": "Una parte ancha y delgada de algo.",
+        "page": 6
+      },
+      {
+        "word": "destello",
+        "say": "dehs-TEH-yoh",
+        "meaning": "Una luz que aparece muy rápido.",
+        "page": 7
+      },
+      {
+        "word": "curvaba",
+        "say": "koor-VAH-bah",
+        "meaning": "Se doblaba en forma de curva.",
+        "page": 7
+      },
+      {
+        "word": "repente",
+        "say": "reh-PEHN-teh",
+        "meaning": "Algo que pasa sin avisar.",
+        "page": 8
+      },
+      {
+        "word": "corrieron",
+        "say": "koh-RYEH-rohn",
+        "meaning": "Se movieron muy rápido.",
+        "page": 8
+      },
+      {
+        "word": "giraron",
+        "say": "hee-RAH-rohn",
+        "meaning": "Dieron vueltas.",
+        "page": 9
+      },
+      {
+        "word": "adelante",
+        "say": "ah-deh-LAHN-teh",
+        "meaning": "Más hacia el frente.",
+        "page": 9
+      },
+      {
+        "word": "brillaba",
+        "say": "bree-YAH-bah",
+        "meaning": "Daba una luz suave.",
+        "page": 10
+      },
+      {
+        "word": "señaló",
+        "say": "seh-nya-LOH",
+        "meaning": "Mostró algo con el dedo.",
+        "page": 10
+      }
+    ]
+  }
+}
