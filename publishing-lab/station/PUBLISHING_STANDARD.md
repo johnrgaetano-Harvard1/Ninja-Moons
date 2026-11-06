@@ -39,3 +39,13 @@ This document is mandatory for every new story published through the independent
 
 Current consolidated entry: https://ninja-moons-publisher.vercel.app/station/
 
+
+## November 2026 unified-station safeguards
+- The publishing build now rejects any *ready* story without a **complete sentence-aligned Spanish pack** and **exactly two bilingual multiple-choice questions per picture**. Kindergarten, Grade 1 and Grade 6 have approved packs in `station/`.
+- The story text itself must offer tappable words; nouns use real-photo popups on tap and hover where supported. Each image must identify its real source and usage rights.
+- Include **Read Page, Read All, Pause/Resume, Stop, Previous and Next**; NINJA Reader also supports Repeat, four stages and adjustable 1–8-word groups.
+- Ask Ninja contains free local story-context help plus a clearly separated, adult-only AI experiment. Never pretend the local helper generates new AI answers.
+- Ask Teacher uses Supabase `nm_teacher_threads` and `nm_teacher_messages` with row-level security; activate school accounts, teacher assignments and consent before sending live student messages. Show new-reply / needs-reply indicators. Do not auto-create real student accounts or classrooms.
+- Do not auto-start external microphone, video or music embeds. Live Reading starts only after deliberate action; experimental music stays off for students until licensing, filtering and teacher approval are ready.
+- An embedded separate project is **not the same** as fully integrating it. Clearly label external app sessions and fallback links.
+- Do not change the primary `ninjamoons.com` deployment without a tested, reversible migration plan.
