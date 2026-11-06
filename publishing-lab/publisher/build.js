@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 "use strict";
-const fs=require("node:fs"),path=require("node:path"),crypto=require("node:crypto");
+const fs=require("node:fs"),path=require("node:path"),crypto=require("node:crypto"),vm=require("node:vm");
 const root=path.resolve(__dirname,".."),out=path.resolve(process.cwd(),"dist");
 // Approved original ocean illustrations: immutable Vercel source, SHA-256 verified on every clean build.
 const oceanAssetSources=[{"file":"ocean-sprite.webp","sha256":"5f3ab49bee36ade8f15f7f567ca8b4d88cc010c3060920e2352f8477499347a9","url":"https://ninja-moons-publishing-glw3bj329-ninja-fitt.vercel.app/stories/ocean-that-glows/images/ocean-sprite.webp"},{"file":"cover.webp","sha256":"c68ee4c5fb6b39f4fb2f00bef5e37b964b90500f01eab42dd0b7c3b030e34513","url":"https://ninja-moons-publishing-glw3bj329-ninja-fitt.vercel.app/stories/ocean-that-glows/images/cover.webp"}];
@@ -78,6 +78,26 @@ async function installFirstGradeArt(){
 async function main(){
  await installOceanArt();
  await installFirstGradeArt();
+ // The unified station is required to pass script and control validation before release.
+ const stationDir=path.join(root,'station');
+ const stationJs=fs.readFileSync(path.join(stationDir,'station.js'),'utf8');
+ const classroomJs=fs.readFileSync(path.join(stationDir,'classroom.js'),'utf8');
+ new vm.Script(stationJs,{filename:'NINJA_READER/station.js'});
+ new vm.Script(classroomJs.replace('export {init,refresh,renderMonitor};',''),{filename:'NINJA_READER/classroom.js'});
+ const stationHtml=fs.readFileSync(path.join(stationDir,'index.html'),'utf8');
+ for(const tool of ['trainer','language','pictures','questions','ninja','teacher','live','transcribe','progress','music']){
+  ensure(stationHtml.includes('data-tool="'+tool+'"')&&stationHtml.includes('data-panel="'+tool+'"'),
+    'unified toolbox missing '+tool);
+ }
+ for(const id of ['readAll','pausePage','trainPlay','trainPause','ninjaLocalForm','chatForm','storyLines']){
+  ensure(stationHtml.includes('id="'+id+'"'),'NINJA READER missing control '+id);
+ }
+ const stationConfig=json(path.join(stationDir,'config.json'));
+ const databaseURL=new URL(stationConfig.projectUrl);
+ ensure(stationConfig.publishableKey.startsWith('sb_publishable_')
+    &&databaseURL.protocol==='https:'&&databaseURL.hostname.endsWith('.supabase.co'),
+   'invalid public-only classroom database configuration');
+
  ensure(isFile(path.join(root,"index.html")),"library home missing");
  const dirs=fs.readdirSync(path.join(root,"stories"),{withFileTypes:true}).filter(d=>d.isDirectory()).map(d=>d.name).sort();
  ensure(dirs.length>0,"no stories present");
