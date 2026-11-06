@@ -47,3 +47,23 @@ textarea,input{border:1px solid #90b8d5;background:white;color:#183c63;border-ra
 .story-image svg#storySprite{display:block;width:100%;height:auto;max-height:43vh;aspect-ratio:16/9;background:#061f46}
 @media(max-width:1000px){.story-image svg#storySprite{max-height:36vh}}
 @media(max-width:680px){.story-image svg#storySprite{max-height:25vh}}
+
+/* In-story words: the story remains visible while each noun can open a real photograph. */
+.story-text .sentence-line{margin:3px 0 7px;line-height:1.55}
+.story-text .sentence-select{background:#eef7ff;border:1px solid #d6e8f4;color:#24639d;font:750 11px system-ui;margin:0 6px 0 0;padding:2px 5px;border-radius:5px;vertical-align:baseline}
+.story-text .word-tap{display:inline;border:0;background:transparent;color:inherit;font:inherit;padding:1px 1px;border-radius:4px;text-align:left;cursor:pointer}
+.story-text .word-tap:hover,.story-text .word-tap:focus-visible{background:#d0edff}
+.story-text .word-tap.noun-tap{ text-decoration:underline dotted #7c57ad; text-underline-offset:4px }
+.story-text .word-tap.vocab-tap{font-weight:750; text-decoration:underline dotted #138ac5;text-underline-offset:4px}
+.story-text .sentence-line.active{background:#f0f8ff;border-radius:6px}
+.hover-noun{position:fixed;z-index:145;width:205px;max-width:48vw;padding:7px;background:#fff;color:#163f6c;border:2px solid #7bc5ed;border-radius:13px;box-shadow:0 12px 36px #0007;pointer-events:none}
+.hover-noun img{display:block;width:100%;height:125px;object-fit:contain;background:#eaf5ff;border-radius:7px}
+.hover-noun span{display:block;text-align:center;font-size:12px;font-weight:850;margin-top:6px}
+.external-ai{margin:15px 0;border:1px solid #b0cfec;border-radius:10px;padding:10px;background:#edf6ff;color:#2a537b}
+.external-ai summary{cursor:pointer;font-weight:850;color:#1e5f9c}
+#ninjaQuickHelp{margin:13px 0}
+#ninjaQuickHelp h4{margin:0 0 7px;color:#115a99;font-size:19px}
+#ninjaQuickHelp .send-form input{flex:1;min-width:0}
+#ninjaAnswer{min-height:48px;white-space:pre-wrap}
+.story-footer .btn{flex:1 1 auto;white-space:nowrap;min-width:0}
+@media(max-width:680px){.story-footer .btn{font-size:10px;min-height:31px;padding:5px 3px;flex:1 1 26%}.story-text .word-tap{font-size:inherit}.story-text .sentence-select{font-size:10px;padding:0 3px;margin-right:4px}.hover-noun{display:none!important}}
