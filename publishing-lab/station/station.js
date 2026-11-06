@@ -8,7 +8,7 @@ const STAGE_HELP={
  es:["Escucha la oración. Repítela cuantas veces quieras.","Elige de una a ocho palabras y practica la pronunciación.","Toca las palabras para ver sus significados y fotos reales.","Comprende la oración y responde dos preguntas sobre la imagen."]
 };
 const GRADES={K:"Kindergarten",1:"1st grade",2:"2nd grade",3:"3rd grade",4:"4th grade",5:"5th grade",6:"6th grade",7:"7th grade",8:"8th grade",9:"9th grade",10:"10th grade",11:"11th grade",12:"12th grade"};
-let catalog=[],story=null,spanish=null,questions=null,photoData={photos:{},aliases:{}},currentSlug="",page=0,sentence=0,stage=0,wordStart=0,tool="trainer",answers={},lastAudio=0,recognition=null,selectedStudent=null,classroom=null;
+let catalog=[],story=null,spanish=null,questions=null,photoData={photos:{},aliases:{}},currentSlug="",page=0,sentence=0,stage=0,wordStart=0,tool="trainer",answers={},lastAudio=0,audioPaused=false,recognition=null,selectedStudent=null,classroom=null;
 const clean=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,"");
 const tokens=s=>String(s||"").match(/[\p{L}\p{M}\p{N}]+(?:['’\-][\p{L}\p{M}\p{N}]+)*/gu)||[];
 const speechLang=()=>language()==="es"&&spanish?"es-ES":"en-US";
@@ -26,7 +26,13 @@ function context(){return{slug:currentSlug,title:story?.title||"",page:page+1,se
 window.NM_STATION={getContext:context,getStory:()=>story,getPage:()=>page,getLocalProgress:()=>({page:page+1,sentence:sentence+1,stage:stage+1,questionsAnswered:Object.keys(answers).length}),getCatalog:()=>catalog};
 function node(tag,cl,txt){const e=document.createElement(tag);if(cl)e.className=cl;if(txt!==undefined)e.textContent=txt;return e;}
 function text(el,txt){el.textContent=txt==null?"":String(txt);}
-function stopSpeech(){lastAudio++;if("speechSynthesis" in window)speechSynthesis.cancel();}
+function stopSpeech(){lastAudio++;audioPaused=false;if("speechSynthesis" in window)speechSynthesis.cancel();for(const id of ["pausePage","trainPause"]){const b=$(id);if(b)b.textContent="Ⅱ Pause";}}
+function togglePause(){
+ if(!("speechSynthesis" in window))return;
+ if(!audioPaused){if(!speechSynthesis.speaking)return;speechSynthesis.pause();audioPaused=true;}
+ else{speechSynthesis.resume();audioPaused=false;}
+ for(const id of ["pausePage","trainPause"]){const b=$(id);if(b)b.textContent=audioPaused?"▶ Resume":"Ⅱ Pause";}
+}
 function speakSegments(parts,readAll=false){
  stopSpeech();if(!("speechSynthesis" in window)){alert("Speech is not available in this browser.");return}
  const serial=++lastAudio;let position=0;
@@ -68,6 +74,16 @@ function pageTitle(){return nativeEs()&&spanish?.titles?.[page]?spanish.titles[p
 function displaySentence(){const en=currentLines()[sentence]||"",es=spanish?.lines?.[page]?.[sentence]||"";return{en,es,shown:nativeEs()?es:en}}
 function setPage(index){if(!story)return;stopSpeech();page=Math.max(0,Math.min(story.pages.length-1,index));sentence=0;wordStart=0;refresh();window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"story_open"}}))}
 function setSentence(i){sentence=Math.max(0,Math.min(currentLines().length-1,i));wordStart=0;refresh();window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"sentence_read"}}))}
+function showHoverNoun(w,trigger){
+ const info=nounInfo(w),pop=$("hoverNounPopover");if(!info||!pop||!trigger?.getBoundingClientRect)return;
+ $("hoverNounPhoto").src=info.src;$("hoverNounPhoto").alt=info.name||w;
+ text($("hoverNounName"),info.name||w);
+ const rect=trigger.getBoundingClientRect();
+ const left=Math.max(8,Math.min(rect.left,window.innerWidth-220));
+ const top=rect.top>225?rect.top-205:rect.bottom+12;
+ pop.style.left=left+"px";pop.style.top=Math.max(6,top)+"px";pop.hidden=false;
+}
+function hideHoverNoun(){const pop=$("hoverNounPopover");if(pop)pop.hidden=true;}
 function renderStory(){
  if(!story)return;
  const pg=story.pages[page],img=$("storyArt");
@@ -88,9 +104,22 @@ function renderStory(){
  const e=$("storyLines");e.replaceChildren();
  const displayed=nativeEs()&&spanish?.lines?.[page]?spanish.lines[page]:pg.lines;
  for(let i=0;i<displayed.length;i++){
-  const line=displayed[i],row=node("p",""),button=node("button","sentence-button"+(i===sentence?" active":""),line);
-  button.type="button";button.onclick=()=>{setSentence(i);speakSegments(makeSegments(pg.lines[i],spanish?.lines?.[page]?.[i]))};
-  row.append(button);
+  const line=displayed[i],row=node("p","sentence-line"+(i===sentence?" active":""));
+  const number=node("button","sentence-select",String(i+1)+".");number.type="button";
+  number.setAttribute("aria-label","Read sentence "+(i+1));
+  number.onclick=()=>{setSentence(i);speakSegments(makeSegments(pg.lines[i],spanish?.lines?.[page]?.[i]))};row.append(number);
+  for(const fragment of line.match(/\\s+|\\S+/g)||[]){
+   if(/^\\s+$/.test(fragment)){row.append(document.createTextNode(fragment));continue;}
+   const w=fragment,v=vocabOf(w),photo=nounInfo(w),btn=node("button","word-tap"+(v?" vocab-tap":"")+(photo?" noun-tap":""),w);
+   btn.type="button";btn.title=photo?"View a real photograph of "+clean(w):v?"Hear and define "+clean(w):"Hear "+clean(w);
+   btn.onclick=()=>{
+    if(sentence!==i){sentence=i;wordStart=0;refresh();}
+    if(photo||v)showWord(w);
+    else speakSegments([{lang:speechLang(),text:w}]);
+   };
+   if(photo){btn.onpointerenter=()=>showHoverNoun(w,btn);btn.onpointerleave=hideHoverNoun;btn.onfocus=()=>showHoverNoun(w,btn);btn.onblur=hideHoverNoun;}
+   row.append(btn);
+  }
   if(dual()&&spanish?.lines?.[page]?.[i])row.append(node("div","spanish-caption",spanish.lines[page][i]));
   e.append(row);
  }
@@ -193,7 +222,7 @@ function refresh(){
 function showTool(name){
  tool=name;for(const e of document.querySelectorAll("[data-panel]"))e.hidden=e.dataset.panel!==name;
  for(const b of document.querySelectorAll("[data-tool]")){const is=b.dataset.tool===name;b.classList.toggle("selected",is);if(is)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")}
- if(name==="ninja"&&!$("ninjaFrame").src)$("ninjaFrame").src="https://ninja-moons-ask-ninja-lab.vercel.app/";
+ // The adult AI testing iframe is loaded only on deliberate user expansion, not on student page load.
  if(name==="live"&&!$("liveFrame").src)$("liveFrame").src="https://ninjamoons.vercel.app/live-reading/";
  if(name==="music"&&!$("musicFrame").src)$("musicFrame").src="https://ninjamoons.vercel.app/live-reading/youtube-test/";
  if((name==="teacher"||name==="progress")&&!classroom)import("./classroom.js").then(m=>{classroom=m;return m.init()}).catch(e=>{text($("accountBox"),"Classroom account tools are temporarily unavailable: "+e.message)});
@@ -256,12 +285,14 @@ async function init(){
  $("dialogClose").onclick=()=>$("wordDialog").close();
  $("backPage").onclick=()=>setPage(page-1);$("nextPage").onclick=()=>setPage((page+1)%story.pages.length);
  $("readPage").onclick=()=>speakSegments(pageAudioSegments());
+ $("readAll").onclick=()=>speakSegments(pageAudioSegments(),true);
+ $("pausePage").onclick=togglePause;
  $("stopPage").onclick=stopSpeech;
  $("trainBack").onclick=()=>trainMove(-1);$("trainNext").onclick=()=>trainMove(1);
  $("trainPlay").onclick=()=>{const s=displaySentence();if(stage===1){const group=Number($("wordCount").value),en=tokens(s.en).slice(wordStart,wordStart+group).join(" "),es=tokens(s.es).slice(wordStart,wordStart+group).join(" ");speakSegments(makeSegments(en,es))}
  else if(stage===2){const vs=vocabList().filter(v=>v.page==null||v.page===page+1);speakSegments(vs.flatMap(v=>[{lang:speechLang(),text:v.word+". "+v.meaning}]))}
  else speakSegments(makeSegments(s.en,s.es))};
- $("trainRepeat").onclick=()=>$("trainPlay").click();$("trainStop").onclick=stopSpeech;
+ $("trainRepeat").onclick=()=>$("trainPlay").click();$("trainPause").onclick=togglePause;$("trainStop").onclick=stopSpeech;
  for(const id of ["wordCount","phoneticPercent","definitionPercent"])$(id).onchange=()=>{wordStart=0;refresh()};
  $("language").onchange=()=>{stopSpeech();refresh()};
  $("speakEnglish").onclick=()=>speakSegments(story.pages[page].lines.map(x=>({lang:"en-US",text:x})));
