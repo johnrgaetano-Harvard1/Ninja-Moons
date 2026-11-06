@@ -3,8 +3,8 @@
   "photos": {
     "ship": {
       "name": "Space shuttle / Transbordador espacial",
-      "src": "https://cdn.mos.cms.futurecdn.net/DtNQT7HdtooYBYAqgPVR5c.jpg",
-      "credit": "NASA / Space.com"
+      "src": "https://www.si.edu/sites/default/files/newsdesk/photos/space-shuttle-discovery-first-launch.jpg",
+      "credit": "Smithsonian Institution / NASA"
     },
     "moon": {
       "name": "The Moon / La Luna",
@@ -13,8 +13,8 @@
     },
     "earth": {
       "name": "Earth / La Tierra",
-      "src": "https://ipravda.sk/res/2026/03/29/thumbs/the-blue-marble-via-nasa-apollo-17-crew-nestandard1.jpg",
-      "credit": "NASA Apollo 17"
+      "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/4878/Earth_and_Moon-1.jpeg?crop=faces%2Cfocalpoint&fit=clip&format=jpeg&w=4096",
+      "credit": "NASA Science"
     },
     "rock": {
       "name": "Real Moon rock / Roca lunar",
