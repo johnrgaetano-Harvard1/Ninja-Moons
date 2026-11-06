@@ -67,3 +67,8 @@ textarea,input{border:1px solid #90b8d5;background:white;color:#183c63;border-ra
 #ninjaAnswer{min-height:48px;white-space:pre-wrap}
 .story-footer .btn{flex:1 1 auto;white-space:nowrap;min-width:0}
 @media(max-width:680px){.story-footer .btn{font-size:10px;min-height:31px;padding:5px 3px;flex:1 1 26%}.story-text .word-tap{font-size:inherit}.story-text .sentence-select{font-size:10px;padding:0 3px;margin-right:4px}.hover-noun{display:none!important}}
+
+/* Discreet classroom message counts, with no noisy audio notifications. */
+.tool-tab{position:relative}
+.message-count{position:absolute;right:4px;top:3px;min-width:19px;height:19px;padding:1px 5px;border:1px solid #e4f7ff;background:#2987d5;color:white;border-radius:100px;font-size:11px;line-height:15px;text-align:center;font-weight:900}
+.message-count[hidden]{display:none!important}
