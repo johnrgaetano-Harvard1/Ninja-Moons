@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "slug": "zoom-trip",
+  "spanish": {
+    "lines": [
+      [
+        "Kai es un ninja.",
+        "Mira es una ninja."
+      ],
+      [
+        "«¡Mira!», dijo Mira.",
+        "«¡Una nave!»"
+      ],
+      [
+        "La nave es grande.",
+        "La nave es azul."
+      ],
+      [
+        "Pip es un pequeño robot.",
+        "«¡Suban!», dijo Pip."
+      ],
+      [
+        "«Vamos a Nox. Nox es una luna».",
+        "«¿Está lejos?»",
+        "«¡Lejos, lejos, lejos!»"
+      ],
+      [
+        "Pip tiene un reloj.",
+        "«¡Llegaremos en siete!»",
+        "«¿Solo siete?», dijo Kai.",
+        "«¡Solo siete!»"
+      ],
+      [
+        "Un anillo azul se ilumina.",
+        "¡Las estrellas se mueven, se mueven, se mueven!"
+      ],
+      [
+        "«¡Uno!»",
+        "«¡Dos!»",
+        "«¡Tres!»",
+        "«¡ZUM!»"
+      ],
+      [
+        "«¡Ya llegamos!», dijo Pip.",
+        "Kai mira el reloj.",
+        "¡Siete! ¡Solo siete!"
+      ],
+      [
+        "Tavi saluda.",
+        "«Las plantas están secas. ¿Pueden ayudar?»",
+        "«¡Sí!», dijo Mira."
+      ],
+      [
+        "Kai gira la rueda.",
+        "El gran espejo también gira.",
+        "La luz del sol llega a un panel.",
+        "¡La bomba arranca!"
+      ],
+      [
+        "¡Splash! Las plantas toman agua.",
+        "«¡Lo hicimos!», dijeron los ninjas."
+      ],
+      [
+        "Esa noche, el maestro Ren tiene una tela.",
+        "La sacude un poco.",
+        "«El espacio también puede moverse», dijo."
+      ],
+      [
+        "Kai mira el anillo azul.",
+        "Mira observa las estrellas que se mueven.",
+        "«¿Cómo llegamos tan rápido?»"
+      ]
+    ],
+    "titles": [
+      "Los dos ninjas",
+      "¡Una nave!",
+      "Una gran nave azul",
+      "¡Hola, Pip!",
+      "Vamos a Nox",
+      "¡Solo siete!",
+      "Un anillo de luz",
+      "¡ZUM!",
+      "¡Ya llegamos!",
+      "El jardín de Tavi",
+      "El espejo y el agua",
+      "¡Lo logramos!",
+      "La tela del maestro Ren",
+      "La gran pregunta"
+    ],
+    "vocabulary": [
+      {
+        "word": "robot",
+        "say": "roh-BOHT",
+        "meaning": "Una máquina que puede ayudar a las personas.",
+        "page": 4
+      },
+      {
+        "word": "reloj",
+        "say": "reh-LOH",
+        "meaning": "Sirve para saber la hora.",
+        "page": 6
+      },
+      {
+        "word": "anillo",
+        "say": "ah-NEE-yoh",
+        "meaning": "Un círculo con espacio en el centro.",
+        "page": 7
+      },
+      {
+        "word": "luna",
+        "say": "LOO-nah",
+        "meaning": "Un mundo que gira alrededor de un planeta.",
+        "page": 5
+      },
+      {
+        "word": "espejo",
+        "say": "ehs-PEH-hoh",
+        "meaning": "Una cosa brillante donde vemos nuestra imagen.",
+        "page": 11
+      }
+    ]
+  }
+}
