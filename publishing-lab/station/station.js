@@ -223,8 +223,7 @@ function showTool(name){
  tool=name;for(const e of document.querySelectorAll("[data-panel]"))e.hidden=e.dataset.panel!==name;
  for(const b of document.querySelectorAll("[data-tool]")){const is=b.dataset.tool===name;b.classList.toggle("selected",is);if(is)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")}
  // The adult AI testing iframe is loaded only on deliberate user expansion, not on student page load.
- if(name==="live"&&!$("liveFrame").src)$("liveFrame").src="https://ninjamoons.vercel.app/live-reading/";
- if(name==="music"&&!$("musicFrame").src)$("musicFrame").src="https://ninjamoons.vercel.app/live-reading/youtube-test/";
+ // Live Reading loads only on an explicit click; the experimental music player never autoplays for students.
  if((name==="teacher"||name==="progress")&&!classroom)import("./classroom.js").then(m=>{classroom=m;return m.init()}).catch(e=>{text($("accountBox"),"Classroom account tools are temporarily unavailable: "+e.message)});
  if(name==="teacher"&&classroom?.refresh)classroom.refresh();
  if(name==="progress"&&classroom?.renderMonitor)classroom.renderMonitor();
@@ -358,6 +357,10 @@ async function init(){
  $("speakEnglish").onclick=()=>speakSegments(story.pages[page].lines.map(x=>({lang:"en-US",text:x})));
  $("speakSpanish").onclick=()=>{if(!spanish){alert("Spanish text has not been published for this story.");return}speakSegments(spanish.lines[page].map(x=>({lang:"es-ES",text:x})))};
  $("copyContext").onclick=copyContext;
+ $("enableLive").onclick=()=>{
+  const frame=$("liveFrame");frame.src="https://ninjamoons.vercel.app/live-reading/";
+  text($("liveStatus"),"The separate live-classroom app is open below. Microphone permission is controlled by its own Start Mic button and your device.");
+ };
  initAskNinja();
  for(const b of document.querySelectorAll("[data-tool]"))b.onclick=()=>showTool(b.dataset.tool);
  $("storyPick").onchange=()=>loadStory($("storyPick").value);
