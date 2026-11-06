@@ -1,0 +1,454 @@
+{
+  "version": 1,
+  "slug": "zoom-trip",
+  "questions": [
+    [
+      [
+        "Who are the two ninjas?",
+        "¿Quiénes son los dos ninjas?",
+        [
+          "Kai and Mira",
+          "Pip and Tavi",
+          "Ren and Nox"
+        ],
+        [
+          "Kai y Mira",
+          "Pip y Tavi",
+          "Ren y Nox"
+        ],
+        0
+      ],
+      [
+        "Where are Kai and Mira?",
+        "¿Dónde están Kai y Mira?",
+        [
+          "On a farm",
+          "At the academy",
+          "Underwater"
+        ],
+        [
+          "En una granja",
+          "En la academia",
+          "Bajo el agua"
+        ],
+        1
+      ]
+    ],
+    [
+      [
+        "What does Mira see?",
+        "¿Qué ve Mira?",
+        [
+          "A ship",
+          "A cat",
+          "A tree"
+        ],
+        [
+          "Una nave",
+          "Un gato",
+          "Un árbol"
+        ],
+        0
+      ],
+      [
+        "What color is the spaceship?",
+        "¿De qué color es la nave?",
+        [
+          "Red",
+          "Blue",
+          "Green"
+        ],
+        [
+          "Roja",
+          "Azul",
+          "Verde"
+        ],
+        1
+      ]
+    ],
+    [
+      [
+        "Is the ship big or little?",
+        "¿La nave es grande o pequeña?",
+        [
+          "Very little",
+          "Big",
+          "Tiny"
+        ],
+        [
+          "Muy pequeña",
+          "Grande",
+          "Diminuta"
+        ],
+        1
+      ],
+      [
+        "What color is the ship?",
+        "¿De qué color es la nave?",
+        [
+          "Blue",
+          "Orange",
+          "Pink"
+        ],
+        [
+          "Azul",
+          "Naranja",
+          "Rosa"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "Who is Pip?",
+        "¿Quién es Pip?",
+        [
+          "A little robot",
+          "A bird",
+          "A dog"
+        ],
+        [
+          "Un pequeño robot",
+          "Un pájaro",
+          "Un perro"
+        ],
+        0
+      ],
+      [
+        "What does Pip say?",
+        "¿Qué dice Pip?",
+        [
+          "Go to sleep!",
+          "Hop in!",
+          "Go home!"
+        ],
+        [
+          "¡A dormir!",
+          "¡Suban!",
+          "¡Váyanse a casa!"
+        ],
+        1
+      ]
+    ],
+    [
+      [
+        "Where will they go?",
+        "¿A dónde van?",
+        [
+          "To a store",
+          "To Nox",
+          "To school"
+        ],
+        [
+          "A una tienda",
+          "A Nox",
+          "A la escuela"
+        ],
+        1
+      ],
+      [
+        "What is Nox?",
+        "¿Qué es Nox?",
+        [
+          "A moon",
+          "A toy",
+          "A fish"
+        ],
+        [
+          "Una luna",
+          "Un juguete",
+          "Un pez"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What does Pip have?",
+        "¿Qué tiene Pip?",
+        [
+          "A clock",
+          "A kite",
+          "A ball"
+        ],
+        [
+          "Un reloj",
+          "Una cometa",
+          "Una pelota"
+        ],
+        0
+      ],
+      [
+        "How long will the trip take?",
+        "¿Cuánto durará el viaje?",
+        [
+          "Seven",
+          "Twenty",
+          "One hundred"
+        ],
+        [
+          "Siete",
+          "Veinte",
+          "Cien"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What lights up?",
+        "¿Qué se ilumina?",
+        [
+          "A blue ring",
+          "A chair",
+          "A boat"
+        ],
+        [
+          "Un anillo azul",
+          "Una silla",
+          "Un bote"
+        ],
+        0
+      ],
+      [
+        "What wiggles outside?",
+        "¿Qué se mueve afuera?",
+        [
+          "The stars",
+          "The flowers",
+          "The trees"
+        ],
+        [
+          "Las estrellas",
+          "Las flores",
+          "Los árboles"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What sound marks the trip?",
+        "¿Qué sonido anuncia el viaje?",
+        [
+          "ZOOM!",
+          "MEOW!",
+          "BARK!"
+        ],
+        [
+          "¡ZUM!",
+          "¡MIAU!",
+          "¡GUAU!"
+        ],
+        0
+      ],
+      [
+        "What number do they say first?",
+        "¿Qué número dicen primero?",
+        [
+          "Three",
+          "One",
+          "Five"
+        ],
+        [
+          "Tres",
+          "Uno",
+          "Cinco"
+        ],
+        1
+      ]
+    ],
+    [
+      [
+        "Who says they are here?",
+        "¿Quién dice que llegaron?",
+        [
+          "Pip",
+          "Tavi",
+          "Ren"
+        ],
+        [
+          "Pip",
+          "Tavi",
+          "Ren"
+        ],
+        0
+      ],
+      [
+        "What does Kai look at?",
+        "¿Qué mira Kai?",
+        [
+          "The clock",
+          "A flower",
+          "The floor"
+        ],
+        [
+          "El reloj",
+          "Una flor",
+          "El suelo"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "Who waves hello?",
+        "¿Quién saluda con la mano?",
+        [
+          "Tavi",
+          "Ren",
+          "Kai"
+        ],
+        [
+          "Tavi",
+          "Ren",
+          "Kai"
+        ],
+        0
+      ],
+      [
+        "What do the dry plants need?",
+        "¿Qué necesitan las plantas secas?",
+        [
+          "Water",
+          "Sand",
+          "Ice"
+        ],
+        [
+          "Agua",
+          "Arena",
+          "Hielo"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What does Kai turn?",
+        "¿Qué gira Kai?",
+        [
+          "A wheel",
+          "A spoon",
+          "A door"
+        ],
+        [
+          "Una rueda",
+          "Una cuchara",
+          "Una puerta"
+        ],
+        0
+      ],
+      [
+        "What makes the pump start?",
+        "¿Qué hace arrancar la bomba?",
+        [
+          "Sunlight reaching a panel",
+          "A loud song",
+          "Cold snow"
+        ],
+        [
+          "La luz del sol en un panel",
+          "Una canción fuerte",
+          "La nieve fría"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What happens to the plants?",
+        "¿Qué pasa con las plantas?",
+        [
+          "They get a drink",
+          "They fly away",
+          "They go to sleep"
+        ],
+        [
+          "Reciben agua",
+          "Salen volando",
+          "Se duermen"
+        ],
+        0
+      ],
+      [
+        "How do the ninjas feel?",
+        "¿Cómo se sienten los ninjas?",
+        [
+          "Happy they helped",
+          "Sad they are lost",
+          "Angry at Pip"
+        ],
+        [
+          "Felices por ayudar",
+          "Tristes por perderse",
+          "Enojados con Pip"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What does Master Ren hold?",
+        "¿Qué sostiene el maestro Ren?",
+        [
+          "A cloth",
+          "A fish",
+          "A book"
+        ],
+        [
+          "Una tela",
+          "Un pez",
+          "Un libro"
+        ],
+        0
+      ],
+      [
+        "What does he do with it?",
+        "¿Qué hace con la tela?",
+        [
+          "Wiggles it",
+          "Eats it",
+          "Throws it"
+        ],
+        [
+          "La mueve",
+          "Se la come",
+          "La lanza"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What does Kai look at?",
+        "¿Qué mira Kai?",
+        [
+          "A blue ring",
+          "A red apple",
+          "A train"
+        ],
+        [
+          "Un anillo azul",
+          "Una manzana roja",
+          "Un tren"
+        ],
+        0
+      ],
+      [
+        "What does Mira wonder?",
+        "¿Qué se pregunta Mira?",
+        [
+          "How they got there so fast",
+          "Why fish can swim",
+          "Where her hat went"
+        ],
+        [
+          "Cómo llegaron tan rápido",
+          "Por qué nadan los peces",
+          "Dónde quedó su sombrero"
+        ],
+        0
+      ]
+    ]
+  ]
+}
