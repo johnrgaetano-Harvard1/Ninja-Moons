@@ -71,7 +71,16 @@ function setSentence(i){sentence=Math.max(0,Math.min(currentLines().length-1,i))
 function renderStory(){
  if(!story)return;
  const pg=story.pages[page],img=$("storyArt");
- img.src=storyPath()+pg.image;img.alt=pg.alt||"Illustration for picture "+(page+1);
+ const priorSprite=document.getElementById("storySprite");if(priorSprite)priorSprite.remove();
+ if(currentSlug==="ocean-that-glows"&&pg.image==="images/ocean-sprite.webp"){
+  img.hidden=true;
+  const NS="http://www.w3.org/2000/svg",svg=document.createElementNS(NS,"svg");
+  svg.id="storySprite";svg.setAttribute("viewBox",(page%2*1672)+" "+(Math.floor(page/2)*941)+" 1672 941");
+  svg.setAttribute("role","img");svg.setAttribute("aria-label",pg.alt||"Ocean story illustration");
+  const image=document.createElementNS(NS,"image");image.setAttribute("href",storyPath()+pg.image);
+  image.setAttribute("width","3344");image.setAttribute("height","4705");image.setAttribute("x","0");image.setAttribute("y","0");
+  svg.append(image);document.querySelector(".story-image").append(svg);
+ }else{img.hidden=false;img.src=storyPath()+pg.image;img.alt=pg.alt||"Illustration for picture "+(page+1);}
  text($("storyGrade"),"NINJA MOONS · "+(GRADES[catalog.find(x=>x.slug===currentSlug)?.grade]||story.readingLevel||"STORY"));
  text($("storyTitle"),story.title);
  text($("pageBadge"),"Picture "+(page+1)+" of "+story.pages.length);
@@ -107,7 +116,7 @@ function renderStages(){
    div.append(b);
   }
   card.append(div);
-  card.append(node("p","help",es?"Palabras seleccionadas: ":"Selected words: "+ww.slice(wordStart,wordStart+group).join(" ")));
+  card.append(node("p","help",(es?"Palabras seleccionadas: ":"Selected words: ")+ww.slice(wordStart,wordStart+group).join(" ")));
  }else if(stage===2){
   const wrap=node("div","definition-grid"),all=tokens(s.shown),pc=Number($("definitionPercent").value);
   const unique=[...new Map(all.map(w=>[clean(w),w])).values()];
@@ -226,7 +235,7 @@ function initTranscription(){
   if(recognition)recognition.stop();
   recognition=new Rec();recognition.lang=$("sttLanguage").value;recognition.continuous=true;recognition.interimResults=true;
   let finalText=$("transcript").value.trim();
-  recognition.onresult=e=>{let interim="";for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)finalText+=(finalText?" ":"")+t;else interim+=t;}text($("transcript"),finalText+(interim?" "+interim:""));};
+  recognition.onresult=e=>{let interim="";for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)finalText+=(finalText?" ":"")+t;else interim+=t;}$("transcript").value=finalText+(interim?" "+interim:"");};
   recognition.onerror=e=>text($("micStatus"),"Microphone error: "+e.error);
   recognition.onend=()=>{text($("micStatus"),"Microphone off. This transcript remains on this device.");recognition=null};
   try{recognition.start();text($("micStatus"),"Microphone active · "+recognition.lang)}catch(e){text($("micStatus"),e.message)}
