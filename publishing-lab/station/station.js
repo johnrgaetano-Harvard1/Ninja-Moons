@@ -91,7 +91,7 @@ function renderStory(){
 function renderStages(){
  if(!story)return;const es=nativeEs(),lbl=STAGE_LABELS[es?"es":"en"],bar=$("stageTabs");bar.replaceChildren();
  for(let i=0;i<4;i++){const b=node("button",i===stage?"active":"",String(i+1)+". "+lbl[i]);b.type="button";b.onclick=()=>{stage=i;wordStart=0;refresh();window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"helper_step"}}))};bar.append(b);}
- const s=displaySentence(),card=$("trainerCard");card.replaceChildren();card.append(node("p","train-meta","PICTURE "+(page+1)+" / "+story.pages.length+" · SENTENCE "+(sentence+1)+" / "+currentLines().length+" · STAGE "+(stage+1)+" / 4));
+ const s=displaySentence(),card=$("trainerCard");card.replaceChildren();card.append(node("p","train-meta","PICTURE "+(page+1)+" / "+story.pages.length+" · SENTENCE "+(sentence+1)+" / "+currentLines().length+" · STAGE "+(stage+1)+" / 4"));
  card.append(node("h3","",lbl[stage]));card.append(node("p","help",STAGE_HELP[es?"es":"en"][stage]));
  const line=node("p","sentence",s.shown);card.append(line);
  if(dual()&&s.es)card.append(node("p","translation","ES: "+s.es));
