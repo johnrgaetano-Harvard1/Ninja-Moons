@@ -1,3 +1,13 @@
+# NINJA MOONS — OPEN THE LIVE READER
+
+## 🚀 [TAP HERE TO OPEN THE LIVE NINJA READER](https://ninja-moons-publisher.vercel.app/station/?story=seven-second-journey-grade-1)
+
+**This GitHub page contains programming files, not the reading app.** The link above opens the real reading workspace with story pictures on top and all learning tools in one toolbox below.
+
+[Open the story chooser / other grades](https://ninja-moons-publisher.vercel.app/station/)
+
+---
+
 # NINJA MOONS — Independent Publishing Engine
 
 This repository contains the standalone NINJA MOONS publishing system. It is linked to the **ninja-moons-publisher** Vercel project, not to the original classroom site or Secret Garden.
