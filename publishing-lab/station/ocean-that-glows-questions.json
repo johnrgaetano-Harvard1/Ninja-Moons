@@ -1,0 +1,326 @@
+{
+  "version": 1,
+  "slug": "ocean-that-glows",
+  "questions": [
+    [
+      [
+        "Which moon are the explorers approaching?",
+        "¿A qué luna se acercan los exploradores?",
+        [
+          "Neruma",
+          "Nox",
+          "Europa"
+        ],
+        [
+          "Neruma",
+          "Nox",
+          "Europa"
+        ],
+        0
+      ],
+      [
+        "Where will their expedition continue?",
+        "¿Dónde continuará su expedición?",
+        [
+          "Underwater",
+          "In a desert",
+          "Inside a volcano"
+        ],
+        [
+          "Bajo el agua",
+          "En un desierto",
+          "Dentro de un volcán"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What did the sailors record?",
+        "¿Qué registraron los marineros?",
+        [
+          "Dates and changes in the reef",
+          "The spaceship's engine code",
+          "A list of cities"
+        ],
+        [
+          "Fechas y cambios en el arrecife",
+          "El código del motor de la nave",
+          "Una lista de ciudades"
+        ],
+        0
+      ],
+      [
+        "Why did Doctor Sol compare an old drawing with a modern photograph?",
+        "¿Por qué comparó la doctora Sol un dibujo antiguo con una foto reciente?",
+        [
+          "To find matching landmarks",
+          "To choose decorations",
+          "To count the sailors"
+        ],
+        [
+          "Para encontrar puntos de referencia iguales",
+          "Para elegir decoraciones",
+          "Para contar a los marineros"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What remained pale beyond the silver threads?",
+        "¿Qué seguía pálido fuera del alcance de los hilos plateados?",
+        [
+          "The coral",
+          "The spaceship",
+          "The station floor"
+        ],
+        [
+          "El coral",
+          "La nave",
+          "El suelo de la estación"
+        ],
+        0
+      ],
+      [
+        "What did Doctor Sol say they needed first?",
+        "¿Qué dijo la doctora Sol que necesitaban primero?",
+        [
+          "Evidence",
+          "A cure claim",
+          "A new legend"
+        ],
+        [
+          "Pruebas",
+          "Afirmar que hay una cura",
+          "Una leyenda nueva"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What kind of vehicle carried the team underwater?",
+        "¿Qué vehículo llevó al equipo bajo el agua?",
+        [
+          "A transparent submarine",
+          "A sailboat",
+          "An airplane"
+        ],
+        [
+          "Un submarino transparente",
+          "Un velero",
+          "Un avión"
+        ],
+        0
+      ],
+      [
+        "What is an ecosystem in the story?",
+        "¿Qué es un ecosistema en la historia?",
+        [
+          "Living things and their surroundings",
+          "Only coral",
+          "Only water"
+        ],
+        [
+          "Seres vivos y su entorno",
+          "Solo el coral",
+          "Solo el agua"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What did the Lumara gather near its tail?",
+        "¿Qué recogía la Lumara cerca de su cola?",
+        [
+          "Golden specks",
+          "Purple rocks",
+          "Plastic rings"
+        ],
+        [
+          "Motas doradas",
+          "Rocas moradas",
+          "Anillos de plástico"
+        ],
+        0
+      ],
+      [
+        "How did Luma record the strange event?",
+        "¿Cómo registró Luma el extraño suceso?",
+        [
+          "Saved the moment without explaining it",
+          "Invented an answer",
+          "Ignored it"
+        ],
+        [
+          "Guardó el momento sin explicarlo",
+          "Inventó una respuesta",
+          "Lo ignoró"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What did Maya mark on the map?",
+        "¿Qué marcó Maya en el mapa?",
+        [
+          "The Lumara's route",
+          "Earth's weather",
+          "A school timetable"
+        ],
+        [
+          "El recorrido de la Lumara",
+          "El tiempo en la Tierra",
+          "Un horario escolar"
+        ],
+        0
+      ],
+      [
+        "Why did the team return on two more evenings?",
+        "¿Por qué volvió el equipo otras dos tardes?",
+        [
+          "To see if the path repeated",
+          "To race their submarine",
+          "To collect coral branches"
+        ],
+        [
+          "Para ver si el recorrido se repetía",
+          "Para hacer carreras con el submarino",
+          "Para recoger ramas de coral"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What helped them see tiny organisms?",
+        "¿Qué les ayudó a ver organismos diminutos?",
+        [
+          "A microscope",
+          "A mirror",
+          "A telescope"
+        ],
+        [
+          "Un microscopio",
+          "Un espejo",
+          "Un telescopio"
+        ],
+        0
+      ],
+      [
+        "Why did Maya label the images with dates and locations?",
+        "¿Por qué puso Maya fechas y lugares en las imágenes?",
+        [
+          "To make comparisons possible",
+          "To make them prettier",
+          "To hide the results"
+        ],
+        [
+          "Para poder compararlas",
+          "Para hacerlas más bonitas",
+          "Para ocultar los resultados"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What did the team keep equal in its fair test?",
+        "¿Qué mantuvo igual el equipo en su prueba justa?",
+        [
+          "Light and starting conditions",
+          "Only the colors",
+          "Different amounts of seawater"
+        ],
+        [
+          "La luz y las condiciones iniciales",
+          "Solo los colores",
+          "Cantidades diferentes de agua marina"
+        ],
+        0
+      ],
+      [
+        "What was the single material some containers received?",
+        "¿Qué material recibieron algunos recipientes?",
+        [
+          "Measured golden material",
+          "Extra sand",
+          "Purple paint"
+        ],
+        [
+          "Una cantidad medida de material dorado",
+          "Arena extra",
+          "Pintura morada"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What did the containers with golden material produce?",
+        "¿Qué produjeron los recipientes con material dorado?",
+        [
+          "More silvery substance",
+          "More plastic",
+          "Less seawater"
+        ],
+        [
+          "Más sustancia plateada",
+          "Más plástico",
+          "Menos agua marina"
+        ],
+        0
+      ],
+      [
+        "Why didn't the coral observations prove a medicine would work?",
+        "¿Por qué las observaciones del coral no probaban que un medicamento funcionaría?",
+        [
+          "Further tests on the compounds were needed",
+          "Coral cannot change color",
+          "The Lumara was too small"
+        ],
+        [
+          "Hacían falta más pruebas de los compuestos",
+          "El coral no puede cambiar de color",
+          "La Lumara era demasiado pequeña"
+        ],
+        0
+      ]
+    ],
+    [
+      [
+        "What mystery did Luma save for future explorers?",
+        "¿Qué misterio guardó Luma para los próximos exploradores?",
+        [
+          "Why the Lumara returns to the garden",
+          "Who built Earth",
+          "Why the station floats"
+        ],
+        [
+          "Por qué la Lumara vuelve al jardín",
+          "Quién construyó la Tierra",
+          "Por qué flota la estación"
+        ],
+        0
+      ],
+      [
+        "Which set contains the story's clues?",
+        "¿Qué grupo contiene las pistas de la historia?",
+        [
+          "Golden specks, tail glow, and container results",
+          "Clouds, school bells, and wheels",
+          "Stars, songs, and windows"
+        ],
+        [
+          "Motas doradas, brillo de la cola y resultados de los recipientes",
+          "Nubes, campanas y ruedas",
+          "Estrellas, canciones y ventanas"
+        ],
+        0
+      ]
+    ]
+  ]
+}
