@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "photos": {
+    "ship": {
+      "name": "Space shuttle / Transbordador espacial",
+      "src": "https://cdn.mos.cms.futurecdn.net/DtNQT7HdtooYBYAqgPVR5c.jpg",
+      "credit": "NASA / Space.com"
+    },
+    "moon": {
+      "name": "The Moon / La Luna",
+      "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/lunar-science/2023/08/lro_fullmoon.jpg?crop=faces%2Cfocalpoint&fit=clip&h=3240&w=3240",
+      "credit": "NASA"
+    },
+    "earth": {
+      "name": "Earth / La Tierra",
+      "src": "https://ipravda.sk/res/2026/03/29/thumbs/the-blue-marble-via-nasa-apollo-17-crew-nestandard1.jpg",
+      "credit": "NASA Apollo 17"
+    },
+    "rock": {
+      "name": "Real Moon rock / Roca lunar",
+      "src": "https://upload.wikimedia.org/wikipedia/commons/8/8a/NASA_Lunar_Sample_60015.jpg",
+      "credit": "NASA sample / Wikimedia Commons"
+    },
+    "ice": {
+      "name": "Ice / Hielo",
+      "src": "https://images.unsplash.com/photo-1517299321609-52687d1bc55a?w=760&q=82",
+      "credit": "Unsplash photography"
+    },
+    "star": {
+      "name": "Stars / Estrellas",
+      "src": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=760&q=82",
+      "credit": "Unsplash photography"
+    },
+    "hill": {
+      "name": "Hills and mountains / Colinas y montañas",
+      "src": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=760&q=82",
+      "credit": "Unsplash photography"
+    },
+    "robot": {
+      "name": "Robot / Robot",
+      "src": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=760&q=82",
+      "credit": "Unsplash photography"
+    },
+    "map": {
+      "name": "Map / Mapa",
+      "src": "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=760&q=82",
+      "credit": "Unsplash photography"
+    }
+  },
+  "aliases": {
+    "ship": "ship",
+    "nave": "ship",
+    "horizon": "ship",
+    "moon": "moon",
+    "luna": "moon",
+    "earth": "earth",
+    "tierra": "earth",
+    "planet": "earth",
+    "planeta": "earth",
+    "rock": "rock",
+    "rocks": "rock",
+    "roca": "rock",
+    "rocas": "rock",
+    "stone": "rock",
+    "stones": "rock",
+    "piedra": "rock",
+    "piedras": "rock",
+    "ice": "ice",
+    "hielo": "ice",
+    "star": "star",
+    "stars": "star",
+    "estrella": "star",
+    "estrellas": "star",
+    "space": "star",
+    "espacio": "star",
+    "sky": "star",
+    "cielo": "star",
+    "hill": "hill",
+    "hills": "hill",
+    "colina": "hill",
+    "montanas": "hill",
+    "robot": "robot",
+    "map": "map",
+    "mapa": "map"
+  }
+}
