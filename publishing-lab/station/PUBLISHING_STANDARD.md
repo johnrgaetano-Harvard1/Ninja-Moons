@@ -1,3 +1,13 @@
+# 🥷 OPEN THE NINJA READER WEBSITE
+
+## 📖 [TAP HERE — OPEN THE WORKING NINJA READER APP](https://ninja-moons-publisher.vercel.app/station/?story=seven-second-journey-grade-1)
+
+**You are currently reading an instruction document on GitHub, NOT the website.** To read the first-grade adventure, use the blue link above. The site has the story, pictures, English/Spanish, noun photographs, NINJA Reader, Ask Ninja and the other toolbox panels.
+
+[Choose a different story / grade](https://ninja-moons-publisher.vercel.app/station/)
+
+---
+
 # NINJA MOONS — Single-Page NINJA READER Publishing Standard
 
 This document is mandatory for every new story published through the independent NINJA MOONS publisher.
