@@ -2,7 +2,7 @@
 "use strict";
 // NINJA MOONS — authenticated classroom inbox and teacher progress monitor.
 // School authorization and consent are enforced again by Supabase RLS.
-let client=null,user=null,profile=null,studentId=null,classroomId=null,threads=[],activeThread=null,poll=null,initializing=null,studentAliases=new Map(),messageList=[];
+let client=null,user=null,profile=null,studentId=null,classroomId=null,threads=[],activeThread=null,poll=null,initializing=null,studentAliases=new Map(),messageList=[],threadActivity=new Map(),draftingNew=false;
 const $=id=>document.getElementById(id);
 const el=(tag,cl,txt)=>{const e=document.createElement(tag);if(cl)e.className=cl;if(txt!==undefined)e.textContent=txt;return e};
 const readText=(id,value)=>{const e=$(id);if(e)e.textContent=value};
@@ -80,10 +80,31 @@ async function loadThreads(){
  if(!client||!(isStudent()||isTeacher()))return;
  const q=await client.from("nm_teacher_threads").select("id,student_id,classroom_id,story_slug,page_number,created_at,created_by,status").order("created_at",{ascending:false}).limit(100);
  if(q.error)throw q.error;threads=q.data||[];
- await aliases();renderThreads();
+ await aliases();
+ threadActivity=new Map();
+ if(threads.length){
+  const ids=threads.map(t=>t.id);
+  const latest=await client.from("nm_teacher_messages").select("thread_id,sender_user_id,created_at")
+   .in("thread_id",ids).order("created_at",{ascending:false}).limit(500);
+  if(!latest.error)for(const msg of latest.data||[])if(!threadActivity.has(msg.thread_id))threadActivity.set(msg.thread_id,msg);
+ }
  if(activeThread&&!threads.some(t=>t.id===activeThread))activeThread=null;
- if(!activeThread&&threads.length)activeThread=threads[0].id;
+ if(!draftingNew&&!activeThread&&threads.length)activeThread=threads[0].id;
+ renderThreads();updateMessageBadge();
  await loadMessages();
+}
+function unreadFor(thread){
+ const last=threadActivity.get(thread.id);if(!last||last.sender_user_id===user?.id)return false;
+ let seen=0;try{seen=Number(localStorage.getItem("nm-chat-seen-"+user.id+"-"+thread.id)||0)}catch{}
+ return Date.parse(last.created_at)>seen;
+}
+function updateMessageBadge(){
+ const pending=threads.filter(t=>isTeacher()?threadActivity.get(t.id)?.sender_user_id===t.created_by:unreadFor(t)).length;
+ const button=document.querySelector('[data-tool="teacher"]');if(!button)return;
+ let badge=button.querySelector(".message-count");
+ if(!badge&&pending){badge=el("span","message-count");button.append(badge)}
+ if(badge){badge.textContent=String(pending);badge.hidden=!pending}
+ button.setAttribute("aria-label",pending?(isTeacher()?pending+" student questions need replies":pending+" new teacher replies"):"Ask Teacher");
 }
 function renderThreads(){
  const box=$("threadList");box.replaceChildren();
@@ -91,14 +112,20 @@ function renderThreads(){
  for(const t of threads){
   const label=(studentAliases.get(t.student_id)||"Student")+" · "+t.story_slug.replace(/-/g," ");
   const b=el("button","thread-button"+(activeThread===t.id?" active":""),""),strong=el("strong","",isTeacher()?label:t.story_slug.replace(/-/g," "));
-  b.type="button";b.append(strong,el("span","", "Picture "+t.page_number+" · "+safeTime(t.created_at)));b.onclick=async()=>{activeThread=t.id;renderThreads();await loadMessages()};
+  b.type="button";const last=threadActivity.get(t.id);
+  const waiting=isTeacher()&&last?.sender_user_id===t.created_by;
+  const unread=unreadFor(t);
+  const state=waiting?" · NEEDS REPLY":unread?" · NEW REPLY":last?" · Replied":" · Awaiting question";
+  b.append(strong,el("span","", "Picture "+t.page_number+state+" · "+safeTime(last?.created_at||t.created_at)));
+  b.onclick=async()=>{draftingNew=false;activeThread=t.id;renderThreads();await loadMessages()};
   box.append(b);
+  continue;
  }
 }
 async function loadMessages(){
  const box=$("chatMessages");box.replaceChildren();messageList=[];
  const t=threads.find(x=>x.id===activeThread);
- if(!t){readText("chatHead","Choose a question, or start a new one.");return;}
+ if(!t){readText("chatHead",draftingNew?"New question · "+(currentContext().title||"Story")+" · Picture "+(currentContext().page||1):"Choose a question, or start a new one.");return;}
  readText("chatHead",(studentAliases.get(t.student_id)||"Student")+" · "+t.story_slug.replace(/-/g," ")+" · Picture "+t.page_number);
  const r=await client.from("nm_teacher_messages").select("id,thread_id,sender_user_id,body,created_at").eq("thread_id",t.id).order("created_at",{ascending:true}).limit(200);
  if(r.error){showMessage("Messages could not be loaded: "+r.error.message);return}
@@ -109,29 +136,40 @@ async function loadMessages(){
   bubble.append(meta);box.append(bubble);
  }
  box.scrollTop=box.scrollHeight;
+ const visible=!document.querySelector('[data-panel="teacher"]')?.hidden&&document.visibilityState!=="hidden";
+ if(visible&&messageList.length){try{localStorage.setItem("nm-chat-seen-"+user.id+"-"+t.id,String(Date.parse(messageList[messageList.length-1].created_at)))}catch{}
+ updateMessageBadge();}
 }
 async function newQuestion(){
- const c=window.NM_STATION?.getContext?.()||{};
+ const c=currentContext();
  if(!c.slug||!isStudent())return showMessage("Choose a story and sign in with an approved student account.");
- const q=await client.from("nm_teacher_threads").insert({
-  classroom_id:classroomId,student_id:studentId,created_by:user.id,
-  story_slug:c.slug,page_number:c.page||1
- }).select("id").single();
- if(q.error)return showMessage("Could not create the question: "+q.error.message);
- activeThread=q.data.id;await loadThreads();$("chatText").focus();
+ draftingNew=true;activeThread=null;
+ $("chatMessages").replaceChildren();readText("chatHead","New question · "+c.title+" · Picture "+c.page);
+ showMessage("Type your question and press Send. It will go privately to your classroom teacher.");
+ $("chatText").focus();
 }
+
 async function sendMessage(event){
  event.preventDefault();
  const content=$("chatText").value.trim();
  if(!content)return;
  if(content.length>1000)return showMessage("Please limit the message to 1,000 characters.");
- if(!activeThread){if(!isStudent())return showMessage("Select a student's question first.");await newQuestion();if(!activeThread)return;}
+ if(!activeThread){
+  if(!isStudent())return showMessage("Select a student's question first.");
+  const c=currentContext();if(!c.slug)return showMessage("Open a story before asking a question.");
+  const created=await client.from("nm_teacher_threads").insert({
+   classroom_id:classroomId,student_id:studentId,created_by:user.id,
+   story_slug:c.slug,page_number:c.page||1
+  }).select("id").single();
+  if(created.error)return showMessage("Couldn't open a private conversation: "+created.error.message);
+  activeThread=created.data.id;draftingNew=false;
+ }
  const button=$("sendChat");button.disabled=true;showMessage("Sending…");
  try{
   const r=await client.from("nm_teacher_messages").insert({thread_id:activeThread,sender_user_id:user.id,body:content});
   if(r.error)throw r.error;
   $("chatText").value="";showMessage("Sent privately to the classroom.");
-  await loadMessages();
+  await loadThreads();
  }catch(e){showMessage("Not sent: "+e.message)}finally{button.disabled=false}
 }
 async function renderMonitor(){
@@ -170,7 +208,7 @@ async function recordReading(data){
 function startPolling(){
  if(poll)clearInterval(poll);
  poll=setInterval(async()=>{
-  if(!user||!profile?.is_active)return;
+  if(!user||!profile?.is_active||document.visibilityState==="hidden")return;
   if(!$("chatApp").hidden&&!document.querySelector('[data-panel="teacher"]').hidden)await loadThreads().catch(()=>{});
   if(isTeacher()&&!document.querySelector('[data-panel="progress"]').hidden)await renderMonitor().catch(()=>{});
  },8000);
