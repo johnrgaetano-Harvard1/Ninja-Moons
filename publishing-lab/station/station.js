@@ -216,10 +216,17 @@ async function loadStory(slug){
   if(!Array.isArray(m.pages)||!m.pages.length)throw Error("Story pages missing");
  }catch(e){text($("storyLines"),"Could not load this story: "+e.message);return}
  currentSlug=slug;story=m;spanish=null;questions=null;
- if(slug==="seven-second-journey-grade-1"){
-  const [t,q]=await Promise.all([fetch("/station/grade1-es.json").then(r=>r.ok?r.json():null),fetch("/station/grade1-questions.json").then(r=>r.ok?r.json():null)]);
-  spanish=t?.spanish||null;questions=q?.questions||null;
- }
+ const packBase=slug==="seven-second-journey-grade-1"?"grade1":slug;
+ const optionalJSON=async(url)=>{try{const r=await fetch(url,{cache:"no-store"});return r.ok?await r.json():null}catch{return null}};
+ const [translated,quizData]=await Promise.all([optionalJSON("/station/"+packBase+"-es.json"),optionalJSON("/station/"+packBase+"-questions.json")]);
+ // A translation must cover every original sentence; never show a partial pack as complete.
+ if(translated?.spanish?.lines?.length===m.pages.length&&m.pages.every((p,i)=>translated.spanish.lines[i]?.length===p.lines.length))spanish=translated.spanish;
+ if(quizData?.questions?.length===m.pages.length&&quizData.questions.every(q=>Array.isArray(q)&&q.length===2))questions=quizData.questions;
+ const esOption=$("language").querySelector('option[value="es"]'),dualOption=$("language").querySelector('option[value="both"]');
+ if(esOption)esOption.disabled=!spanish;
+ if(dualOption)dualOption.disabled=!spanish;
+ if(!spanish&&language()!=="en")$("language").value="en";
+ const optionsNote=$("translationNotice");if(optionsNote)optionsNote.textContent=spanish?"Spanish story and vocabulary are available.":"Spanish translation is not yet available for this story; English remains active.";
  let saved={};try{saved=JSON.parse(localStorage.getItem("nm-station-v1-"+slug)||"{}")}catch{}
  page=Math.max(0,Math.min(story.pages.length-1,Number(saved.page)||0));
  sentence=Math.max(0,Math.min(story.pages[page].lines.length-1,Number(saved.sentence)||0));
