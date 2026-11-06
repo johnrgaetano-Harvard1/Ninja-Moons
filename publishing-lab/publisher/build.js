@@ -96,11 +96,32 @@ async function main(){
    ensure(fs.statSync(f).size===p.imageBytes,"image size mismatch "+slug+" page "+p.page);
    ensure(digest(f)===p.sha256,"image SHA256 mismatch "+slug+" page "+p.page);
   }
+  // One shared NINJA READER methodology requires complete bilingual and question packs.
+  // Verify all READY stories before they can be published to the unified station.
+  const packBase=slug==='seven-second-journey-grade-1'?'grade1':slug;
+  const translationPath=path.join(root,'station',packBase+'-es.json');
+  const quizPath=path.join(root,'station',packBase+'-questions.json');
+  ensure(isFile(translationPath),'missing Spanish learning pack: '+slug);
+  ensure(isFile(quizPath),'missing bilingual comprehension pack: '+slug);
+  const tr=json(translationPath),quiz=json(quizPath);
+  ensure(tr.slug===slug&&Array.isArray(tr.spanish?.lines)&&tr.spanish.lines.length===m.pages.length,
+    'Spanish page alignment failed: '+slug);
+  ensure(tr.spanish.lines.every((lines,i)=>Array.isArray(lines)&&lines.length===m.pages[i].lines.length
+    &&lines.every(s=>typeof s==='string'&&s.trim())), 'Spanish sentence alignment failed: '+slug);
+  ensure(Array.isArray(tr.spanish.vocabulary)&&tr.spanish.vocabulary.every(v=>v&&typeof v.word==='string'
+    &&v.word.trim()&&typeof v.meaning==='string'&&v.meaning.trim()), 'Spanish vocabulary missing: '+slug);
+  ensure(quiz.slug===slug&&Array.isArray(quiz.questions)&&quiz.questions.length===m.pages.length,
+    'quiz page alignment failed: '+slug);
+  ensure(quiz.questions.every(items=>Array.isArray(items)&&items.length===2&&items.every(q=>Array.isArray(q)
+    &&q.length===5&&typeof q[0]==='string'&&q[0].trim()&&typeof q[1]==='string'&&q[1].trim()
+    &&Array.isArray(q[2])&&q[2].length===3&&q[2].every(v=>typeof v==='string'&&v.trim())
+    &&Array.isArray(q[3])&&q[3].length===3&&q[3].every(v=>typeof v==='string'&&v.trim())
+    &&Number.isInteger(q[4])&&q[4]>=0&&q[4]<3)), 'bilingual multiple-choice question validation failed: '+slug);
   const level=String(m.readingLevel||'');
   const grade=/^(K|Kindergarten)$/i.test(level)?'K':Number(level.match(/^(?:Grade\s+)?(1[0-2]|[1-9])$/i)?.[1]);
   ensure(grade==='K'||(grade>=1&&grade<=12),'readingLevel must identify K or Grade 1–12: '+slug);
   ensure(!m.vocabulary||(Array.isArray(m.vocabulary)&&m.vocabulary.every(v=>v&&['word','meaning'].every(k=>typeof v[k]==='string'&&v[k].trim())&&(!v.say||typeof v.say==='string'))),'invalid vocabulary '+slug);
-  library.push({grade,description:typeof m.description==='string'?m.description:'Explore '+m.title+' with illustrations and reading support.',topics:Array.isArray(m.topics)?m.topics.filter(t=>typeof t==='string'):['Adventure'],slug,title:m.title,readingLevel:m.readingLevel||"",pages:m.pages.length,href:"/stories/"+slug+"/",cover:"/stories/"+slug+"/"+(m.coverImage||m.pages[0].image)});
+  library.push({languages:['en','es'], bilingualQuestions:m.pages.length*2,grade,description:typeof m.description==='string'?m.description:'Explore '+m.title+' with illustrations and reading support.',topics:Array.isArray(m.topics)?m.topics.filter(t=>typeof t==='string'):['Adventure'],slug,title:m.title,readingLevel:m.readingLevel||"",pages:m.pages.length,href:"/stories/"+slug+"/",cover:"/stories/"+slug+"/"+(m.coverImage||m.pages[0].image)});
  }
  ensure(json(path.join(root,"health.json")).service==="ninja-moons-publishing-lab","wrong publishing project");
  fs.rmSync(out,{recursive:true,force:true});fs.cpSync(root,out,{recursive:true,filter:p=>!p.includes(path.sep+"publisher"+path.sep)&&!p.endsWith("image-sources.json")});
