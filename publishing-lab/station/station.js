@@ -34,6 +34,8 @@ function togglePause(){
  for(const id of ["pausePage","trainPause"]){const b=$(id);if(b)b.textContent=audioPaused?"▶ Resume":"Ⅱ Pause";}
 }
 function speakSegments(parts,readAll=false){
+ // Do not play reading audio into a live student microphone.
+ if(recognition)recognition.stop();
  stopSpeech();if(!("speechSynthesis" in window)){alert("Speech is not available in this browser.");return}
  const serial=++lastAudio;let position=0;
  function next(){
@@ -220,6 +222,8 @@ function refresh(){
  persist();
 }
 function showTool(name){
+ // A microphone must not stay open unnoticed after leaving the transcription toolbox.
+ if(name!=="transcribe"&&recognition)recognition.stop();
  tool=name;for(const e of document.querySelectorAll("[data-panel]"))e.hidden=e.dataset.panel!==name;
  for(const b of document.querySelectorAll("[data-tool]")){const is=b.dataset.tool===name;b.classList.toggle("selected",is);if(is)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")}
  // The adult AI testing iframe is loaded only on deliberate user expansion, not on student page load.
@@ -399,11 +403,22 @@ function initTranscription(){
   recognition=new Rec();const active=recognition;
   active.lang=selected;active.continuous=true;active.interimResults=true;
   const seen=new Set();
+  let micError="",heardSpeech=false,stoppedByUser=false;
+  active.onstart=()=>{
+   if(run===transcriptRun)text($("micStatus"),"Microphone active · Listening for "+lang.label+" speech.");
+  };
+  active.onaudiostart=()=>{
+   if(run===transcriptRun)text($("micStatus"),"Microphone connected · Speak a sentence in "+lang.label+".");
+  };
+  active.onspeechstart=()=>{
+   if(run===transcriptRun)text($("micStatus"),"Speech detected · Recognizing "+lang.label+" words…");
+  };
   active.onresult=event=>{
    if(run!==transcriptRun)return;
    let interim="";
    for(let i=0;i<event.results.length;i++){
     const result=event.results[i],t=result?.[0]?.transcript?.trim()||"";
+    if(t)heardSpeech=true;
     if(result.isFinal&&!seen.has(i)&&t){
      seen.add(i);
      committedText+=(committedText?" ":"")+t;
@@ -417,21 +432,53 @@ function initTranscription(){
     english.value=original.value;
    }
   };
-  active.onerror=event=>{if(run===transcriptRun)text($("micStatus"),"Microphone: "+event.error+". Try selecting the correct spoken language.")};
-  active.onend=()=>{if(run===transcriptRun){text($("micStatus"),"Microphone off. Both transcript boxes remain on this device.");recognition=null}};
+  active.onerror=event=>{
+   if(run!==transcriptRun)return;
+   const code=String(event.error||"unknown");
+   // Do not bury useful recognition or permission errors beneath a generic onend notice.
+   const causes={
+    "not-allowed":"Microphone access was denied. Allow microphone permission in your browser and retry.",
+    "service-not-allowed":"Speech recognition service is blocked by this browser or device.",
+    "no-speech":"No speech detected. Speak clearly, check the input device and tap Start Mic again.",
+    "audio-capture":"No microphone input available. Check your device microphone settings.",
+    "network":"Speech-recognition network error. Check your connection and try again.",
+    "language-not-supported":"This device does not support speech recognition in "+lang.label+".",
+    "aborted":"Microphone session was interrupted. Tap Start Mic again."
+   };
+   micError=causes[code]||"Microphone error: "+code+". Tap Start Mic again.";
+   if(stoppedByUser&&code==="aborted")micError="";
+   if(micError)text($("micStatus"),micError);
+  };
+  active.onend=()=>{
+   if(run!==transcriptRun||recognition!==active)return;
+   recognition=null;
+   if(micError)return;
+   text($("micStatus"),stoppedByUser
+    ?"Microphone stopped. Your transcript remains on this device."
+    :heardSpeech
+      ?"Microphone paused by your browser. Tap Start Mic to continue reading."
+      :"Microphone stopped without recognizing speech. Check mic permissions and try again.");
+  };
+  active.requestStop=()=>{stoppedByUser=true;active.stop()};
   try{active.start();text($("micStatus"),"Listening in "+lang.label+"…");}
   catch(err){text($("micStatus"),"Could not start microphone: "+err.message);recognition=null;return}
   prepareNativeTranslator(lang.code).catch(()=>{});
  };
  $("micStart").onclick=()=>{start().catch(err=>text($("micStatus"),"Microphone unavailable: "+err.message))};
- $("micStop").onclick=()=>{recognition?.stop()};
+ $("micStop").onclick=()=>{
+  if(recognition){if(typeof recognition.requestStop==="function")recognition.requestStop();else recognition.stop()}
+  else text($("micStatus"),"Microphone is already off.");
+ };
  choose.onchange=()=>{
-  recognition?.stop();
+  // Prevent results from the previous language being attached to the new one.
+  if(recognition)recognition.stop();
+  ++transcriptRun;
   setStatus("Reading language selected: "+STT_LANGUAGES[choose.value].label+". Start the mic to recognize that language.");
  };
  $("clearTranscript").onclick=()=>{
   ++transcriptRun;
-  recognition?.stop();original.value="";english.value="";
+  if(recognition)recognition.stop();
+  original.value="";english.value="";
   committedText="";englishText="";transcriptTranslationQueue=Promise.resolve();
   text($("micStatus"),"Both transcript boxes cleared on this device.");
   setStatus("Choose a language and read aloud. Original speech and English will appear together.");
@@ -441,6 +488,8 @@ function initTranscription(){
   const input=original.value.trim();
   if(!input){setStatus("Speak or type text in the original box first.");return}
   if(input.length>800){setStatus("To translate typed text, select up to 800 characters.");return}
+  // Translating manually should also end any live recognition session.
+  if(recognition){if(typeof recognition.requestStop==="function")recognition.requestStop();else recognition.stop()}
   const run=++transcriptRun,button=$("translateNow");
   button.disabled=true;setStatus("Translating to English…");
   try{
@@ -457,7 +506,13 @@ function initTranscription(){
   }catch(err){if(run===transcriptRun)reportFailure(err)}
   finally{button.disabled=false}
  };
- if(!Rec)text($("micStatus"),"This browser does not support speech recognition. You can type in the original box and select Translate to English.");
+ document.addEventListener("visibilitychange",()=>{
+  if(document.hidden&&recognition){
+   if(typeof recognition.requestStop==="function")recognition.requestStop();
+   else recognition.stop();
+  }
+ });
+ if(!Rec)text($("micStatus"),"Speech recognition is unavailable in this browser. Try Safari on an iPhone or Chrome/Edge on a computer, or type and translate.");
 }
 
 async function init(){
