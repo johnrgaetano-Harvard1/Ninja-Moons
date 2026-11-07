@@ -50,10 +50,24 @@
  }
  async function student(){
   assertCrypto();
-  const value=hashKey();
-  if(!value)throw Error("Missing private encryption key. Open the 'Connected Student Story' link from Step 1 on the teacher screen.");
+  let value=hashKey(),generated=false;
+  // Opening the student story directly must not leave Send permanently disabled.
+  // Generate a secret locally, and provide a paired TEACHER link to share it.
+  if(!value){
+   const bytes=new Uint8Array(32);crypto.getRandomValues(bytes);
+   value=base64url(bytes);generated=true;
+   // A # fragment is never included in the HTTP request to the server.
+   try{history.replaceState(null,"",location.pathname+location.search+"#nmkey="+value)}
+   catch(_error){location.hash="nmkey="+value}
+  }
   await setKey(value);
-  return {keyId};
+  return {keyId,generated};
+ }
+ function teacherLink(){
+  if(!secret||!key)throw Error("No encryption key loaded.");
+  const url=new URL("/station/teacher.html?test=live",location.origin);
+  url.hash="nmkey="+secret;
+  return url.href;
  }
  function studentLink(url){
   if(!secret||!key)throw Error("Teacher encryption has not been initialized.");
@@ -89,5 +103,5 @@
   },key,cipher);
   return decode.decode(plaintext);
  }
- window.NMLiveE2E=Object.freeze({teacher,student,studentLink,seal,open,get keyId(){return keyId}});
+ window.NMLiveE2E=Object.freeze({teacher,student,studentLink,teacherLink,seal,open,get keyId(){return keyId}});
 })();
