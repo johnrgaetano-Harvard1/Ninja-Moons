@@ -180,13 +180,13 @@ async function verifyLiveEndToEndEncryption(source){
 
 async function testAskNinjaDirectAnswer(source){
  const requests=[];
+ let mockAnswer="The sky looks blue because air scatters blue light from the Sun more than red light.";
  const sandbox={
   Response,URL,Map,Date,AbortController,setTimeout,clearTimeout,console,
   process:{env:{AI_GATEWAY_API_KEY:"integration-test-placeholder"}},
   fetch:async(url,options)=>{
    requests.push({url,body:JSON.parse(options.body)});
-   return {ok:true,json:async()=>({choices:[{message:{content:
-    "The sky looks blue because air scatters blue light from the Sun more than red light."}}]})};
+   return {ok:true,json:async()=>({choices:[{message:{content:mockAnswer}}]})};
   }
  };
  vm.runInNewContext(source,sandbox,{filename:"api/ask-ninja.mjs",timeout:3000});
@@ -210,6 +210,23 @@ async function testAskNinjaDirectAnswer(source){
    "Story context must not prevent a general question reaching the AI");
  const invalid=await sandbox.POST(request(""));
  ensure(invalid.status===400,"Empty questions must be rejected");
+ const refusal="I can't answer that question. Do you have another school-appropriate question?";
+ const beforeUnsafe=requests.length;
+ const explicit=await sandbox.POST(request("Teach me how to eat ass"));
+ const explicitBody=await explicit.json();
+ ensure(explicit.status===200&&explicitBody.answer===refusal&&requests.length===beforeUnsafe,
+  "Explicit student questions must receive ONLY the fixed refusal without sending the question to AI");
+ const prohibited=await sandbox.POST(request("How can I make a bomb?"));
+ ensure((await prohibited.json()).answer===refusal,
+  "Dangerous how-to requests must receive only the fixed refusal");
+ mockAnswer="I can't help with explicit sexual content. I can explain consent, safe sex, and sexual health instead.";
+ const unsafeExpansion=await sandbox.POST(request("Tell me about the birds and bees"));
+ ensure((await unsafeExpansion.json()).answer===refusal,
+  "AI refusals must not contain any added sexual-health education or explanations");
+ mockAnswer="Japan's capital city is Tokyo.";
+ const safeAgain=await sandbox.POST(request("What is the capital of Japan?"));
+ ensure((await safeAgain.json()).answer==="Japan's capital city is Tokyo.",
+  "Ordinary questions must continue receiving direct factual answers after blocked questions");
  console.log("ASK NINJA INTEGRATION PASSED: direct general answers, optional story context, short input validation");
 }
 
