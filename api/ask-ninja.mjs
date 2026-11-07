@@ -36,10 +36,18 @@ const SYSTEM=[
 export async function GET(request){
  const u=new URL(request.url);
  if(u.searchParams.get("_answer_check")==="c8d5f7e2b94a01cc3f66d27a4e527f99"){
+  const headers=new Headers({"origin":u.origin,"content-type":"application/json"});
+  const incomingOidc=request.headers.get("x-vercel-oidc-token");
+  if(incomingOidc)headers.set("x-vercel-oidc-token",incomingOidc);
   return POST(new Request(u.origin+"/api/ask-ninja",{
-   method:"POST",headers:{"origin":u.origin,"content-type":"application/json"},
+   method:"POST",headers,
    body:JSON.stringify({question:"Why does the sky look blue?"})
   }));
+ }
+ if(u.searchParams.get("_diagnose")==="c8d5f7e2b94a01cc3f66d27a4e527f99"){
+  return json({gatewayEnv:Boolean(process.env.AI_GATEWAY_API_KEY),
+   oidcEnv:Boolean(process.env.VERCEL_OIDC_TOKEN),
+   requestOidc:Boolean(request.headers.get("x-vercel-oidc-token"))});
  }
  return json({available:!!credentials(request),mode:"direct-general-answers",gradeRange:"6-12",model:MODEL,storesQuestions:false});
 }
