@@ -126,6 +126,9 @@ async function main(){
  ensure(quickChatJs.includes('nm_q_send')&&quickChatJs.includes('nm_q_read')&&quickChatJs.includes('nm_q_teacher_reply'),'quick teacher chat is missing required private database functions');
  const teacherDemoJs=fs.readFileSync(path.join(stationDir,'teacher-demo.js'),'utf8');
  new vm.Script(teacherDemoJs,{filename:'NINJA_READER/teacher-demo.js'});
+ const liveTestApi=fs.readFileSync(path.resolve(__dirname,"../../api/live-chat.mjs"),"utf8");
+ ensure(liveTestApi.includes("nm_live_demo_read")&&liveTestApi.includes("nm_live_demo_add")
+   &&liveTestApi.includes("Cache-Control"),"same-origin live messaging API missing");
  const liveTestJs=fs.readFileSync(path.join(stationDir,'live-test.js'),'utf8');
  new vm.Script(liveTestJs,{filename:'NINJA_READER/live-test.js'});
  ensure(liveTestJs.includes('nm_live_demo_create')&&liveTestJs.includes('nm_live_demo_read')

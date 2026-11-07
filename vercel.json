@@ -7,6 +7,9 @@
   "functions": {
     "api/translate.mjs": {
       "maxDuration": 25
+    },
+    "api/live-chat.mjs": {
+      "maxDuration": 20
     }
   }
 }
