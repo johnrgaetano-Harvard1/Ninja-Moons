@@ -33,7 +33,11 @@ export async function GET(request){
 }
 export async function POST(request){
  const origin=request.headers.get("origin");
- if(origin!==new URL(request.url).origin)return json({message:"Use the NINJA MOONS reading page for this test."},403);
+ const fetchSite=request.headers.get("sec-fetch-site");
+ // Some older in-app and television browsers omit Origin for same-site POST.
+ // Reject explicitly cross-site requests and mismatched origins.
+ if((origin&&origin!==new URL(request.url).origin)||fetchSite==="cross-site")
+  return json({message:"Use the NINJA MOONS reading page for this test."},403);
  if(!String(request.headers.get("content-type")||"").startsWith("application/json"))return json({message:"JSON required."},415);
  if(Number(request.headers.get("content-length")||0)>2000)return json({message:"Message is too long."},413);
  try{
