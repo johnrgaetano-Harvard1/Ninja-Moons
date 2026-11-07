@@ -7,8 +7,13 @@ const node=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.classNam
 const ctx=()=>window.NM_STATION?.getContext?.()||{};
 const ownerPortal=/\/teacher\.html$/.test(location.pathname);
 const params=new URLSearchParams(location.search);
-const testRoom=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(params.get("testroom")||"")?params.get("testroom"):null;
-const testStudentKey=/^[0-9a-f]{64}$/.test(params.get("studentkey")||"")?params.get("studentkey"):null;
+const fixedLive=params.get("test")==="live";
+const DEFAULT_ROOM="197d9609-c01a-46b7-af7a-ecb6efd14bed";
+const DEFAULT_STUDENT_KEY="7ffa15545dceb848d809f6dd925a06dd5c8e6e8d416ebd7c3f2257552391c5a6";
+const testRoom=fixedLive?DEFAULT_ROOM:
+ /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(params.get("testroom")||"")?params.get("testroom"):null;
+const testStudentKey=fixedLive?DEFAULT_STUDENT_KEY:
+ /^[0-9a-f]{64}$/.test(params.get("studentkey")||"")?params.get("studentkey"):null;
 const liveTest=!!testRoom&&!!testStudentKey;
 let db=null,token="",mode="student",threads=[],selected=null,creating=false,ready=null,timer=null,loadInProgress=false;
 const status=msg=>{const n=$("chatStatus");if(n)n.textContent=msg};
@@ -31,6 +36,24 @@ async function client(){
  const cfg=await response.json();
  if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(cfg.projectUrl)||!String(cfg.publishableKey||"").startsWith("sb_publishable_"))
   throw Error("The messaging service configuration is invalid.");
+ if(fixedLive){
+  // The public test uses a same-origin server endpoint; no third-party SDK or login.
+  db={rpc:async(name,args)=>{
+   try{
+    const isRead=name==="nm_live_demo_read";
+    if(!isRead&&name!=="nm_live_demo_add")throw Error("Unknown test message action.");
+    const url="/api/live-chat"+(isRead?"?role=student":"");
+    const res=await fetch(url,isRead?{cache:"no-store"}:{
+     method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},
+     body:JSON.stringify({role:"student",message:args.p_body,story:args.p_story,page:args.p_page})
+    });
+    const body=await res.json().catch(()=>({}));
+    if(!res.ok)return {data:null,error:{message:body.message||"Live test messaging is unavailable."}};
+    return {data:isRead?{messages:body.messages||[]}:body.sent,error:null};
+   }catch(error){return {data:null,error:{message:error.message||"Test connection failed."}}}
+  }};
+  return db;
+ }
  const sdk=await import("https://esm.sh/@supabase/supabase-js@2.57.0");
  db=sdk.createClient(cfg.projectUrl,cfg.publishableKey,{auth:{detectSessionInUrl:true,flowType:"pkce"}});
  return db;
@@ -213,12 +236,12 @@ function init(){
     if(allowed.error)return false;
     mode="teacher";selected=null;creating=false;notice();await refresh();status("Teacher inbox is ready.");return true;
    };
-   const teacherReady=ownerPortal?await restoreTeacher():false;
+   const teacherReady=ownerPortal&&!fixedLive?await restoreTeacher():false;
    if(!teacherReady){
     if(ownerPortal){$("chatApp").hidden=true;showTeacherLogin()}
     else {notice();await refresh()}
    }
-   db.auth.onAuthStateChange((_event,session)=>{
+   if(!fixedLive)db.auth.onAuthStateChange((_event,session)=>{
     if(ownerPortal&&session?.user&&mode!=="teacher")
      setTimeout(()=>restoreTeacher().catch(()=>{}),0);
    });
