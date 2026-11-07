@@ -126,8 +126,15 @@ async function main(){
  ensure(quickChatJs.includes('nm_q_send')&&quickChatJs.includes('nm_q_read')&&quickChatJs.includes('nm_q_teacher_reply'),'quick teacher chat is missing required private database functions');
  const teacherDemoJs=fs.readFileSync(path.join(stationDir,'teacher-demo.js'),'utf8');
  new vm.Script(teacherDemoJs,{filename:'NINJA_READER/teacher-demo.js'});
+ const liveTestJs=fs.readFileSync(path.join(stationDir,'live-test.js'),'utf8');
+ new vm.Script(liveTestJs,{filename:'NINJA_READER/live-test.js'});
+ ensure(liveTestJs.includes('nm_live_demo_create')&&liveTestJs.includes('nm_live_demo_read')
+  &&liveTestJs.includes('nm_live_demo_add'),'cross-device live teacher RPCs missing');
+ ensure(quickChatJs.includes('nm_live_demo_read')&&quickChatJs.includes('nm_live_demo_add'),
+  'student Ask Teacher must connect to live test room');
  const teacherDemoHtml=fs.readFileSync(path.join(stationDir,'teacher.html'),'utf8');
- ensure(teacherDemoHtml.includes('id="demoInbox"')&&teacherDemoHtml.includes('id="privateInbox"')&&teacherDemoJs.includes('sessionStorage'),
+ ensure(teacherDemoHtml.includes('id="demoInbox"')&&teacherDemoHtml.includes('id="privateInbox"')
+  &&teacherDemoHtml.includes('id="liveTestInbox"')&&teacherDemoHtml.includes('id="studentLiveLink"')&&teacherDemoJs.includes('sessionStorage'),
   'no-login demonstration and protected teacher inbox must both be present');
  const stationHtml=fs.readFileSync(path.join(stationDir,'index.html'),'utf8');
  for(const id of ['translatedTranscript','sttLanguage','translateNow','translationStatus']){
