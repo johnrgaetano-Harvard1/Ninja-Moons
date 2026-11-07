@@ -6,6 +6,8 @@ const SUPABASE="https://eaqwobzxrpplxymumlki.supabase.co";
 const PUBLISHABLE_KEY="sb_publishable_XyVDJAFO5aWN_KVZoK9fXQ_j49gQckf";
 const H={"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff","Referrer-Policy":"no-referrer"};
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:H});
+// Encrypted envelopes ONLY. The API has no message decryption key.
+const ENVELOPE=/^nmE2E1\.[A-Za-z0-9_-]{16}\.[A-Za-z0-9_-]{22,690}$/;
 async function callRpc(name,body){
  const r=await fetch(SUPABASE+"/rest/v1/rpc/"+name,{
   method:"POST",headers:{"apikey":PUBLISHABLE_KEY,"Authorization":"Bearer "+PUBLISHABLE_KEY,"Content-Type":"application/json","Accept":"application/json"},
@@ -26,7 +28,9 @@ export async function GET(request){
  try{
   const r=await callRpc("nm_live_demo_read",{p_room:ROOM,p_key:KEYS[role],p_role:role});
   if(r.error)return json({message:r.error,connected:false},r.status===400?410:502);
-  const messages=Array.isArray(r.data?.messages)?r.data.messages:[];
+  // Never display messages from the legacy unencrypted test in the encrypted UI.
+  const messages=(Array.isArray(r.data?.messages)?r.data.messages:[])
+    .filter(m=>typeof m.body==="string"&&ENVELOPE.test(m.body));
   if(u.searchParams.get("check")==="1")return json({connected:true,mode:"isolated-live-demo",messageCount:messages.length,expires:"2026-11-14"});
   return json({connected:true,messages});
  }catch(err){console.error("Live test read failed",err.name);return json({message:"The live test could not reach its messaging database."},504)}
@@ -47,7 +51,9 @@ export async function POST(request){
   const msg=typeof body.message==="string"?body.message.trim():"";
   const story=typeof body.story==="string"?body.story:"seven-second-journey-grade-1";
   const page=Number.isInteger(body.page)?body.page:1;
-  if(!(role in KEYS)||!msg||msg.length>750||story.length>100||!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(story))return json({message:"Enter a short test question or reply."},400);
+  if(!(role in KEYS)||!msg||msg.length>750||story.length>100||!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(story))
+   return json({message:"Enter a short encrypted test message."},400);
+  if(!ENVELOPE.test(msg))return json({message:"Encrypted AES-256-GCM messages required. Reload both test screens."},400);
   const r=await callRpc("nm_live_demo_add",{p_room:ROOM,p_key:KEYS[role],p_role:role,p_body:msg,p_story:story,p_page:page});
   if(r.error)return json({message:r.error},r.status===400?429:502);
   return json({sent:true});
