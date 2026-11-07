@@ -41,23 +41,60 @@ body{background:#071e45;color:#edf7ff;font-family:system-ui,-apple-system,sans-s
 .student-demo .demo-messages{min-height:60px;max-height:190px}
 #privateInbox .context-strip{margin-top:0}
 @media(max-width:720px){.demo-columns{grid-template-columns:1fr}.demo-thread-list{max-height:170px;overflow:auto}.teacher-wrap{padding:10px 8px 55px}.demo-box{padding:12px}}
+
+.live-link-field{display:block;width:100%;padding:9px;border:1px solid #94badd;border-radius:8px;color:#13416e;background:white;font-size:12px}
+.live-messages{min-height:170px;max-height:390px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin:12px 0}
+.live-bubble{align-self:flex-start;background:#e3f2ff;color:#174168;border:1px solid #a9cfee;border-radius:12px;padding:11px 14px;max-width:88%;white-space:pre-wrap;overflow-wrap:anywhere}
+.live-bubble.teacher{align-self:flex-end;background:#d7e5ff}
+.live-bubble small{display:block;font-size:11px;color:#577c9a;margin-top:5px}
+.live-reply-form{display:flex;flex-wrap:wrap;gap:9px;align-items:stretch}
+.live-reply-form textarea{flex:1 1 250px;min-height:90px;resize:vertical;width:100%}
+.live-reply-form button{align-self:flex-end}
+#liveTestInbox .demo-box .demo-status{color:#3776a6}
+#liveTestInbox .demo-box h2{font-size:23px}
 </style></head><body>
 <main class="teacher-wrap">
  <header class="teacher-hero">
-  <div><div class="teacher-label">NINJA MOONS · TEACHER TOOLBOX</div><h1>💬 Teacher Inbox</h1>
+  <div><div class="teacher-label">NINJA MOONS · TEACHER TOOLBOX</div><h1>💬 Live Teacher Inbox</h1>
    <p class="teacher-note">See incoming questions, reply, and watch the answer appear on the student side.</p>
   </div>
   <a href="/station/">← Back to student stories</a>
  </header>
  <div class="demo-controls">
-  <div><span class="demo-chip" id="demoIndicator">INTERACTIVE DEMO · NO LOGIN</span></div>
+  <div><span class="demo-chip" id="demoIndicator">LIVE TEST · NO LOGIN</span></div>
   <div style="display:flex;gap:8px;flex-wrap:wrap">
-   <button id="showDemo" class="btn subtle" type="button" hidden>Back to demo</button>
-   <button id="openRealInbox" class="btn primary" type="button">Open real student messages · Secure sign-in</button>
-   <button id="resetDemo" class="btn subtle" type="button">Reset demo</button>
+   <button id="showDemo" class="btn subtle" type="button" hidden>Back to live test</button>
+   <button id="openRealInbox" class="btn primary" type="button">Protected real messages · Sign-in</button>
+   <button id="resetDemo" hidden class="btn subtle" type="button">Reset demo</button>
   </div>
  </div>
- <section id="demoInbox" class="teacher-card" aria-label="Interactive sample teacher inbox">
+ <section id="liveTestInbox" class="teacher-card" aria-label="Cross-device student-to-teacher test">
+ <div class="demo-notice"><strong>LIVE · REAL STUDENT PAGE · NO SIGN-IN REQUIRED</strong>
+ Send a question from the story on your other screen and watch it arrive here. This is a separate short-lived test, not real classroom student data.</div>
+ <div class="student-demo">
+  <h2>Step 1 · Open the student story</h2>
+  <p>Leave this Teacher Inbox open. Open the link below on a second screen or device; it automatically connects that story to this room.</p>
+  <div class="demo-controls">
+   <a id="studentLiveLink" class="btn primary" href="#" target="_blank" rel="noopener noreferrer">📖 Open Connected Student Story</a>
+   <button class="btn subtle" id="copyLiveLink" type="button">Copy Student Link</button>
+   <button class="btn subtle" id="newLiveRoom" type="button">New Test Room</button>
+  </div>
+  <input class="live-link-field" id="liveLinkText" readonly aria-label="Paired student link" value="Connecting…" />
+ </div>
+ <p class="demo-status" id="liveStatus" role="status" aria-live="polite">Connecting live test…</p>
+ <section class="demo-box">
+  <h2>Step 2 · Student questions appear here</h2>
+  <span class="demo-chip" id="liveBadge">CONNECTING…</span>
+  <div id="liveMessages" class="live-messages" aria-live="polite"><p>Waiting for a student question…</p></div>
+  <form id="liveReplyForm" class="live-reply-form">
+   <textarea id="liveReplyText" maxlength="750" rows="3" placeholder="Type your reply to the student…" required></textarea>
+   <button class="btn primary" id="liveReplyBtn" type="submit" disabled>Send Teacher Reply</button>
+  </form>
+  <p class="demo-status" id="liveReplyStatus" role="status">Step 3 · Reply here, then see it on the student screen.</p>
+ </section>
+ <p class="teacher-note">This test room expires after four hours. It doesn't expose real student messages and requires no passwords.</p>
+</section>
+<section id="demoInbox" class="teacher-card" hidden aria-label="Interactive sample teacher inbox">
   <div class="demo-notice"><strong>Sample messages — not real students</strong>
   This demonstration works without signing in. Replies are shown on this screen only. Real student conversations remain protected in your private inbox.</div>
   <div class="demo-columns">
@@ -86,5 +123,5 @@ body{background:#071e45;color:#edf7ff;font-family:system-ui,-apple-system,sans-s
  </section>
  <p class="teacher-note">The demo is saved only within this browser. Real students don't enter an account number to ask a question; only teacher access is protected.</p>
 </main>
-<script type="module" src="/station/teacher-demo.js"></script>
+<script type="module" src="/station/teacher-demo.js"></script><script type="module" src="/station/live-test.js"></script>
 </body></html>
