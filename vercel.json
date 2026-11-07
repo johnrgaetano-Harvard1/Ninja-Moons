@@ -3,5 +3,10 @@
   "framework": null,
   "buildCommand": "node publishing-lab/publisher/test-import.js && node publishing-lab/publisher/build.js",
   "outputDirectory": "dist",
-  "installCommand": "echo No dependencies for standalone publisher"
+  "installCommand": "echo No dependencies for standalone publisher",
+  "functions": {
+    "api/translate.mjs": {
+      "maxDuration": 25
+    }
+  }
 }

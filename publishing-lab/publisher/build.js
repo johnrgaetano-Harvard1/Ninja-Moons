@@ -118,11 +118,16 @@ async function main(){
  const stationJs=fs.readFileSync(path.join(stationDir,'station.js'),'utf8');
  const classroomJs=fs.readFileSync(path.join(stationDir,'classroom.js'),'utf8');
  new vm.Script(stationJs,{filename:'NINJA_READER/station.js'});
+ ensure(fs.readFileSync(path.resolve(__dirname,'../../api/translate.mjs'),'utf8').includes('openai/gpt-5-nano'),'translation gateway handler missing');
+
  new vm.Script(classroomJs.replace('export {init,refresh,renderMonitor};',''),{filename:'NINJA_READER/classroom.js'});
  const quickChatJs=fs.readFileSync(path.join(stationDir,'quickchat.js'),'utf8');
  new vm.Script(quickChatJs.replace('export {init,refresh};',''),{filename:'NINJA_READER/quickchat.js'});
  ensure(quickChatJs.includes('nm_q_send')&&quickChatJs.includes('nm_q_read')&&quickChatJs.includes('nm_q_teacher_reply'),'quick teacher chat is missing required private database functions');
  const stationHtml=fs.readFileSync(path.join(stationDir,'index.html'),'utf8');
+ for(const id of ['translatedTranscript','sttLanguage','translateNow','translationStatus']){
+   ensure(stationHtml.includes('id="'+id+'"'),'five-language transcription is missing '+id);
+ }
  for(const tool of ['trainer','language','pictures','questions','ninja','teacher','live','transcribe','progress','music']){
   ensure(stationHtml.includes('data-tool="'+tool+'"')&&stationHtml.includes('data-panel="'+tool+'"'),
     'unified toolbox missing '+tool);

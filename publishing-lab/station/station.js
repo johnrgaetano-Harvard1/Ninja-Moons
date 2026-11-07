@@ -324,22 +324,142 @@ async function loadStory(slug){
  history.replaceState(null,"","/station/?story="+encodeURIComponent(slug));
  refresh();window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"story_open"}}))
 }
-function initTranscription(){
- const Rec=window.SpeechRecognition||window.webkitSpeechRecognition;
- if(!Rec){$("micStatus").textContent="Speech recognition is not supported by this browser. The story and other tools remain available.";return}
- const start=()=>{
-  if(recognition)recognition.stop();
-  recognition=new Rec();recognition.lang=$("sttLanguage").value;recognition.continuous=true;recognition.interimResults=true;
-  let finalText=$("transcript").value.trim();
-  recognition.onresult=e=>{let interim="";for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)finalText+=(finalText?" ":"")+t;else interim+=t;}$("transcript").value=finalText+(interim?" "+interim:"");};
-  recognition.onerror=e=>text($("micStatus"),"Microphone error: "+e.error);
-  recognition.onend=()=>{text($("micStatus"),"Microphone off. This transcript remains on this device.");recognition=null};
-  try{recognition.start();text($("micStatus"),"Microphone active · "+recognition.lang)}catch(e){text($("micStatus"),e.message)}
- };
- $("micStart").onclick=start;
- $("micStop").onclick=()=>{recognition?.stop()};
- $("clearTranscript").onclick=()=>{$("transcript").value="";text($("micStatus"),"Transcript cleared on this device.")};
+// The selected language is the language the student is actually speaking.
+// Only finalized speech segments are translated; interim recognition remains visible.
+const STT_LANGUAGES={
+ "en-US":{code:"en",label:"English"},
+ "es-ES":{code:"es",label:"Español"},
+ "zh-CN":{code:"zh",label:"中文（普通话）"},
+ "hi-IN":{code:"hi",label:"हिन्दी"},
+ "ar-SA":{code:"ar",label:"العربية"}
+};
+let transcriptRun=0,lastTranscriptionLanguage="",transcriptTranslationQueue=Promise.resolve();
+let nativeTranslator=null,nativeTranslatorLanguage="";
+async function englishTranslation(utterance,languageCode){
+ const input=String(utterance||"").trim();
+ if(!input)return"";
+ if(languageCode==="en")return input;
+ // Chrome desktop may offer private on-device translation. Other browsers use
+ // the site's server-side service, which receives text only, never microphone audio.
+ if(globalThis.Translator&&nativeTranslatorLanguage===languageCode&&nativeTranslator){
+  try{return String(await nativeTranslator.translate(input)).trim()}catch(_e){nativeTranslator=null}
+ }
+ const response=await fetch("/api/translate",{
+  method:"POST",headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({text:input,sourceLanguage:languageCode}),
+  cache:"no-store",credentials:"same-origin"
+ });
+ const data=await response.json().catch(()=>({}));
+ if(!response.ok||typeof data.english!=="string")
+  throw Error(data.message||"Automatic English translation is unavailable.");
+ return data.english.trim();
 }
+async function prepareNativeTranslator(lang){
+ nativeTranslator=null;nativeTranslatorLanguage="";
+ if(lang==="en"||!globalThis.Translator)return;
+ try{
+  const info=await globalThis.Translator.availability({sourceLanguage:lang,targetLanguage:"en"});
+  // Do not silently trigger model downloads on a school computer.
+  if(info!=="available")return;
+  nativeTranslator=await globalThis.Translator.create({sourceLanguage:lang,targetLanguage:"en"});
+  nativeTranslatorLanguage=lang;
+ }catch(_e){nativeTranslator=null;nativeTranslatorLanguage=""}
+}
+function initTranscription(){
+ const original=$("transcript"),english=$("translatedTranscript"),statusBox=$("translationStatus");
+ const choose=$("sttLanguage");
+ const Rec=window.SpeechRecognition||window.webkitSpeechRecognition;
+ let committedText="",englishText="";
+ const setStatus=message=>text(statusBox,message);
+ const reportFailure=err=>setStatus("English translation unavailable: "+(err.message||"Please try again.")+" Original transcript is preserved.");
+ const translatePiece=(piece,lang,run)=>{
+  transcriptTranslationQueue=transcriptTranslationQueue.then(async()=>{
+   try{
+    const output=await englishTranslation(piece,lang);
+    if(run!==transcriptRun)return;
+    englishText+=(englishText?" ":"")+output;
+    english.value=englishText;
+    setStatus(lang==="en"?"English transcription ready.":"English translation updated · "+STT_LANGUAGES[choose.value].label+" → English");
+   }catch(err){if(run===transcriptRun)reportFailure(err)}
+  });
+ };
+ const start=async()=>{
+  if(!Rec){text($("micStatus"),"Speech recognition is not supported by this browser. You can type text and use Translate to English.");return}
+  const selected=choose.value,lang=STT_LANGUAGES[selected];
+  if(!lang)return;
+  if(recognition){recognition.onend=null;recognition.stop();recognition=null}
+  const run=++transcriptRun;
+  if(lastTranscriptionLanguage&&lastTranscriptionLanguage!==selected){original.value="";english.value="";}
+  lastTranscriptionLanguage=selected;
+  committedText=original.value.trim();englishText=english.value.trim();
+  transcriptTranslationQueue=Promise.resolve();
+  setStatus(selected==="en-US"?"English speech will appear in both boxes.":"Finalized "+lang.label+" phrases are translated to English automatically.");
+  // Start the microphone immediately in this user gesture; translation setup
+  // happens afterward so it does not block the browser's permission prompt.
+  recognition=new Rec();const active=recognition;
+  active.lang=selected;active.continuous=true;active.interimResults=true;
+  const seen=new Set();
+  active.onresult=event=>{
+   if(run!==transcriptRun)return;
+   let interim="";
+   for(let i=0;i<event.results.length;i++){
+    const result=event.results[i],t=result?.[0]?.transcript?.trim()||"";
+    if(result.isFinal&&!seen.has(i)&&t){
+     seen.add(i);
+     committedText+=(committedText?" ":"")+t;
+     translatePiece(t,lang.code,run);
+    }else if(!result.isFinal&&t){interim+=(interim?" ":"")+t}
+   }
+   original.value=committedText+(interim?(committedText?" ":"")+interim:"");
+   original.scrollTop=original.scrollHeight;
+   if(lang.code==="en"){
+    englishText=committedText;
+    english.value=original.value;
+   }
+  };
+  active.onerror=event=>{if(run===transcriptRun)text($("micStatus"),"Microphone: "+event.error+". Try selecting the correct spoken language.")};
+  active.onend=()=>{if(run===transcriptRun){text($("micStatus"),"Microphone off. Both transcript boxes remain on this device.");recognition=null}};
+  try{active.start();text($("micStatus"),"Listening in "+lang.label+"…");}
+  catch(err){text($("micStatus"),"Could not start microphone: "+err.message);recognition=null;return}
+  prepareNativeTranslator(lang.code).catch(()=>{});
+ };
+ $("micStart").onclick=()=>{start().catch(err=>text($("micStatus"),"Microphone unavailable: "+err.message))};
+ $("micStop").onclick=()=>{recognition?.stop()};
+ choose.onchange=()=>{
+  recognition?.stop();
+  setStatus("Reading language selected: "+STT_LANGUAGES[choose.value].label+". Start the mic to recognize that language.");
+ };
+ $("clearTranscript").onclick=()=>{
+  ++transcriptRun;
+  recognition?.stop();original.value="";english.value="";
+  committedText="";englishText="";transcriptTranslationQueue=Promise.resolve();
+  text($("micStatus"),"Both transcript boxes cleared on this device.");
+  setStatus("Choose a language and read aloud. Original speech and English will appear together.");
+ };
+ $("translateNow").onclick=async()=>{
+  const selected=choose.value,lang=STT_LANGUAGES[selected];
+  const input=original.value.trim();
+  if(!input){setStatus("Speak or type text in the original box first.");return}
+  if(input.length>800){setStatus("To translate typed text, select up to 800 characters.");return}
+  const run=++transcriptRun,button=$("translateNow");
+  button.disabled=true;setStatus("Translating to English…");
+  try{
+   let translated=[];
+   // Server limits each piece to protect shared school resources.
+   for(const part of input.match(/[\s\S]{1,240}/g)||[]){
+    const value=await englishTranslation(part,lang.code);
+    if(run!==transcriptRun)return;
+    translated.push(value);
+   }
+   englishText=translated.join(" ");
+   english.value=englishText;
+   setStatus("English translation ready.");
+  }catch(err){if(run===transcriptRun)reportFailure(err)}
+  finally{button.disabled=false}
+ };
+ if(!Rec)text($("micStatus"),"This browser does not support speech recognition. You can type in the original box and select Translate to English.");
+}
+
 async function init(){
  for(let i=1;i<=8;i++){const o=node("option","",String(i));o.value=String(i);$("wordCount").append(o)}$("wordCount").value="2";
  $("dialogClose").onclick=()=>$("wordDialog").close();

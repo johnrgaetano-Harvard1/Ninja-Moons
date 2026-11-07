@@ -65,7 +65,36 @@
     <details class="external-ai"><summary>Advanced AI: existing adult test app</summary><p class="quiet">The original AI experiment uses a separate access-controlled system and may require an adult test code. It is not automatically connected to this reader's student login.</p><div class="actions"><button id="copyContext" class="btn primary">Copy story context for Ask Ninja</button><a class="text-link" href="https://ninja-moons-ask-ninja-lab.vercel.app/" target="_blank" rel="noopener">Open Ask Ninja in a separate tab if embedding is blocked</a></div><div class="embed-frame"><iframe id="ninjaFrame" title="Ask Ninja existing learning assistant" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></details></section>
    <section class="panel" data-panel="teacher" hidden><div class="panel-heading"><h3>Ask Teacher · Just Send</h3><p>No student accounts, account numbers, names, or passwords. Type your question and send. The teacher's reply comes back to this same browser automatically.</p></div><div id="accountBox"></div><div id="chatApp" hidden><div class="chat-layout"><div class="chat-sidebar"><h4 id="inboxTitle">My questions</h4><div id="threadList"></div><button id="newThread" class="btn primary wide" type="button">+ Ask a new question</button></div><div class="chat-main"><div id="chatHead" class="context-strip">Choose a conversation</div><div class="chat-messages" id="chatMessages"></div><form id="chatForm" class="send-form"><textarea id="chatText" rows="2" maxlength="1000" placeholder="Ask your teacher a question…" aria-label="Your message" required></textarea><button class="btn primary" type="submit" id="sendChat">Send</button></form><div class="quiet" id="chatStatus" role="status" aria-live="polite"></div></div></div></div></section>
    <section class="panel" data-panel="live" hidden><div class="panel-heading"><h3>Teacher Live · Reading Classroom</h3><p>The existing live reading tools stay here beneath your story. Microphone access requires your permission.</p></div><p class="context-strip">For the teacher to observe a student’s reading activity, use the authenticated Progress panel. The existing live audio experience below is a separate application and may require its own session.</p><div class="actions"><button id="enableLive" type="button" class="btn primary">▶ Open Live Reading in this toolbox</button><span id="liveStatus" class="quiet" role="status">Microphone off. No live classroom loaded.</span></div><div class="embed-frame"><iframe id="liveFrame" title="Existing NINJA MOONS live reading classroom" loading="lazy" allow="microphone"></iframe></div><a href="https://ninjamoons.vercel.app/live-reading/" target="_blank" rel="noopener" class="text-link">Open Live Reading directly if embedding is blocked</a></section>
-   <section class="panel" data-panel="transcribe" hidden><div class="panel-heading"><h3>Transcription · Speak to Text</h3><p>Practice speaking. Supported browsers can show your words on screen without leaving the page.</p></div><div class="actions"><label>Speech language <select id="sttLanguage"><option value="en-US">English</option><option value="es-ES">Español</option></select></label><button id="micStart" class="btn primary" type="button">🎙 Start Mic</button><button id="micStop" class="btn subtle" type="button">■ Stop Mic</button><button id="clearTranscript" class="btn subtle" type="button">Clear</button></div><textarea id="transcript" rows="6" placeholder="Your spoken words appear here if your device supports speech recognition."></textarea><p class="quiet" id="micStatus" role="status">Microphone off. No recording or transcript is uploaded by this tool.</p></section>
+   <section class="panel" data-panel="transcribe" hidden>
+    <div class="panel-heading"><h3>Transcription · Read Aloud in 5 Languages</h3>
+      <p>Read your story in your language. See exactly what you said and its English translation together. Translation updates after each completed phrase.</p>
+    </div>
+    <div class="actions">
+     <label>Spoken language
+      <select id="sttLanguage" aria-label="Language the student is speaking">
+       <option value="en-US">English</option>
+       <option value="es-ES">Español · Spanish</option>
+       <option value="zh-CN">中文 · Mandarin Chinese</option>
+       <option value="hi-IN">हिन्दी · Hindi</option>
+       <option value="ar-SA">العربية · Arabic</option>
+      </select>
+     </label>
+     <button id="micStart" class="btn primary" type="button">🎙 Start Mic</button>
+     <button id="micStop" class="btn subtle" type="button">■ Stop Mic</button>
+     <button id="translateNow" class="btn secondary" type="button">Translate to English</button>
+     <button id="clearTranscript" class="btn subtle" type="button">Clear Both</button>
+    </div>
+    <div class="transcription-grid">
+     <label class="transcription-column"><span>What you said · Original language</span>
+      <textarea id="transcript" dir="auto" rows="7" placeholder="Your spoken or typed words appear here."></textarea>
+     </label>
+     <label class="transcription-column"><span>English · Automatic translation</span>
+      <textarea id="translatedTranscript" dir="auto" rows="7" readonly placeholder="The English translation will appear here after you finish a phrase."></textarea>
+     </label>
+    </div>
+    <p id="translationStatus" class="context-strip" aria-live="polite">Choose the language being spoken, then Start Mic. Original and English text appear side by side.</p>
+    <p class="quiet" id="micStatus" role="status">Microphone off. Your browser may process speech remotely. When on-device translation is unavailable, only the finalized transcript text is sent to the translation service; no microphone audio is sent by NINJA MOONS to that service.</p>
+   </section>
    <section class="panel" data-panel="progress" hidden><div class="panel-heading"><h3>Reading Progress & Teacher Monitor</h3><p>Track pages, training stages, and questions. Authorized teachers can view their students’ recent activity.</p></div><div id="progressCard" class="training-card"></div><div id="teacherMonitor" hidden><h4>Teacher Classroom Activity</h4><div id="teacherEvents"></div></div></section>
    <section class="panel" data-panel="music" hidden><div class="panel-heading"><h3>Music · Optional Reading Background</h3><p>Use the existing classroom music experiment; teachers should control whether music is available.</p></div><div class="context-strip"><strong>Music is off for students.</strong> The old playlist experiment has not been approved for classroom use. Only verified school-appropriate and properly licensed music should be enabled by an authorized teacher.</div><p class="quiet">The original music experiment remains available for adult review; it will not automatically start here.</p><a class="text-link" href="https://ninjamoons.vercel.app/live-reading/youtube-test/" rel="noopener" target="_blank">Open the existing experimental music page (adult review)</a></section>
   </div>

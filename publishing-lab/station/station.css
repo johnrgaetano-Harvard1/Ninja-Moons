@@ -117,3 +117,11 @@ textarea,input{border:1px solid #90b8d5;background:white;color:#183c63;border-ra
  .toolbox-title{padding:9px 14px 7px}
  .tool-tabs{padding:7px}
 }
+
+/* Five-language read-aloud: source speech next to its English translation. */
+.transcription-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.transcription-column{display:flex;flex-direction:column;gap:7px;color:#184c7a;font-size:14px;font-weight:850;min-width:0}
+.transcription-column textarea{width:100%;min-height:190px;font:18px/1.55 system-ui,-apple-system,sans-serif;resize:vertical;white-space:pre-wrap}
+#translatedTranscript{background:#eaf5ff;border-color:#8bc6ea;color:#153b67}
+#translationStatus{margin:10px 0;min-height:44px}
+@media(max-width:800px){.transcription-grid{grid-template-columns:1fr}.transcription-column textarea{min-height:145px;font-size:17px}}
