@@ -422,7 +422,9 @@ function initTranscription(){
     if(result.isFinal&&!seen.has(i)&&t){
      seen.add(i);
      committedText+=(committedText?" ":"")+t;
-     translatePiece(t,lang.code,run);
+     // English recognition already writes directly to the English box.
+     // Queuing an English "translation" here duplicated every finalized phrase.
+     if(lang.code!=="en")translatePiece(t,lang.code,run);
     }else if(!result.isFinal&&t){interim+=(interim?" ":"")+t}
    }
    original.value=committedText+(interim?(committedText?" ":"")+interim:"");
