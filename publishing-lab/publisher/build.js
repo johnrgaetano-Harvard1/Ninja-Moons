@@ -109,6 +109,66 @@ async function installGardenArt(){
  fs.writeFileSync(manifestFile,JSON.stringify(manifest,null,2));
 }
 
+// Cross-browser cryptographic integration test: two independent browser contexts,
+// real Node WebCrypto AES-256-GCM, encrypted messages, key handoff, and tamper rejection.
+async function verifyLiveEndToEndEncryption(source){
+ const browser=(hash,store)=>{
+  const location={hash,origin:'https://ninja-moons-publisher.vercel.app'};
+  const storage={
+   getItem:key=>store.get(key)||null,
+   setItem:(key,value)=>store.set(key,value)
+  };
+  const sandbox={
+   window:{},location,localStorage:storage,
+   crypto:crypto.webcrypto,URL,URLSearchParams,TextEncoder,TextDecoder,
+   Uint8Array,Uint16Array,ArrayBuffer,
+   btoa:str=>Buffer.from(str,'binary').toString('base64'),
+   atob:str=>Buffer.from(str,'base64').toString('binary')
+  };
+  vm.runInNewContext(source,sandbox,{filename:'live-e2e.js',timeout:3000});
+  return sandbox.window.NMLiveE2E;
+ };
+ const teacher=browser('',new Map());
+ const teacherState=await teacher.teacher();
+ const link=teacher.studentLink('https://ninja-moons-publisher.vercel.app/station/?test=live');
+ const studentURL=new URL(link);
+ ensure(studentURL.hash.startsWith('#nmkey=')&&!studentURL.search.includes('nmkey'),
+  'encryption key must be in URL fragment only, never sent in HTTP query');
+ const student=browser(studentURL.hash,new Map());
+ const studentState=await student.student();
+ ensure(teacherState.keyId===studentState.keyId,
+  'student and teacher must have matching AES-256 keys');
+ const question='What does this part of the story mean?';
+ const envelope=await student.seal(question,'student');
+ ensure(/^nmE2E1\\.[A-Za-z0-9_-]{16}\\.[A-Za-z0-9_-]{22,690}$/.test(envelope)
+  &&!envelope.includes(question)&&envelope.length<750,
+  'message text must be a valid ciphertext envelope, never plaintext');
+ ensure(await teacher.open(envelope,'student')===question,
+  'teacher could not decrypt a student question');
+ const reply='Great question! Read line five again.';
+ const response=await teacher.seal(reply,'teacher');
+ ensure(await student.open(response,'teacher')===reply,
+  'student could not decrypt the teacher response');
+ let roleTamperingRejected=false;
+ try{await teacher.open(envelope,'teacher')}catch(_error){roleTamperingRejected=true}
+ ensure(roleTamperingRejected,'AES-GCM role authentication must reject sender impersonation');
+ let ciphertextTamperingRejected=false;
+ const lastChar=envelope.at(-1);
+ const modified=envelope.slice(0,-1)+(lastChar==='A'?'B':'A');
+ try{await teacher.open(modified,'student')}catch(_error){ciphertextTamperingRejected=true}
+ ensure(ciphertextTamperingRejected,'AES-GCM must reject modified ciphertext');
+ const unpaired=browser('',new Map());
+ let absentKeyRejected=false;
+ try{await unpaired.student()}catch(_error){absentKeyRejected=true}
+ ensure(absentKeyRejected,'student without a teacher-issued key must fail closed');
+ const unrelated=browser('',new Map());
+ await unrelated.teacher();
+ let wrongKeyRejected=false;
+ try{await unrelated.open(envelope,'student')}catch(_error){wrongKeyRejected=true}
+ ensure(wrongKeyRejected,'a different AES-256 key must not decrypt the message');
+ console.log('ENCRYPTION INTEGRATION PASSED: two browser peers, AES-256-GCM, secret fragment, authenticated ciphertext, tampering rejected');
+}
+
 async function main(){
  await installOceanArt();
  await installGardenArt();
@@ -141,6 +201,7 @@ async function main(){
   'no-login demonstration and protected teacher inbox must both be present');
  const e2eJs=fs.readFileSync(path.join(stationDir,'live-e2e.js'),'utf8');
  new vm.Script(e2eJs,{filename:'NINJA_READER/live-e2e.js'});
+ await verifyLiveEndToEndEncryption(e2eJs);
  ensure(e2eJs.includes('AES-GCM')&&e2eJs.includes('tagLength:128')&&
   e2eJs.includes('nmkey')&&e2eJs.includes('crypto.subtle.decrypt'),
   'AES-256-GCM client-side encryption library missing');
