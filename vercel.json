@@ -10,6 +10,9 @@
     },
     "api/live-chat.mjs": {
       "maxDuration": 20
+    },
+    "api/ask-ninja.mjs": {
+      "maxDuration": 25
     }
   }
 }

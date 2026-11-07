@@ -156,3 +156,8 @@ textarea,input{border:1px solid #90b8d5;background:white;color:#183c63;border-ra
 .live-test-pairing strong{display:block;margin-bottom:10px}
 .live-test-pair-actions{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
 .live-test-pair-actions .btn{font-size:14px;text-decoration:none}
+
+/* Ask Ninja responds directly and preserves short paragraphs in the answer. */
+#ninjaAnswer{white-space:pre-wrap;line-height:1.55;min-height:70px;overflow-wrap:anywhere}
+#ninjaAnswer[aria-busy="true"]{opacity:.85}
+#ninjaLocalForm button[disabled]{opacity:.65;cursor:wait}

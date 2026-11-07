@@ -177,6 +177,42 @@ async function verifyLiveEndToEndEncryption(source){
  console.log('ENCRYPTION INTEGRATION PASSED: two browser peers, AES-256-GCM, secret fragment, authenticated ciphertext, tampering rejected');
 }
 
+
+async function testAskNinjaDirectAnswer(source){
+ const requests=[];
+ const sandbox={
+  Response,URL,Map,Date,AbortController,setTimeout,clearTimeout,console,
+  process:{env:{AI_GATEWAY_API_KEY:"integration-test-placeholder"}},
+  fetch:async(url,options)=>{
+   requests.push({url,body:JSON.parse(options.body)});
+   return {ok:true,json:async()=>({choices:[{message:{content:
+    "The sky looks blue because air scatters blue light from the Sun more than red light."}}]})};
+  }
+ };
+ vm.runInNewContext(source,sandbox,{filename:"api/ask-ninja.mjs",timeout:3000});
+ const request=(question,context={})=>({
+  url:"https://ninja-moons-publisher.vercel.app/api/ask-ninja",
+  headers:new Headers({"origin":"https://ninja-moons-publisher.vercel.app",
+    "content-type":"application/json","x-forwarded-for":"build-test"}),
+  text:async()=>JSON.stringify({question,context})
+ });
+ const q="Why does the sky look blue?";
+ const result=await sandbox.POST(request(q));
+ const body=await result.json();
+ ensure(result.status===200&&body.answer.includes("scatters blue light"),
+   "Ask Ninja must return a clear useful answer, not a Socratic prompt");
+ ensure(requests[0].body.messages[1].content.includes(q)&&
+  requests[0].body.messages[0].content.includes("Never restrict answers to the story"),
+   "Ask Ninja must allow questions unrelated to a story");
+ const other="What is the capital of Japan?";
+ const answer=await sandbox.POST(request(other,{title:"A space mission",page:4,text:"The stars were shining."}));
+ ensure(answer.status===200&&requests.at(-1).body.messages[1].content.includes(other),
+   "Story context must not prevent a general question reaching the AI");
+ const invalid=await sandbox.POST(request(""));
+ ensure(invalid.status===400,"Empty questions must be rejected");
+ console.log("ASK NINJA INTEGRATION PASSED: direct general answers, optional story context, short input validation");
+}
+
 async function main(){
  await installOceanArt();
  await installGardenArt();
@@ -187,6 +223,18 @@ async function main(){
  const classroomJs=fs.readFileSync(path.join(stationDir,'classroom.js'),'utf8');
  new vm.Script(stationJs,{filename:'NINJA_READER/station.js'});
  ensure(fs.readFileSync(path.resolve(__dirname,'../../api/translate.mjs'),'utf8').includes('openai/gpt-5-nano'),'translation gateway handler missing');
+ const askNinjaSource=fs.readFileSync(path.resolve(__dirname,'../../api/ask-ninja.mjs'),'utf8');
+ const askNinjaExecutable=askNinjaSource.replace('export function GET','function GET')
+   .replace('export async function POST','async function POST');
+ new vm.Script(askNinjaExecutable,{filename:'api/ask-ninja.mjs'});
+ ensure(askNinjaSource.includes('openai/gpt-5-nano')&&
+   askNinjaSource.includes('ANSWER THE ACTUAL QUESTION FIRST')&&
+   askNinjaSource.includes('Never restrict answers to the story')&&
+   stationJs.includes('fetch("/api/ask-ninja"')&&
+   !stationJs.includes('function quickNinjaAnswer'),
+   'Ask Ninja must answer general school-safe questions through the AI Gateway, without the old canned response engine');
+ await testAskNinjaDirectAnswer(askNinjaExecutable);
+
 
  new vm.Script(classroomJs.replace('export {init,refresh,renderMonitor};',''),{filename:'NINJA_READER/classroom.js'});
  const quickChatJs=fs.readFileSync(path.join(stationDir,'quickchat.js'),'utf8');
