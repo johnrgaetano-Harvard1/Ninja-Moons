@@ -74,6 +74,14 @@
   <button class="btn subtle" id="liveStudentSample" type="button">Send One-Tap Test Question</button>
  </form>
  <p id="liveStudentStatus" class="live-student-status" role="status" aria-live="polite">Connecting to the live teacher test…</p>
+ <div id="liveStudentPairing" class="live-test-pairing" hidden>
+  <strong>This screen created a new encryption key. To see your questions, the teacher must open the matching teacher link below.</strong>
+  <div class="live-test-pair-actions">
+   <a id="liveStudentTeacherLink" class="btn primary" target="_blank" rel="noopener noreferrer" href="#">Open Matched Teacher Inbox</a>
+   <button id="liveStudentCopyTeacherLink" class="btn subtle" type="button">Copy Teacher Link</button>
+  </div>
+  <p id="liveStudentPairStatus" class="quiet" role="status"></p>
+ </div>
  <h4>Messages in this test</h4>
  <div id="liveStudentMessages" class="live-student-messages" aria-live="polite"><p>Checking for messages…</p></div>
  <p class="nm-encryption-note" id="liveStudentCryptoLabel" role="status" aria-live="polite">🔒 Checking end-to-end encryption…</p>

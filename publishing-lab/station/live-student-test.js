@@ -88,6 +88,19 @@
   try{
    if(!window.NMLiveE2E)throw Error("The browser encryption library did not load.");
    const info=await window.NMLiveE2E.student();
+   if(info.generated){
+    const match=window.NMLiveE2E.teacherLink();
+    $("liveStudentTeacherLink").href=match;
+    $("liveStudentPairing").hidden=false;
+    $("liveStudentCopyTeacherLink").onclick=async()=>{
+     try{
+      await navigator.clipboard.writeText(match);
+      $("liveStudentPairStatus").textContent="Matching teacher link copied. Open it on the teacher screen.";
+     }catch(err){
+      $("liveStudentPairStatus").textContent="Use Open Matched Teacher Inbox, or copy that button's link.";
+     }
+    };
+   }
    encryptionReady=true;
    cryptoLabel.textContent="🔒 AES-256-GCM end-to-end encryption (live test) · HTTPS/TLS in transit · Shared key ID "+info.keyId+". Message text is encrypted on this device before sending. Experimental; not independently audited.";
    button.disabled=false;$("liveStudentSample").disabled=false;

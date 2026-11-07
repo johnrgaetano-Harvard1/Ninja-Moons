@@ -113,13 +113,18 @@ async function installGardenArt(){
 // real Node WebCrypto AES-256-GCM, encrypted messages, key handoff, and tamper rejection.
 async function verifyLiveEndToEndEncryption(source){
  const browser=(hash,store)=>{
-  const location={hash,origin:'https://ninja-moons-publisher.vercel.app'};
+  const location={hash,origin:'https://ninja-moons-publisher.vercel.app',
+   pathname:'/station/',search:'?test=live'};
+  const history={replaceState(_state,_title,next){
+   const url=new URL(next,location.origin);
+   location.hash=url.hash;
+  }};
   const storage={
    getItem:key=>store.get(key)||null,
    setItem:(key,value)=>store.set(key,value)
   };
   const sandbox={
-   window:{},location,localStorage:storage,
+   window:{},location,history,localStorage:storage,
    crypto:crypto.webcrypto,URL,URLSearchParams,TextEncoder,TextDecoder,
    Uint8Array,Uint16Array,ArrayBuffer,
    btoa:str=>Buffer.from(str,'binary').toString('base64'),
@@ -157,15 +162,18 @@ async function verifyLiveEndToEndEncryption(source){
  const modified=envelope.slice(0,-1)+(lastChar==='A'?'B':'A');
  try{await teacher.open(modified,'student')}catch(_error){ciphertextTamperingRejected=true}
  ensure(ciphertextTamperingRejected,'AES-GCM must reject modified ciphertext');
- const unpaired=browser('',new Map());
- let absentKeyRejected=false;
- try{await unpaired.student()}catch(_error){absentKeyRejected=true}
- ensure(absentKeyRejected,'student without a teacher-issued key must fail closed');
- const unrelated=browser('',new Map());
- await unrelated.teacher();
- let wrongKeyRejected=false;
- try{await unrelated.open(envelope,'student')}catch(_error){wrongKeyRejected=true}
- ensure(wrongKeyRejected,'a different AES-256 key must not decrypt the message');
+ // Direct student URL without an invitation must generate a key and matching teacher link.
+ const directContext=browser('',new Map());
+ const newStudent=await directContext.student();
+ ensure(newStudent.generated===true,'direct student URL must create its own encryption key');
+ const matchedTeacherURL=new URL(directContext.teacherLink());
+ ensure(matchedTeacherURL.hash.startsWith('#nmkey='),'direct student must expose a matching teacher fragment link');
+ const invitedTeacher=browser(matchedTeacherURL.hash,new Map());
+ const matchedTeacher=await invitedTeacher.teacher();
+ ensure(newStudent.keyId===matchedTeacher.keyId,'direct student teacher pairing must use the same AES-256 key');
+ const fromDirect=await directContext.seal('Can you read this student question?','student');
+ ensure(await invitedTeacher.open(fromDirect,'student')==='Can you read this student question?',
+  'fresh paired teacher must decrypt direct student question');
  console.log('ENCRYPTION INTEGRATION PASSED: two browser peers, AES-256-GCM, secret fragment, authenticated ciphertext, tampering rejected');
 }
 
@@ -215,7 +223,7 @@ async function main(){
  ensure(teacherDemoHtml.includes('id="liveCryptoLabel"')&&teacherDemoHtml.includes('/station/live-e2e.js'),
  'Teacher message encryption status and module are required');
 
- ensure(stationHtml.includes('id="liveStudentTester"')&&stationHtml.includes('id="liveStudentForm"')
+ ensure(stationHtml.includes('id="liveStudentTester"')&&stationHtml.includes('id="liveStudentPairing"')&&stationHtml.includes('id="liveStudentForm"')
   &&stationHtml.includes('/station/live-student-test.js'),'student test form is missing');
  for(const id of ['translatedTranscript','sttLanguage','translateNow','translationStatus']){
    ensure(stationHtml.includes('id="'+id+'"'),'five-language transcription is missing '+id);
