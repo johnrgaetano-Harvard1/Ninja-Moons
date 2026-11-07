@@ -3,6 +3,10 @@
 const el=id=>document.getElementById(id);
 const make=(tag,cls,body)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(body!==undefined)e.textContent=body;return e};
 const STORAGE="nm-live-test-owner-v1";
+const params=new URLSearchParams(location.search);
+// The dedicated teacher test defaults to the same published test channel as ?test=live.
+const fixedLive=params.get("test")==="live"||(!params.has("testroom")&&!params.has("teacherkey"));
+const FIXED_ROOM="197d9609-c01a-46b7-af7a-ecb6efd14bed";
 // A paired teacher link always takes priority over an unrelated room saved in this browser.
 const linkParams=new URLSearchParams(location.search);
 function pairedRoom(){
@@ -28,6 +32,24 @@ function recover(){
  return null;
 }
 async function client(){
+ if(fixedLive){
+  // Same-origin test API avoids remote SDK loading on television and school browsers.
+  db={rpc:async(name,args)=>{
+   try{
+    if(name!=="nm_live_demo_add"&&name!=="nm_live_demo_read")
+     throw Error("Unknown test request.");
+    const isRead=name==="nm_live_demo_read";
+    const res=await fetch("/api/live-chat"+(isRead?"?role=teacher":""),isRead?{cache:"no-store"}:{
+     method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},
+     body:JSON.stringify({role:"teacher",message:args.p_body,story:args.p_story,page:args.p_page})
+    });
+    const body=await res.json().catch(()=>({}));
+    if(!res.ok)return{data:null,error:{message:body.message||"Could not reach the classroom test."}};
+    return{data:isRead?{messages:body.messages||[]}:body.sent,error:null};
+   }catch(err){return{data:null,error:{message:err.message||"Test connection error."}}}
+  }};
+  return;
+ }
  const r=await fetch("/station/config.json",{cache:"no-store"});
  if(!r.ok)throw Error("Classroom database settings are unavailable.");
  const cfg=await r.json();
@@ -37,6 +59,7 @@ async function client(){
  db=sdk.createClient(cfg.projectUrl,cfg.publishableKey,{auth:{detectSessionInUrl:false}});
 }
 function storyLink(){
+ if(fixedLive)return new URL("/station/?story=seven-second-journey-grade-1&tool=teacher&test=live",location.origin).href;
  const url=new URL("/station/",location.origin);
  for(const [k,v] of Object.entries({story:"seven-second-journey-grade-1",tool:"teacher",testroom:room.id,studentkey:room.studentKey}))
   url.searchParams.set(k,v);
@@ -48,6 +71,12 @@ function showLink(){
 }
 async function ensureRoom(force=false){
  if(!db)throw Error("Test connection is not initialized.");
+ if(fixedLive){
+  room={id:FIXED_ROOM,teacherKey:"",studentKey:"",created:Date.now()};
+  showLink();
+  el("newLiveRoom").hidden=true;
+  return;
+ }
  const fixed=force?null:pairedRoom();
  if(fixed){
   room=fixed;
