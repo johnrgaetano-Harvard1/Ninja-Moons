@@ -3,6 +3,16 @@
 const el=id=>document.getElementById(id);
 const make=(tag,cls,body)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(body!==undefined)e.textContent=body;return e};
 const STORAGE="nm-live-test-owner-v1";
+// A paired teacher link always takes priority over an unrelated room saved in this browser.
+const linkParams=new URLSearchParams(location.search);
+function pairedRoom(){
+ const id=linkParams.get("testroom")||"";
+ const teacherKey=linkParams.get("teacherkey")||"";
+ const studentKey=linkParams.get("studentkey")||"";
+ if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(id) ||
+  !/^[0-9a-f]{64}$/.test(teacherKey)||!/^[0-9a-f]{64}$/.test(studentKey))return null;
+ return {id,teacherKey,studentKey,created:Date.now(),paired:true};
+}
 let db=null,room=null,busy=false,refreshTimer=null,privateLoaded=false;
 const setStatus=value=>{el("liveStatus").textContent=value};
 function key(){
@@ -38,6 +48,12 @@ function showLink(){
 }
 async function ensureRoom(force=false){
  if(!db)throw Error("Test connection is not initialized.");
+ const fixed=force?null:pairedRoom();
+ if(fixed){
+  room=fixed;
+  // Do not cache access tokens from a one-time teacher URL.
+  showLink();return;
+ }
  const old=force?null:recover();
  if(old){room=old;showLink();return}
  setStatus("Creating your private test room…");
@@ -106,6 +122,8 @@ el("copyLiveLink").onclick=async()=>{
 };
 el("newLiveRoom").onclick=async()=>{
  el("newLiveRoom").disabled=true;
+ // A freshly generated room must not silently revert to the URL-paired test on reload.
+ if(pairedRoom())history.replaceState(null,"",location.pathname);
  try{await ensureRoom(true);render([]);await refresh();el("liveReplyStatus").textContent="New session ready. Use the new student story link."}
  catch(err){setStatus("Could not start new test: "+err.message)}
  finally{el("newLiveRoom").disabled=false}
