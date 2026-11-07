@@ -373,7 +373,10 @@ async function init(){
   $("storyPick").replaceChildren();
   for(const st of catalog){const opt=node("option","",String(GRADES[st.grade]||st.readingLevel||"Story")+" · "+st.title);opt.value=st.slug;$("storyPick").append(opt)}
   const query=new URLSearchParams(location.search).get("story"),desired=query&&catalog.some(x=>x.slug===query)?query:catalog.some(x=>x.slug==="seven-second-journey-grade-1")?"seven-second-journey-grade-1":catalog[0].slug;
-  await loadStory(desired);showTool("trainer");
+  await loadStory(desired);
+   const requestedTool=new URLSearchParams(location.search).get("tool");
+   const validTools=["trainer","language","pictures","questions","ninja","teacher","live","transcribe","progress","music"];
+   showTool(validTools.includes(requestedTool)?requestedTool:"trainer");
  }catch(e){text($("storyLines"),"Story library unavailable: "+e.message);text($("storyPick"),"Story library unavailable");}
 }
 init();
