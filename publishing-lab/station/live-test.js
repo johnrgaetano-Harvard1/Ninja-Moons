@@ -66,7 +66,8 @@ function storyLink(){
  return url.href;
 }
 function showLink(){
- const url=storyLink();el("studentLiveLink").href=url;el("liveLinkText").value=url;
+ const url=fixedLive?window.NMLiveE2E.studentLink(storyLink()):storyLink();
+ el("studentLiveLink").href=url;el("liveLinkText").value=url;
  el("liveBadge").textContent="LIVE TEST · CONNECTED";
 }
 async function ensureRoom(force=false){
@@ -115,7 +116,11 @@ async function refresh(){
   const r=await db.rpc("nm_live_demo_read",{p_room:room.id,p_key:room.teacherKey,p_role:"teacher"});
   if(r.error)throw r.error;
   const messages=Array.isArray(r.data?.messages)?r.data.messages:[];
-  render(messages);
+  const decoded=fixedLive?await Promise.all(messages.map(async m=>{
+    try{return {...m,body:await window.NMLiveE2E.open(m.body,m.sender)}}
+    catch(_err){return {...m,body:"[Encrypted message — cannot decrypt with this session key]"}}}
+  )):messages;
+  render(decoded);
   setStatus(messages.length
    ?"Live and connected · "+messages.length+" message"+(messages.length===1?"":"s")+" · Checking every 3 seconds."
    :"Live and connected · No questions yet. Send one from the student story and it will appear here.");
@@ -130,11 +135,14 @@ el("liveReplyForm").addEventListener("submit",async e=>{
  try{
   const r=await db.rpc("nm_live_demo_add",{
    p_room:room.id,p_key:room.teacherKey,p_role:"teacher",
-   p_body:value,p_story:"seven-second-journey-grade-1",p_page:1
+   p_body:fixedLive?await window.NMLiveE2E.seal(value,"teacher"):value,
+   p_story:"seven-second-journey-grade-1",p_page:1
   });
   if(r.error)throw r.error;
   el("liveReplyText").value="";
-  el("liveReplyStatus").textContent="Reply sent. The student's story screen will show it automatically.";
+  el("liveReplyStatus").textContent=fixedLive
+   ?"Encrypted AES-256-GCM reply delivered. It will appear on the student's screen."
+   :"Reply sent. The student's story screen will show it automatically.";
   await refresh();
  }catch(err){el("liveReplyStatus").textContent="Reply failed: "+err.message}
  finally{el("liveReplyBtn").disabled=false}
@@ -167,8 +175,21 @@ el("showDemo").addEventListener("click",()=>{
 async function init(){
  el("demoInbox").hidden=true;
  el("resetDemo").hidden=true;
- try{await client();await ensureRoom();await refresh()}
- catch(err){el("liveBadge").textContent="TEST CONNECTION ERROR";setStatus("Unable to connect: "+err.message)}
+ try{
+  if(fixedLive){
+   if(!window.NMLiveE2E)throw Error("The browser encryption library did not load.");
+   const info=await window.NMLiveE2E.teacher();
+   el("liveCryptoLabel").textContent="🔒 AES-256-GCM end-to-end encryption (live test) · HTTPS/TLS in transit · Shared key ID "+info.keyId+". Only devices holding the paired test link can decrypt new message text. Experimental; not independently audited.";
+  }else{
+   el("liveCryptoLabel").textContent="🔒 HTTPS/TLS transport encryption only — end-to-end encryption is available in the live test mode.";
+  }
+  await client();await ensureRoom();await refresh();
+ }catch(err){
+  el("liveBadge").textContent="ENCRYPTION / CONNECTION ERROR";
+  el("liveReplyBtn").disabled=true;
+  el("liveCryptoLabel").textContent="🔒 Encrypted messaging unavailable in this browser. Do not send private content.";
+  setStatus("Unable to start encrypted test: "+err.message);
+ }
  refreshTimer=setInterval(()=>{if(document.visibilityState!=="hidden")refresh().catch(()=>{})},3000);
  document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")refresh().catch(()=>{})});
 }
