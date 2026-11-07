@@ -265,14 +265,56 @@ function quickNinjaAnswer(question){
  if(scored[0]?.score>0)return "Here's a clue from this picture:\n“"+scored[0].line+"”\nTry explaining what this tells you in your own words. You can ask your teacher for more help.";
  return "I can help explain the current page, give a published word definition, show the Spanish translation, or practise pronunciation. For a question that needs a new answer, choose Ask Teacher or open the supervised Ask Ninja AI test.";
 }
-function askLocal(q){
- const answer=quickNinjaAnswer(q);text($("ninjaAnswer"),answer);
- return answer;
+let ninjaBusy=false;
+async function askLocal(input){
+ const q=String(input||"").trim();
+ const output=$("ninjaAnswer");
+ if(!q){text(output,"Type a question first.");return}
+ if(ninjaBusy)return;
+ const form=$("ninjaLocalForm");
+ const submit=form.querySelector('button[type="submit"]');
+ ninjaBusy=true;submit.disabled=true;output.setAttribute("aria-busy","true");
+ text(output,"Ninja is getting a direct answer…");
+ try{
+  const c=context();
+  const optionalLines=story?currentLines().join(" ").slice(0,320):"";
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),20000);
+  let response;
+  try{
+   response=await fetch("/api/ask-ninja",{
+    method:"POST",credentials:"same-origin",cache:"no-store",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+     question:q,
+     context:{title:c.title||"",page:c.page||1,text:optionalLines}
+    }),
+    signal:controller.signal
+   });
+  }finally{clearTimeout(timer)}
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok||typeof result.answer!=="string"||!result.answer.trim())
+   throw Error(result.message||"Ninja could not find an answer. Please try again.");
+  text(output,result.answer.trim());
+ }catch(err){
+  text(output,err?.name==="AbortError"
+   ?"Ninja took too long to answer. Try again."
+   :"Ninja could not answer right now: "+(err.message||"Please try again."));
+ }finally{
+  ninjaBusy=false;submit.disabled=false;output.removeAttribute("aria-busy");
+ }
 }
 function initAskNinja(){
  $("ninjaLocalForm").onsubmit=e=>{e.preventDefault();askLocal($("ninjaQuestion").value)};
- $("ninjaExplain").onclick=()=>askLocal("Explain what happened on this picture");
- $("ninjaSpanish").onclick=()=>askLocal("Translate this sentence into Spanish");
+ $("ninjaExplain").onclick=()=>{
+  $("ninjaQuestion").value="Explain what is happening on this story page.";
+  askLocal($("ninjaQuestion").value);
+ };
+ $("ninjaSpanish").onclick=()=>{
+  const line=displaySentence().en||"";
+  $("ninjaQuestion").value="Translate this story sentence into Spanish: "+line.slice(0,210);
+  askLocal($("ninjaQuestion").value);
+ };
  $("ninjaWord").onclick=()=>{
   const sent=displaySentence().shown||"";
   const matching=tokens(sent).find(w=>vocabOf(w)||nounInfo(w))||tokens(sent).find(w=>w.length>4)||"this";
@@ -283,7 +325,7 @@ function initAskNinja(){
   const question=$("ninjaQuestion").value.trim();
   showTool("teacher");
   const field=$("chatText");
-  field.value=(question?question+"\n":"")+"Story: "+(story?.title||"")+" · picture "+(page+1)+", sentence "+(sentence+1)+".";
+  field.value=(question?question+"\\n":"")+"Story: "+(story?.title||"")+" · picture "+(page+1)+", sentence "+(sentence+1)+".";
   field.focus();
  };
  const details=document.querySelector(".external-ai");
@@ -308,7 +350,7 @@ async function loadStory(slug){
   if(!Array.isArray(m.pages)||!m.pages.length)throw Error("Story pages missing");
  }catch(e){text($("storyLines"),"Could not load this story: "+e.message);return}
  currentSlug=slug;story=m;spanish=null;questions=null;
- if($("ninjaAnswer"))text($("ninjaAnswer"),"Choose a question above or type one about this story.");
+ if($("ninjaAnswer"))text($("ninjaAnswer"),"Ask Ninja a question about anything school-safe. You can also ask about this story.");
  const packBase=slug==="seven-second-journey-grade-1"?"grade1":slug;
  const optionalJSON=async(url)=>{try{const r=await fetch(url,{cache:"no-store"});return r.ok?await r.json():null}catch{return null}};
  const [translated,quizData]=await Promise.all([optionalJSON("/station/"+packBase+"-es.json"),optionalJSON("/station/"+packBase+"-questions.json")]);
