@@ -124,6 +124,11 @@ async function main(){
  const quickChatJs=fs.readFileSync(path.join(stationDir,'quickchat.js'),'utf8');
  new vm.Script(quickChatJs.replace('export {init,refresh};',''),{filename:'NINJA_READER/quickchat.js'});
  ensure(quickChatJs.includes('nm_q_send')&&quickChatJs.includes('nm_q_read')&&quickChatJs.includes('nm_q_teacher_reply'),'quick teacher chat is missing required private database functions');
+ const teacherDemoJs=fs.readFileSync(path.join(stationDir,'teacher-demo.js'),'utf8');
+ new vm.Script(teacherDemoJs,{filename:'NINJA_READER/teacher-demo.js'});
+ const teacherDemoHtml=fs.readFileSync(path.join(stationDir,'teacher.html'),'utf8');
+ ensure(teacherDemoHtml.includes('id="demoInbox"')&&teacherDemoHtml.includes('id="privateInbox"')&&teacherDemoJs.includes('sessionStorage'),
+  'no-login demonstration and protected teacher inbox must both be present');
  const stationHtml=fs.readFileSync(path.join(stationDir,'index.html'),'utf8');
  for(const id of ['translatedTranscript','sttLanguage','translateNow','translationStatus']){
    ensure(stationHtml.includes('id="'+id+'"'),'five-language transcription is missing '+id);
