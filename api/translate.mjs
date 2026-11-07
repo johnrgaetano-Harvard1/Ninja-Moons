@@ -22,7 +22,16 @@ export async function GET(request){
   const inner=new Request(request.url,{method:"POST",headers:{
    "content-type":"application/json","origin":new URL(request.url).origin,
    "x-vercel-oidc-token":request.headers.get("x-vercel-oidc-token")||""
-  },body:JSON.stringify({text:"Los niños leen el libro en español.",sourceLanguage:"es"})});
+  },body:JSON.stringify((()=>{
+   const sample={
+    es:"Los niños leen el libro en español.",
+    zh:"孩子们正在读书。",
+    hi:"बच्चे किताब पढ़ रहे हैं।",
+    ar:"الأطفال يقرؤون الكتاب."
+   };
+   const sourceLanguage=new URL(request.url).searchParams.get("lang")||"es";
+   return {text:sample[sourceLanguage]||sample.es,sourceLanguage:sourceLanguage in sample?sourceLanguage:"es"};
+  })())});
   return POST(inner);
  }
  return json({available:!!credentials(request),model:MODEL,languages:Object.keys(LANGUAGES),mode:"text-only",storesTranscripts:false});
