@@ -84,6 +84,9 @@ async function main(){
  const classroomJs=fs.readFileSync(path.join(stationDir,'classroom.js'),'utf8');
  new vm.Script(stationJs,{filename:'NINJA_READER/station.js'});
  new vm.Script(classroomJs.replace('export {init,refresh,renderMonitor};',''),{filename:'NINJA_READER/classroom.js'});
+ const quickChatJs=fs.readFileSync(path.join(stationDir,'quickchat.js'),'utf8');
+ new vm.Script(quickChatJs.replace('export {init,refresh};',''),{filename:'NINJA_READER/quickchat.js'});
+ ensure(quickChatJs.includes('nm_q_send')&&quickChatJs.includes('nm_q_read')&&quickChatJs.includes('nm_q_teacher_reply'),'quick teacher chat is missing required private database functions');
  const stationHtml=fs.readFileSync(path.join(stationDir,'index.html'),'utf8');
  for(const tool of ['trainer','language','pictures','questions','ninja','teacher','live','transcribe','progress','music']){
   ensure(stationHtml.includes('data-tool="'+tool+'"')&&stationHtml.includes('data-panel="'+tool+'"'),
@@ -179,7 +182,7 @@ async function main(){
     const info=document.createElement('div');info.className='details';
     const title=document.createElement('h2');title.textContent=story.title;
     const level=document.createElement('p');level.className='small';level.textContent=(story.readingLevel||'Reader')+' · '+story.pages+' pages';
-    const link=document.createElement('a');link.className='link';link.href=story.href;link.textContent='📖 Open Illustrated Story';
+    const link=document.createElement('a');link.className='link';link.href='/station/?story='+encodeURIComponent(story.slug);link.textContent='📖 Open All Story Tools';
     info.append(title,level,link);card.append(img,info);main.append(card);
    }
   }catch(e){console.warn('Story catalog unavailable',e)}
