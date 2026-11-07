@@ -224,7 +224,8 @@ async function main(){
  new vm.Script(stationJs,{filename:'NINJA_READER/station.js'});
  ensure(fs.readFileSync(path.resolve(__dirname,'../../api/translate.mjs'),'utf8').includes('openai/gpt-5-nano'),'translation gateway handler missing');
  const askNinjaSource=fs.readFileSync(path.resolve(__dirname,'../../api/ask-ninja.mjs'),'utf8');
- const askNinjaExecutable=askNinjaSource.replace('export function GET','function GET')
+ const askNinjaExecutable=askNinjaSource.replace('export async function GET','async function GET')
+   .replace('export function GET','function GET')
    .replace('export async function POST','async function POST');
  new vm.Script(askNinjaExecutable,{filename:'api/ask-ninja.mjs'});
  ensure(askNinjaSource.includes('openai/gpt-5-nano')&&
