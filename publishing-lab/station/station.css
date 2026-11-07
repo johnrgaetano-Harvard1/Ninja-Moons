@@ -72,3 +72,48 @@ textarea,input{border:1px solid #90b8d5;background:white;color:#183c63;border-ra
 .tool-tab{position:relative}
 .message-count{position:absolute;right:4px;top:3px;min-width:19px;height:19px;padding:1px 5px;border:1px solid #e4f7ff;background:#2987d5;color:white;border-radius:100px;font-size:11px;line-height:15px;text-align:center;font-weight:900}
 .message-count[hidden]{display:none!important}
+
+
+/* Large-screen reading layout: keep the story visible without covering the toolbox.
+   Width alone used to scale the image until the dock filled most of a short TV/laptop viewport. */
+@media (min-width:1001px){
+ .story-dock{
+  height:clamp(240px,35vh,340px);
+  height:clamp(240px,35dvh,340px);
+  min-height:0;
+  grid-template-columns:minmax(0,0.94fr) minmax(0,1fr);
+ }
+ .story-image{height:100%;min-height:0;overflow:hidden}
+ .story-image img,.story-image svg#storySprite{
+  display:block;width:100%;height:100%;max-height:100%;
+  aspect-ratio:auto;object-fit:contain
+ }
+ .story-content{min-height:0;max-height:100%;overflow:hidden;padding:12px 16px}
+ .story-content h2{font-size:clamp(20px,2.1vw,27px)}
+ .page-title{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+ .story-text{
+  min-height:0;max-height:none;flex:1 1 0;overflow-y:auto;
+  font:clamp(16px,1.5vw,20px)/1.45 Georgia,serif;
+  padding:5px 4px
+ }
+ .story-footer{flex:0 0 auto;gap:6px;flex-wrap:nowrap;margin-top:7px}
+ .story-footer .btn{padding:6px 8px;min-height:34px;font-size:12px}
+ .story-track{flex:0 0 auto;margin-top:7px}
+ .toolbox{margin-top:12px}
+ .toolbox-title{padding:12px 18px 9px}
+ .toolbox-title h2{font-size:clamp(22px,2.1vw,28px);margin:2px 0}
+ .tool-tabs{padding:10px;gap:7px}
+ .tool-tab{min-height:48px;padding:7px 6px}
+ .panel-stack{padding:12px}
+ .panel{padding:16px}
+}
+/* The reading pane and all tools must remain reachable on shorter laptop displays. */
+@media (min-width:1001px) and (max-height:640px){
+ .story-dock{height:225px}
+ .story-content{padding:8px 12px}
+ .story-name{font-size:10px}
+ .story-content h2{font-size:21px}
+ .story-footer .btn{min-height:31px;padding:4px 7px}
+ .toolbox-title{padding:9px 14px 7px}
+ .tool-tabs{padding:7px}
+}

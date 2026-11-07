@@ -70,7 +70,7 @@ function showWord(word,forceLang){
  window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"word_tap"}}));
 }
 function currentLines(){return story?.pages?.[page]?.lines||[]}
-function pageTitle(){return nativeEs()&&spanish?.titles?.[page]?spanish.titles[page]:currentSlug==="seven-second-journey-grade-1"?SCENE_TITLES[page]:story.pages[page].alt||"Picture "+(page+1)}
+function pageTitle(){return nativeEs()&&spanish?.titles?.[page]?spanish.titles[page]:currentSlug==="seven-second-journey-grade-1"?SCENE_TITLES[page]:story.pages[page].title||story.pages[page].alt||"Picture "+(page+1)}
 function displaySentence(){const en=currentLines()[sentence]||"",es=spanish?.lines?.[page]?.[sentence]||"";return{en,es,shown:nativeEs()?es:en}}
 function setPage(index){if(!story)return;stopSpeech();page=Math.max(0,Math.min(story.pages.length-1,index));sentence=0;wordStart=0;refresh();window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"story_open"}}))}
 function setSentence(i){sentence=Math.max(0,Math.min(currentLines().length-1,i));wordStart=0;refresh();window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"sentence_read"}}))}
