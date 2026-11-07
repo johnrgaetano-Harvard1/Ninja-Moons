@@ -35,7 +35,7 @@ function togglePause(){
 }
 function speakSegments(parts,readAll=false){
  // Do not play reading audio into a live student microphone.
- if(recognition)recognition.stop();
+ if(recognition){try{recognition.stop()}catch(_error){recognition=null}}
  stopSpeech();if(!("speechSynthesis" in window)){alert("Speech is not available in this browser.");return}
  const serial=++lastAudio;let position=0;
  function next(){
@@ -223,7 +223,7 @@ function refresh(){
 }
 function showTool(name){
  // A microphone must not stay open unnoticed after leaving the transcription toolbox.
- if(name!=="transcribe"&&recognition)recognition.stop();
+ if(name!=="transcribe"&&recognition){try{recognition.stop()}catch(_error){recognition=null}}
  tool=name;for(const e of document.querySelectorAll("[data-panel]"))e.hidden=e.dataset.panel!==name;
  for(const b of document.querySelectorAll("[data-tool]")){const is=b.dataset.tool===name;b.classList.toggle("selected",is);if(is)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")}
  // The adult AI testing iframe is loaded only on deliberate user expansion, not on student page load.
@@ -470,14 +470,14 @@ function initTranscription(){
   else text($("micStatus"),"Microphone is already off.");
  };
  choose.onchange=()=>{
-  // Prevent results from the previous language being attached to the new one.
-  if(recognition)recognition.stop();
+  // Prevent late results in the previous language from entering the new transcript.
   ++transcriptRun;
+  if(recognition){const previous=recognition;recognition=null;try{previous.stop()}catch(_error){}}
   setStatus("Reading language selected: "+STT_LANGUAGES[choose.value].label+". Start the mic to recognize that language.");
  };
  $("clearTranscript").onclick=()=>{
   ++transcriptRun;
-  if(recognition)recognition.stop();
+  if(recognition){const previous=recognition;recognition=null;try{previous.stop()}catch(_error){}}
   original.value="";english.value="";
   committedText="";englishText="";transcriptTranslationQueue=Promise.resolve();
   text($("micStatus"),"Both transcript boxes cleared on this device.");
@@ -489,7 +489,7 @@ function initTranscription(){
   if(!input){setStatus("Speak or type text in the original box first.");return}
   if(input.length>800){setStatus("To translate typed text, select up to 800 characters.");return}
   // Translating manually should also end any live recognition session.
-  if(recognition){if(typeof recognition.requestStop==="function")recognition.requestStop();else recognition.stop()}
+  if(recognition){const previous=recognition;recognition=null;try{previous.stop()}catch(_error){}}
   const run=++transcriptRun,button=$("translateNow");
   button.disabled=true;setStatus("Translating to English…");
   try{
@@ -508,8 +508,8 @@ function initTranscription(){
  };
  document.addEventListener("visibilitychange",()=>{
   if(document.hidden&&recognition){
-   if(typeof recognition.requestStop==="function")recognition.requestStop();
-   else recognition.stop();
+   try{if(typeof recognition.requestStop==="function")recognition.requestStop();
+   else recognition.stop()}catch(_error){recognition=null}
   }
  });
  if(!Rec)text($("micStatus"),"Speech recognition is unavailable in this browser. Try Safari on an iPhone or Chrome/Edge on a computer, or type and translate.");
