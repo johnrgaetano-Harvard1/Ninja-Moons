@@ -11,6 +11,11 @@
  wrap.hidden=false;
  const status=$("liveStudentStatus"),connection=$("liveStudentConnection"),list=$("liveStudentMessages");
  const button=$("liveStudentSend"),field=$("liveStudentText");
+ $("liveStudentSample").onclick=()=>{
+  if(button.disabled)return;
+  field.value="Teacher, can you see this sample student question?";
+  button.click();
+ };
  let reading=false,lastCount=-1;
  const speak=(value)=>{status.textContent=value};
  function showMessages(messages){
