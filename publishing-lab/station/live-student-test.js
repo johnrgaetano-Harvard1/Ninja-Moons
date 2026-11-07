@@ -11,6 +11,9 @@
  wrap.hidden=false;
  const status=$("liveStudentStatus"),connection=$("liveStudentConnection"),list=$("liveStudentMessages");
  const button=$("liveStudentSend"),field=$("liveStudentText");
+ const cryptoLabel=$("liveStudentCryptoLabel");
+ let encryptionReady=false;
+ button.disabled=true;$("liveStudentSample").disabled=true;
  $("liveStudentSample").onclick=()=>{
   if(button.disabled)return;
   field.value="Teacher, can you see this sample student question?";
@@ -36,15 +39,19 @@
   if(messages.length>lastCount){list.scrollTop=list.scrollHeight;lastCount=messages.length}
  }
  async function refresh(){
-  if(reading)return;
+  if(reading||!encryptionReady)return;
   reading=true;
   try{
    const res=await fetch("/api/live-chat?role=student",{cache:"no-store",credentials:"same-origin"});
    const data=await res.json().catch(()=>({}));
    if(!res.ok||!data.connected)throw Error(data.message||"Cannot reach teacher test.");
-   connection.textContent="CONNECTED TO TEACHER";
+   connection.textContent="CONNECTED · AES-256-GCM KEY "+window.NMLiveE2E.keyId;
    const messages=Array.isArray(data.messages)?data.messages:[];
-   showMessages(messages);
+   const decoded=await Promise.all(messages.map(async m=>{
+    try{return {...m,body:await window.NMLiveE2E.open(m.body,m.sender)}}
+    catch(_err){return {...m,body:"[Encrypted message — unable to decrypt with this test key]"}}}
+   ));
+   showMessages(decoded);
    // Do not hide a useful send-confirmation underneath a frequent poll.
    if(!status.textContent.includes("Delivered"))speak("Connected. Type a question and press Send Question to Teacher.");
   }catch(err){
@@ -55,28 +62,44 @@
  $("liveStudentForm").addEventListener("submit",async event=>{
   event.preventDefault();
   const message=field.value.trim();
-  if(!message)return;
+  if(!message||!encryptionReady)return;
   button.disabled=true;button.textContent="Sending…";speak("Sending your question to the teacher…");
   try{
    // The active story context comes directly from the same page as the question.
    const context=window.NM_STATION?.getContext?.()||{};
+   const encryptedMessage=await window.NMLiveE2E.seal(message,"student");
    const res=await fetch("/api/live-chat",{
     method:"POST",credentials:"same-origin",cache:"no-store",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({role:"student",message,story:context.slug||"seven-second-journey-grade-1",page:Number(context.page)||1})
+    body:JSON.stringify({role:"student",message:encryptedMessage,story:context.slug||"seven-second-journey-grade-1",page:Number(context.page)||1})
    });
    const data=await res.json().catch(()=>({}));
    if(!res.ok||data.sent!==true)throw Error(data.message||"The server did not accept your question.");
    field.value="";
    await refresh();
-   speak("Delivered to the Teacher Inbox! Look at Step 2 on the teacher screen.");
+   speak("AES-256-GCM encrypted message delivered to the Teacher Inbox! Look at Step 2.");
   }catch(err){
    speak("NOT SENT: "+err.message+" Your question is still in the text box. Try again.");
   }finally{
    button.disabled=false;button.textContent="Send Question to Teacher";
   }
  });
- refresh().catch(()=>{});
- setInterval(()=>{if(document.visibilityState!=="hidden")refresh().catch(()=>{})},3000);
- document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")refresh().catch(()=>{})});
+ async function start(){
+  try{
+   if(!window.NMLiveE2E)throw Error("The browser encryption library did not load.");
+   const info=await window.NMLiveE2E.student();
+   encryptionReady=true;
+   cryptoLabel.textContent="🔒 AES-256-GCM end-to-end encryption (live test) · HTTPS/TLS in transit · Shared key ID "+info.keyId+". Message text is encrypted on this device before sending. Experimental; not independently audited.";
+   button.disabled=false;$("liveStudentSample").disabled=false;
+   await refresh();
+   setInterval(()=>{if(document.visibilityState!=="hidden")refresh().catch(()=>{})},3000);
+   document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")refresh().catch(()=>{})});
+  }catch(err){
+   encryptionReady=false;button.disabled=true;$("liveStudentSample").disabled=true;
+   connection.textContent="ENCRYPTION KEY REQUIRED";
+   speak("Cannot start encrypted messaging: "+err.message);
+   cryptoLabel.textContent="🔒 Encrypted messaging is not ready. Do not send private content.";
+  }
+ }
+ start().catch(err=>{speak("Encrypted test could not start: "+err.message)});
 })();
