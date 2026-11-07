@@ -139,7 +139,13 @@ async function main(){
  ensure(teacherDemoHtml.includes('id="demoInbox"')&&teacherDemoHtml.includes('id="privateInbox"')
   &&teacherDemoHtml.includes('id="liveTestInbox"')&&teacherDemoHtml.includes('id="studentLiveLink"')&&teacherDemoJs.includes('sessionStorage'),
   'no-login demonstration and protected teacher inbox must both be present');
+ const liveStudentJs=fs.readFileSync(path.join(stationDir,'live-student-test.js'),'utf8');
+ new vm.Script(liveStudentJs,{filename:'NINJA_READER/live-student-test.js'});
+ ensure(liveStudentJs.includes('/api/live-chat')&&liveStudentJs.includes('role:"student"'),
+  'direct student-to-teacher test messaging is required');
  const stationHtml=fs.readFileSync(path.join(stationDir,'index.html'),'utf8');
+ ensure(stationHtml.includes('id="liveStudentTester"')&&stationHtml.includes('id="liveStudentForm"')
+  &&stationHtml.includes('/station/live-student-test.js'),'student test form is missing');
  for(const id of ['translatedTranscript','sttLanguage','translateNow','translationStatus']){
    ensure(stationHtml.includes('id="'+id+'"'),'five-language transcription is missing '+id);
  }

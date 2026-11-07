@@ -125,3 +125,24 @@ textarea,input{border:1px solid #90b8d5;background:white;color:#183c63;border-ra
 #translatedTranscript{background:#eaf5ff;border-color:#8bc6ea;color:#153b67}
 #translationStatus{margin:10px 0;min-height:44px}
 @media(max-width:800px){.transcription-grid{grid-template-columns:1fr}.transcription-column textarea{min-height:145px;font-size:17px}}
+
+/* Live cross-device experiment: clear single composer for student questions. */
+.live-student-test{background:#eaf6ff;color:#164066;border:2px solid #55b5ec;border-radius:15px;padding:clamp(14px,3vw,23px);margin:12px 0}
+.live-student-test[hidden]{display:none!important}
+.live-test-title{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px;letter-spacing:.04em;color:#10558a}
+#liveStudentConnection{background:#ceeaff;color:#13446d;border:1px solid #8abde2;border-radius:100px;padding:5px 9px}
+.live-student-test h3{font-size:clamp(22px,3vw,29px);margin:11px 0 5px}
+.live-student-test p{line-height:1.5}
+.live-student-test form{display:flex;flex-direction:column;gap:9px;max-width:100%}
+.live-student-test form label{font-size:13px;font-weight:850;color:#144675}
+.live-student-test textarea{display:block;width:100%;font-size:18px;line-height:1.5;min-height:90px;resize:vertical}
+.live-student-test button{font-size:17px;min-height:50px;align-self:flex-start}
+.live-student-status{background:#d5edff;color:#144f85;border-radius:9px;padding:11px 13px;font-weight:800;min-height:44px}
+.live-student-messages{border:1px solid #bddcef;background:white;border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:9px;max-height:310px;overflow:auto;min-height:90px}
+.live-student-bubble{align-self:flex-start;max-width:94%;border-radius:12px;border:1px solid #9ecaea;padding:10px 13px;background:#e7f5ff;white-space:pre-wrap;overflow-wrap:anywhere}
+.live-student-bubble.teacher{align-self:flex-end;background:#dbe8ff}
+.live-student-bubble small{display:block;color:#567897;margin-top:5px;font-size:11px}
+.live-student-mode .story-dock{position:relative;top:auto;z-index:1}
+.live-student-mode [data-panel="teacher"]>.panel-heading{display:none}
+.live-student-mode #accountBox,.live-student-mode #chatApp{display:none!important}
+@media(max-width:600px){.live-student-test button{align-self:stretch}.live-student-test textarea{min-height:80px}}

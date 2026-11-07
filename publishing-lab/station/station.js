@@ -228,7 +228,7 @@ function showTool(name){
  for(const b of document.querySelectorAll("[data-tool]")){const is=b.dataset.tool===name;b.classList.toggle("selected",is);if(is)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")}
  // The adult AI testing iframe is loaded only on deliberate user expansion, not on student page load.
  // Live Reading loads only on an explicit click; the experimental music player never autoplays for students.
- if(name==="teacher"&&!quickchat)import("./quickchat.js").then(m=>{quickchat=m;return m.init()}).catch(e=>{text($("accountBox"),"Messaging is temporarily unavailable: "+e.message)});
+ if(name==="teacher"&&new URLSearchParams(location.search).get("test")!=="live"&&!quickchat)import("./quickchat.js").then(m=>{quickchat=m;return m.init()}).catch(e=>{text($("accountBox"),"Messaging is temporarily unavailable: "+e.message)});
   if(name==="teacher"&&quickchat?.refresh)quickchat.refresh();
   if(name==="progress"&&!classroom)import("./classroom.js").then(m=>{classroom=m;return m.init()}).catch(e=>{text($("progressCard"),"Protected classroom progress is unavailable: "+e.message)});
   if(name==="progress"&&classroom?.renderMonitor)classroom.renderMonitor();
