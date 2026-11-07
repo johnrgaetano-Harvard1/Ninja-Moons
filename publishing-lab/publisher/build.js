@@ -75,8 +75,43 @@ async function installFirstGradeArt(){
  fs.writeFileSync(manifestFile,JSON.stringify(manifest,null,2));
 }
 
+
+async function installGardenArt(){
+ const dir=path.join(root,"stories","secret-garden"),manifestFile=path.join(dir,"manifest.json");
+ if(!isFile(manifestFile))return;
+ const manifest=json(manifestFile);
+ fs.mkdirSync(path.join(dir,"images"),{recursive:true});
+ for(const p of manifest.pages){
+  const name="picture_"+String(p.page).padStart(2,"0")+".png";
+  const target=path.join(dir,"images",name);
+  if(isFile(target)&&p.sha256&&p.imageBytes&&digest(target)===p.sha256
+     &&fs.statSync(target).size===p.imageBytes)continue;
+  const urls=["https://ninja-moons-secret-garden.vercel.app/"+name,
+   "https://ninja-moons-secret-garden-ninja-fitt.vercel.app/"+name];
+  let found=false;
+  for(const url of urls){
+   try{
+    const response=await fetch(url,{redirect:"follow",signal:AbortSignal.timeout(45000)});
+    if(!response.ok)continue;
+    const bytes=Buffer.from(await response.arrayBuffer());
+    if(bytes.length<10000||bytes.length>15*1024*1024)continue;
+    if(bytes.subarray(1,4).toString()!=="PNG")continue;
+    const w=bytes.readUInt32BE(16),h=bytes.readUInt32BE(20);
+    if(w<1400||h<700||Math.abs(w/h-16/9)>.06)continue;
+    const sha=crypto.createHash("sha256").update(bytes).digest("hex");
+    if(p.sha256&&p.sha256!==sha)continue;
+    fs.writeFileSync(target,bytes);
+    p.sha256=sha;p.imageBytes=bytes.length;found=true;break;
+   }catch(_error){/* Retry the approved original image origin */ }
+  }
+  ensure(found,"Original Secret Garden illustration could not be verified: "+name);
+ }
+ fs.writeFileSync(manifestFile,JSON.stringify(manifest,null,2));
+}
+
 async function main(){
  await installOceanArt();
+ await installGardenArt();
  await installFirstGradeArt();
  // The unified station is required to pass script and control validation before release.
  const stationDir=path.join(root,'station');

@@ -1,0 +1,310 @@
+{
+  "version": 1,
+  "slug": "secret-garden",
+  "title": "The Secret Garden",
+  "description": "Maya and Kai solve the mysteries of a glowing biodome on a distant moon, learning to check evidence as the five rings illuminate.",
+  "readingLevel": "Grade 6",
+  "status": "ready",
+  "imageStatus": "complete",
+  "generatedReader": true,
+  "coverImage": "images/picture_01.png",
+  "topics": [
+    "Space",
+    "Plants",
+    "Science",
+    "Future"
+  ],
+  "vocabulary": [
+    {
+      "word": "biodome",
+      "say": "BY-oh-dohm",
+      "meaning": "an enclosed space for growing living things",
+      "page": 1
+    },
+    {
+      "word": "measurement",
+      "say": "MEH-zhur-ment",
+      "meaning": "a number describing something observed",
+      "page": 1
+    },
+    {
+      "word": "hologram",
+      "say": "HOL-oh-gram",
+      "meaning": "an image that seems three-dimensional",
+      "page": 2
+    },
+    {
+      "word": "indicator",
+      "say": "IN-di-kay-tur",
+      "meaning": "a sign that shows information",
+      "page": 2
+    },
+    {
+      "word": "hydroponics",
+      "say": "HY-droh-PON-iks",
+      "meaning": "growing plants without soil using water that supplies what their roots need",
+      "page": 3
+    },
+    {
+      "word": "nutrients",
+      "say": "NOO-tree-ents",
+      "meaning": "substances that help living things grow",
+      "page": 3
+    },
+    {
+      "word": "photosynthesis",
+      "say": "FOH-toh-SIN-thuh-sis",
+      "meaning": "the process plants use to make sugars from light, water, and carbon dioxide",
+      "page": 4
+    },
+    {
+      "word": "spectrum",
+      "say": "SPEK-trum",
+      "meaning": "the range of colors in light",
+      "page": 4
+    },
+    {
+      "word": "circulation",
+      "say": "sur-kyuh-LAY-shun",
+      "meaning": "a path that carries something around and back again",
+      "page": 5
+    },
+    {
+      "word": "filtration",
+      "say": "fil-TRAY-shun",
+      "meaning": "cleaning that removes unwanted material",
+      "page": 5
+    },
+    {
+      "word": "sensors",
+      "say": "SEN-surz",
+      "meaning": "devices that detect or measure conditions",
+      "page": 6
+    },
+    {
+      "word": "automation",
+      "say": "aw-tuh-MAY-shun",
+      "meaning": "machines carrying out tasks with limited direct human control",
+      "page": 6
+    },
+    {
+      "word": "humidity",
+      "say": "hyoo-MID-uh-tee",
+      "meaning": "the amount of water vapor in the air",
+      "page": 7
+    },
+    {
+      "word": "conservation",
+      "say": "kon-sur-VAY-shun",
+      "meaning": "using resources without needless waste",
+      "page": 7
+    },
+    {
+      "word": "integration",
+      "say": "in-tuh-GRAY-shun",
+      "meaning": "joining parts into one system",
+      "page": 8
+    },
+    {
+      "word": "optimization",
+      "say": "op-tuh-muh-ZAY-shun",
+      "meaning": "adjusting things to get better results",
+      "page": 8
+    },
+    {
+      "word": "transplantation",
+      "say": "trans-plan-TAY-shun",
+      "meaning": "moving a plant to a new growing place",
+      "page": 9
+    },
+    {
+      "word": "cultivation",
+      "say": "kul-tuh-VAY-shun",
+      "meaning": "growing and caring for plants",
+      "page": 9
+    },
+    {
+      "word": "sustainability",
+      "say": "suh-stay-nuh-BIL-uh-tee",
+      "meaning": "meeting needs while caring for future resources",
+      "page": 10
+    },
+    {
+      "word": "innovation",
+      "say": "in-uh-VAY-shun",
+      "meaning": "finding new ideas or improving old ones",
+      "page": 10
+    },
+    {
+      "word": "word",
+      "say": "phonetic",
+      "meaning": "definition"
+    }
+  ],
+  "pages": [
+    {
+      "page": 1,
+      "title": "The Thirty-Day Tree",
+      "lines": [
+        "Seven seconds after leaving Earth, the Ninja explorers stood beneath unfamiliar stars.",
+        "Across the moon's silver valley, a glowing biodome rose like a glass mountain.",
+        "Inside, one golden-fruited tree stretched higher than every other plant.",
+        "Maya checked her wrist screen, which displayed a surprising measurement : TREE AGE: 30 DAYS.",
+        "\"A tree that big in one month?\" Kai asked.",
+        "Maya zoomed in and spotted five glowing rings around its trunk.",
+        "The rings lit up one after another, almost as though the garden were inviting them inside.",
+        "\"I think,\" Maya said, \"we've found our next mystery.\""
+      ],
+      "image": "images/picture_01.png",
+      "alt": "Original Secret Garden cinematic illustration 1: The Thirty-Day Tree"
+    },
+    {
+      "page": 2,
+      "title": "Five Glowing Clues",
+      "lines": [
+        "The doors opened onto towers of strawberries, bright flowers, and streams beneath clear walkways.",
+        "A cheerful robot rolled forward and introduced itself as Luma, the garden's guide.",
+        "Above its head appeared a hologram showing the giant tree surrounded by five symbols.",
+        "\"Each symbol hides a clue,\" Luma explained, \"and together they reveal the garden's secret.\"",
+        "Kai noticed a glowing indicator pointing toward some lettuce.",
+        "\"We have to solve this ourselves?\" he asked.",
+        "\"You get to,\" Luma answered, its eyes flashing blue.",
+        "Maya followed the light, determined to discover whether the thirty-day tree was real."
+      ],
+      "image": "images/picture_02.png",
+      "alt": "Original Secret Garden cinematic illustration 2: Five Glowing Clues"
+    },
+    {
+      "page": 3,
+      "title": "Roots Without Dirt",
+      "lines": [
+        "Beneath the lettuce, white roots dangled in clear water instead of soil.",
+        "\"Somebody forgot the dirt,\" Kai whispered, but Maya was already examining the flowing channels.",
+        "Luma called the method hydroponics .",
+        "The water carried nutrients .",
+        "Maya traced a channel until it disappeared beneath the giant tree.",
+        "\"So roots can get what they need without soil,\" she said.",
+        "The first ring turned green, displaying: ROOTS NEED THE RIGHT CONDITIONS.",
+        "Kai grinned, but Maya noticed that the tree's roots were hidden behind a wall.",
+        "\"Interesting,\" she said, \"but we still haven't seen what's underneath that tree.\""
+      ],
+      "image": "images/picture_03.png",
+      "alt": "Original Secret Garden cinematic illustration 3: Roots Without Dirt"
+    },
+    {
+      "page": 4,
+      "title": "A Sky Built by Scientists",
+      "lines": [
+        "The next light led them upstairs beneath rows of red, blue, and white lamps.",
+        "\"It's like someone built a second sky,\" Kai said.",
+        "Luma explained photosynthesis .",
+        "Different colors belonged to the visible spectrum .",
+        "Maya watched the lamps above the giant tree brighten in a carefully timed pattern.",
+        "\"You can give plants useful light even when sunlight is limited,\" she realized.",
+        "The second ring flashed green, but a narrow beam swept across the trunk and stopped at a glass panel.",
+        "On the panel appeared another message: LOOK CLOSER AT THE WATER."
+      ],
+      "image": "images/picture_04.png",
+      "alt": "Original Secret Garden cinematic illustration 4: A Sky Built by Scientists"
+    },
+    {
+      "page": 5,
+      "title": "The Water’s Return Trip",
+      "lines": [
+        "Behind the panel, clear pipes twisted overhead like a transparent maze.",
+        "Kai watched water move through a repeating circulation .",
+        "Some returning water passed through filtration .",
+        "Elsewhere, cool surfaces collected moisture released by leaves.",
+        "\"So the garden catches water and uses some again,\" Maya said.",
+        "\"Yes, though we still replace what the system loses,\" Luma replied.",
+        "The third ring glowed green as a pipe beside the tree lit up from bottom to top.",
+        "At its highest point, the ninjas spotted a small silver robot waiting beside the branches."
+      ],
+      "image": "images/picture_05.png",
+      "alt": "Original Secret Garden cinematic illustration 5: The Water’s Return Trip"
+    },
+    {
+      "page": 6,
+      "title": "The Tiny Garden Detectives",
+      "lines": [
+        "The robot floated from leaf to leaf, recording information without touching the fruit.",
+        "Luma said its sensors checked temperature, light, and moisture.",
+        "The garden also used automation .",
+        "Kai watched another robot adjust a lamp after receiving a measurement.",
+        "\"It's like the whole garden is paying attention,\" he said.",
+        "Maya examined a screen and discovered that the giant tree had arrived exactly thirty days earlier.",
+        "Before she could mention it, the fourth ring flashed green and sparkling golden mist filled the room.",
+        "Luma rolled toward the tree and announced, \"One clue remains.\""
+      ],
+      "image": "images/picture_06.png",
+      "alt": "Original Secret Garden cinematic illustration 6: The Tiny Garden Detectives"
+    },
+    {
+      "page": 7,
+      "title": "The Golden Rain",
+      "lines": [
+        "Fine droplets shimmered above the branches, turning ordinary water into a curtain of gold.",
+        "\"It's beautiful,\" Maya said, catching a drop on her glove.",
+        "Luma explained humidity and showed how the garden controlled it.",
+        "Careful conservation helped the system collect and reuse water.",
+        "Kai counted four green rings and one still silver.",
+        "\"We know about roots, light, water, and robots,\" he said, \"so what's missing?\"",
+        "Maya looked from the mist to the pipes, then toward the hidden roots.",
+        "\"Maybe the answer isn't another machine,\" she whispered."
+      ],
+      "image": "images/picture_07.png",
+      "alt": "Original Secret Garden cinematic illustration 7: The Golden Rain"
+    },
+    {
+      "page": 8,
+      "title": "The Fifth Ring",
+      "lines": [
+        "Maya called up the hologram and placed the four discoveries together.",
+        "The pipes fed the roots, the lamps lit the leaves, and the sensors helped control both.",
+        "\"They work together,\" she said, \"instead of working alone.\"",
+        "Luma called this integration and optimization .",
+        "The fifth ring burst into green light, and the hologram displayed: MYSTERY SOLVED.",
+        "Kai cheered, but Maya held up her hand.",
+        "\"Not quite,\" she said, pointing to the original message on her wrist.",
+        "\"We've explained how the garden works, but have we proved this huge tree grew in thirty days?\""
+      ],
+      "image": "images/picture_08.png",
+      "alt": "Original Secret Garden cinematic illustration 8: The Fifth Ring"
+    },
+    {
+      "page": 9,
+      "title": "The Number That Changed Everything",
+      "lines": [
+        "Luma opened the hidden panel, revealing a photograph of the tree arriving on a transport platform.",
+        "It was already tall, with thick branches and golden fruit beginning to form.",
+        "\"Thirty days in this garden,\" Maya realized, \"not thirty days since the seed sprouted!\"",
+        "The tree had undergone transplantation after years of cultivation .",
+        "Kai laughed.",
+        "\"We solved five clues, but the biggest mystery was what the number meant!\"",
+        "Luma changed the display to read: TIME IN BIODOME: 30 DAYS.",
+        "Maya smiled at the towering branches.",
+        "\"Good scientists don't just collect facts,\" she said.",
+        "\"They check what those facts actually tell them.\""
+      ],
+      "image": "images/picture_09.png",
+      "alt": "Original Secret Garden cinematic illustration 9: The Number That Changed Everything"
+    },
+    {
+      "page": 10,
+      "title": "The Garden of Tomorrow",
+      "lines": [
+        "At sunset, Luma projected future cities with vegetable gardens climbing their buildings.",
+        "It described sustainability .",
+        "The ninjas saw how innovation could help grow food in cities, deserts, and spacecraft.",
+        "\"Our biggest discovery wasn't a magical tree,\" Kai said as the dome glowed behind them.",
+        "\"It was learning how real science works,\" Maya replied.",
+        "She saved the corrected measurement beside a picture of the five glowing rings.",
+        "Then Luma showed them one final image: a small garden floating inside a spacecraft far from any planet.",
+        "\"Now,\" Luma asked, \"how would you grow food where there is almost no gravity?\"",
+        "The ninjas exchanged excited looks, already imagining their next adventure."
+      ],
+      "image": "images/picture_10.png",
+      "alt": "Original Secret Garden cinematic illustration 10: The Garden of Tomorrow"
+    }
+  ]
+}
