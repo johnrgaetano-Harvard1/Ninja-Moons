@@ -8,7 +8,7 @@ const STAGE_HELP={
  es:["Escucha la oración. Repítela cuantas veces quieras.","Elige de una a ocho palabras y practica la pronunciación.","Toca las palabras para ver sus significados y fotos reales.","Comprende la oración y responde dos preguntas sobre la imagen."]
 };
 const GRADES={K:"Kindergarten",1:"1st grade",2:"2nd grade",3:"3rd grade",4:"4th grade",5:"5th grade",6:"6th grade",7:"7th grade",8:"8th grade",9:"9th grade",10:"10th grade",11:"11th grade",12:"12th grade"};
-let catalog=[],story=null,spanish=null,questions=null,photoData={photos:{},aliases:{}},currentSlug="",page=0,sentence=0,stage=0,wordStart=0,tool="trainer",answers={},lastAudio=0,audioPaused=false,recognition=null,selectedStudent=null,classroom=null;
+let catalog=[],story=null,spanish=null,questions=null,photoData={photos:{},aliases:{}},currentSlug="",page=0,sentence=0,stage=0,wordStart=0,tool="trainer",answers={},lastAudio=0,audioPaused=false,recognition=null,selectedStudent=null,classroom=null,quickchat=null;
 const clean=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,"");
 const tokens=s=>String(s||"").match(/[\p{L}\p{M}\p{N}]+(?:['’\-][\p{L}\p{M}\p{N}]+)*/gu)||[];
 const speechLang=()=>language()==="es"&&spanish?"es-ES":"en-US";
@@ -224,9 +224,10 @@ function showTool(name){
  for(const b of document.querySelectorAll("[data-tool]")){const is=b.dataset.tool===name;b.classList.toggle("selected",is);if(is)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")}
  // The adult AI testing iframe is loaded only on deliberate user expansion, not on student page load.
  // Live Reading loads only on an explicit click; the experimental music player never autoplays for students.
- if((name==="teacher"||name==="progress")&&!classroom)import("./classroom.js").then(m=>{classroom=m;return m.init()}).catch(e=>{text($("accountBox"),"Classroom account tools are temporarily unavailable: "+e.message)});
- if(name==="teacher"&&classroom?.refresh)classroom.refresh();
- if(name==="progress"&&classroom?.renderMonitor)classroom.renderMonitor();
+ if(name==="teacher"&&!quickchat)import("./quickchat.js").then(m=>{quickchat=m;return m.init()}).catch(e=>{text($("accountBox"),"Messaging is temporarily unavailable: "+e.message)});
+  if(name==="teacher"&&quickchat?.refresh)quickchat.refresh();
+  if(name==="progress"&&!classroom)import("./classroom.js").then(m=>{classroom=m;return m.init()}).catch(e=>{text($("progressCard"),"Protected classroom progress is unavailable: "+e.message)});
+  if(name==="progress"&&classroom?.renderMonitor)classroom.renderMonitor();
 }
 
 const WORD_STOP=new Set(["a","an","the","what","does","do","mean","is","are","in","on","for","this","that","where","who","why","how","can","i","you","me","please","tell","about","of","and","it","to","my","story","picture","sentence","explain","word","with","have","has","we","did","get","them","they"]);
