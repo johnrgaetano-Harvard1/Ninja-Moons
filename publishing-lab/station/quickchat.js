@@ -6,6 +6,10 @@ const $=id=>document.getElementById(id);
 const node=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n};
 const ctx=()=>window.NM_STATION?.getContext?.()||{};
 const ownerPortal=/\/teacher\.html$/.test(location.pathname);
+const params=new URLSearchParams(location.search);
+const testRoom=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(params.get("testroom")||"")?params.get("testroom"):null;
+const testStudentKey=/^[0-9a-f]{64}$/.test(params.get("studentkey")||"")?params.get("studentkey"):null;
+const liveTest=!!testRoom&&!!testStudentKey;
 let db=null,token="",mode="student",threads=[],selected=null,creating=false,ready=null,timer=null,loadInProgress=false;
 const status=msg=>{const n=$("chatStatus");if(n)n.textContent=msg};
 const when=date=>{try{return new Date(date).toLocaleString()}catch{return""}};
@@ -35,18 +39,19 @@ function notice(){
  const box=$("accountBox");box.replaceChildren();
  const text=node("p","quiet",mode==="teacher"
   ?"Teacher inbox · Only verified teachers can see and answer student questions."
+  :liveTest?"LIVE TEST CONNECTED · Questions go directly to your paired teacher screen. No student account required."
   :"Just type and send. No student account, name, or number. Your teacher's reply will appear on this device.");
  const button=node("button","btn subtle",mode==="teacher"?"Sign out of teacher inbox":"Teacher sign in");
  button.type="button";
  button.onclick=mode==="teacher"?teacherSignout:showTeacherLogin;
- box.append(text,button);
+ box.append(text);if(!liveTest||mode==="teacher")box.append(button);
  if(mode==="teacher"){
   const label=node("span","quiet"," · Verified teacher access");
   box.append(label);
  }
  $("chatApp").hidden=false;
- $("newThread").hidden=mode==="teacher";
- $("inboxTitle").textContent=mode==="teacher"?"Teacher inbox":"My questions";
+ $("newThread").hidden=mode==="teacher"||liveTest;
+ $("inboxTitle").textContent=mode==="teacher"?"Teacher inbox":liveTest?"Live test messages":"My questions";
  $("chatText").placeholder=mode==="teacher"?"Type your reply…":"Type a question for your teacher…";
 }
 function showTeacherLogin(){
@@ -141,9 +146,15 @@ async function refresh(){
  try{
   const result=mode==="teacher"
    ?await db.rpc("nm_q_teacher_read")
+   :liveTest?await db.rpc("nm_live_demo_read",{p_room:testRoom,p_key:testStudentKey,p_role:"student"})
    :await db.rpc("nm_q_read",{p_token:token});
   if(result.error)throw result.error;
-  threads=Array.isArray(result.data)?result.data:[];
+  if(liveTest&&mode!=="teacher"){
+   const c=ctx(),messages=Array.isArray(result.data?.messages)?result.data.messages:[];
+   const latest=[...messages].reverse().find(m=>m.sender==="student");
+   threads=[{id:testRoom,story_slug:latest?.story_slug||c.slug||"seven-second-journey-grade-1",
+     page_number:latest?.page_number||c.page||1,status:"open",updated_at:messages.at(-1)?.created_at||new Date().toISOString(),messages}];
+  }else threads=Array.isArray(result.data)?result.data:[];
   if(selected&&!threads.some(t=>t.id===selected))selected=null;
   if(!selected&&!creating&&threads.length)selected=threads[0].id;
   render();
@@ -152,6 +163,7 @@ async function refresh(){
 }
 function newQuestion(){
  if(mode==="teacher")return;
+ if(liveTest){selected=testRoom;render();$("chatText").focus();return;}
  selected=null;creating=true;render();$("chatText").focus();
  status("Ask anything about this story. Your reply stays private to this browser.");
 }
@@ -167,15 +179,22 @@ async function send(event){
    const r=await db.rpc("nm_q_teacher_reply",{p_thread:selected,p_body:content});
    if(r.error)throw r.error;
   }else{
-   const c=ctx();
-   if(!selected&&!c.slug)throw Error("Choose a story first.");
-   const r=await db.rpc("nm_q_send",{p_token:token,p_thread:selected,p_body:content,p_story:c.slug||"zoom-trip",p_page:c.page||1});
-   if(r.error)throw r.error;
-   selected=r.data;creating=false;
+   const c=ctx();if(!c.slug)throw Error("Choose a story first.");
+   if(liveTest){
+    const r=await db.rpc("nm_live_demo_add",{
+     p_room:testRoom,p_key:testStudentKey,p_role:"student",p_body:content,p_story:c.slug,p_page:c.page||1
+    });
+    if(r.error)throw r.error;
+    selected=testRoom;creating=false;
+   }else{
+    const r=await db.rpc("nm_q_send",{p_token:token,p_thread:selected,p_body:content,p_story:c.slug,p_page:c.page||1});
+    if(r.error)throw r.error;
+    selected=r.data;creating=false;
+   }
   }
   $("chatText").value="";
   await refresh();
-  status(mode==="teacher"?"Reply sent to the student's private conversation.":"Sent! Your teacher's reply will appear here automatically.");
+  status(mode==="teacher"?"Reply sent to the student's private conversation.":liveTest?"LIVE TEST: question sent! Look at the paired teacher screen.":"Sent! Your teacher's reply will appear here automatically.");
  }catch(err){status("Not sent: "+err.message)}
  finally{button.disabled=false}
 }
@@ -183,7 +202,7 @@ function init(){
  if(ready)return ready;
  ready=(async()=>{
   try{
-   token=deviceKey();await client();
+   token=liveTest?"":deviceKey();await client();
    $("newThread").onclick=newQuestion;
    $("chatForm").addEventListener("submit",send);
    // The owner portal automatically restores an existing verified session.
