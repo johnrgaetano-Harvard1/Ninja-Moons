@@ -234,37 +234,6 @@ function showTool(name){
   if(name==="progress"&&classroom?.renderMonitor)classroom.renderMonitor();
 }
 
-const WORD_STOP=new Set(["a","an","the","what","does","do","mean","is","are","in","on","for","this","that","where","who","why","how","can","i","you","me","please","tell","about","of","and","it","to","my","story","picture","sentence","explain","word","with","have","has","we","did","get","them","they"]);
-function quickNinjaAnswer(question){
- if(!story)return "Open a story first.";
- const q=String(question||"").trim(),words=tokens(q).map(clean).filter(w=>w&&!WORD_STOP.has(w));
- const current=displaySentence(),all=currentLines();
- if(/spanish|español|traduc|translate|en español/i.test(q)){
-  return spanish
-   ?"English: "+current.en+"\nEspañol: "+current.es
-   :"The Spanish version has not yet been published for this story.";
- }
- if(/what happened|explain|summarize|summary|main idea|what is going on|qué pasó|qué ocurre/i.test(q)){
-  const scene=pageTitle();return "Picture "+(page+1)+" — "+scene+".\n"+all.slice(0,Math.min(3,all.length)).join(" ")+"\nWhat clue do you notice in the picture?";
- }
- const candidates=[...(nativeEs()?spanish?.vocabulary||[]:story.vocabulary||[]),...(story.vocabulary||[])];
- const selected=candidates.find(v=>words.some(w=>clean(v.word)===w||clean(v.word).split(" ").includes(w)));
- if(selected){
-  if(/pronounc|sound|say|speak|decir|pronuncia/i.test(q)){
-   return selected.word+": "+(selected.say||"Press the Listen control to hear this word.")+".";
-  }
-  const photo=nounInfo(selected.word);
-  return selected.word+": "+selected.meaning+(photo?" Tap the underlined word in the story for a real picture.":"");
- }
- if(/pronounc|sound|say|speak|decir|pronuncia/i.test(q)&&words.length){
-  const word=words.find(w=>all.join(" ").toLowerCase().includes(w))||words[0];
-  return "Tap '"+word+"' in the story to hear it aloud. Choose a word in NINJA Reader Stage 2 to practise from that point.";
- }
- const keyWords=words.filter(w=>w.length>2);
- const scored=all.map(line=>({line,score:keyWords.reduce((n,w)=>n+(tokens(line).map(clean).includes(w)?1:0),0)})).sort((a,b)=>b.score-a.score);
- if(scored[0]?.score>0)return "Here's a clue from this picture:\n“"+scored[0].line+"”\nTry explaining what this tells you in your own words. You can ask your teacher for more help.";
- return "I can help explain the current page, give a published word definition, show the Spanish translation, or practise pronunciation. For a question that needs a new answer, choose Ask Teacher or open the supervised Ask Ninja AI test.";
-}
 let ninjaBusy=false;
 async function askLocal(input){
  const q=String(input||"").trim();
@@ -325,7 +294,7 @@ function initAskNinja(){
   const question=$("ninjaQuestion").value.trim();
   showTool("teacher");
   const field=$("chatText");
-  field.value=(question?question+"\\n":"")+"Story: "+(story?.title||"")+" · picture "+(page+1)+", sentence "+(sentence+1)+".";
+  field.value=(question?question+"\n":"")+"Story: "+(story?.title||"")+" · picture "+(page+1)+", sentence "+(sentence+1)+".";
   field.focus();
  };
  const details=document.querySelector(".external-ai");
