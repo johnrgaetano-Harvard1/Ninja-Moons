@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NINJA MOONS · Private Teacher Inbox</title><meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#071e45"><link rel="stylesheet" href="/station/station.css">
+<style>body{background:#071e45;color:#edf7ff;font-family:system-ui,-apple-system,sans-serif;margin:0}.teacher-wrap{max-width:1120px;margin:auto;padding:24px 18px 72px}.teacher-hero{padding:22px 0 10px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.teacher-hero a{color:#b4e8ff}.teacher-hero h1{font-size:clamp(28px,5vw,46px);margin:0}.teacher-card{border:1px solid #3a75b4;border-radius:20px;background:#113057;padding:22px;margin-top:16px;min-height:400px}.teacher-card .chat-layout{min-height:440px}.teacher-card .quiet{color:#d2e8fd}.teacher-card #chatStatus{margin-top:10px}.teacher-label{font-size:12px;font-weight:800;letter-spacing:.14em;color:#82d4ff}.teacher-note{color:#d8eafb;margin-top:6px}.teacher-card .login-box{max-width:480px;display:grid;gap:12px}.teacher-card input{padding:12px;border-radius:10px;max-width:100%;width:100%}.teacher-card #chatMessages{max-height:50vh;overflow:auto}</style>
+</head><body>
+<main class="teacher-wrap">
+ <header class="teacher-hero"><div><div class="teacher-label">NINJA MOONS · OWNER ACCESS</div><h1>💬 Teacher Inbox</h1><p class="teacher-note">Questions from all published stories in one private place. Reply once; the answer returns to the student's browser.</p></div><a href="/station/">← Back to student stories</a></header>
+ <section class="teacher-card" data-panel="teacher"><div id="accountBox"></div>
+  <div id="chatApp" hidden><div class="chat-layout"><div class="chat-sidebar"><h3 id="inboxTitle">Teacher inbox</h3><div id="threadList"></div><button id="newThread" class="btn primary" type="button" hidden>New message</button></div>
+    <div class="chat-main"><div class="context-strip" id="chatHead">Select a question</div><div class="chat-messages" id="chatMessages"></div><form id="chatForm" class="send-form"><textarea id="chatText" maxlength="1000" rows="3" placeholder="Type your reply" required></textarea><button id="sendChat" class="btn primary" type="submit">Send reply</button></form><div id="chatStatus" class="quiet" role="status" aria-live="polite"></div></div></div></div>
+ </section><p class="teacher-note">Student names and account numbers are not required. Conversation keys keep replies separate. Clearing a student's browser storage can remove access to their earlier replies.</p>
+</main><script type="module">import {init} from "/station/quickchat.js";init();</script>
+</body></html>

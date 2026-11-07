@@ -5,6 +5,7 @@
 const $=id=>document.getElementById(id);
 const node=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n};
 const ctx=()=>window.NM_STATION?.getContext?.()||{};
+const ownerPortal=/\/teacher\.html$/.test(location.pathname);
 let db=null,token="",mode="student",threads=[],selected=null,creating=false,ready=null,timer=null,loadInProgress=false;
 const status=msg=>{const n=$("chatStatus");if(n)n.textContent=msg};
 const when=date=>{try{return new Date(date).toLocaleString()}catch{return""}};
@@ -27,7 +28,7 @@ async function client(){
  if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(cfg.projectUrl)||!String(cfg.publishableKey||"").startsWith("sb_publishable_"))
   throw Error("The messaging service configuration is invalid.");
  const sdk=await import("https://esm.sh/@supabase/supabase-js@2.57.0");
- db=sdk.createClient(cfg.projectUrl,cfg.publishableKey,{auth:{detectSessionInUrl:false}});
+ db=sdk.createClient(cfg.projectUrl,cfg.publishableKey,{auth:{detectSessionInUrl:true,flowType:"pkce"}});
  return db;
 }
 function notice(){
@@ -50,30 +51,46 @@ function notice(){
 }
 function showTeacherLogin(){
  const box=$("accountBox");box.replaceChildren();
- const intro=node("p","quiet","Teacher access only. Students do not need to sign in.");
- const form=node("form","login-box"),email=node("input"),pass=node("input"),button=node("button","btn primary","Open teacher inbox");
- email.type="email";email.autocomplete="username";email.placeholder="School email";email.required=true;
- pass.type="password";pass.autocomplete="current-password";pass.placeholder="Password";pass.required=true;
- button.type="submit";
- const back=node("button","btn subtle","Back to questions");back.type="button";back.onclick=notice;
- form.append(intro,email,pass,button,back);box.append(form);
+ const title=node("h3","","Private teacher sign-in");
+ const intro=node("p","quiet","Only the approved owner can open this inbox. Students do not enter passwords.");
+ const form=node("form","login-box");
+ const email=node("input"),pass=node("input");
+ email.type="email";email.autocomplete="username";email.placeholder="Your verified account email";email.required=true;
+ pass.type="password";pass.autocomplete="current-password";pass.placeholder="Password (optional if using email link)";
+ const login=node("button","btn primary","Sign in with password");
+ login.type="submit";
+ const link=node("button","btn secondary","Email me a secure sign-in link");
+ link.type="button";
+ const back=node("button","btn subtle","Return to reading");
+ back.type="button";back.onclick=()=>{if(ownerPortal)location.assign("/station/");else notice()};
+ const info=node("p","quiet","A sign-in link will go to your verified email. Open it on this device.");
+ form.append(title,intro,email,pass,login,link,info,back);box.append(form);
+ if(ownerPortal)$("chatApp").hidden=true;
  form.onsubmit=async event=>{
-  event.preventDefault();button.disabled=true;status("Checking teacher access…");
+  event.preventDefault();login.disabled=true;status("Checking teacher access…");info.textContent="Checking your account…";
   try{
    const s=await db.auth.signInWithPassword({email:email.value.trim(),password:pass.value});
    pass.value="";
    if(s.error)throw s.error;
    const r=await db.rpc("nm_q_teacher_read");
-   if(r.error)throw Error("This account is not activated as a teacher.");
+   if(r.error)throw Error("This account does not have teacher inbox permission.");
    mode="teacher";selected=null;creating=false;notice();await refresh();status("Teacher inbox is ready.");
-  }catch(err){
-   await db.auth.signOut().catch(()=>{});
-   status("Teacher inbox unavailable: "+err.message);
-  }finally{button.disabled=false}
+  }catch(err){await db.auth.signOut().catch(()=>{});info.textContent="Unable to sign in: "+err.message}
+  finally{login.disabled=false}
+ };
+ link.onclick=async()=>{
+  const address=email.value.trim();if(!email.checkValidity()){email.reportValidity();return}
+  link.disabled=true;info.textContent="Sending your secure link…";
+  try{
+   const r=await db.auth.signInWithOtp({email:address,options:{shouldCreateUser:false,emailRedirectTo:location.origin+"/station/teacher.html"}});
+   if(r.error)throw r.error;
+   info.textContent="If this email is approved, a sign-in link has been sent. Open it on this device to access the inbox.";
+  }catch(err){info.textContent="Could not send sign-in link: "+err.message}
+  finally{link.disabled=false}
  };
 }
 async function teacherSignout(){
- await db.auth.signOut();mode="student";selected=null;creating=false;notice();await refresh();status("Student questions are ready.");
+ await db.auth.signOut();mode="student";selected=null;creating=false;if(ownerPortal){$("chatApp").hidden=true;showTeacherLogin()}else{notice();await refresh()}status("Signed out of teacher inbox.");
 }
 function updateBadge(){
  const tab=document.querySelector('[data-tool="teacher"]');
@@ -167,12 +184,28 @@ function init(){
  ready=(async()=>{
   try{
    token=deviceKey();await client();
-   notice();$("newThread").onclick=newQuestion;
+   $("newThread").onclick=newQuestion;
    $("chatForm").addEventListener("submit",send);
-   await refresh();
-   timer=setInterval(()=>{if(document.visibilityState!=="hidden")refresh().catch(()=>{})},7000);
-   document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")refresh().catch(()=>{})});
-  }catch(err){$("chatApp").hidden=true;status("Messages are unavailable: "+err.message);$("accountBox").textContent="Student messaging is currently unavailable: "+err.message}
+   // The owner portal automatically restores an existing verified session.
+   const restoreTeacher=async()=>{
+    const auth=await db.auth.getUser();
+    if(!auth?.data?.user)return false;
+    const allowed=await db.rpc("nm_q_teacher_read");
+    if(allowed.error)return false;
+    mode="teacher";selected=null;creating=false;notice();await refresh();status("Teacher inbox is ready.");return true;
+   };
+   const teacherReady=ownerPortal?await restoreTeacher():false;
+   if(!teacherReady){
+    if(ownerPortal){$("chatApp").hidden=true;showTeacherLogin()}
+    else {notice();await refresh()}
+   }
+   db.auth.onAuthStateChange((_event,session)=>{
+    if(ownerPortal&&session?.user&&mode!=="teacher")
+     setTimeout(()=>restoreTeacher().catch(()=>{}),0);
+   });
+   timer=setInterval(()=>{if(document.visibilityState!=="hidden"&&(mode==="teacher"||!ownerPortal))refresh().catch(()=>{})},7000);
+   document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&(mode==="teacher"||!ownerPortal))refresh().catch(()=>{})});
+  }catch(err){$("chatApp").hidden=true;status("Messages are unavailable: "+err.message);$("accountBox").textContent="Messaging is unavailable: "+err.message}
  })();
  return ready;
 }
