@@ -69,13 +69,14 @@
  <p>Read your story above, then ask a question here. It goes directly to Step 2 on the Teacher screen.</p>
  <form id="liveStudentForm">
   <label for="liveStudentText">Your question</label>
-  <textarea id="liveStudentText" rows="3" maxlength="750" placeholder="Teacher, can you explain this part of the story?" required></textarea>
+  <textarea id="liveStudentText" rows="3" maxlength="450" placeholder="Teacher, can you explain this part of the story?" required></textarea>
   <button class="btn primary" id="liveStudentSend" type="submit">Send Question to Teacher</button>
   <button class="btn subtle" id="liveStudentSample" type="button">Send One-Tap Test Question</button>
  </form>
  <p id="liveStudentStatus" class="live-student-status" role="status" aria-live="polite">Connecting to the live teacher test…</p>
  <h4>Messages in this test</h4>
  <div id="liveStudentMessages" class="live-student-messages" aria-live="polite"><p>Checking for messages…</p></div>
+ <p class="nm-encryption-note" id="liveStudentCryptoLabel" role="status" aria-live="polite">🔒 Checking end-to-end encryption…</p>
  <p class="quiet">Messages are visible on both test screens. Only use sample questions. No student login is needed.</p>
 </section>
 <div id="accountBox"></div><div id="chatApp" hidden><div class="chat-layout"><div class="chat-sidebar"><h4 id="inboxTitle">My questions</h4><div id="threadList"></div><button id="newThread" class="btn primary wide" type="button">+ Ask a new question</button></div><div class="chat-main"><div id="chatHead" class="context-strip">Choose a conversation</div><div class="chat-messages" id="chatMessages"></div><form id="chatForm" class="send-form"><textarea id="chatText" rows="2" maxlength="1000" placeholder="Ask your teacher a question…" aria-label="Your message" required></textarea><button class="btn primary" type="submit" id="sendChat">Send</button></form><div class="quiet" id="chatStatus" role="status" aria-live="polite"></div></div></div></div></section>
@@ -118,6 +119,7 @@
 </main>
 <div id="hoverNounPopover" class="hover-noun" role="tooltip" hidden><img id="hoverNounPhoto" alt=""><span id="hoverNounName"></span></div>
 <dialog id="wordDialog" class="word-dialog"><h3 id="dialogWord"></h3><p id="dialogPhonetic"></p><p id="dialogDefinition"></p><img id="dialogImage" alt="Real photograph of a noun" hidden><p id="dialogCredit" class="quiet"></p><div class="actions"><button id="dialogHear" class="btn primary">🔊 Hear word</button><button id="dialogClose" class="btn subtle">Close</button></div></dialog>
+<script defer src="/station/live-e2e.js"></script>
 <script defer src="/station/live-student-test.js"></script>
 <script type="module" src="/station/station.js"></script>
 </body></html>

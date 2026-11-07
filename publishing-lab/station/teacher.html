@@ -86,6 +86,7 @@ body{background:#071e45;color:#edf7ff;font-family:system-ui,-apple-system,sans-s
   <h2>Step 2 · Student questions appear here</h2>
   <span class="demo-chip" id="liveBadge">CONNECTING…</span>
   <div id="liveMessages" class="live-messages" aria-live="polite"><p>Waiting for a student question…</p></div>
+  <p class="nm-encryption-note" id="liveCryptoLabel" role="status" aria-live="polite">🔒 Preparing end-to-end encryption…</p>
   <form id="liveReplyForm" class="live-reply-form">
    <textarea id="liveReplyText" maxlength="750" rows="3" placeholder="Type your reply to the student…" required></textarea>
    <button class="btn primary" id="liveReplyBtn" type="submit" disabled>Send Teacher Reply</button>
@@ -123,5 +124,6 @@ body{background:#071e45;color:#edf7ff;font-family:system-ui,-apple-system,sans-s
  </section>
  <p class="teacher-note">The demo is saved only within this browser. Real students don't enter an account number to ask a question; only teacher access is protected.</p>
 </main>
-<script type="module" src="/station/teacher-demo.js"></script><script type="module" src="/station/live-test.js"></script>
+<script type="module" src="/station/teacher-demo.js"></script><script defer src="/station/live-e2e.js"></script>
+<script type="module" src="/station/live-test.js"></script>
 </body></html>

@@ -146,3 +146,7 @@ textarea,input{border:1px solid #90b8d5;background:white;color:#183c63;border-ra
 .live-student-mode [data-panel="teacher"]>.panel-heading{display:none}
 .live-student-mode #accountBox,.live-student-mode #chatApp{display:none!important}
 @media(max-width:600px){.live-student-test button{align-self:stretch}.live-student-test textarea{min-height:80px}}
+
+/* Accurate security note directly beneath each live-test message area. */
+.nm-encryption-note{font-size:12px;line-height:1.5;padding:10px 1px;margin:8px 0 14px;color:#2c5f83!important;overflow-wrap:anywhere}
+#liveTestInbox .nm-encryption-note{color:#235a82!important}
