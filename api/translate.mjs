@@ -17,25 +17,7 @@ function withinLimit(request){
  for(const [key,max,duration] of limits){const value=state.get(key)||{count:0,until:now+duration};value.count++;state.set(key,value);}
  return true;
 }
-export async function GET(request){
- if(new URL(request.url).searchParams.get("verify")==="ninja-moons-translation-check-f9e7df2b1c44"){
-  const inner=new Request(request.url,{method:"POST",headers:{
-   "content-type":"application/json","origin":new URL(request.url).origin,
-   "x-vercel-oidc-token":request.headers.get("x-vercel-oidc-token")||""
-  },body:JSON.stringify((()=>{
-   const sample={
-    es:"Los niños leen el libro en español.",
-    zh:"孩子们正在读书。",
-    hi:"बच्चे किताब पढ़ रहे हैं।",
-    ar:"الأطفال يقرؤون الكتاب."
-   };
-   const sourceLanguage=new URL(request.url).searchParams.get("lang")||"es";
-   return {text:sample[sourceLanguage]||sample.es,sourceLanguage:sourceLanguage in sample?sourceLanguage:"es"};
-  })())});
-  return POST(inner);
- }
- return json({available:!!credentials(request),model:MODEL,languages:Object.keys(LANGUAGES),mode:"text-only",storesTranscripts:false});
-}
+export function GET(request){return json({available:!!credentials(request),model:MODEL,languages:Object.keys(LANGUAGES),mode:"text-only",storesTranscripts:false});}
 export async function POST(request){
  if(request.headers.get("origin")!==new URL(request.url).origin)
   return json({message:"Open NINJA READER to translate."},403);
