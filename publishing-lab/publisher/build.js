@@ -140,7 +140,7 @@ async function verifyLiveEndToEndEncryption(source){
   'student and teacher must have matching AES-256 keys');
  const question='What does this part of the story mean?';
  const envelope=await student.seal(question,'student');
- ensure(/^nmE2E1\\.[A-Za-z0-9_-]{16}\\.[A-Za-z0-9_-]{22,690}$/.test(envelope)
+ ensure(/^nmE2E1\.[A-Za-z0-9_-]{16}\.[A-Za-z0-9_-]{22,690}$/.test(envelope)
   &&!envelope.includes(question)&&envelope.length<750,
   'message text must be a valid ciphertext envelope, never plaintext');
  ensure(await teacher.open(envelope,'student')===question,
