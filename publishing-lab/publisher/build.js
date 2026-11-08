@@ -258,21 +258,35 @@ async function main(){
  const quickChatJs=fs.readFileSync(path.join(stationDir,'quickchat.js'),'utf8');
  new vm.Script(quickChatJs.replace('export {init,refresh};',''),{filename:'NINJA_READER/quickchat.js'});
  ensure(quickChatJs.includes('nm_q_send')&&quickChatJs.includes('nm_q_read')&&quickChatJs.includes('nm_q_teacher_reply'),'quick teacher chat is missing required private database functions');
- const teacherDemoJs=fs.readFileSync(path.join(stationDir,'teacher-demo.js'),'utf8');
- new vm.Script(teacherDemoJs,{filename:'NINJA_READER/teacher-demo.js'});
+ const teacherDashboardJs=fs.readFileSync(path.join(stationDir,'teacher-dashboard.js'),'utf8');
+ new vm.Script(teacherDashboardJs,{filename:'NINJA_READER/teacher-dashboard.js'});
  const liveTestApi=fs.readFileSync(path.resolve(__dirname,"../../api/live-chat.mjs"),"utf8");
  ensure(liveTestApi.includes("nm_live_demo_read")&&liveTestApi.includes("nm_live_demo_add")
    &&liveTestApi.includes("Cache-Control"),"same-origin live messaging API missing");
  const liveTestJs=fs.readFileSync(path.join(stationDir,'live-test.js'),'utf8');
  new vm.Script(liveTestJs,{filename:'NINJA_READER/live-test.js'});
- ensure(liveTestJs.includes('nm_live_demo_create')&&liveTestJs.includes('nm_live_demo_read')
-  &&liveTestJs.includes('nm_live_demo_add'),'cross-device live teacher RPCs missing');
- ensure(quickChatJs.includes('nm_live_demo_read')&&quickChatJs.includes('nm_live_demo_add'),
-  'student Ask Teacher must connect to live test room');
+ ensure(liveTestJs.includes("nm_live_demo_read")&&liveTestJs.includes("nm_live_demo_add")&&
+   liveTestJs.includes("window.NMLiveE2E.seal"),"encrypted teacher test messaging must remain intact");
+ ensure(quickChatJs.includes('nm_q_send')&&quickChatJs.includes('nm_q_read')
+   &&quickChatJs.includes('nm_q_teacher_reply'),'protected teacher inbox RPCs missing');
  const teacherDemoHtml=fs.readFileSync(path.join(stationDir,'teacher.html'),'utf8');
- ensure(teacherDemoHtml.includes('id="demoInbox"')&&teacherDemoHtml.includes('id="privateInbox"')
-  &&teacherDemoHtml.includes('id="liveTestInbox"')&&teacherDemoHtml.includes('id="studentLiveLink"')&&teacherDemoJs.includes('sessionStorage'),
-  'no-login demonstration and protected teacher inbox must both be present');
+ ensure(teacherDemoHtml.includes('<h1>Teacher Dashboard</h1>')&&
+   teacherDemoHtml.includes('id="liveTestInbox"')&&
+   teacherDemoHtml.includes('id="privateInbox"')&&
+   teacherDemoHtml.includes('id="teacherWorkspace"')&&
+   teacherDemoHtml.includes('id="dashStudentFrame"')&&
+   teacherDemoHtml.includes('id="dashStoryCards"')&&
+   teacherDemoHtml.includes('id="dashLessonNotes"')&&
+   teacherDemoHtml.includes('id="studentLiveLink"')&&
+   teacherDemoHtml.includes('/station/teacher-dashboard.js')&&
+   teacherDashboardJs.includes('import("/station/quickchat.js")')&&
+   teacherDashboardJs.includes('location.origin'),
+   'one-page Teacher Dashboard must combine live messaging, protected inbox, student tools, story catalog and lesson notes');
+ for(const tool of ['trainer','language','pictures','questions','ninja','live','transcribe','progress','music']){
+  ensure(teacherDemoHtml.includes('data-dashboard-tool="'+tool+'"')&&
+   teacherDashboardJs.includes('["'+tool+'",'),
+   'teacher dashboard missing accessible integrated tool '+tool);
+ }
  const e2eJs=fs.readFileSync(path.join(stationDir,'live-e2e.js'),'utf8');
  new vm.Script(e2eJs,{filename:'NINJA_READER/live-e2e.js'});
  await verifyLiveEndToEndEncryption(e2eJs);
@@ -371,32 +385,14 @@ async function main(){
 
  // Add future stories automatically to the test library without changing the existing featured story.
  // DOM construction uses textContent rather than untrusted HTML.
+ // The publishing domain is now a simple two-entry portal.
+ // All stories are opened from Student Station, and teacher tools stay on Teacher Dashboard.
  const homepagePath=path.join(out,"index.html"),homepage=fs.readFileSync(homepagePath,"utf8");
- const insert=String.raw`<script>
- (async function(){
-  try{
-   const response=await fetch('/catalog.json',{cache:'no-store'});
-   if(!response.ok)throw Error('catalog missing');
-   const catalog=await response.json();
-   const extra=(catalog.stories||[]).filter(story=>story.slug!=='zoom-trip');
-   if(!extra.length)return;
-   const main=document.querySelector('main');if(!main)return;
-   const heading=document.createElement('h2');heading.textContent='More NINJA MOONS Stories';heading.style.marginTop='36px';main.append(heading);
-   for(const story of extra){
-    const card=document.createElement('section');card.className='book';
-    const img=document.createElement('img');img.className='cover';img.src=story.cover;img.alt='Illustration from '+story.title;
-    const info=document.createElement('div');info.className='details';
-    const title=document.createElement('h2');title.textContent=story.title;
-    const level=document.createElement('p');level.className='small';level.textContent=(story.readingLevel||'Reader')+' · '+story.pages+' pages';
-    const link=document.createElement('a');link.className='link';link.href='/station/?story='+encodeURIComponent(story.slug);link.textContent='📖 Open All Story Tools';
-    info.append(title,level,link);card.append(img,info);main.append(card);
-   }
-  }catch(e){console.warn('Story catalog unavailable',e)}
- })();
- </script>`;
- ensure(homepage.includes("</body>"),"library homepage missing closing body");
- fs.writeFileSync(homepagePath,addNavigation(homepage.replace("</body>",insert+"</body>")));
-
+ ensure(homepage.includes('Open Student Station')&&homepage.includes('Open Teacher Dashboard')&&
+   homepage.includes('href="/station/"')&&homepage.includes('href="/station/teacher.html"'),
+   'homepage must expose exactly the two classroom stations');
+ fs.writeFileSync(homepagePath,homepage);
+ 
  fs.writeFileSync(path.join(out,"health.json"),JSON.stringify({service:"ninja-moons-publishing-lab",status:"ok",mode:"isolated",validatedStories:library.length,validatedPages:library.reduce((v,s)=>v+s.pages,0),illustrations:"complete"},null,2));
  console.log("PUBLISH VALIDATION PASSED:",library.length,"stories,",library.reduce((v,s)=>v+s.pages,0),"pages; illustration checksums match");
 }
