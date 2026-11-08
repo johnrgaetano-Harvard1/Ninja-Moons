@@ -165,16 +165,8 @@ el("newLiveRoom").onclick=async()=>{
  catch(err){setStatus("Could not start new test: "+err.message)}
  finally{el("newLiveRoom").disabled=false}
 };
-el("openRealInbox").addEventListener("click",()=>{el("liveTestInbox").hidden=true});
-el("showDemo").addEventListener("click",()=>{
- el("liveTestInbox").hidden=false;
- el("demoInbox").hidden=true;
- el("resetDemo").hidden=true;
- refresh().catch(()=>{});
-});
+// The live inbox stays visible alongside all the other teacher tools.
 async function init(){
- el("demoInbox").hidden=true;
- el("resetDemo").hidden=true;
  try{
   if(fixedLive){
    if(!window.NMLiveE2E)throw Error("The browser encryption library did not load.");
