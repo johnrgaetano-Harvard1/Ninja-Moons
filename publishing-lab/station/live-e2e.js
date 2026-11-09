@@ -6,6 +6,9 @@
 (function(){
  const PREFIX="nmE2E1";
  const STORAGE="nm-live-test-aes-key-v1";
+ // Public demonstration only: shared room/key allow immediate no-login two-way testing.
+ // Never use this shared demo for real student or private classroom messages.
+ const DEMO_KEY="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
  const encode=new TextEncoder(),decode=new TextDecoder("utf-8",{fatal:true});
  let secret="",key=null,keyId="";
  const base64url=bytes=>btoa(String.fromCharCode(...bytes)).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
@@ -36,7 +39,7 @@
  }
  async function teacher(){
   assertCrypto();
-  let value=hashKey();
+  let value=new URLSearchParams(location.search).get("test")==="live"?DEMO_KEY:hashKey();
   if(!value){
    try{value=localStorage.getItem(STORAGE)||""}catch(_e){}
   }
@@ -50,7 +53,7 @@
  }
  async function student(){
   assertCrypto();
-  let value=hashKey(),generated=false;
+  let value=new URLSearchParams(location.search).get("test")==="live"?DEMO_KEY:hashKey(),generated=false;
   // Opening the student story directly must not leave Send permanently disabled.
   // Generate a secret locally, and provide a paired TEACHER link to share it.
   if(!value){
