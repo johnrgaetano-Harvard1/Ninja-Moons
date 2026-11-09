@@ -265,6 +265,12 @@ function refresh(){
  persist();
 }
 function showTool(name){
+ // One no-login messaging path: Ask Teacher opens the working shared demo on this same station.
+ if(name==="teacher"&&new URLSearchParams(location.search).get("test")!=="live"){
+  const url=new URL(location.href);url.searchParams.set("test","live");url.searchParams.set("tool","teacher");
+  if(currentSlug)url.searchParams.set("story",currentSlug);
+  location.replace(url.href);return;
+ }
  // A microphone must not stay open unnoticed after leaving the transcription toolbox.
  if(name!=="transcribe"&&recognition){try{recognition.stop()}catch(_error){recognition=null}}
  tool=name;for(const e of document.querySelectorAll("[data-panel]"))e.hidden=e.dataset.panel!==name;
