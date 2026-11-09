@@ -1,0 +1,58 @@
+name: Encrypted offsite database backup
+
+on:
+  schedule:
+    - cron: '17 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ninja-moons-database-backup
+  cancel-in-progress: false
+
+jobs:
+  encrypted-backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      NINJA_DATABASE_URL: ${{ secrets.NINJA_DATABASE_URL }}
+      NINJA_AGE_RECIPIENT: ${{ secrets.NINJA_AGE_RECIPIENT }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.NINJA_BACKUP_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.NINJA_BACKUP_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ vars.NINJA_BACKUP_REGION }}
+      NINJA_BACKUP_BUCKET: ${{ vars.NINJA_BACKUP_BUCKET }}
+      NINJA_BACKUP_ENDPOINT: ${{ vars.NINJA_BACKUP_ENDPOINT }}
+    steps:
+      - name: Check configuration without exposing values
+        shell: bash
+        run: |
+          set -euo pipefail
+          for name in NINJA_DATABASE_URL NINJA_AGE_RECIPIENT AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_DEFAULT_REGION NINJA_BACKUP_BUCKET NINJA_BACKUP_ENDPOINT; do
+            if [[ -z "${!name:-}" ]]; then echo "::error::Backup configuration missing: $name"; exit 1; fi
+          done
+      - uses: actions/checkout@v4
+      - name: Install backup tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y postgresql-client age awscli
+      - name: Encrypt database and upload offsite
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ninja-backups"
+          bash recovery/backup-postgres-encrypted.sh "$RUNNER_TEMP/ninja-backups"
+          shopt -s nullglob
+          files=("$RUNNER_TEMP"/ninja-backups/*.dump.age)
+          [[ ${#files[@]} -eq 1 ]] || { echo "::error::Expected one encrypted backup"; exit 1; }
+          for file in "${files[@]}" "${files[0]}.sha256"; do
+            aws --endpoint-url "$NINJA_BACKUP_ENDPOINT" s3 cp "$file" "s3://$NINJA_BACKUP_BUCKET/ninja-moons/$(basename "$file")" --only-show-errors
+          done
+          echo "Encrypted backup and checksum uploaded to offsite storage."
+      - name: Remove local backup files
+        if: always()
+        shell: bash
+        run: rm -rf "$RUNNER_TEMP/ninja-backups"
