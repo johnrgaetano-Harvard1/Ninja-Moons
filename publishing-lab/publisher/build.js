@@ -258,6 +258,35 @@ async function main(){
  const quickChatJs=fs.readFileSync(path.join(stationDir,'quickchat.js'),'utf8');
  new vm.Script(quickChatJs.replace('export {init,refresh};',''),{filename:'NINJA_READER/quickchat.js'});
  ensure(quickChatJs.includes('nm_q_send')&&quickChatJs.includes('nm_q_read')&&quickChatJs.includes('nm_q_teacher_reply'),'quick teacher chat is missing required private database functions');
+ // Universal document reader must preserve all source words while paging content
+ // through the existing four-stage story reader (not a second independent reader).
+ const docCoreJs=fs.readFileSync(path.join(stationDir,'document-core.js'),'utf8');
+ const studentDocsJs=fs.readFileSync(path.join(stationDir,'document-library.js'),'utf8');
+ const teacherDocsJs=fs.readFileSync(path.join(stationDir,'teacher-library.js'),'utf8');
+ new vm.Script(docCoreJs,{filename:'NINJA_READER/document-core.js'});
+ new vm.Script(studentDocsJs,{filename:'NINJA_READER/document-library.js'});
+ new vm.Script(teacherDocsJs,{filename:'NINJA_READER/teacher-library.js'});
+ ensure(docCoreJs.includes('indexedDB.open')&&docCoreJs.includes('mammoth@1.9.0')&&
+  docCoreJs.includes('pdfjs-dist@4.10.38')&&docCoreJs.includes('jszip@3.10.1')&&
+  docCoreJs.includes('nm_reader_add_part')&&docCoreJs.includes('nm_reader_finish_doc'),
+  'Universal PDF, Word, EPUB and text importer / private classroom publishing is missing');
+ ensure(studentDocsJs.includes('nm_reader_status')&&studentDocsJs.includes('nm_reader_read_doc')&&
+  teacherDocsJs.includes('nm_reader_room_new')&&teacherDocsJs.includes('nm_reader_set_page')&&
+  teacherDocsJs.includes('core.publish'),
+  'Teacher-shared documents and follow-teacher session must be connected to both workspaces');
+ ensure(stationJs.includes('openImportedDocument')&&stationJs.includes('window.NMDocs.toReader')&&
+  stationJs.includes('goToPage:n=>')&&stationJs.includes('showTool,'),
+  'Universal imports must use the existing four-stage reader rather than an isolated replacement');
+ const container={window:{},crypto:crypto.webcrypto,Uint8Array,TextEncoder,TextDecoder,URL,
+  console,document:{},File:class File{}};
+ vm.runInNewContext(docCoreJs,container,{timeout:3000,filename:'document-core.js'});
+ const content=Array.from({length:2400},(_,i)=>'word'+i).join(' ')+'.';
+ const imported=container.window.NMDocs.toReader({id:'test-doc',title:'A full document',text:content});
+ ensure(imported.pages.length>2&&imported.isDocument===true&&
+  imported.pages.flatMap(p=>p.lines).join(' ').replace(/\\s+/g,' ').trim()===content,
+  'Document reading pagination must retain every word and page in its original order');
+ ensure(/^[a-f0-9]{64}$/.test(container.window.NMDocs.secret()),
+  'Teacher/student classroom secret must be 256-bit random');
  const teacherDashboardJs=fs.readFileSync(path.join(stationDir,'teacher-dashboard.js'),'utf8');
  new vm.Script(teacherDashboardJs,{filename:'NINJA_READER/teacher-dashboard.js'});
  const liveTestApi=fs.readFileSync(path.resolve(__dirname,"../../api/live-chat.mjs"),"utf8");
@@ -303,6 +332,13 @@ async function main(){
  ensure(teacherDemoHtml.includes('id="liveCryptoLabel"')&&teacherDemoHtml.includes('/station/live-e2e.js'),
  'Teacher message encryption status and module are required');
 
+ ensure(stationHtml.includes('id="studentLibrary"')&&stationHtml.includes('id="studentDocumentFile"')&&
+  stationHtml.includes('id="studentClassList"')&&stationHtml.includes('/station/document-core.js')&&
+  stationHtml.includes('/station/document-library.js')&&
+  teacherDemoHtml.includes('id="teacherLibrarySection"')&&
+  teacherDemoHtml.includes('id="teacherDocFile"')&&teacherDemoHtml.includes('id="teacherClassLink"')&&
+  teacherDemoHtml.includes('/station/teacher-library.js')&&teacherDemoHtml.includes('/station/document-core.js'),
+  'Document library controls must appear in both Teacher and Student workspaces');
  ensure(stationHtml.includes('id="liveStudentTester"')&&stationHtml.includes('id="liveStudentPairing"')&&stationHtml.includes('id="liveStudentForm"')
   &&stationHtml.includes('/station/live-student-test.js'),'student test form is missing');
  for(const id of ['translatedTranscript','sttLanguage','translateNow','translationStatus']){
