@@ -1,0 +1,951 @@
+{
+  "captured_on": "2026-11-09",
+  "tables": [
+    {
+      "table": "audit_events",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "actor_user_id",
+          "type": "uuid",
+          "nullable": "YES",
+          "default_present": false
+        },
+        {
+          "name": "event_name",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "entity_kind",
+          "type": "text",
+          "nullable": "YES",
+          "default_present": false
+        },
+        {
+          "name": "entity_id",
+          "type": "uuid",
+          "nullable": "YES",
+          "default_present": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "classroom_enrollments",
+      "columns": [
+        {
+          "name": "classroom_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "student_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "joined_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "classroom_teachers",
+      "columns": [
+        {
+          "name": "classroom_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "teacher_user_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "classrooms",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "school_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "school_year",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "consent_records",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "student_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "guardian_user_id",
+          "type": "uuid",
+          "nullable": "YES",
+          "default_present": false
+        },
+        {
+          "name": "basis",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "notice_version",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "verified_by",
+          "type": "uuid",
+          "nullable": "YES",
+          "default_present": false
+        },
+        {
+          "name": "verified_at",
+          "type": "timestamp with time zone",
+          "nullable": "YES",
+          "default_present": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "guardian_links",
+      "columns": [
+        {
+          "name": "student_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "guardian_user_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "verified_at",
+          "type": "timestamp with time zone",
+          "nullable": "YES",
+          "default_present": false
+        }
+      ]
+    },
+    {
+      "table": "nm_quick_messages",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "thread_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "sender",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "body",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "nm_quick_threads",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "token_hash",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "story_slug",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "page_number",
+          "type": "integer",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "nm_teacher_messages",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "thread_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "sender_user_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "body",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "nm_teacher_threads",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "classroom_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "student_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "created_by",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "story_slug",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "page_number",
+          "type": "integer",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "profiles",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "role",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "quiz_attempts",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "client_event_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "student_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "actor_user_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "story_slug",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "question_id",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "answer_choice",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "reading_assignments",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "classroom_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "assigned_by",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "story_slug",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "due_at",
+          "type": "timestamp with time zone",
+          "nullable": "YES",
+          "default_present": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "reading_events",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "client_event_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "student_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "actor_user_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "story_slug",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "sentence_number",
+          "type": "integer",
+          "nullable": "YES",
+          "default_present": false
+        },
+        {
+          "name": "helper_stage",
+          "type": "integer",
+          "nullable": "YES",
+          "default_present": false
+        },
+        {
+          "name": "duration_ms",
+          "type": "integer",
+          "nullable": "YES",
+          "default_present": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "school_staff",
+      "columns": [
+        {
+          "name": "school_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "role",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "schools",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "district_ref",
+          "type": "text",
+          "nullable": "YES",
+          "default_present": false
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "student_profiles",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "school_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "display_alias",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "grade_level",
+          "type": "text",
+          "nullable": "YES",
+          "default_present": false
+        },
+        {
+          "name": "consent_status",
+          "type": "text",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": "NO",
+          "default_present": true
+        },
+        {
+          "name": "is_synthetic_test",
+          "type": "boolean",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    },
+    {
+      "table": "student_user_links",
+      "columns": [
+        {
+          "name": "student_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": "NO",
+          "default_present": false
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": "NO",
+          "default_present": true
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "table": "classroom_enrollments",
+      "policy": "enrollments_scoped_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "classroom_teachers",
+      "policy": "classroom_teachers_own_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "classrooms",
+      "policy": "classrooms_scoped_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "guardian_links",
+      "policy": "guardian_links_own_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "nm_teacher_messages",
+      "policy": "nm_messages_participant_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "nm_teacher_messages",
+      "policy": "nm_messages_participant_write",
+      "command": "INSERT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "nm_teacher_threads",
+      "policy": "nm_threads_student_or_teacher_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "nm_teacher_threads",
+      "policy": "nm_threads_student_start",
+      "command": "INSERT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "profiles",
+      "policy": "profiles_self_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "quiz_attempts",
+      "policy": "attempts_scoped_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "quiz_attempts",
+      "policy": "attempts_student_insert",
+      "command": "INSERT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "reading_assignments",
+      "policy": "assignments_scoped_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "reading_events",
+      "policy": "events_scoped_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "reading_events",
+      "policy": "events_student_insert",
+      "command": "INSERT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "school_staff",
+      "policy": "staff_own_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "schools",
+      "policy": "schools_staff_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "student_profiles",
+      "policy": "student_profiles_scoped_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    },
+    {
+      "table": "student_user_links",
+      "policy": "student_links_own_read",
+      "command": "SELECT",
+      "roles": [
+        "authenticated"
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "name": "nm_live_demo_add",
+      "arguments": "p_room uuid, p_key text, p_role text, p_body text, p_story text, p_page integer",
+      "returns": "boolean",
+      "security_definer": false
+    },
+    {
+      "name": "nm_live_demo_create",
+      "arguments": "p_teacher_key text, p_student_key text",
+      "returns": "uuid",
+      "security_definer": false
+    },
+    {
+      "name": "nm_live_demo_read",
+      "arguments": "p_room uuid, p_key text, p_role text",
+      "returns": "jsonb",
+      "security_definer": false
+    },
+    {
+      "name": "nm_q_read",
+      "arguments": "p_token text",
+      "returns": "jsonb",
+      "security_definer": false
+    },
+    {
+      "name": "nm_q_send",
+      "arguments": "p_token text, p_thread uuid, p_body text, p_story text, p_page integer",
+      "returns": "uuid",
+      "security_definer": false
+    },
+    {
+      "name": "nm_q_teacher_read",
+      "arguments": "",
+      "returns": "jsonb",
+      "security_definer": false
+    },
+    {
+      "name": "nm_q_teacher_reply",
+      "arguments": "p_thread uuid, p_body text",
+      "returns": "boolean",
+      "security_definer": false
+    },
+    {
+      "name": "nm_reader_add_part",
+      "arguments": "p_room uuid, p_key text, p_doc uuid, p_part integer, p_content text",
+      "returns": "boolean",
+      "security_definer": false
+    },
+    {
+      "name": "nm_reader_finish_doc",
+      "arguments": "p_room uuid, p_key text, p_doc uuid",
+      "returns": "boolean",
+      "security_definer": false
+    },
+    {
+      "name": "nm_reader_read_doc",
+      "arguments": "p_room uuid, p_token text, p_role text, p_doc uuid",
+      "returns": "jsonb",
+      "security_definer": false
+    },
+    {
+      "name": "nm_reader_room_new",
+      "arguments": "p_teacher_key text, p_student_key text",
+      "returns": "uuid",
+      "security_definer": false
+    },
+    {
+      "name": "nm_reader_set_page",
+      "arguments": "p_room uuid, p_key text, p_doc uuid, p_page integer, p_follow boolean",
+      "returns": "boolean",
+      "security_definer": false
+    },
+    {
+      "name": "nm_reader_start_doc",
+      "arguments": "p_room uuid, p_key text, p_title text, p_parts integer, p_words integer",
+      "returns": "uuid",
+      "security_definer": false
+    },
+    {
+      "name": "nm_reader_status",
+      "arguments": "p_room uuid, p_token text, p_role text",
+      "returns": "jsonb",
+      "security_definer": false
+    }
+  ]
+}
