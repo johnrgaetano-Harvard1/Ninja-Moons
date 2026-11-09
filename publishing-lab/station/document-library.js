@@ -126,7 +126,8 @@
    session.follow=follow;
    if(follow&&current.active_doc){
     if(current.active_doc!==session.active)await openShared(current.active_doc,current.active_page||1);
-    else if(current.active_page!==session.lastPage&&ready()&&window.NM_STATION.getStory()?.documentId==="shared-"+current.active_doc){
+    else if(ready()&&window.NM_STATION.getStory()?.documentId==="shared-"+current.active_doc
+     &&Number(window.NM_STATION.getContext()?.page)!==Number(current.active_page||1)){
      window.NM_STATION.goToPage(current.active_page||1);
      session.lastPage=current.active_page;
     }
