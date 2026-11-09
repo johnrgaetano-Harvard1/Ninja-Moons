@@ -27,7 +27,7 @@ function persist(){
 }
 function context(){return{slug:currentSlug,title:story?.title||"",page:page+1,sentence:sentence+1,stage:stage+1,totalPages:story?.pages?.length||0,language:language(),text:story?.pages?.[page]?.lines?.[sentence]||""};}
 window.NM_STATION={getContext:context,getStory:()=>story,getPage:()=>page,
- goToPage:n=>setPage(Math.max(0,Number(n)-1)),openDocument:openImportedDocument,
+ goToPage:n=>setPage(Math.max(0,Number(n)-1)),openDocument:openImportedDocument,showTool,
  getLocalProgress:()=>({page:page+1,sentence:sentence+1,stage:stage+1,questionsAnswered:Object.keys(answers).length}),
  getCatalog:()=>catalog};
 function node(tag,cl,txt){const e=document.createElement(tag);if(cl)e.className=cl;if(txt!==undefined)e.textContent=txt;return e;}
@@ -337,6 +337,7 @@ async function copyContext(){
 function openImportedDocument(documentData){
  if(!window.NMDocs)throw Error("The document importer is not loaded.");
  const manifest=window.NMDocs.toReader(documentData);
+ window.NMDocs.remember(documentData);
  stopSpeech();
  try{recognition?.stop()}catch(_error){}
  const slug="imported-"+documentData.id;
