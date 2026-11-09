@@ -98,6 +98,24 @@ a{color:#8edcff}a:focus-visible,button:focus-visible,select:focus-visible,textar
 .dash-foot a{color:#a4e3ff}
 @media(max-width:1150px){.dash-grid{grid-template-columns:1fr}.dash-frame-shell iframe{height:1150px}.dash-summary{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:680px){.dash-wrap{padding:0 10px 36px}.dash-head{padding:12px 0}.dash-brand{font-size:17px}.dash-head-actions a{font-size:12px}.dash-nav{border-radius:9px;top:0;margin:10px 0}.dash-summary{grid-template-columns:1fr}.dash-stat{padding:12px}.dashboard-card{padding:13px;border-radius:13px}.dash-notes{grid-template-columns:1fr}.dash-tool-strip button{flex:1 1 auto}.dash-frame-shell{min-height:940px}.dash-frame-shell iframe{height:1250px}.dash-btn{font-size:13px}#privateInbox .chat-layout{grid-template-columns:1fr}}
+
+.dashboard-library-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.dashboard-library-grid .dash-soft{margin:0;min-width:0}
+.dashboard-library-grid h3{font-size:20px}
+.dashboard-library-grid input[type=file]{width:100%;color:#143e68;border:1px solid #9ac8e8;border-radius:9px;padding:11px;background:#fff}
+.dashboard-library-grid textarea{display:block;width:100%;background:white;color:#123b66;border:1px solid #92bde3;border-radius:10px;line-height:1.5;resize:vertical;min-height:98px;padding:11px;margin-bottom:10px}
+.dash-library-help{font-size:12px;color:#365f86;line-height:1.4}
+.dash-library-status{min-height:23px;margin:12px 0;color:#114f7c;font-size:13px;line-height:1.45;font-weight:750}
+.dashboard-doc-list{display:grid;gap:9px;margin-top:13px}
+.dashboard-doc-item{border:1px solid #a4cce8;border-radius:10px;background:#fff;padding:11px;display:flex;flex-wrap:wrap;align-items:center;gap:9px;color:#11395b}
+.dashboard-doc-item strong{display:block;overflow-wrap:anywhere;font-size:14px}
+.dashboard-doc-item small{display:block;color:#557b9d;margin-top:4px;font-size:12px}
+.dashboard-doc-item .doc-meta{flex:1 1 145px;min-width:100px}
+.dashboard-doc-item .dash-btn{font-size:12px;padding:8px 10px}
+.dash-library-options{display:flex;gap:11px;flex-wrap:wrap;align-items:center;margin:12px 0;font-size:13px;color:#204d74}
+.dash-library-options label{display:flex;gap:6px;align-items:center}
+.dash-library-options input[type=number]{max-width:90px;min-height:38px;border:1px solid #99bee2;border-radius:8px;background:#fff;color:#12416e;padding:6px}
+@media(max-width:800px){.dashboard-library-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -118,6 +136,7 @@ a{color:#8edcff}a:focus-visible,button:focus-visible,select:focus-visible,textar
  <button id="openRealInbox" type="button">🔒 Private Inbox</button>
  <a href="#teacherWorkspace">🖥 Teaching Tools</a>
  <button type="button" id="dashOpenMonitor">📊 Class Monitor</button>
+ <a href="#teacherLibrarySection">📂 Upload & Sessions</a>
  <a href="#dashStorySection">📚 Story Library</a>
  <a href="#dashNotesSection">📝 Lesson Notes</a>
 </nav>
@@ -126,6 +145,46 @@ a{color:#8edcff}a:focus-visible,button:focus-visible,select:focus-visible,textar
  <div class="dash-stat"><div class="stat-top">STORY LIBRARY</div><strong id="dashStoryCount">Loading stories…</strong><p>Choose a published story and open it in your teaching workspace.</p></div>
  <div class="dash-stat"><div class="stat-top">ONE TEACHING WORKSPACE</div><strong>All learning tools</strong><p>Reading, language, vocabulary, AI help, transcription, monitoring and more.</p></div>
 </div>
+<section class="dashboard-card dash-section" id="teacherLibrarySection" aria-label="Teacher library and class reading sessions">
+ <div class="dash-card-head">
+  <div><div class="dash-overline">UNIVERSAL READING LIBRARY</div><h2>Upload, Teach & Share Any Reading</h2>
+   <p class="dash-muted">Upload documents or paste text. Read them with the existing Ninja Reader, or publish an authorized reading to your temporary Class Library session.</p>
+  </div>
+  <span class="dash-live-tag">CLASSROOM PREVIEW</span>
+ </div>
+ <div class="dashboard-library-grid">
+  <div class="dash-soft">
+   <h3>Teacher's My Library</h3>
+   <label class="dash-inline-label" for="teacherDocFile">Open PDF, DOCX, EPUB, TXT, Markdown</label>
+   <input id="teacherDocFile" type="file" accept=".pdf,.docx,.epub,.txt,.text,.md">
+   <p class="dash-library-help">Extracts text on this device. Scanned PDFs need OCR. Personal files stay in this browser until you choose to share.</p>
+   <label class="dash-inline-label" for="teacherPasteTitle">Or paste a reading or assignment</label>
+   <input id="teacherPasteTitle" maxlength="130" class="dash-field" placeholder="Document title">
+   <textarea id="teacherPasteText" rows="4" placeholder="Paste any story, lesson, article, or document here…"></textarea>
+   <button id="teacherSavePaste" class="dash-btn" type="button">Save to My Library</button>
+   <p id="teacherLibraryStatus" class="dash-library-status" role="status" aria-live="polite">Your private library is ready.</p>
+   <div id="teacherLocalDocuments" class="dashboard-doc-list" aria-label="Teacher personal documents"></div>
+  </div>
+  <div class="dash-soft">
+   <h3>Class Library · Live Session</h3>
+   <p>Start a session, copy the private student link, and share a reading. Connected students can see the reading in their Student Station. Follow Teacher can synchronize the reading section.</p>
+   <div class="dash-actions">
+    <button id="teacherNewReadingRoom" type="button" class="dash-btn">Start Classroom Session</button>
+    <button id="teacherCopyClassLink" type="button" class="dash-btn secondary" disabled>Copy Student Invitation</button>
+   </div>
+   <label class="dash-inline-label" for="teacherClassLink">Student invitation link (private)</label>
+   <input id="teacherClassLink" class="dash-field" readonly placeholder="Create a session to get a student invitation">
+   <div class="dash-library-options">
+    <label><input id="teacherFollowEnabled" type="checkbox" checked> Students follow teacher's section</label>
+    <label for="teacherSectionNumber">Reading section <input type="number" id="teacherSectionNumber" min="1" max="99999" value="1"></label>
+    <button type="button" id="teacherSetSection" class="dash-btn secondary" disabled>Show Section to Class</button>
+   </div>
+   <p id="teacherClassStatus" class="dash-library-status" role="status" aria-live="polite">No active class session. Start one to share a document with students.</p>
+   <div id="teacherSharedDocuments" class="dashboard-doc-list" aria-label="Teacher-shared classroom readings"></div>
+  </div>
+ </div>
+ <p class="dash-muted">The classroom sharing feature is a private-link, 48-hour demonstration and is not yet a verified-school assignment system. Share only content you have permission to distribute; do not upload student records or confidential material. Large books can always be read personally, while the demonstration class session has a storage limit.</p>
+</section>
 <div class="dash-grid">
 <div class="dash-left">
 <section id="liveTestInbox" class="dashboard-card" aria-label="Live encrypted student-to-teacher test">
@@ -230,6 +289,8 @@ a{color:#8edcff}a:focus-visible,button:focus-visible,select:focus-visible,textar
  <span>Student access: <a href="/station/" target="_blank" rel="noopener noreferrer">/station/</a></span>
 </footer>
 </div>
+<script defer src="/station/document-core.js"></script>
+<script defer src="/station/teacher-library.js"></script>
 <script defer src="/station/live-e2e.js"></script>
 <script type="module" src="/station/live-test.js"></script>
 <script defer src="/station/teacher-dashboard.js"></script>
