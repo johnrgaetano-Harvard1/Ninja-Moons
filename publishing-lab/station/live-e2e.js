@@ -39,7 +39,10 @@
  }
  async function teacher(){
   assertCrypto();
-  let value=new URLSearchParams(location.search).get("test")==="live"?DEMO_KEY:hashKey();
+  const p=new URLSearchParams(location.search);
+  // Default Teacher Dashboard and ?test=live Student Station MUST share the same demo key.
+  const demo=p.get("test")==="live"||(!p.has("testroom")&&!p.has("teacherkey"));
+  let value=demo?DEMO_KEY:hashKey();
   if(!value){
    try{value=localStorage.getItem(STORAGE)||""}catch(_e){}
   }
