@@ -14,7 +14,7 @@
   ["transcribe","Transcription"],["progress","Class Monitor"],
   ["music","Music · Experimental"]
  ]);
- const state={tool:"trainer",story:"seven-second-journey-grade-1",loaded:false};
+ const state={tool:"trainer",story:"seven-second-journey-grade-1",document:null,loaded:false};
  let privateInit=null,notesTimer=null;
  const set=(id,content)=>{const e=$(id);if(e)e.textContent=content};
  function validSlug(value){return typeof value==="string"&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)&&value.length<120}
@@ -29,20 +29,43 @@
   state.tool=tool;
   for(const btn of tools)btn.setAttribute("aria-pressed",String(btn.dataset.dashboardTool===tool));
   const next=previewUrl();
-  if(!state.loaded||stationFrame.getAttribute("src")!==next||options.force){
-   stationFrame.src=next;state.loaded=true;
+  let switched=false;
+  if(state.loaded&&!options.force){
+   try{
+    const app=stationFrame.contentWindow?.NM_STATION;
+    if(app?.showTool){app.showTool(tool);switched=true}
+   }catch(_error){}
+  }
+  if(!switched){
+   stationFrame.src=state.document?"/station/?story=seven-second-journey-grade-1&tool="+encodeURIComponent(tool):next;
+   state.loaded=true;
    set("dashFrameStatus","Opening "+allowedTools.get(tool)+"…");
   }
-  set("dashCurrentTool",allowedTools.get(tool)+" · "+(picker.selectedOptions?.[0]?.textContent||"Student Station"));
+  set("dashCurrentTool",allowedTools.get(tool)+" · "+(state.document?.title||picker.selectedOptions?.[0]?.textContent||"Student Station"));
   if(options.scroll)$("teacherWorkspace").scrollIntoView({behavior:"smooth",block:"start"});
  }
- tools.forEach(button=>button.addEventListener("click",()=>openWorkspace(button.dataset.dashboardTool)));
+ function openDocumentInDashboard(data){
+  if(!data||typeof data.id!=="string"||typeof data.text!=="string")throw Error("Choose a valid document.");
+  state.document=data;
+  state.story="imported-"+data.id;
+  const app=stationFrame.contentWindow?.NM_STATION;
+  if(!app?.openDocument)throw Error("The teaching workspace is not ready.");
+  app.openDocument(data);
+  app.showTool?.(state.tool);
+  set("dashCurrentTool",state.tool+" · "+data.title);
+ }
+ window.NMDashboard=Object.freeze({openDocument:openDocumentInDashboard,openWorkspace});
+  tools.forEach(button=>button.addEventListener("click",()=>openWorkspace(button.dataset.dashboardTool)));
  $("dashOpenMonitor").onclick=()=>openWorkspace("progress",{scroll:true});
  $("dashRefreshPreview").onclick=()=>openWorkspace(state.tool,{force:true});
  picker.onchange=()=>{
-  if(validSlug(picker.value)){state.story=picker.value;openWorkspace(state.tool,{scroll:false})}
+  if(validSlug(picker.value)){state.document=null;state.story=picker.value;openWorkspace(state.tool,{scroll:false,force:true})}
  };
  stationFrame.addEventListener("load",()=>{
+  try{
+   const app=stationFrame.contentWindow?.NM_STATION;
+   if(state.document&&app?.openDocument){app.openDocument(state.document);app.showTool?.(state.tool)}
+  }catch(_error){}
   set("dashFrameStatus","Tool loaded. Use the reading and classroom controls within this dashboard.");
   try{
    const d=stationFrame.contentDocument;
