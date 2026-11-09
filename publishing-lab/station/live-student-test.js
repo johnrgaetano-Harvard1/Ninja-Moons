@@ -3,6 +3,7 @@
 // Supabase client and any external module imports. It uses the same-origin API.
 (function(){
  const qs=new URLSearchParams(location.search);
+ // The Student Station Ask Teacher toolbox is the same no-login live demo.
  if(qs.get("test")!=="live")return;
  document.documentElement.classList.add("live-student-mode");
  const $=id=>document.getElementById(id);
@@ -102,7 +103,7 @@
     };
    }
    encryptionReady=true;
-   cryptoLabel.textContent="🔒 AES-256-GCM end-to-end encryption (live test) · HTTPS/TLS in transit · Shared key ID "+info.keyId+". Message text is encrypted on this device before sending. Experimental; not independently audited.";
+   cryptoLabel.textContent="DEMO ONLY · Shared public test room and key. AES-256-GCM transport payloads are not private from other demo visitors. Never send names or personal information. Key "+info.keyId;
    button.disabled=false;$("liveStudentSample").disabled=false;
    await refresh();
    setInterval(()=>{if(document.visibilityState!=="hidden")refresh().catch(()=>{})},3000);
