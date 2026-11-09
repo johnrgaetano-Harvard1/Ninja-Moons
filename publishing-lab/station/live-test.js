@@ -171,7 +171,7 @@ async function init(){
   if(fixedLive){
    if(!window.NMLiveE2E)throw Error("The browser encryption library did not load.");
    const info=await window.NMLiveE2E.teacher();
-   el("liveCryptoLabel").textContent="🔒 AES-256-GCM end-to-end encryption (live test) · HTTPS/TLS in transit · Shared key ID "+info.keyId+". Only devices holding the paired test link can decrypt new message text. Experimental; not independently audited.";
+   el("liveCryptoLabel").textContent="DEMO ONLY · Shared public test room and key. Not private from other demo visitors. Use sample messages only. Key "+info.keyId;
   }else{
    el("liveCryptoLabel").textContent="🔒 HTTPS/TLS transport encryption only — end-to-end encryption is available in the live test mode.";
   }
