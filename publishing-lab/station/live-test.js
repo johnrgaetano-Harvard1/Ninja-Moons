@@ -150,8 +150,8 @@ el("liveReplyForm").addEventListener("submit",async e=>{
 el("copyLiveLink").onclick=async()=>{
  if(!room)return;
  try{
-  await navigator.clipboard.writeText(storyLink());
-  setStatus("Student link copied. Open it on the second screen.");
+  await navigator.clipboard.writeText(el("studentLiveLink").href);
+  setStatus("Encrypted student invitation copied, including the matching key. Open it on the second screen.");
  }catch(_err){
   el("liveLinkText").focus();el("liveLinkText").select();
   setStatus("Select and copy the highlighted student link.");
