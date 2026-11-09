@@ -118,11 +118,12 @@ async function refresh(){
   const messages=Array.isArray(r.data?.messages)?r.data.messages:[];
   const decoded=fixedLive?await Promise.all(messages.map(async m=>{
     try{return {...m,body:await window.NMLiveE2E.open(m.body,m.sender)}}
-    catch(_err){return {...m,body:"[Encrypted message — cannot decrypt with this session key]"}}}
+    catch(_err){return null}}
   )):messages;
-  render(decoded);
-  setStatus(messages.length
-   ?"Live and connected · "+messages.length+" message"+(messages.length===1?"":"s")+" · Checking every 3 seconds."
+  const readable=decoded.filter(Boolean);
+  render(readable);
+  setStatus(readable.length
+   ?"Live and connected · "+readable.length+" readable message"+(readable.length===1?"":"s")+" · Checking every 3 seconds."
    :"Live and connected · No questions yet. Send one from the student story and it will appear here.");
  }catch(err){setStatus("Live test error: "+err.message)}
  finally{busy=false}
