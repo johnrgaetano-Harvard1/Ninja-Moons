@@ -84,8 +84,9 @@
  }
  async function openPreview(data){
   $("teacherWorkspace").scrollIntoView({behavior:"smooth",block:"start"});
-  const app=await waitPreview();
-  app.openDocument(data);
+  await waitPreview();
+  if(window.NMDashboard?.openDocument)window.NMDashboard.openDocument(data);
+  else preview.contentWindow.NM_STATION.openDocument(data);
  }
  async function openSharedForTeacher(id){
   if(!room)throw Error("Start a session first.");
