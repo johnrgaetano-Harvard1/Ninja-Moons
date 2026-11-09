@@ -11,7 +11,40 @@
 <main class="main">
  <div class="welcome"><div><p class="kicker">NINJA MOONS · STUDENT STATION</p><h1>Student Station · Everything in One Place</h1><p>Your stories, read-aloud, NINJA Reader, vocabulary pictures, comprehension, AI Helper, Ask Teacher, live reading, and language tools all live here. Keep your story above while using the tools below.</p></div>
  <label class="book-chooser">Choose a story <select id="storyPick" aria-label="Select illustrated story"><option>Loading stories…</option></select></label></div>
- <section class="story-dock" id="storyDock" aria-label="The illustrated story stays in view">
+ <section id="studentLibrary" class="document-library-hub" aria-label="Student library and class reading">
+ <div class="document-library-head">
+  <div><p class="library-eyebrow">MY READING LIBRARY</p><h2>Upload Any Reading</h2>
+   <p>Choose a file or paste text, then use the same Ninja Reader tools below. Your personal documents stay on this device unless you deliberately join a teacher session.</p>
+  </div>
+  <span class="library-chip">YOUR DOCUMENTS · PRIVATE</span>
+ </div>
+ <div class="library-panels">
+  <div class="library-panel">
+   <h3>My Library</h3>
+   <label for="studentDocumentFile" class="library-label">Upload PDF, Word (DOCX), EPUB, TXT, or Markdown</label>
+   <input type="file" id="studentDocumentFile" accept=".pdf,.docx,.epub,.txt,.text,.md" aria-label="Upload a document for Ninja Reader">
+   <p class="library-helper">The text is extracted in your browser. Text-based PDFs work; scanned images need OCR.</p>
+   <label for="studentDocumentTitle" class="library-label">Or paste a reading</label>
+   <input id="studentDocumentTitle" type="text" maxlength="130" placeholder="Reading title">
+   <textarea id="studentDocumentPaste" rows="3" placeholder="Paste a story, article, assignment, or chapter here…"></textarea>
+   <button type="button" class="library-button" id="studentSavePaste">Save & Read Text</button>
+   <p id="studentLibraryStatus" class="library-status" role="status" aria-live="polite">Choose a file or paste a reading to begin.</p>
+   <div id="studentDocumentList" class="library-list" aria-label="Personal reading documents"></div>
+  </div>
+  <div class="library-panel">
+   <h3>Class Library & Live Session</h3>
+   <p>Use the teacher's private class link to see assigned readings. Your teacher can choose a reading and optionally move everyone to the same section.</p>
+   <label for="studentJoinLink" class="library-label">Teacher's class invitation link</label>
+   <input id="studentJoinLink" type="text" autocomplete="off" placeholder="Paste the link your teacher shared…">
+   <button id="studentJoinClass" type="button" class="library-button">Join Reading Session</button>
+   <div class="library-follow"><label><input type="checkbox" id="studentFollowTeacher" checked> Follow Teacher's reading section</label></div>
+   <p id="studentClassStatus" class="library-status" role="status" aria-live="polite">No classroom session joined.</p>
+   <div id="studentClassList" class="library-list" aria-label="Class reading assignments"></div>
+  </div>
+ </div>
+ <p class="library-footnote">Personal uploads are stored in this browser, subject to its storage space. Shared classroom sessions are temporary previews with access restricted by the invitation link; don't upload sensitive student records or material you are not authorized to distribute.</p>
+</section>
+<section class="story-dock" id="storyDock" aria-label="The illustrated story stays in view">
   <div class="story-image"><img id="storyArt" src="/stories/seven-second-journey-grade-1/images/page-01.png" alt="Illustrated story page" fetchpriority="high"><span class="page-badge" id="pageBadge">Page 1 of 10</span></div>
   <div class="story-content">
    <div class="story-name" id="storyGrade">NINJA MOONS · FIRST GRADE</div>
@@ -127,6 +160,8 @@
 </main>
 <div id="hoverNounPopover" class="hover-noun" role="tooltip" hidden><img id="hoverNounPhoto" alt=""><span id="hoverNounName"></span></div>
 <dialog id="wordDialog" class="word-dialog"><h3 id="dialogWord"></h3><p id="dialogPhonetic"></p><p id="dialogDefinition"></p><img id="dialogImage" alt="Real photograph of a noun" hidden><p id="dialogCredit" class="quiet"></p><div class="actions"><button id="dialogHear" class="btn primary">🔊 Hear word</button><button id="dialogClose" class="btn subtle">Close</button></div></dialog>
+<script defer src="/station/document-core.js"></script>
+<script defer src="/station/document-library.js"></script>
 <script defer src="/station/live-e2e.js"></script>
 <script defer src="/station/live-student-test.js"></script>
 <script type="module" src="/station/station.js"></script>
