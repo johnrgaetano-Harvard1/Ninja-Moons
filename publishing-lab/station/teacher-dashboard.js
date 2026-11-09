@@ -134,6 +134,8 @@
  }
  $("openRealInbox").onclick=()=>privateInbox();
  $("dashOpenPrivate").onclick=()=>privateInbox();
+ // Real classroom questions are the primary inbox; do not require a hidden extra click.
+ privateInbox().catch(()=>{});
  const NOTES_KEY="nm-teacher-dashboard-lesson-notes-v1";
  try{$("dashLessonNotes").value=localStorage.getItem(NOTES_KEY)||""}
  catch(_error){set("dashNotesStatus","Private browsing may prevent saving notes on this device.")}
