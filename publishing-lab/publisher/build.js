@@ -266,7 +266,7 @@ async function main(){
  new vm.Script(docCoreJs,{filename:'NINJA_READER/document-core.js'});
  new vm.Script(studentDocsJs,{filename:'NINJA_READER/document-library.js'});
  new vm.Script(teacherDocsJs,{filename:'NINJA_READER/teacher-library.js'});
- ensure(docCoreJs.includes('indexedDB.open')&&docCoreJs.includes('mammoth@1.9.0')&&
+ ensure(docCoreJs.includes('indexedDB.open')&&docCoreJs.includes('mammoth/1.9.0')&&
   docCoreJs.includes('pdfjs-dist@4.10.38')&&docCoreJs.includes('jszip@3.10.1')&&
   docCoreJs.includes('nm_reader_add_part')&&docCoreJs.includes('nm_reader_finish_doc'),
   'Universal PDF, Word, EPUB and text importer / private classroom publishing is missing');
