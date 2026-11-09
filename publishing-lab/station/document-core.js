@@ -103,14 +103,14 @@
    throw Error("Use a normal public https:// document link.");
   const host=url.hostname.toLowerCase();
   if(host==="localhost"||host.endsWith(".local")||host.endsWith(".internal")||
-     /^(?:\\d{1,3}\\.){3}\\d{1,3}$/.test(host)||host.includes(":"))
+     /^(?:\d{1,3}\.){3}\d{1,3}$/.test(host)||host.includes(":"))
    throw Error("Only public document websites are supported.");
   // Public-domain Gutenberg book landing pages resolve to its plain text.
-  const book=url.pathname.match(/^\\/ebooks\\/(\\d{1,7})\\/?$/);
+  const book=url.pathname.match(/^\/ebooks\/(\d{1,7})\/?$/);
   if((host==="www.gutenberg.org"||host==="gutenberg.org")&&book){
    url=new URL("https://www.gutenberg.org/cache/epub/"+book[1]+"/pg"+book[1]+".txt");
   }
-  const ext=(url.pathname.match(/\\.(pdf|docx|epub|txt|text|md)$/i)||[])[1];
+  const ext=(url.pathname.match(/\.(pdf|docx|epub|txt|text|md)$/i)||[])[1];
   if(!ext)throw Error("Use a direct PDF, DOCX, EPUB, or TXT file link, or a Project Gutenberg book page.");
   onProgress("Downloading public reading from "+url.hostname+"…");
   let response;
