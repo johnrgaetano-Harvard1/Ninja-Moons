@@ -50,9 +50,9 @@
    const messages=Array.isArray(data.messages)?data.messages:[];
    const decoded=await Promise.all(messages.map(async m=>{
     try{return {...m,body:await window.NMLiveE2E.open(m.body,m.sender)}}
-    catch(_err){return {...m,body:"[Encrypted message — unable to decrypt with this test key]"}}}
+    catch(_err){return null}}
    ));
-   showMessages(decoded);
+   showMessages(decoded.filter(Boolean));
    // Do not hide a useful send-confirmation underneath a frequent poll.
    if(!status.textContent.includes("Delivered"))speak("Connected. Type a question and press Send Question to Teacher.");
   }catch(err){
