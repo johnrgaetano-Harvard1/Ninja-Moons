@@ -49,6 +49,17 @@
    }
   }catch(err){ownList.append(make("p","library-error","This browser cannot open the private library: "+err.message))}
  }
+ $("studentImportLink").onclick=async()=>{
+  const button=$("studentImportLink");button.disabled=true;
+  try{
+   const data=await core.fromURL($("studentDocumentURL").value,status);
+   const doc=await core.save(data);
+   $("studentDocumentURL").value="";
+   await showOwned();await openDocument(doc);
+   status("Imported "+doc.title+" from its public link.");
+  }catch(error){status("Link import: "+error.message)}
+  finally{button.disabled=false}
+ };
  $("studentDocumentFile").addEventListener("change",async event=>{
   const file=event.target.files?.[0];if(!file)return;
   try{

@@ -94,6 +94,42 @@
   }
   return {title:file.name.replace(/\.(txt|md|text|pdf|docx|epub)$/i,"").slice(0,130),text:normalize(text),source:extension};
  }
+ // Import a publicly accessible direct document URL. Browser fetch respects the
+ // source site's CORS and permissions; no arbitrary server-side URL proxy or SSRF.
+ async function fromURL(input,onProgress=()=>{}){
+  let url;
+  try{url=new URL(String(input||"").trim())}catch{throw Error("Enter a complete https:// link.")}
+  if(url.protocol!=="https:"||url.username||url.password||url.port||url.href.length>1800)
+   throw Error("Use a normal public https:// document link.");
+  const host=url.hostname.toLowerCase();
+  if(host==="localhost"||host.endsWith(".local")||host.endsWith(".internal")||
+     /^(?:\\d{1,3}\\.){3}\\d{1,3}$/.test(host)||host.includes(":"))
+   throw Error("Only public document websites are supported.");
+  // Public-domain Gutenberg book landing pages resolve to its plain text.
+  const book=url.pathname.match(/^\\/ebooks\\/(\\d{1,7})\\/?$/);
+  if((host==="www.gutenberg.org"||host==="gutenberg.org")&&book){
+   url=new URL("https://www.gutenberg.org/cache/epub/"+book[1]+"/pg"+book[1]+".txt");
+  }
+  const ext=(url.pathname.match(/\\.(pdf|docx|epub|txt|text|md)$/i)||[])[1];
+  if(!ext)throw Error("Use a direct PDF, DOCX, EPUB, or TXT file link, or a Project Gutenberg book page.");
+  onProgress("Downloading public reading from "+url.hostname+"…");
+  let response;
+  try{response=await fetch(url.href,{mode:"cors",credentials:"omit",redirect:"follow",signal:AbortSignal.timeout(25000)})}
+  catch{throw Error("The source website blocked direct importing or did not respond. Download the file there, then use Upload Document here.")}
+  if(!response.ok)throw Error("The document website returned HTTP "+response.status+". Download the file and upload it instead.");
+  const size=Number(response.headers.get("content-length")||0);
+  if(size>35*1024*1024)throw Error("This document exceeds the 35 MB import limit.");
+  const type=(response.headers.get("content-type")||"").toLowerCase();
+  if(type.includes("text/html"))throw Error("That link returned a webpage instead of a document. Use a direct file link.");
+  const blob=await response.blob();
+  if(blob.size>35*1024*1024)throw Error("This document exceeds the 35 MB import limit.");
+  const name=decodeURIComponent(url.pathname.split("/").pop()||"online-reading").replace(/[^a-zA-Z0-9 ._-]/g,"_").slice(0,130);
+  const file=new File([blob],name.endsWith("."+ext)?name:name+"."+ext,{type:type||"application/octet-stream"});
+  const result=await extract(file,onProgress);
+  result.source="web-"+ext;
+  result.url=url.href;
+  return result;
+ }
  function toReader(doc){
   if(!doc||typeof doc.text!=="string")throw Error("Document has no text.");
   const text=normalize(doc.text),lines=[];
@@ -198,6 +234,6 @@
   await rpc("nm_reader_finish_doc",{p_room:room.id,p_key:room.teacherKey,p_doc:docId});
   return docId;
  }
- window.NMDocs=Object.freeze({extract,toReader,save,get,list,remove,count,secret,rpc,publish,
+ window.NMDocs=Object.freeze({extract,fromURL,toReader,save,get,list,remove,count,secret,rpc,publish,
   remember:doc=>{if(!doc?.id)throw Error("Document id required.");memory.set(doc.id,doc);return doc}});
 })();

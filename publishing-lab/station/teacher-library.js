@@ -177,6 +177,17 @@
   if(pageTimer)clearTimeout(pageTimer);
   pageTimer=setTimeout(()=>showPage(data.page).catch(err=>classStatus("Section sync: "+err.message)),300);
  });
+ $("teacherImportLink").onclick=async()=>{
+  const button=$("teacherImportLink");button.disabled=true;
+  try{
+   const data=await core.fromURL($("teacherDocumentURL").value,ownStatus);
+   const doc=await core.save(data);
+   $("teacherDocumentURL").value="";
+   await readOwned();await openPreview(doc);
+   ownStatus("Imported "+doc.title+". Share to Class when you are ready.");
+  }catch(error){ownStatus("Link import: "+error.message)}
+  finally{button.disabled=false}
+ };
  $("teacherDocFile").addEventListener("change",async event=>{
   const file=event.target.files?.[0];if(!file)return;
   try{

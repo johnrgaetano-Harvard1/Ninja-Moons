@@ -158,6 +158,10 @@ a{color:#8edcff}a:focus-visible,button:focus-visible,select:focus-visible,textar
    <label class="dash-inline-label" for="teacherDocFile">Open PDF, DOCX, EPUB, TXT, Markdown</label>
    <input id="teacherDocFile" type="file" accept=".pdf,.docx,.epub,.txt,.text,.md">
    <p class="dash-library-help">Extracts text on this device. Scanned PDFs need OCR. Personal files stay in this browser until you choose to share.</p>
+   <label class="dash-inline-label" for="teacherDocumentURL">Or import a free online PDF, ebook, or text file</label>
+   <input id="teacherDocumentURL" class="dash-field" type="url" inputmode="url" maxlength="1800" placeholder="https://example.org/free-book.pdf">
+   <button id="teacherImportLink" class="dash-btn secondary" type="button">Import Link to Library</button>
+   <p class="dash-library-help">Accepts public direct document links and Project Gutenberg book pages. Some websites block downloads; use Upload Document if that happens. Only share materials you are authorized to distribute.</p>
    <label class="dash-inline-label" for="teacherPasteTitle">Or paste a reading or assignment</label>
    <input id="teacherPasteTitle" maxlength="130" class="dash-field" placeholder="Document title">
    <textarea id="teacherPasteText" rows="4" placeholder="Paste any story, lesson, article, or document here…"></textarea>

@@ -24,6 +24,10 @@
    <label for="studentDocumentFile" class="library-label">Upload PDF, Word (DOCX), EPUB, TXT, or Markdown</label>
    <input type="file" id="studentDocumentFile" accept=".pdf,.docx,.epub,.txt,.text,.md" aria-label="Upload a document for Ninja Reader">
    <p class="library-helper">The text is extracted in your browser. Text-based PDFs work; scanned images need OCR.</p>
+   <label class="library-label" for="studentDocumentURL">Or import a free online PDF, ebook, or text file by link</label>
+   <input id="studentDocumentURL" type="url" inputmode="url" maxlength="1800" placeholder="https://example.org/free-book.pdf" aria-label="Public document link" style="width:100%;padding:10px;border-radius:9px">
+   <button id="studentImportLink" type="button" class="library-button">Import Link & Read</button>
+   <p class="library-helper">Public direct PDF, DOCX, EPUB, or TXT links; Project Gutenberg book pages also supported. Some websites block imports—download and upload instead. Only use material you have permission to read.</p>
    <label for="studentDocumentTitle" class="library-label">Or paste a reading</label>
    <input id="studentDocumentTitle" type="text" maxlength="130" placeholder="Reading title">
    <textarea id="studentDocumentPaste" rows="3" placeholder="Paste a story, article, assignment, or chapter here…"></textarea>
