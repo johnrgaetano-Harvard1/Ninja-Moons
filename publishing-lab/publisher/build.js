@@ -162,10 +162,10 @@ async function verifyLiveEndToEndEncryption(source){
  const modified=envelope.slice(0,-1)+(lastChar==='A'?'B':'A');
  try{await teacher.open(modified,'student')}catch(_error){ciphertextTamperingRejected=true}
  ensure(ciphertextTamperingRejected,'AES-GCM must reject modified ciphertext');
- // Direct student URL without an invitation must generate a key and matching teacher link.
+ // No-login public demo uses a consistent shared test key; never treat it as private.
  const directContext=browser('',new Map());
  const newStudent=await directContext.student();
- ensure(newStudent.generated===true,'direct student URL must create its own encryption key');
+ ensure(newStudent.generated===false,'public no-login demo should use the shared test key without an invitation');
  const matchedTeacherURL=new URL(directContext.teacherLink());
  ensure(matchedTeacherURL.hash.startsWith('#nmkey='),'direct student must expose a matching teacher fragment link');
  const invitedTeacher=browser(matchedTeacherURL.hash,new Map());
@@ -174,7 +174,7 @@ async function verifyLiveEndToEndEncryption(source){
  const fromDirect=await directContext.seal('Can you read this student question?','student');
  ensure(await invitedTeacher.open(fromDirect,'student')==='Can you read this student question?',
   'fresh paired teacher must decrypt direct student question');
- console.log('ENCRYPTION INTEGRATION PASSED: two browser peers, AES-256-GCM, secret fragment, authenticated ciphertext, tampering rejected');
+ console.log('DEMO ENCRYPTION INTEGRATION PASSED: shared test key, AES-256-GCM, authenticated ciphertext, tampering rejected');
 }
 
 
