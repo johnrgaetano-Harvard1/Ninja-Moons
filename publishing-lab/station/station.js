@@ -21,9 +21,15 @@ function persist(){
  try{localStorage.setItem("nm-station-v1-"+currentSlug,JSON.stringify({page,sentence,stage,wordStart,answers,updatedAt:Date.now()}));}catch{}
  const progress=Object.freeze({slug:currentSlug,page:page+1,sentence:sentence+1,stage:stage+1,language:language()});
  window.dispatchEvent(new CustomEvent("nm:context",{detail:progress}));
+ if(window.parent!==window&&story?.isDocument){
+  window.parent.postMessage({kind:"nm-reader-section",docId:story.documentId,page:page+1},location.origin);
+ }
 }
 function context(){return{slug:currentSlug,title:story?.title||"",page:page+1,sentence:sentence+1,stage:stage+1,totalPages:story?.pages?.length||0,language:language(),text:story?.pages?.[page]?.lines?.[sentence]||""};}
-window.NM_STATION={getContext:context,getStory:()=>story,getPage:()=>page,getLocalProgress:()=>({page:page+1,sentence:sentence+1,stage:stage+1,questionsAnswered:Object.keys(answers).length}),getCatalog:()=>catalog};
+window.NM_STATION={getContext:context,getStory:()=>story,getPage:()=>page,
+ goToPage:n=>setPage(Math.max(0,Number(n)-1)),openDocument:openImportedDocument,
+ getLocalProgress:()=>({page:page+1,sentence:sentence+1,stage:stage+1,questionsAnswered:Object.keys(answers).length}),
+ getCatalog:()=>catalog};
 function node(tag,cl,txt){const e=document.createElement(tag);if(cl)e.className=cl;if(txt!==undefined)e.textContent=txt;return e;}
 function text(el,txt){el.textContent=txt==null?"":String(txt);}
 function stopSpeech(){lastAudio++;audioPaused=false;if("speechSynthesis" in window)speechSynthesis.cancel();for(const id of ["pausePage","trainPause"]){const b=$(id);if(b)b.textContent="Ⅱ Pause";}}
@@ -72,7 +78,7 @@ function showWord(word,forceLang){
  window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"word_tap"}}));
 }
 function currentLines(){return story?.pages?.[page]?.lines||[]}
-function pageTitle(){return nativeEs()&&spanish?.titles?.[page]?spanish.titles[page]:currentSlug==="seven-second-journey-grade-1"?SCENE_TITLES[page]:story.pages[page].title||story.pages[page].alt||"Picture "+(page+1)}
+function pageTitle(){return nativeEs()&&spanish?.titles?.[page]?spanish.titles[page]:currentSlug==="seven-second-journey-grade-1"?SCENE_TITLES[page]:story.pages[page].title||story.pages[page].alt||(story?.isDocument?"Section ":"Picture ")+(page+1)}
 function displaySentence(){const en=currentLines()[sentence]||"",es=spanish?.lines?.[page]?.[sentence]||"";return{en,es,shown:nativeEs()?es:en}}
 function setPage(index){if(!story)return;stopSpeech();page=Math.max(0,Math.min(story.pages.length-1,index));sentence=0;wordStart=0;refresh();window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"story_open"}}))}
 function setSentence(i){sentence=Math.max(0,Math.min(currentLines().length-1,i));wordStart=0;refresh();window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"sentence_read"}}))}
@@ -90,7 +96,16 @@ function renderStory(){
  if(!story)return;
  const pg=story.pages[page],img=$("storyArt");
  const priorSprite=document.getElementById("storySprite");if(priorSprite)priorSprite.remove();
- if(currentSlug==="ocean-that-glows"&&pg.image==="images/ocean-sprite.webp"){
+ const priorDocumentArt=document.getElementById("documentArt");if(priorDocumentArt)priorDocumentArt.remove();
+ if(story.isDocument){
+  img.hidden=true;
+  const card=node("div","document-cover");
+  card.id="documentArt";
+  card.append(node("div","doc-cover-icon","📖"),
+   node("strong","",story.title),node("span","",Number(story.wordCount||0).toLocaleString()+" words"),
+   node("span","",(page+1)+" of "+story.pages.length+" reading sections"));
+  document.querySelector(".story-image").append(card);
+ }else if(currentSlug==="ocean-that-glows"&&pg.image==="images/ocean-sprite.webp"){
   img.hidden=true;
   const NS="http://www.w3.org/2000/svg",svg=document.createElementNS(NS,"svg");
   svg.id="storySprite";svg.setAttribute("viewBox",(page%2*1672)+" "+(Math.floor(page/2)*941)+" 1672 941");
@@ -99,9 +114,9 @@ function renderStory(){
   image.setAttribute("width","3344");image.setAttribute("height","4705");image.setAttribute("x","0");image.setAttribute("y","0");
   svg.append(image);document.querySelector(".story-image").append(svg);
  }else{img.hidden=false;img.src=storyPath()+pg.image;img.alt=pg.alt||"Illustration for picture "+(page+1);}
- text($("storyGrade"),"NINJA MOONS · "+(GRADES[catalog.find(x=>x.slug===currentSlug)?.grade]||story.readingLevel||"STORY"));
+ text($("storyGrade"),"NINJA MOONS · "+(story.isDocument?"IMPORTED READING":GRADES[catalog.find(x=>x.slug===currentSlug)?.grade]||story.readingLevel||"STORY"));
  text($("storyTitle"),story.title);
- text($("pageBadge"),"Picture "+(page+1)+" of "+story.pages.length);
+ text($("pageBadge"),(story.isDocument?"Section ":"Picture ")+(page+1)+" of "+story.pages.length);
  text($("pageTitle"),pageTitle());
  const e=$("storyLines");e.replaceChildren();
  const displayed=nativeEs()&&spanish?.lines?.[page]?spanish.lines[page]:pg.lines;
@@ -131,7 +146,7 @@ function renderStory(){
 function renderStages(){
  if(!story)return;const es=nativeEs(),lbl=STAGE_LABELS[es?"es":"en"],bar=$("stageTabs");bar.replaceChildren();
  for(let i=0;i<4;i++){const b=node("button",i===stage?"active":"",String(i+1)+". "+lbl[i]);b.type="button";b.onclick=()=>{stage=i;wordStart=0;refresh();window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"helper_step"}}))};bar.append(b);}
- const s=displaySentence(),card=$("trainerCard");card.replaceChildren();card.append(node("p","train-meta","PICTURE "+(page+1)+" / "+story.pages.length+" · SENTENCE "+(sentence+1)+" / "+currentLines().length+" · STAGE "+(stage+1)+" / 4"));
+ const s=displaySentence(),card=$("trainerCard");card.replaceChildren();card.append(node("p","train-meta",(story.isDocument?"SECTION ":"PICTURE ")+(page+1)+" / "+story.pages.length+" · SENTENCE "+(sentence+1)+" / "+currentLines().length+" · STAGE "+(stage+1)+" / 4"));
  card.append(node("h3","",lbl[stage]));card.append(node("p","help",STAGE_HELP[es?"es":"en"][stage]));
  const line=node("p","sentence",s.shown);card.append(line);
  if(dual()&&s.es)card.append(node("p","translation","ES: "+s.es));
@@ -192,7 +207,15 @@ function renderPictures(){
 function renderQuiz(){
  const container=$("questionCard");container.replaceChildren();
  const set=questions?.[page];
- if(!set||!set.length){const a=node("p","help","This story does not yet have authored comprehension questions in the unified library. We will not invent or auto-grade unverified answers.");const p=node("a","text-link","Open the original story’s comprehension activities");p.href=storyPath();p.target="_blank";p.rel="noopener";container.append(a,p);return;}
+ if(!set||!set.length){
+  if(story?.isDocument){
+   container.append(node("p","help","This imported reading has no teacher-authored quiz yet. You can ask Ninja for a direct explanation of any part of the document."));
+   const b=node("button","btn primary","Ask Ninja about this document");b.type="button";b.onclick=()=>showTool("ninja");container.append(b);
+  }else{
+   const a=node("p","help","This story does not yet have authored comprehension questions in the unified library. We will not invent or auto-grade unverified answers.");
+   const p=node("a","text-link","Open the original story’s comprehension activities");p.href=storyPath();p.target="_blank";p.rel="noopener";container.append(a,p);
+  }return;
+ }
  for(let i=0;i<set.length;i++){
   const q=set[i],es=nativeEs(),both=dual(),w=node("div","quiz-item"),h=node("h4","",both?q[0]+" / "+q[1]:es?q[1]:q[0]);
   w.append(h);
@@ -209,7 +232,7 @@ function renderQuiz(){
 function renderProgress(){
  if(!story)return;
  const box=$("progressCard");box.replaceChildren();
- box.append(node("h3","",story.title),node("p","", "Picture "+(page+1)+" of "+story.pages.length+" · Sentence "+(sentence+1)+" · Stage "+(stage+1)+" of 4"));
+ box.append(node("h3","",story.title),node("p","", (story.isDocument?"Section ":"Picture ")+(page+1)+" of "+story.pages.length+" · Sentence "+(sentence+1)+" · Stage "+(stage+1)+" of 4"));
  box.append(node("p","",Object.keys(answers).length+" comprehension answers saved on this device."));
  box.append(node("p","help","Reading location and answers are saved in this browser. Verified school accounts can also record selected reading events for teacher monitoring."));
 }
@@ -310,7 +333,43 @@ async function copyContext(){
  try{await navigator.clipboard.writeText(questionContext());text($("copyContext"),"Copied! Paste into Ask Ninja");setTimeout(()=>text($("copyContext"),"Copy story context for Ask Ninja"),2600)}
  catch{prompt("Copy this question:",questionContext())}
 }
+// The existing four-stage reader also powers any imported document.
+function openImportedDocument(documentData){
+ if(!window.NMDocs)throw Error("The document importer is not loaded.");
+ const manifest=window.NMDocs.toReader(documentData);
+ stopSpeech();
+ try{recognition?.stop()}catch(_error){}
+ const slug="imported-"+documentData.id;
+ if(!catalog.some(x=>x.slug===slug))catalog.push({slug,title:manifest.title,readingLevel:"Imported reading",grade:"Custom"});
+ if(!$("storyPick").querySelector('option[value="'+slug+'"]')){
+  const option=node("option","","My Library · "+manifest.title);option.value=slug;$("storyPick").append(option);
+ }
+ currentSlug=slug;story=manifest;spanish=null;questions=null;answers={};
+ const optionEs=$("language").querySelector('option[value="es"]');
+ const optionBoth=$("language").querySelector('option[value="both"]');
+ if(optionEs)optionEs.disabled=true;
+ if(optionBoth)optionBoth.disabled=true;
+ if(language()!=="en")$("language").value="en";
+ text($("translationNotice"),"Imported text is ready in English. Ask Ninja for translations of selected passages.");
+ let saved={};try{saved=JSON.parse(localStorage.getItem("nm-station-v1-"+slug)||"{}")}catch(_e){}
+ page=Math.max(0,Math.min(story.pages.length-1,Number(saved.page)||0));
+ sentence=Math.max(0,Math.min(story.pages[page].lines.length-1,Number(saved.sentence)||0));
+ stage=[0,1,2,3].includes(saved.stage)?saved.stage:0;wordStart=0;answers=saved.answers||{};
+ $("storyPick").value=slug;
+ const url=new URL(location.href);url.searchParams.set("story",slug);
+ history.replaceState(null,"",url.pathname+url.search+url.hash);
+ text($("ninjaAnswer"),"Ask Ninja anything school-safe about this document or another topic.");
+ refresh();
+ window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"story_open"}}));
+ return manifest;
+}
 async function loadStory(slug){
+ if(slug.startsWith("imported-")&&window.NMDocs){
+  try{
+   const data=await window.NMDocs.get(slug.slice("imported-".length));
+   if(data){openImportedDocument(data);return}
+  }catch(err){text($("storyLines"),"Could not open local document: "+err.message);return}
+ }
  if(!catalog.some(s=>s.slug===slug))return;
  stopSpeech();recognition?.stop();$("micStatus").textContent="Microphone off.";
  let m;
@@ -336,7 +395,8 @@ async function loadStory(slug){
  sentence=Math.max(0,Math.min(story.pages[page].lines.length-1,Number(saved.sentence)||0));
  stage=[0,1,2,3].includes(saved.stage)?saved.stage:0;wordStart=Number(saved.wordStart)||0;answers=saved.answers||{};
  $("storyPick").value=slug;
- history.replaceState(null,"","/station/?story="+encodeURIComponent(slug));
+ const url=new URL(location.href);url.searchParams.set("story",slug);
+ history.replaceState(null,"",url.pathname+url.search+url.hash);
  refresh();window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"story_open"}}))
 }
 // The selected language is the language the student is actually speaking.
