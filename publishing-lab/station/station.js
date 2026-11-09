@@ -363,7 +363,7 @@ function openImportedDocument(documentData){
  const slug="imported-"+documentData.id;
  if(!catalog.some(x=>x.slug===slug))catalog.push({slug,title:manifest.title,readingLevel:"Imported reading",grade:"Custom"});
  if(!$("storyPick").querySelector('option[value="'+slug+'"]')){
-  const option=node("option","","My Library · "+manifest.title);option.value=slug;$("storyPick").append(option);
+  const option=node("option","",(documentData.source==="class"?"Class Library · ":"My Library · ")+manifest.title);option.value=slug;$("storyPick").append(option);
  }
  currentSlug=slug;story=manifest;spanish=null;questions=null;answers={};
  const optionEs=$("language").querySelector('option[value="es"]');
