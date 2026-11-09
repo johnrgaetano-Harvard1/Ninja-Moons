@@ -75,6 +75,26 @@ function showWord(word,forceLang){
  if(photo){img.src=photo.src;img.alt=photo.name||word;img.onerror=()=>{img.hidden=true};text($("dialogCredit"),"Real photo · "+(photo.credit||""))}else text($("dialogCredit"),"");
  $("dialogHear").onclick=()=>speakSegments([{lang,text:v?.word||word}]);
  if(!$("wordDialog").open)$("wordDialog").showModal();
+ // Uploaded documents don't have an authored glossary. Look up an unfamiliar
+ // word only after a deliberate tap; never send the whole imported document.
+ if(story?.isDocument&&!v){
+  text($("dialogDefinition"),"Looking up this word…");
+  const wordToDefine=String(word||"").slice(0,90);
+  const excerpt=currentLines()[sentence]?.slice(0,160)||"";
+  fetch("/api/ask-ninja",{
+   method:"POST",credentials:"same-origin",cache:"no-store",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({question:"Define the word "+wordToDefine+" in simple school-level English. Context: "+excerpt.slice(0,105)})
+  }).then(async r=>{
+   const data=await r.json().catch(()=>({}));
+   if(!r.ok||!data.answer)throw Error(data.message||"Definition unavailable.");
+   if($("dialogWord").textContent===wordToDefine&&$("wordDialog").open)
+    text($("dialogDefinition"),data.answer);
+  }).catch(error=>{
+   if($("dialogWord").textContent===wordToDefine&&$("wordDialog").open)
+    text($("dialogDefinition"),"Definition not available right now. You can still hear the word.");
+  });
+ }
  window.dispatchEvent(new CustomEvent("nm:reading-event",{detail:{event_type:"word_tap"}}));
 }
 function currentLines(){return story?.pages?.[page]?.lines||[]}
@@ -128,10 +148,10 @@ function renderStory(){
   for(const fragment of line.match(/\s+|\S+/g)||[]){
    if(/^\s+$/.test(fragment)){row.append(document.createTextNode(fragment));continue;}
    const w=fragment,v=vocabOf(w),photo=nounInfo(w),btn=node("button","word-tap"+(v?" vocab-tap":"")+(photo?" noun-tap":""),w);
-   btn.type="button";btn.title=photo?"View a real photograph of "+clean(w):v?"Hear and define "+clean(w):"Hear "+clean(w);
+   btn.type="button";btn.title=photo?"View a real photograph of "+clean(w):v||story?.isDocument?"Hear and define "+clean(w):"Hear "+clean(w);
    btn.onclick=()=>{
     if(sentence!==i){sentence=i;wordStart=0;refresh();}
-    if(photo||v)showWord(w);
+    if(photo||v||story?.isDocument)showWord(w);
     else speakSegments([{lang:speechLang(),text:w}]);
    };
    if(photo){btn.onpointerenter=()=>showHoverNoun(w,btn);btn.onpointerleave=hideHoverNoun;btn.onfocus=()=>showHoverNoun(w,btn);btn.onblur=hideHoverNoun;}
