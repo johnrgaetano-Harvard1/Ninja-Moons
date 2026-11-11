@@ -1,0 +1,43 @@
+name: Encrypted Supabase database backup
+on:
+  schedule:
+    - cron: '17 8 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check required secrets
+        env:
+          DB_URL: ${{ secrets.NINJA_SUPABASE_DB_URL }}
+          AGE_RECIPIENT: ${{ secrets.NINJA_BACKUP_AGE_RECIPIENT }}
+        run: |
+          test -n "$DB_URL" || { echo "Missing NINJA_SUPABASE_DB_URL"; exit 1; }
+          test -n "$AGE_RECIPIENT" || { echo "Missing NINJA_BACKUP_AGE_RECIPIENT"; exit 1; }
+      - name: Install PostgreSQL client and age
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client age
+      - name: Dump and encrypt database
+        env:
+          DB_URL: ${{ secrets.NINJA_SUPABASE_DB_URL }}
+          AGE_RECIPIENT: ${{ secrets.NINJA_BACKUP_AGE_RECIPIENT }}
+        run: |
+          set -euo pipefail
+          umask 077
+          pg_dump --version
+          pg_dump --dbname="$DB_URL" --format=custom --no-owner --no-acl --file=backup.dump
+          test -s backup.dump
+          age -r "$AGE_RECIPIENT" -o ninja-supabase.dump.age backup.dump
+          rm -f backup.dump
+          test -s ninja-supabase.dump.age
+      - name: Upload encrypted backup (7 days)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ninja-supabase-encrypted-${{ github.run_id }}
+          path: ninja-supabase.dump.age
+          retention-days: 7
+          if-no-files-found: error
