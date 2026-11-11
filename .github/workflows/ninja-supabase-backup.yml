@@ -20,7 +20,7 @@ jobs:
       - name: Install PostgreSQL client and age
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq postgresql-client age
+          sudo apt-get install -y -qq age
       - name: Dump and encrypt database
         env:
           DB_URL: ${{ secrets.NINJA_SUPABASE_DB_URL }}
@@ -28,11 +28,7 @@ jobs:
         run: |
           set -euo pipefail
           umask 077
-          pg_dump --version
-          pg_dump --dbname="$DB_URL" --format=custom --no-owner --no-acl --file=backup.dump
-          test -s backup.dump
-          age -r "$AGE_RECIPIENT" -o ninja-supabase.dump.age backup.dump
-          rm -f backup.dump
+          docker run --rm -e DB_URL postgres:17 sh -c 'exec pg_dump --dbname="$DB_URL" --format=custom --no-owner --no-acl' | age -r "$AGE_RECIPIENT" -o ninja-supabase.dump.age
           test -s ninja-supabase.dump.age
       - name: Upload encrypted backup (7 days)
         uses: actions/upload-artifact@v4
